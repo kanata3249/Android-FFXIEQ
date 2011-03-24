@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent" android:layout_width="wrap_content" android:orientation="horizontal">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tableLayout1" android:layout_width="255dip" android:layout_height="wrap_content">
+    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
+        <RelativeLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/relativeLayout2">
+            <Button android:layout_height="wrap_content" android:layout_alignParentRight="true" android:id="@+id/Save" android:layout_width="wrap_content" android:text="@string/Save"></Button>
+            <com.github.kanata3249.ffxieq.android.CharacterSelectorView android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_toLeftOf="@+id/Save" android:id="@+id/CharacterSelector" android:textColor="@android:color/primary_text_light" android:prompt="@string/CharacterSelectorDropDownTitle"></com.github.kanata3249.ffxieq.android.CharacterSelectorView>
+        </RelativeLayout>
+    </TableRow>
+    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow2" android:layout_width="wrap_content">
+        <TableLayout android:layout_height="wrap_content" android:id="@+id/tableLayout2" android:layout_width="wrap_content">
+            <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
+                <Spinner android:entries="@array/JobEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Job"></Spinner>
+                <EditText android:layout_height="wrap_content" android:text="EditText" android:id="@+id/JobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
+                <Spinner android:entries="@array/RaceEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Race"></Spinner>
+            </TableRow>
+            <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
+                <Spinner android:entries="@array/JobEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/SubJob"></Spinner>
+                <EditText android:layout_height="wrap_content" android:text="EditText" android:id="@+id/SubJobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
+                <Button android:layout_height="wrap_content" android:id="@+id/Merits" android:layout_width="wrap_content" android:text="@string/Merits"></Button>
+            </TableRow>
+        </TableLayout>
+    </TableRow>
+    <RelativeLayout android:layout_height="wrap_content" android:id="@+id/relativeLayout1" android:layout_width="wrap_content">
+        <CheckBox android:id="@+id/InAbyssea" android:layout_width="wrap_content" android:text="@string/InAbyssea" android:layout_height="wrap_content"></CheckBox>
+        <Spinner android:entries="@array/AbyssiteOfMeritEntries" android:layout_height="wrap_content" android:layout_toRightOf="@+id/AbyssiteOfFurtherance" android:prompt="@string/AbyssiteOfMeritPrompt" android:id="@+id/AbyssiteOfMerit" android:layout_width="wrap_content">
+        </Spinner>
+        <Spinner android:entries="@array/AbyssiteOfFurtheranceEntries" android:layout_height="wrap_content" android:layout_toRightOf="@+id/InAbyssea" android:prompt="@string/AbyssiteOfFurtherancePrompt" android:id="@+id/AbyssiteOfFurtherance" android:layout_width="wrap_content">
+        </Spinner>
+    </RelativeLayout>
+</TableLayout>
+<LinearLayout android:layout_width="wrap_content" android:layout_height="match_parent" android:id="@+id/linearLayout1" android:orientation="vertical">
+    <com.github.kanata3249.ffxieq.android.AtmaSetView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/Atmas"></com.github.kanata3249.ffxieq.android.AtmaSetView>
+    <com.github.kanata3249.ffxieq.android.EquipmentSetView android:layout_width="wrap_content" android:scrollbars="vertical" android:layout_height="match_parent" android:id="@+id/Equipments"></com.github.kanata3249.ffxieq.android.EquipmentSetView>
+</LinearLayout>
+</LinearLayout>

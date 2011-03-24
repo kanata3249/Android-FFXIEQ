@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/linearLayout1" xmlns:android="http://schemas.android.com/apk/res/android">
+	<fragment class="com.github.kanata3249.ffxieq.android.CharacterEditFragment" android:layout_height="match_parent" android:id="@+id/CharacterEdit" android:layout_width="450dip"/>
+	<fragment class="com.github.kanata3249.ffxieq.android.CharacterStatusFragment" android:layout_height="match_parent" android:id="@+id/CharacterStatus" android:layout_width="wrap_content"/>
+</LinearLayout>

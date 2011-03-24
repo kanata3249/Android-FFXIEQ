@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ffxieq</string>
+    <string-array name="RaceEntries">
+        <item>Hum</item>
+        <item>Elv</item>
+        <item>Tar</item>
+        <item>Mit</item>
+        <item>Gal</item>
+    </string-array>
+    <string-array name="JobEntries">
+        <item>WAR</item>
+        <item>MNK</item>
+        <item>WHM</item>
+        <item>BLM</item>
+        <item>RDM</item>
+        <item>THF</item>
+        <item>PLD</item>
+        <item>DRK</item>
+        <item>BST</item>
+        <item>BRD</item>
+        <item>RNG</item>
+        <item>SAM</item>
+        <item>NIN</item>
+        <item>DRG</item>
+        <item>SMN</item>
+        <item>BLU</item>
+        <item>COR</item>
+        <item>PUP</item>
+        <item>DNC</item>
+        <item>SCH</item>
+    </string-array>
+    <string-array name="Merits_0_8_Entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="Merits_0_4_Entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="Merits_0_5_Entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="Merits_m4_p4_Entries">
+        <item>-4</item>
+        <item>-3</item>
+        <item>-2</item>
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string name="NewCharacterName">NewCharacter 1.</string>
+    <string name="Save">Save...</string>
+    <string name="InAbyssea">Abyssea</string>
+    <string name="Merits">Merits...</string>
+    <string name="Accuracy">命中</string>
+    <string name="Attack">攻撃力</string>
+    <string name="RangeAccuracy">飛命</string>
+    <string name="RangeAttack">飛攻</string>
+    <string name="Heste">ヘイスト</string>
+    <string name="Slow">スロウ</string>
+    <string name="SubtleBlow">モクシャ</string>
+    <string name="StoreTP">ストアTP</string>
+    <string name="Evasion">回避</string>
+    <string name="DoubleAttack">ダブル</string>
+    <string name="TrippleAttack">トリプル</string>
+    <string name="QuadAttack">クワッド</string>
+    <string name="SaveOK">Save</string>
+    <string name="QuerySaveCharacterTitle">Save Character info</string>
+    <string name="SaveNew">Save as new character.</string>
+    <string name="CharacterSelectorDropDownTitle">Select character</string>
+    <string name="QueryDeleteCharacter">Are you sure to delete this character?</string>
+    <string name="DeleteOK">Delete</string>
+    <string name="Cancel">Cancel</string>
+    <string name="QueryDeleteCharacterTitle">Delete Character</string>
+    <string-array name="AbyssiteOfFurtheranceEntries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="AbyssiteOfMeritEntries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+        <string name="AbyssiteOfFurtherancePrompt">遊軍</string>
+        <string name="AbyssiteOfMeritPrompt">真価</string>
+        <string name="CriticalRate">クリティカル</string>
+        <string name="CriticalDamage">クリダメージ</string>
+        <string name="Remove">Remove</string>
+        <string name="AccuracySub">サブ命中</string>
+        <string name="AttackSub">サブ攻撃力</string>
+        <string name="Enmity">敵対心</string>
+        <string name="AccuracyMagic">魔命</string>
+        <string name="AttackMagic">魔攻</string>
+        <string name="D">D値</string>
+        <string name="DSub">サブD値</string>
+        <string name="DRange">遠隔D値</string>
+        <string name="Delay">間隔</string>
+        <string name="DelaySub">サブ間隔</string>
+        <string name="DelayRange">遠隔間隔</string>
+        <string name="RegistFire">耐火</string>
+        <string name="RegistIce">耐氷</string>
+        <string name="RegistWind">耐風</string>
+        <string name="RegistEarth">耐土</string>
+        <string name="RegistLightning">耐雷</string>
+        <string name="RegistWater">耐水</string>
+        <string name="RegistLight">耐光</string>
+        <string name="RegistDark">耐闇</string>
+        <string name="Defence">防</string>
+        <string name="DefenceMagic">魔法防御</string>
+        <string name="DamageCutPhysical">物理カット</string>
+        <string name="DamageCutMagic">魔法カット</string>
+        <string name="DamageCutBreath">ブレスカット</string>
+        <string name="HP">HP</string>
+        <string name="MP">MP</string>
+        <string name="STR">STR</string>
+        <string name="DEX">DEX</string>
+        <string name="VIT">VIT</string>
+        <string name="AGI">AGI</string>
+        <string name="INT">INT</string>
+        <string name="MND">MND</string>
+        <string name="CHR">CHR</string>
+		<string name="HANDTOHAND">格闘</string>
+		<string name="DAGGER">短剣</string>
+		<string name="SWORD">片手剣</string>
+		<string name="GREATSWORD">両手剣</string>
+		<string name="AXE">片手斧</string>
+		<string name="GREATAXE">両手斧</string>
+		<string name="SCYTH">両手鎌</string>
+		<string name="POLEARM">槍</string>
+		<string name="KATANA">片手刀</string>
+		<string name="GREATKATANA">両手刀</string>
+		<string name="CLUB">片手棍</string>
+		<string name="STAFF">両手棍</string>
+		<string name="ARCHERY">弓術</string>
+		<string name="MARKSMANSHIP">射撃</string>
+		<string name="THROWING">投擲</string>
+		<string name="DIVINEMAGIC">神聖</string>
+		<string name="HEALINGMAGIC">回復</string>
+		<string name="ENCHANCINGMAGIC">強化</string>
+		<string name="ENFEEBLINGMAGIC">弱体</string>
+		<string name="ELEMENTALMAGIC">精霊</string>
+		<string name="DARKMAGIC">暗黒</string>
+		<string name="SINGING">歌唱</string>
+		<string name="STRINGINSTRUMENT">弦楽器</string>
+		<string name="WINDINSTRUMENT">管楽器</string>
+		<string name="NINJUTSU">忍術</string>
+		<string name="SUMMONING">召喚</string>
+		<string name="BLUEMAGIC">青魔法</string>
+		<string name="GUARDING">ガード</string>
+		<string name="EVASION">回避</string>
+		<string name="SHIELD">盾</string>
+		<string name="PARRYING">受け流し</string>
+		<string name="ENMITY">敵対心</string>
+		<string name="CRITICAL">クリティカル</string>
+		<string name="CRITICALDEFENCE">被クリティカル</string>
+		<string name="SPELLINTERRUPTION">詠唱中断</string>
+</resources>

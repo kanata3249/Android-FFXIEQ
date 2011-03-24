@@ -1,0 +1,198 @@
+/*
+   Copyright 2011 kanata3249
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+package com.github.kanata3249.ffxi;
+
+public class FFXIString {
+	public static final int ItemDescriptionTokenSeparator = 1;
+
+	public static final int RACE_HUM = 2000;
+	public static final int RACE_ELV = 2001;
+	public static final int RACE_TAR = 2002;
+	public static final int RACE_MIT = 2003;
+	public static final int RACE_GAL = 2004;
+	public static final int RACE_DB_HUM = 2010;
+	public static final int RACE_DB_ELV = 2011;
+	public static final int RACE_DB_TAR = 2012;
+	public static final int RACE_DB_MIT = 2013;
+	public static final int RACE_DB_GAL = 2014;
+	public static final int RACE_DB_ALL = 2015;
+
+	public static final int JOB_WAR = 2100;
+	public static final int JOB_MNK = 2101;
+	public static final int JOB_WHM = 2102;
+	public static final int JOB_BLM = 2103;
+	public static final int JOB_RDM = 2104;
+	public static final int JOB_THF = 2105;
+	public static final int JOB_PLD = 2106;
+	public static final int JOB_DRK = 2107;
+	public static final int JOB_BST = 2108;
+	public static final int JOB_BRD = 2109;
+	public static final int JOB_RNG = 2110;
+	public static final int JOB_SAM = 2111;
+	public static final int JOB_NIN = 2112;
+	public static final int JOB_DRG = 2113;
+	public static final int JOB_SMN = 2114;
+	public static final int JOB_BLU = 2115;
+	public static final int JOB_COR = 2116;
+	public static final int JOB_PUP = 2117;
+	public static final int JOB_DNC = 2118;
+	public static final int JOB_SCH = 2119;
+	public static final int JOB_DB_WAR = 2150;
+	public static final int JOB_DB_MNK = 2151;
+	public static final int JOB_DB_WHM = 2152;
+	public static final int JOB_DB_BLM = 2153;
+	public static final int JOB_DB_RDM = 2154;
+	public static final int JOB_DB_THF = 2155;
+	public static final int JOB_DB_PLD = 2156;
+	public static final int JOB_DB_DRK = 2157;
+	public static final int JOB_DB_BST = 2158;
+	public static final int JOB_DB_BRD = 2159;
+	public static final int JOB_DB_RNG = 2160;
+	public static final int JOB_DB_SAM = 2161;
+	public static final int JOB_DB_NIN = 2162;
+	public static final int JOB_DB_DRG = 2163;
+	public static final int JOB_DB_SMN = 2164;
+	public static final int JOB_DB_BLU = 2165;
+	public static final int JOB_DB_COR = 2166;
+	public static final int JOB_DB_PUP = 2167;
+	public static final int JOB_DB_DNC = 2168;
+	public static final int JOB_DB_SCH = 2169;
+	public static final int JOB_DB_ALL = 2170;
+	
+	public static final int PART_MAIN = 2200;
+	public static final int PART_SUB = 2201;
+	public static final int PART_HEAD = 2202;
+	public static final int PART_BODY = 2203;
+	public static final int PART_HANDS = 2204;
+	public static final int PART_FEET = 2205;
+	public static final int PART_LEGS = 2206;
+	public static final int PART_BACK = 2207;
+	public static final int PART_NECK = 2208;
+	public static final int PART_WAIST = 2209;
+	public static final int PART_RING1 = 2210;
+	public static final int PART_RING2 = 2211;
+	public static final int PART_EAR1 = 2212;
+	public static final int PART_EAR2 = 2213;
+	public static final int PART_RANGE = 2214;
+	public static final int PART_ANMO = 2215;
+
+	public static final int PART_DB_MAIN = 2300;
+	public static final int PART_DB_SUB = 2301;
+	public static final int PART_DB_HEAD = 2302;
+	public static final int PART_DB_BODY = 2303;
+	public static final int PART_DB_HANDS = 2304;
+	public static final int PART_DB_FEET = 2305;
+	public static final int PART_DB_LEGS = 2306;
+	public static final int PART_DB_BACK = 2307;
+	public static final int PART_DB_NECK = 2308;
+	public static final int PART_DB_WAIST = 2309;
+	public static final int PART_DB_RING1 = 2310;
+	public static final int PART_DB_RING2 = 2311;
+	public static final int PART_DB_EAR1 = 2312;
+	public static final int PART_DB_EAR2 = 2313;
+	public static final int PART_DB_RANGE = 2314;
+	public static final int PART_DB_ANMO = 2315;
+
+	public static final int TOKEN_STR = 1000;
+	public static final int TOKEN_AGI = 1001;
+	public static final int TOKEN_DEX = 1002;
+	public static final int TOKEN_VIT = 1003;
+	public static final int TOKEN_INT = 1004;
+	public static final int TOKEN_MND = 1005;
+	public static final int TOKEN_CHR = 1006;
+	public static final int TOKEN_HP = 1007;
+	public static final int TOKEN_MP = 1008;
+	public static final int TOKEN_CONVERT_HPMP = 1009;
+	public static final int TOKEN_CONVERT_MPHP = 1010;
+	public static final int TOKEN_DMP = 1011;
+	public static final int TOKEN_DELAY = 1012;
+	public static final int TOKEN_ATTACK = 1013;
+	public static final int TOKEN_ATTACK_RANGE = 1014;
+	public static final int TOKEN_DEF = 1015;
+	public static final int TOKEN_HASTE = 1016;
+	public static final int TOKEN_SLOW = 1017;
+	public static final int TOKEN_SUBTLE_BLOW = 1018;
+	public static final int TOKEN_STORE_TP = 1019;
+	public static final int TOKEN_EVASION = 1020;
+	public static final int TOKEN_ACCURACY = 1021;
+	public static final int TOKEN_ACCURACY_RANGE = 1022;
+	public static final int TOKEN_DOUBLE_ATTACK = 1023;
+	public static final int TOKEN_TRIPPLE_ATTACK = 1024;
+	public static final int TOKEN_QUAD_ATTACK = 1025;
+	public static final int TOKEN_ENMITY = 1026;
+	
+	public static final int TOKEN_CRITICAL_RATE = 1050;
+	public static final int TOKEN_CRITICAL_DAMAGE = 1051;
+	public static final int TOKEN_ACCURACY_MAGIC = 1052;
+	public static final int TOKEN_ATTACK_MAGIC = 1053;
+	public static final int TOKEN_ATTACK_MAGIC2 = 1054;
+	
+	public static final int TOKEN_DEFENCE = 1055;
+	public static final int TOKEN_DEFENCE_MAGIC = 1056;
+	public static final int TOKEN_DEFENCE_MAGIC2 = 1057;
+	public static final int TOKEN_DAMAGECUT = 1058;
+	public static final int TOKEN_DAMAGECUT_PHYSICAL = 1059;
+	public static final int TOKEN_DAMAGECUT_MAGIC = 1060;
+	public static final int TOKEN_DAMAGECUT_BREATH = 1061;
+
+	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
+	public static final int TOKEN_SKILL_DAGGER = 1101;
+	public static final int TOKEN_SKILL_SWORD = 1102;
+	public static final int TOKEN_SKILL_GREATSWORD = 1103;
+	public static final int TOKEN_SKILL_AXE = 1104;
+	public static final int TOKEN_SKILL_GREATEAXE = 1105;
+	public static final int TOKEN_SKILL_SCYTH = 1106;
+	public static final int TOKEN_SKILL_POLEARM = 1107;
+	public static final int TOKEN_SKILL_KATANA = 1108;
+	public static final int TOKEN_SKILL_GREATKATANA = 1109;
+	public static final int TOKEN_SKILL_CLUB = 1110;
+	public static final int TOKEN_SKILL_STAFF = 1111;
+	public static final int TOKEN_SKILL_ARCHERY = 1112;
+	public static final int TOKEN_SKILL_MARKSMANSHIP = 1113;
+	public static final int TOKEN_SKILL_THROWING = 1114;
+	public static final int TOKEN_SKILL_GUARDING = 1115;
+	public static final int TOKEN_SKILL_EVASION = 1116;
+	public static final int TOKEN_SKILL_SHIELD = 1117;
+	public static final int TOKEN_SKILL_PARRYING = 1118;
+
+	public static final int TOKEN_SKILL_DIVINE_MAGIC = 1119;
+	public static final int TOKEN_SKILL_HEALING_MAGIC = 1120;
+	public static final int TOKEN_SKILL_ENCHANCING_MAGIC = 1121;
+	public static final int TOKEN_SKILL_ENFEEBLING_MAGIC = 1122;
+	public static final int TOKEN_SKILL_ELEMENTAL_MAGIC = 1123;
+	public static final int TOKEN_SKILL_DARK_MAGIC = 1124;
+	public static final int TOKEN_SKILL_SINGING = 1125;
+	public static final int TOKEN_SKILL_STRING_INSTRUMENT = 1126;
+	public static final int TOKEN_SKILL_WIND_INSTRUMENT = 1127;
+	public static final int TOKEN_SKILL_NINJUTSU = 1128;
+	public static final int TOKEN_SKILL_SUMMONING = 1129;
+	public static final int TOKEN_SKILL_BLUE_MAGIC = 1130;
+	
+	public static final int TOKEN_REGIST_FIRE = 1131;
+	public static final int TOKEN_REGIST_ICE = 1132;
+	public static final int TOKEN_REGIST_WIND = 1133;
+	public static final int TOKEN_REGIST_EARTH = 1134;
+	public static final int TOKEN_REGIST_LIGHTNING = 1135;
+	public static final int TOKEN_REGIST_WATER = 1136;
+	public static final int TOKEN_REGIST_LIGHT = 1137;
+	public static final int TOKEN_REGIST_DARK = 1138;
+
+	public static final int TOKEN_Latent_Effect = 1200;
+	public static final int TOKEN_Assult = 1201;
+	public static final int TOKEN_Besieged = 1202;
+	public static final int TOKEN_Campaign = 1203;
+	public static final int TOKEN_Dynamis = 1204;
+}

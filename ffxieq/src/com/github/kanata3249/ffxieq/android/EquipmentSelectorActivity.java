@@ -1,0 +1,184 @@
+/*
+   Copyright 2011 kanata3249
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+package com.github.kanata3249.ffxieq.android;
+
+import com.github.kanata3249.ffxieq.Equipment;
+import com.github.kanata3249.ffxieq.FFXICharacter;
+import com.github.kanata3249.ffxieq.R;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
+
+public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
+	int mPart;
+	int mJob;
+	int mLevel;
+	int mRace;
+	long mCurrent;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		Bundle param;
+		
+		super.onCreate(savedInstanceState);
+		
+		if (savedInstanceState != null) {
+			param = savedInstanceState;
+		} else {
+			param = getIntent().getExtras();
+		}
+		
+		mPart = param.getInt("Part");
+		mRace = param.getInt("Race");
+		mLevel = param.getInt("Level");
+		mJob = param.getInt("Job");
+		mCurrent = param.getLong("Current");
+		
+		setContentView(R.layout.equipmentselector);
+		
+		EquipmentListView elv;
+		
+		elv = (EquipmentListView)findViewById(R.id.ListView);
+		if (elv != null) {
+			elv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
+			
+			elv.setOnItemClickListener(new OnItemClickListener() {
+
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					Intent result = new Intent();
+					
+					result.putExtra("From", "EquipmentSelector");
+					result.putExtra("Part", mPart);
+					result.putExtra("Id", arg3);
+					setResult(RESULT_OK, result);
+					finish();
+				}
+				
+			});
+		}
+		
+		{
+			Equipment cur = getDAO().instanciateEquipment(mCurrent);
+			if (cur != null) {
+				TextView tv;
+				
+				tv = (TextView)findViewById(R.id.Name);
+				if (tv != null) {
+					tv.setText(cur.getName());
+				}
+				tv = (TextView)findViewById(R.id.Job);
+				if (tv != null) {
+					tv.setText(cur.getJob());
+				}
+				tv = (TextView)findViewById(R.id.Description);
+				if (tv != null) {
+					tv.setText(cur.getDescription());
+				}
+				tv = (TextView)findViewById(R.id.Level);
+				if (tv != null) {
+					tv.setText(((Integer)cur.getLevel()).toString());
+				}
+				tv = (TextView)findViewById(R.id.Race);
+				if (tv != null) {
+					tv.setText(cur.getRace());
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putInt("Part", mPart);
+		outState.putInt("Race", mRace);
+		outState.putInt("Job", mJob);
+		outState.putInt("Level", mLevel);
+		outState.putLong("Current", mCurrent);
+	}
+
+	static public boolean startActivity(Activity from, int request, FFXICharacter charInfo, int part, long current) {
+		Intent intent = new Intent(from, EquipmentSelectorActivity.class);
+		
+		intent.putExtra("Part", part);
+		intent.putExtra("Race", charInfo.getRace());
+		intent.putExtra("Job", charInfo.getJob());
+		intent.putExtra("Level", charInfo.getJobLevel());
+		intent.putExtra("Current", current);
+		
+		from.startActivityForResult(intent, request);
+		return true;
+	}
+
+	static public boolean startActivity(Fragment from, int request, FFXICharacter charInfo, int part, long current) {
+		Intent intent = new Intent(from.getActivity(), EquipmentSelectorActivity.class);
+		
+		intent.putExtra("Part", part);
+		intent.putExtra("Race", charInfo.getRace());
+		intent.putExtra("Job", charInfo.getJob());
+		intent.putExtra("Level", charInfo.getJobLevel());
+		intent.putExtra("Current", current);
+		
+		from.startActivityForResult(intent, request);
+		return true;
+	}
+	static public boolean isComeFrom(Intent data) {
+		return data.getStringExtra("From").equals("EquipmentSelector");
+	}
+	static public int getPart(Intent data) {
+		return data.getIntExtra("Part", -1);
+	}
+	
+	static public long getEquipmentId(Intent data) {
+		return data.getLongExtra("Id", -1);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.equipmentselector, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.Remove:
+			Intent result = new Intent();
+			
+			result.putExtra("From", "EquipmentSelector");
+			result.putExtra("Part", mPart);
+			result.putExtra("Id", -1);
+			setResult(RESULT_OK, result);
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+}
