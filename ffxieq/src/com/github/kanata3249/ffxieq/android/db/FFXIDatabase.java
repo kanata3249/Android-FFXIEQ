@@ -16,10 +16,12 @@
 package com.github.kanata3249.ffxieq.android.db;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -33,11 +35,13 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.*;
+import android.os.Environment;
 
 public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	private static final String DB_NAME = "ffxieq";
 	private static final String DB_NAME_ASSET = "db.zip";
-	private static final String DB_PATH = "/data/data/com.github.kanata3249.ffxieq/databases/";
+	private static String DB_PATH;
+	private static String SD_PATH;
 
 	static final Character[][] RaceToStatusRank = {
 		// TODO This table should be read from DB.
@@ -66,6 +70,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public FFXIDatabase(Context context) {
 		super(context, DB_NAME, null, 1);
 		
+		DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
+		SD_PATH = Environment.getExternalStorageDirectory() + "/" + context.getPackageName() + "/"; 
+
 		mContext = context;
 		mHpTable = new HPTable();
 		mMpTable = new MPTable();
@@ -76,13 +83,12 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mAtmaTable = new AtmaTable();
 		mJobTraitTable = new JobTraitTable();
 
-		try {
-			copyDatabaseFromAssets();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (checkDatabase()) {
+			try {
+				copyDatabaseFromAssets();
+			} catch (IOException e) {
+			}
 		}
-		
-		JobToRank = mJobRankTable.buildJobRankTable(getReadableDatabase());
 	}
 
 
@@ -94,12 +100,26 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	}
 	
+	public boolean checkDatabase() {
+		File in = new File(DB_PATH + DB_NAME);
+		
+		if (in.isFile())
+			return false;
+		return true;
+	}
+	
 	public void copyDatabaseFromAssets() throws IOException {
 		InputStream in = mContext.getAssets().open(DB_NAME_ASSET, AssetManager.ACCESS_STREAMING);
 		ZipInputStream zipIn = new ZipInputStream(in);
 		ZipEntry zipEntry = zipIn.getNextEntry();
 		File outDir = new File(DB_PATH);
 		
+		SQLiteDatabase db;
+
+		db = getReadableDatabase();
+		if (db != null)
+			db.close();
+
 		outDir.mkdir();
 		while (zipEntry != null) {
 			byte[] buffer = new byte[4096];
@@ -119,10 +139,42 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		in.close();
 	}
 
+	public void copyDatabaseFromSD() throws IOException {
+		File outDir = new File(DB_PATH);
+		SQLiteDatabase db;
+
+		db = getReadableDatabase();
+		if (db != null)
+			db.close();
+
+		outDir.mkdir();
+		FileChannel channelSource = new FileInputStream(SD_PATH + DB_NAME).getChannel();
+		FileChannel channelTarget = new FileOutputStream(DB_PATH + DB_NAME).getChannel();
+		channelSource.transferTo(0, channelSource.size(), channelTarget);
+
+		channelSource.close();
+		channelTarget.close();
+		
+	}
+
+	public void copyDatabaseToSD() throws IOException {
+		File outDir = new File(SD_PATH);
+
+		outDir.mkdir();
+		FileChannel channelSource = new FileInputStream(DB_PATH + DB_NAME).getChannel();
+		FileChannel channelTarget = new FileOutputStream(SD_PATH + DB_NAME).getChannel();
+		channelSource.transferTo(0, channelSource.size(), channelTarget);
+
+		channelSource.close();
+		channelTarget.close();
+	}
+
 	// DA methods
 	public String jobToRank(int job, StatusType type) {
 		String ret;
 		
+		if (JobToRank == null)
+			JobToRank = mJobRankTable.buildJobRankTable(getReadableDatabase());
 		ret = JobToRank[job][type.ordinal()];
 		if (ret == null) {
 			ret = "-";
@@ -507,7 +559,6 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public JobTrait[] getJobTraits(int job, int level) {
 		return mJobTraitTable.getJobTraits(this, getReadableDatabase(), getString(FFXIString.JOB_DB_WAR + job), level);
 	}
-
 
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy) {
 		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy);

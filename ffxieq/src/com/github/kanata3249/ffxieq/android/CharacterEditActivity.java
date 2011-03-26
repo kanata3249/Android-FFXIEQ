@@ -15,6 +15,8 @@
 */
 package com.github.kanata3249.ffxieq.android;
 
+import java.io.IOException;
+
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
+import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 
 public class CharacterEditActivity extends FFXIEQBaseActivity {
     /** Called when the activity is first created. */
@@ -77,6 +80,28 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 		case R.id.Delete:
 			showDialog(R.layout.querydeletecharacter);
 			return true;
+			
+		case R.id.InstallDB:
+			try {
+				((FFXIDatabase)getDAO()).copyDatabaseFromAssets();
+			} catch (IOException e) {
+			}
+			return true;
+
+		case R.id.InstallDBFromSD:
+			try {
+				((FFXIDatabase)getDAO()).copyDatabaseFromSD();
+			} catch (IOException e) {
+			}
+			return true;
+
+		case R.id.ExportDBToSD:
+			try {
+				((FFXIDatabase)getDAO()).copyDatabaseToSD();
+			} catch (IOException e) {
+			}
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}

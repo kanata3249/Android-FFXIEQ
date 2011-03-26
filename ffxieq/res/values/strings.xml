@@ -179,4 +179,7 @@
 		<string name="CRITICAL">クリティカル</string>
 		<string name="CRITICALDEFENCE">被クリティカル</string>
 		<string name="SPELLINTERRUPTION">詠唱中断</string>
+		<string name="InstallDB">Install DB</string>
+		<string name="InstallDBFromSD">Install DB from SD</string>
+		<string name="ExportDBToSD">ExportDB To SD</string>
 </resources>
