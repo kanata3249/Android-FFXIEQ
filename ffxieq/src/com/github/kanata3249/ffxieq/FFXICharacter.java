@@ -280,7 +280,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAccuracyByWeaponType(type));
+				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 			}
 		}
 		return getStatusString(mod, separate);
@@ -292,7 +292,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAccuracyByWeaponType(type));
+				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 			}
 		}
 		return getStatusString(mod, separate);
@@ -337,7 +337,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAttackByWeaponType(type));
+				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 			}
 		}
 		return getStatusString(mod, separate);
@@ -349,7 +349,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAttackByWeaponType(type));
+				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 			}
 		}
 		return getStatusString(mod, separate);
@@ -364,7 +364,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAccuracyByWeaponType(type));
+				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 			}
 		}
 		return getStatusString(mod, separate);
@@ -379,7 +379,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAttackByWeaponType(type));
+				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 			}
 		}
 		return getStatusString(mod, separate);
@@ -411,7 +411,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		} else {
 			value = stsvalue * 50 / 100 + 200 + (skillvalue - 200) * 90 / 100;
 		}
-		mod.setValue(value);
+		mod.setValue(value + mod.getValue());
 		return getStatusString(mod, separate);
 	}
 	public String getDoubleAttack(int separate) {
@@ -445,7 +445,7 @@ public class FFXICharacter implements IStatus, Serializable {
 
 		stsvalue = sts.getValue() + sts.getAdditional();
 		mod = getStatus(mLevel, StatusType.Defence);
-		mod.setValue(mLevel.getLevel() + stsvalue * 50 / 100);
+		mod.setValue(mLevel.getLevel() + stsvalue * 50 / 100 + mod.getValue());
 		return getStatusString(mod, separate);
 	}
 	public String getDefenceMagic(int separate) {

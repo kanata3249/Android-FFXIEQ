@@ -55,6 +55,13 @@ public class JobLevelAndRace implements Serializable {
 	int mRace;
 
 	public JobLevelAndRace(int race, int job, int subjob, int level, int sublevel) { this.mRace = race; this.mJob = job; this.mSubJob = subjob; this.mLevel = level; this.mSubLevel = sublevel; };
+	public JobLevelAndRace(JobLevelAndRace from) {
+		mJob = from.mJob;
+		mSubJob = from.mSubJob;
+		mLevel = from.mLevel;
+		mSubLevel = from.mSubLevel;
+		mRace = from.mRace;
+	}
 	
 	public int getJob() { return mJob; };
 	public int getSubJob() { return mSubJob; };

@@ -27,6 +27,7 @@ import com.github.kanata3249.ffxi.*;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
 import com.github.kanata3249.ffxieq.Equipment;
+import com.github.kanata3249.ffxieq.JobTrait;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -59,6 +60,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	SkillCapTable mSkillCapTable;
 	EquipmentTable mEquipmentTable;
 	AtmaTable mAtmaTable;
+	JobTraitTable mJobTraitTable;
 
 	// Constructor
 	public FFXIDatabase(Context context) {
@@ -72,7 +74,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mStatusTable = new StatusTable();
 		mEquipmentTable = new EquipmentTable();
 		mAtmaTable = new AtmaTable();
-		
+		mJobTraitTable = new JobTraitTable();
+
 		try {
 			copyDatabaseFromAssets();
 		} catch (IOException e) {
@@ -500,6 +503,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public Atma instanciateAtma(long id) {
 		return mAtmaTable.newInstance(this, getReadableDatabase(), id);
+	}
+	public JobTrait[] getJobTraits(int job, int level) {
+		return mJobTraitTable.getJobTraits(this, getReadableDatabase(), getString(FFXIString.JOB_DB_WAR + job), level);
 	}
 
 

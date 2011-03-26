@@ -20,6 +20,7 @@ import android.database.Cursor;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
 import com.github.kanata3249.ffxieq.Equipment;
+import com.github.kanata3249.ffxieq.JobTrait;
 
 public interface FFXIDAO {
 	// DA methods
@@ -32,6 +33,7 @@ public interface FFXIDAO {
 	
 	public Equipment instanciateEquipment(long id);
 	public Atma instanciateAtma(long id);
+	public JobTrait[] getJobTraits(int job, int level);
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderby);		// TODO android depenent
 	public Cursor getAtmaCursor(String[] columns, String orderby);		// TODO android depenent
 }

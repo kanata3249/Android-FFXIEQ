@@ -34,6 +34,7 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	static final int MND = 7;
 	static final int CHR = 8;
 	
+	JobTraitSet mJobTraits;
 
 	public JobAndRace() {
 		super();
@@ -80,11 +81,19 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 
 	// IStatus
 	public StatusValue getStatus(JobLevelAndRace level, StatusType type) {
+		StatusValue value;
+		if (mJobTraits == null)
+			mJobTraits = new JobTraitSet();
+		mJobTraits.setLevel(level);
+		value = mJobTraits.getStatus(level, type);
+
 		switch (type) {
 		case HP:
-			return calcHP(level);
+			value.add(calcHP(level));
+			return value;
 		case MP:
-			return calcMP(level);
+			value.add(calcMP(level));
+			return value;
 		case STR:
 		case DEX:
 		case VIT:
@@ -92,7 +101,8 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 		case INT:
 		case MND:
 		case CHR:
-			return calcStatus(level, type);
+			value.add(calcStatus(level, type));
+			return value;
 		case SKILL_HANDTOHAND:
 		case SKILL_DAGGER:
 		case SKILL_SWORD:
@@ -125,9 +135,11 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 		case SKILL_NINJUTSU:
 		case SKILL_SUMMONING:
 		case SKILL_BLUE_MAGIC:
-			return calcSkill(level, type);
+			value.add(calcSkill(level, type));
+			return value;
 		default:
-			return super.getStatus(level, type);
+			value.add(super.getStatus(level, type));
+			return value;
 		}
 	}
 
