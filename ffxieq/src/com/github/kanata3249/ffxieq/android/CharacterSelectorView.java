@@ -43,7 +43,7 @@ public class CharacterSelectorView extends Spinner {
 		mDao = dao;
 		mSettings = settings;
 		
-		cursor = settings.getCharactersCursor(columns, null);
+		cursor = settings.getCharactersCursor(columns, FFXIEQSettings.C_Name + " ASC");
 		adapter = new CharacterSelectorAdapter(getContext(), android.R.layout.simple_spinner_item, cursor, columns, views);
 		adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		setAdapter(adapter);
@@ -53,6 +53,9 @@ public class CharacterSelectorView extends Spinner {
 	}
 	
 	private void setSelectionById(long selectionid) {
+		if (getSelectedItemId() == selectionid) {
+			return;
+		}
 		for (int i = 0; i < getCount(); i++) {
 			long id = getItemIdAtPosition(i);
 			if (id == selectionid) {
@@ -75,10 +78,10 @@ public class CharacterSelectorView extends Spinner {
 		Cursor cursor;
 
 		if (getAdapter() != null) {
-			cursor = mSettings.getCharactersCursor(columns, null);
+			cursor = mSettings.getCharactersCursor(columns, FFXIEQSettings.C_Name + " ASC");
 			((CharacterSelectorAdapter)getAdapter()).changeCursor(cursor);
+			setSelectionById(id);
 		}
-		setSelectionById(id);
 	}
 	
 	public String getName() {

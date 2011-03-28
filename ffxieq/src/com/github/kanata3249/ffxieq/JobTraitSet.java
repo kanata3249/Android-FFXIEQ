@@ -64,7 +64,8 @@ public class JobTraitSet extends StatusModifier implements IStatus, Serializable
 		}
 
 		if (subtotal.getValue() > total.getValue()
-			|| subtotal.getAdditional() > total.getAdditional())
+			|| subtotal.getAdditional() > total.getAdditional()
+			|| subtotal.getAdditionalPercent() > total.getAdditionalPercent())
 			return subtotal;
 		return total;
 	}

@@ -148,13 +148,15 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 					String name = tv.getText().toString();
 					CheckBox cb = (CheckBox)(v.getRootView().findViewById(R.id.SaveNew));
 					long newid;
+					String old_name;
 					
 					newid = charid;
 					if (cb.isChecked())
 						newid = -1;
+					old_name = cef.getName();
 					newid = getSettings().saveCharInfo(newid, name, cef.getFFXICharacter());
 					CharacterEditActivity.this.dismissDialog(R.layout.querysavecharacter);
-					if (newid != charid || !name.equals(cef.getName())) {
+					if (newid != charid || !name.equals(old_name)) {
 						cef.loadFFXICharacter(newid);
 					}
 				}

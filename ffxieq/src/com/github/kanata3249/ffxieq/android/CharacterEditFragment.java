@@ -38,6 +38,7 @@ import com.github.kanata3249.ffxieq.R;
 
 public class CharacterEditFragment extends FFXIEQFragment {
 	private View mView;
+	private boolean mUpdating;
     
 	public void loadFFXICharacter(long id) {
 		setCharacterID(id);
@@ -72,7 +73,33 @@ public class CharacterEditFragment extends FFXIEQFragment {
 	    	listener = new AdapterView.OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
-					saveAndUpdateValues();
+					switch (arg0.getId()) {
+					case R.id.Race:
+						if (getFFXICharacter().getRace() != arg2) {
+							saveAndUpdateValues();
+						}
+						break;
+					case R.id.Job:
+						if (getFFXICharacter().getJob() != arg2) {
+							saveAndUpdateValues();
+						}
+						break;
+					case R.id.SubJob:
+						if (getFFXICharacter().getSubJob() != arg2) {
+							saveAndUpdateValues();
+						}
+						break;
+					case R.id.AbyssiteOfFurtherance:
+						if (getFFXICharacter().getAbyssiteOfFurtherance() != arg2) {
+							saveAndUpdateValues();
+						}
+						break;
+					case R.id.AbyssiteOfMerit:
+						if (getFFXICharacter().getAbyssiteOfMerit() != arg2) {
+							saveAndUpdateValues();
+						}
+						break;
+					}
 				}
 				public void onNothingSelected(AdapterView<?> arg0) {
 					saveAndUpdateValues();
@@ -315,6 +342,9 @@ public class CharacterEditFragment extends FFXIEQFragment {
     	Spinner spin;
         FFXICharacter charInfo = getFFXICharacter();
 
+        if (mUpdating)
+        	return;
+        mUpdating = true;
     	spin = (Spinner)mView.findViewById(R.id.Race);
     	if (spin != null) {
     		spin.setSelection(charInfo.getRace());
@@ -375,6 +405,7 @@ public class CharacterEditFragment extends FFXIEQFragment {
     	if (mListener != null) {
     		mListener.notifyDatasetChanged();
     	}
+    	mUpdating = false;
     }
     
     public void setOnDatasetChangedListener(OnDatasetChangedListener listener) {
