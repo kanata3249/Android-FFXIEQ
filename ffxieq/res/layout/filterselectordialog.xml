@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent" android:layout_width="match_parent" android:orientation="vertical">
+    <TableLayout android:id="@+id/tableLayout1" android:layout_height="match_parent" android:stretchColumns="0" android:layout_width="match_parent">
+        <TableRow android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableRow1">
+            <EditText android:id="@+id/Filter" android:text="" android:layout_height="wrap_content" android:layout_width="match_parent" android:inputType="text" android:focusable="true" android:editable="true"></EditText>
+            <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/ApplyFilter" android:text="@string/ApplyFilter"></Button>
+        </TableRow>
+        <ListView android:layout_width="match_parent" android:id="@+id/Filters" android:padding="5dip" android:layout_height="200dip"></ListView>
+    </TableLayout>
+</LinearLayout>
