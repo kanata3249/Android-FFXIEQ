@@ -20,6 +20,9 @@ import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +40,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	int mLevel;
 	int mRace;
 	long mCurrent;
+	long mFilterID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		mLevel = param.getInt("Level");
 		mJob = param.getInt("Job");
 		mCurrent = param.getLong("Current");
+		mFilterID = param.getLong("Filter");
 		
 		setContentView(R.layout.equipmentselector);
 		
@@ -62,6 +67,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		
 		elv = (EquipmentListView)findViewById(R.id.ListView);
 		if (elv != null) {
+			elv.setFilterByID(mFilterID);
 			elv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
 			
 			elv.setOnItemClickListener(new OnItemClickListener() {
@@ -118,6 +124,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		outState.putInt("Job", mJob);
 		outState.putInt("Level", mLevel);
 		outState.putLong("Current", mCurrent);
+		outState.putLong("Filter", mFilterID);
 	}
 
 	static public boolean startActivity(Activity from, int request, FFXICharacter charInfo, int part, long current) {
@@ -128,6 +135,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		intent.putExtra("Job", charInfo.getJob());
 		intent.putExtra("Level", charInfo.getJobLevel());
 		intent.putExtra("Current", current);
+		intent.putExtra("Filter", (long)-1);
 		
 		from.startActivityForResult(intent, request);
 		return true;
@@ -141,6 +149,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		intent.putExtra("Job", charInfo.getJob());
 		intent.putExtra("Level", charInfo.getJobLevel());
 		intent.putExtra("Current", current);
+		intent.putExtra("Filter", (long)-1);
 		
 		from.startActivityForResult(intent, request);
 		return true;
@@ -167,6 +176,8 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		EquipmentListView elv;
+
 		switch (item.getItemId()) {
 		case R.id.Remove:
 			Intent result = new Intent();
@@ -177,8 +188,43 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 			setResult(RESULT_OK, result);
 			finish();
 			return true;
+		case R.id.Filter:
+			showDialog(0);
+			return true;
+		case R.id.ResetFilter:
+			
+			elv = (EquipmentListView)findViewById(R.id.ListView);
+			if (elv != null) {
+				elv.setFilter("");
+			}
+			mFilterID = -1;
+			return true;
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle args) {
+		FilterSelectorDialog dialog = new FilterSelectorDialog(this);
+
+		dialog.setOnDismissListener(new OnDismissListener() {
+			public void onDismiss(DialogInterface dialog) {
+				FilterSelectorDialog fsd = (FilterSelectorDialog)dialog;
+				String filter = fsd.getFilterString();
+				mFilterID = fsd.getFilterID();
+
+				if (filter.length() > 0) {
+					EquipmentListView elv = (EquipmentListView)findViewById(R.id.ListView);
+					if (elv != null) {
+						elv.setFilter(filter);
+					}
+				}
+				
+			}
+			
+		});
+		return dialog;
 	}
 }

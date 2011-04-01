@@ -28,26 +28,60 @@ import android.widget.SimpleCursorAdapter;
 public class EquipmentListView extends ListView {
 	FFXIDAO mDao;
 	String mOrderBy;
+	String mFilter;
+	int mPart;
+	int mRace;
+	int mJob;
+	int mLevel;
+	long mFilterID;
+
+	final String [] columns = { EquipmentTable.C_Id, EquipmentTable.C_Name, EquipmentTable.C_Level, EquipmentTable.C_Description, EquipmentTable.C_Job, EquipmentTable.C_Race };
+	final int []views = { 0, R.id.Name, R.id.Level, R.id.Description, R.id.Job, R.id.Race };
 
 	public EquipmentListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mFilter = "";
+		mFilterID = -1;
 		mOrderBy = EquipmentTable.C_Level + " DESC, " + EquipmentTable.C_Name + " ASC";
 	}
 
 	public boolean setParam(FFXIDAO dao, int part, int race, int job, int level) {
 		EquipmentListViewAdapter adapter;
-		String [] columns = { EquipmentTable.C_Id, EquipmentTable.C_Name, EquipmentTable.C_Level, EquipmentTable.C_Description, EquipmentTable.C_Job, EquipmentTable.C_Race };
-		int []views = { 0, R.id.Name, R.id.Level, R.id.Description, R.id.Job, R.id.Race };
 		Cursor cursor;
 
+		mPart = part;
+		mRace = race;
+		mJob = job;
+		mLevel = level;
 		mDao = dao;
-		cursor = dao.getEquipmentCursor(part, race, job, level, columns, mOrderBy);
+		if (mFilterID != -1) {
+			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
+		}
+		cursor = dao.getEquipmentCursor(part, race, job, level, columns, mOrderBy, mFilter);
 		adapter = new EquipmentListViewAdapter(getContext(), R.layout.equipmentlistview, cursor, columns, views);
 		setAdapter(adapter);
 		
 		return true;
 	}
 	
+	public String getFilter() {
+		return mFilter;
+	}
+
+	public void setFilter(String filter) {
+		EquipmentListViewAdapter adapter;
+
+		mFilter = filter;
+		adapter = (EquipmentListViewAdapter)getAdapter();
+		if (adapter != null) {
+			Cursor cursor = mDao.getEquipmentCursor(mPart, mRace, mJob, mLevel, columns, mOrderBy, mFilter);
+			adapter.changeCursor(cursor);
+		}
+	}
+	public void setFilterByID(long filterid) {
+		mFilterID = filterid;
+	}
+
 	private class EquipmentListViewAdapter extends SimpleCursorAdapter {
 
 		public EquipmentListViewAdapter(Context context,
@@ -55,5 +89,6 @@ public class EquipmentListView extends ListView {
 			super(context, textViewResourceId, c, from, to);
 		}
 	}
+
 
 }

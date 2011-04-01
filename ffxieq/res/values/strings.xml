@@ -91,6 +91,7 @@
     <string name="DeleteOK">Delete</string>
     <string name="Cancel">Cancel</string>
     <string name="QueryDeleteCharacterTitle">Delete Character</string>
+    <string name="EditFilterTitle">Enter filter expression.</string>
     <string-array name="AbyssiteOfFurtheranceEntries">
         <item>0</item>
         <item>1</item>
@@ -182,4 +183,7 @@
 		<string name="InstallDB">Install DB</string>
 		<string name="InstallDBFromSD">Install DB from SD</string>
 		<string name="ExportDBToSD">ExportDB To SD</string>
+		<string name="Filter">Filter...</string>
+		<string name="ResetFilter">Reset Filter</string>
+		<string name="ApplyFilter">Apply</string>
 </resources>

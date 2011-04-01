@@ -71,18 +71,23 @@ public class EquipmentTable {
 		return newInstance;
 	}
 
-	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String[] columns, String orderBy) {
+	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String[] columns, String orderBy, String filter) {
 		Cursor cursor;
 		String partStr, jobStr, alljobStr;
+		String filterexp;
 		
 		partStr = dao.getString(FFXIString.PART_DB_MAIN + part);
 		jobStr = dao.getString(FFXIString.JOB_DB_WAR + job);
 		alljobStr = dao.getString(FFXIString.JOB_DB_ALL);
+		filterexp = "";
+		if (filter.length() > 0) {
+			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
+		}
 		
 		cursor = db.query(TABLE_NAME, columns,
 				C_Part + " LIKE '%" + partStr + "%' AND " +
 				C_Level + " <= '" + level + "' AND " +
-				"(" + C_Job + " LIKE '%" + jobStr + "%' OR " + C_Job + " = '" + alljobStr + "')",
+				"(" + C_Job + " LIKE '%" + jobStr + "%' OR " + C_Job + " = '" + alljobStr + "')" + filterexp,
 				null, null, null, orderBy);
 
 		return cursor;
