@@ -134,6 +134,10 @@ public class FFXIString {
 	public static final int TOKEN_QUAD_ATTACK = 1025;
 	public static final int TOKEN_ENMITY = 1026;
 	
+	public static final int TOKEN_DUALWIELD = 1027;
+	public static final int TOKEN_DUALWIELDUP = 1028;
+	public static final int TOKEN_MARTIALARTS = 1029;
+	
 	public static final int TOKEN_CRITICAL_RATE = 1050;
 	public static final int TOKEN_CRITICAL_DAMAGE = 1051;
 	public static final int TOKEN_ACCURACY_MAGIC = 1052;

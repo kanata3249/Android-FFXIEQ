@@ -101,10 +101,13 @@ public class StatusModifierWithDescription extends StatusModifier {
 	
 	public String canonicalizeDescription(String string) {
 		StringBuilder newString = new StringBuilder();
+		if (string == null) {
+			return "";
+		}
 		String tmpString = new String(string);
 		// TODO Convert SPC to UNDERLINE for some multi-word token.  (for English/German version?)
 		
-		// Canonicalize some error characters in japanese database
+		// Canonicalize some error characters in Japanese database
 		final String SIGN_CHARS = "I”“•ij–{C|D^FGƒ„H—mnOQobp";
 		for (int i =0; i < tmpString.length(); i++) {
 			char ch = tmpString.charAt(i);
@@ -212,6 +215,9 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_DAMAGECUT_PHYSICAL, StatusType.DamageCutPhysical);
 		setupCommonTokenHandler(FFXIString.TOKEN_DAMAGECUT_MAGIC, StatusType.DamageCutMagic);
 		setupCommonTokenHandler(FFXIString.TOKEN_DAMAGECUT_BREATH, StatusType.DamageCutBreath);
+		setupCommonTokenHandler(FFXIString.TOKEN_DUALWIELD, StatusType.DualWield);
+		setupCommonTokenHandler(FFXIString.TOKEN_DUALWIELDUP, StatusType.DualWield);
+		setupCommonTokenHandler(FFXIString.TOKEN_MARTIALARTS, StatusType.MartialArts);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);

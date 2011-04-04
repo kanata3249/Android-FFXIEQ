@@ -204,7 +204,29 @@ public class FFXICharacter implements IStatus, Serializable {
 		return getStatusString(getStatus(mLevel, StatusType.CHR), separate);
 	}
 	public String getD(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.D), separate);
+		StatusType type;
+		Equipment eq;
+
+		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
+		if (eq != null) {
+			type = eq.getWeaponType();
+		} else {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
+		if (type == StatusType.SKILL_HANDTOHAND) {
+			StatusValue value;
+			StatusValue skill;
+			int D;
+			
+			skill = getStatus(mLevel, type);
+			D = (skill.getValue() + skill.getAdditional()) * 11 / 100 + 3;
+			value = new StatusValue(D, 0, 0);
+			
+			value.add(getStatus(mLevel, StatusType.D));
+			return getStatusString(value, separate);
+		} else {
+			return getStatusString(getStatus(mLevel, StatusType.D), separate);
+		}
 	}
 	public String getDSub(int separate) {
 		return getStatusString(getStatus(mLevel, StatusType.DSub), separate);
@@ -213,10 +235,102 @@ public class FFXICharacter implements IStatus, Serializable {
 		return getStatusString(getStatus(mLevel, StatusType.DRange), separate);
 	}
 	public String getDelay(int separate) {
+		StatusType type, subtype;
+		Equipment eq;
+
+		type = subtype = null;
+		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
+		if (eq != null) {
+			type = eq.getWeaponType();
+		}
+		eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
+		if (eq != null) {
+			subtype = eq.getWeaponType();
+		}
+		if (type == null) {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
+		switch (type) {
+		case SKILL_HANDTOHAND:
+			{	// Martial Arts
+				StatusValue base = getStatus(mLevel, StatusType.Delay);
+				StatusValue martialarts = getStatus(mLevel, StatusType.MartialArts);
+				int rank = martialarts.getValue();
+				
+				if (rank > 0) {
+					base.setValue(400 - 20 * (rank - 1));
+				} else {
+					base.setValue(480);
+				}
+				return getStatusString(base, separate);
+			}
+
+		case SKILL_DAGGER:
+		case SKILL_SWORD:
+		case SKILL_AXE:
+		case SKILL_KATANA:
+		case SKILL_CLUB:
+			if (subtype != null) {
+				switch (subtype) {
+				case SKILL_DAGGER:
+				case SKILL_SWORD:
+				case SKILL_AXE:
+				case SKILL_KATANA:
+				case SKILL_CLUB:
+					{
+						// Dual Wield
+						StatusValue base = getStatus(mLevel, StatusType.Delay);
+						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
+						base.setAdditionalPercent(-(dualwield.getAdditional() + dualwield.getAdditionalPercent()));
+						
+						return getStatusString(base, separate);
+					}
+				}
+			}
+		}
 		return getStatusString(getStatus(mLevel, StatusType.Delay), separate);
 	}
 	public String getDelaySub(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DelaySub), separate);
+		StatusType type, subtype;
+		Equipment eq;
+
+		type = subtype = null;
+		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
+		if (eq != null) {
+			type = eq.getWeaponType();
+		}
+		eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
+		if (eq != null) {
+			subtype = eq.getWeaponType();
+		}
+		if (type == null) {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
+		switch (type) {
+		case SKILL_DAGGER:
+		case SKILL_SWORD:
+		case SKILL_AXE:
+		case SKILL_KATANA:
+		case SKILL_CLUB:
+			if (subtype != null) {
+				switch (subtype) {
+				case SKILL_DAGGER:
+				case SKILL_SWORD:
+				case SKILL_AXE:
+				case SKILL_KATANA:
+				case SKILL_CLUB:
+					{
+						// Dual Wield
+						StatusValue base = getStatus(mLevel, StatusType.DelaySub);
+						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
+						base.setAdditionalPercent(-(dualwield.getAdditional() + dualwield.getAdditionalPercent()));
+
+						return getStatusString(base, separate);
+					}
+				}
+			}
+		}
+		return getStatusString(new StatusValue(0, 0, 0), separate);
 	}
 	public String getDelayRange(int separate) {
 		return getStatusString(getStatus(mLevel, StatusType.DelayRange), separate);
@@ -279,9 +393,11 @@ public class FFXICharacter implements IStatus, Serializable {
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
-			if (type != null) {
-				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
-			}
+		} else {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
+		if (type != null) {
+			mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 		}
 		return getStatusString(mod, separate);
 	}
@@ -294,8 +410,10 @@ public class FFXICharacter implements IStatus, Serializable {
 			if (type != null) {
 				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 			}
+			return getStatusString(mod, separate);
+		} else {
+			return getStatusString(new StatusValue(0, 0, 0), separate);
 		}
-		return getStatusString(mod, separate);
 	}
 	int calcAttackByWeaponType(StatusType type) {
 		int value;
@@ -336,9 +454,11 @@ public class FFXICharacter implements IStatus, Serializable {
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
-			if (type != null) {
-				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
-			}
+		} else {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
+		if (type != null) {
+			mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 		}
 		return getStatusString(mod, separate);
 	}
@@ -351,8 +471,10 @@ public class FFXICharacter implements IStatus, Serializable {
 			if (type != null) {
 				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 			}
+			return getStatusString(mod, separate);
+		} else {
+			return getStatusString(new StatusValue(0, 0, 0), separate);
 		}
-		return getStatusString(mod, separate);
 	}
 	public String getAccuracyRange(int separate) {
 		StatusType type;

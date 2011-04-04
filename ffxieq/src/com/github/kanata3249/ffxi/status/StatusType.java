@@ -95,7 +95,8 @@ public enum StatusType {
 	MagicEvasion,			//
 	HealingHP,				//
 	HealingMP,				//
-	DualWeapon,				//
+	DualWield,
+	MartialArts,
 	DoubleAttack,
 	TrippleAttack,
 	QuadAttack,

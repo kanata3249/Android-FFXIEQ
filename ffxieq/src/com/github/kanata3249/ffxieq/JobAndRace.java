@@ -165,10 +165,10 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	
 	private StatusValue calcSkill(JobLevelAndRace level, StatusType type) {
 		int cap;
-		StatusValue v;
+		StatusValue v = new StatusValue(0, 0, 0);
 		
 		cap = Dao.getSkillCap(type, level.getJob(), level.getLevel(), level.getSubJob(), level.getSubLevel());
-		v = super.getStatus(level, type);
+		v.add(super.getStatus(level, type));
 		if (v.getValue() > cap) {
 			v.setValue(cap);
 		}

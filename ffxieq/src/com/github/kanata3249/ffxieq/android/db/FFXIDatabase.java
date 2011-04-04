@@ -265,6 +265,12 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			return "クワッドアタック";
 		case FFXIString.TOKEN_ENMITY:
 			return "敵対心";
+		case FFXIString.TOKEN_DUALWIELD:
+			return "二刀流";
+		case FFXIString.TOKEN_DUALWIELDUP:
+			return "二刀流効果アップ";
+		case FFXIString.TOKEN_MARTIALARTS:
+			return "マーシャルアーツ";
 
 		case FFXIString.TOKEN_CRITICAL_RATE:
 			return "クリティカルヒット";
