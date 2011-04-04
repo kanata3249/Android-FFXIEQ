@@ -9,6 +9,6 @@
 	</RelativeLayout>
 	<com.github.kanata3249.ffxieq.android.AtmaListView
 	  android:layout_width="match_parent"
-	  android:layout_height="match_parent" android:id="@+id/ListView" android:layout_marginTop="10dip">
+	  android:layout_height="match_parent" android:id="@+id/ListView" android:layout_marginTop="10dip" android:fastScrollEnabled="true">
 	</com.github.kanata3249.ffxieq.android.AtmaListView>
 </LinearLayout>
