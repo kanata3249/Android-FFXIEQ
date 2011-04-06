@@ -186,4 +186,6 @@
 		<string name="Filter">Filter...</string>
 		<string name="ResetFilter">Reset Filter</string>
 		<string name="ApplyFilter">Apply</string>
+		<string name="Skill">Skill...</string>
+		<string name="Delete">Delete...</string>
 </resources>

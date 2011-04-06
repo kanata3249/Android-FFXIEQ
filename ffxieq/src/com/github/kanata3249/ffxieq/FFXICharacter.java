@@ -98,6 +98,12 @@ public class FFXICharacter implements IStatus, Serializable {
 	public void setSubJobLevel(int sublevel) {
 		mLevel.setSubLevel(sublevel);
 	}
+	public JobAndRace getJobAndRace() {
+		return mJobAndRace;
+	}
+	public void setJobAndRace(JobAndRace jobandrace) {
+		mJobAndRace = jobandrace;
+	}
 	public Equipment getEquipment(int part) {
 		return mEquipment.getEquipment(part);
 	}

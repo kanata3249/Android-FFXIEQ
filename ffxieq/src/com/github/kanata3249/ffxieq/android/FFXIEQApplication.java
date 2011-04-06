@@ -26,6 +26,7 @@ import android.app.Application;
 public class FFXIEQApplication extends Application {
 	FFXIDatabase mFFXIDatabase;
 	FFXIEQSettings mFFXIEQSettings;
+	ControlBindableValue[] mTemporaryValues;
 	
 	long mCharacterID;
 	FFXICharacter mFFXICharacter;
@@ -76,5 +77,11 @@ public class FFXIEQApplication extends Application {
 	public void setFFXICharacter(FFXICharacter charInfo) {
 		mFFXICharacter = charInfo;
 	}
-	
+
+	public ControlBindableValue[] getTemporaryValues() {
+		return mTemporaryValues;
+	}
+	public void setTemporaryValues(ControlBindableValue []values) {
+		mTemporaryValues = values;
+	}
 }

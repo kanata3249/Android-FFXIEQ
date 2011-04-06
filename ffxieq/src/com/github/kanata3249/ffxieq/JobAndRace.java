@@ -35,6 +35,7 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	static final int CHR = 8;
 	
 	JobTraitSet mJobTraits;
+	int mSkills[];
 
 	public JobAndRace() {
 		super();
@@ -45,38 +46,21 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	@Override
 	protected void loadDefaultValues() {
 		super.loadDefaultValues();
-		// fill all skill value to 999
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_HANDTOHAND);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_DAGGER);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_SWORD);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_GREATSWORD);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_AXE);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_GREATAXE);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_SCYTH);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_POLEARM);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_KATANA);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_GREATKATANA);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_CLUB);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_STAFF);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_ARCHERY);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_MARKSMANSHIP);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_THROWING);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_GUARDING);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_EVASION);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_SHIELD);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_PARRYING);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_DIVINE_MAGIC);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_HEALING_MAGIC);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_ENCHANCING_MAGIC);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_ENFEEBLING_MAGIC);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_ELEMENTAL_MAGIC);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_DARK_MAGIC);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_SINGING);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_STRING_INSTRUMENT);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_WIND_INSTRUMENT);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_NINJUTSU);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_SUMMONING);
-		super.setStatus(new StatusValue(999, 0, 0), StatusType.SKILL_BLUE_MAGIC);
+		if (mSkills == null) {
+			// fill all skill value to 999
+
+			mSkills = new int[StatusType.MODIFIER_NUM.ordinal()];
+			for (int i = 0; i < mSkills.length; i++) {
+				mSkills[i] = 999;
+			}
+		} else if (mSkills.length != StatusType.MODIFIER_NUM.ordinal()) {
+			int skills[] = new int[StatusType.MODIFIER_NUM.ordinal()]; 
+			for (int i = 0; i < Math.min(skills.length, mSkills.length); i++) {
+				skills[i] = mSkills[i];
+			}
+			mSkills = skills;
+		}
+
 	}
 
 	// IStatus
@@ -165,13 +149,20 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	
 	private StatusValue calcSkill(JobLevelAndRace level, StatusType type) {
 		int cap;
-		StatusValue v = new StatusValue(0, 0, 0);
+		StatusValue v = new StatusValue(mSkills[type.ordinal()], 0, 0);
 		
 		cap = Dao.getSkillCap(type, level.getJob(), level.getLevel(), level.getSubJob(), level.getSubLevel());
-		v.add(super.getStatus(level, type));
 		if (v.getValue() > cap) {
 			v.setValue(cap);
 		}
 		return v;
+	}
+	public int getSkill(StatusType type) {
+		loadDefaultValues();  // quick hack for StatusType length change...
+		return mSkills[type.ordinal()];
+	}
+	public void setSkill(StatusType type, int value) {
+		loadDefaultValues();  // quick hack for StatusType length change...
+		mSkills[type.ordinal()] = value;
 	}
 }

@@ -16,31 +16,22 @@
 package com.github.kanata3249.ffxieq.android;
 
 import com.github.kanata3249.ffxi.status.StatusType;
-import com.github.kanata3249.ffxieq.MeritPoint;
+import com.github.kanata3249.ffxieq.JobAndRace;
 import com.github.kanata3249.ffxieq.R;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MeritPointEditActivity extends FFXIEQBaseActivity {
-
+public class SkillEditActivity extends FFXIEQBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.meritpointedit);
-
+		setContentView(R.layout.skilleditor);
+		
 		ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-		bindControlAndValue(R.id.HP, values[StatusType.HP.ordinal()]);
-		bindControlAndValue(R.id.MP, values[StatusType.MP.ordinal()]);
-		bindControlAndValue(R.id.STR, values[StatusType.STR.ordinal()]);
-		bindControlAndValue(R.id.DEX, values[StatusType.DEX.ordinal()]);
-		bindControlAndValue(R.id.VIT, values[StatusType.VIT.ordinal()]);
-		bindControlAndValue(R.id.AGI, values[StatusType.AGI.ordinal()]);
-		bindControlAndValue(R.id.INT, values[StatusType.INT.ordinal()]);
-		bindControlAndValue(R.id.MND, values[StatusType.MND.ordinal()]);
-		bindControlAndValue(R.id.CHR, values[StatusType.CHR.ordinal()]);
+		
 		bindControlAndValue(R.id.HANDTOHAND, values[StatusType.SKILL_HANDTOHAND.ordinal()]);
 		bindControlAndValue(R.id.DAGGER, values[StatusType.SKILL_DAGGER.ordinal()]);
 		bindControlAndValue(R.id.SWORD, values[StatusType.SKILL_SWORD.ordinal()]);
@@ -60,6 +51,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		bindControlAndValue(R.id.EVASION, values[StatusType.SKILL_EVASION.ordinal()]);
 		bindControlAndValue(R.id.SHIELD, values[StatusType.SKILL_SHIELD.ordinal()]);
 		bindControlAndValue(R.id.PARRYING, values[StatusType.SKILL_PARRYING.ordinal()]);
+
 		bindControlAndValue(R.id.DIVINEMAGIC, values[StatusType.SKILL_DIVINE_MAGIC.ordinal()]);
 		bindControlAndValue(R.id.HEALINGMAGIC, values[StatusType.SKILL_HEALING_MAGIC.ordinal()]);
 		bindControlAndValue(R.id.ENCHANCINGMAGIC, values[StatusType.SKILL_ENCHANCING_MAGIC.ordinal()]);
@@ -72,10 +64,6 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		bindControlAndValue(R.id.NINJUTSU, values[StatusType.SKILL_NINJUTSU.ordinal()]);
 		bindControlAndValue(R.id.SUMMONING, values[StatusType.SKILL_SUMMONING.ordinal()]);
 		bindControlAndValue(R.id.BLUEMAGIC, values[StatusType.SKILL_BLUE_MAGIC.ordinal()]);
-		bindControlAndValue(R.id.ENMITY, values[StatusType.Enmity.ordinal()]);
-		bindControlAndValue(R.id.CRITICAL, values[StatusType.CriticalRate.ordinal()]);
-		bindControlAndValue(R.id.CRITICALDEFENCE, values[StatusType.CriticalRateDefence.ordinal()]);
-		bindControlAndValue(R.id.SPELLINTERRUPTION, values[StatusType.SpellInterruptionRate.ordinal()]);
 
 		updateValues();
 	}
@@ -85,49 +73,46 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		super.onPause();
 		saveValues();
 	}
-	
+
 	public void onSave(View view) {
 		saveValues();
 		
 		{
-			MeritPoint merits = new MeritPoint();
+			JobAndRace jobandrace = new JobAndRace();
 			StatusType[] types = StatusType.values();
 			ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
 
-			for (int i = 0; i < values.length; i++) {
-				merits.setMeritPoint(types[i], values[i].getIntValue());
+			for (int i = 0; i < values.length - 1; i++) {
+				jobandrace.setSkill(types[i], values[i].getIntValue());
 			}
-			merits.setMeritPoint(StatusType.Enmity, values[StatusType.Enmity.ordinal()].getIntValue() - 4);
 			
-			getFFXICharacter().setMeritPoint(merits);
+			getFFXICharacter().setJobAndRace(jobandrace);
 		}
 		
 		Intent result = new Intent();
 		
-		result.putExtra("From", "MeritPointEdit");
+		result.putExtra("From", "SkillEdit");
 		setResult(RESULT_OK, result);
 		
 		finish();
 	}
 	
 	static public boolean startActivity(FFXIEQBaseActivity from, int request) {
-		{  // Create temporary copy of merit point values
+		{ // Create temporary copy of skill values
 			ControlBindableInteger values[];
-			MeritPoint merits;
 	
-			merits = from.getFFXICharacter().getMeritPoint();
+			JobAndRace jobandrace = from.getFFXICharacter().getJobAndRace();
 			values = new ControlBindableInteger[StatusType.MODIFIER_NUM.ordinal()];
 			StatusType[] types = StatusType.values();
 			for (int i = 0; i < values.length; i++) {
-				values[i] = new ControlBindableInteger(merits.getMeritPoint(types[i]));
+				values[i] = new ControlBindableInteger(jobandrace.getSkill(types[i]));
 			}
-			values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + 4);
 			from.setTemporaryValues(values);
 		}
 
 		{
-			Intent intent = new Intent(from, MeritPointEditActivity.class);
-		
+			Intent intent = new Intent(from, SkillEditActivity.class);
+			
 			from.startActivityForResult(intent, request);
 		}
 		return true;

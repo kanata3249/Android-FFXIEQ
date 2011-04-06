@@ -77,6 +77,13 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.EditMerits:
+			MeritPointEditActivity.startActivity(this, 0);
+			return true;
+		case R.id.EditSkill:
+			SkillEditActivity.startActivity(this, 0);
+			return true;
+
 		case R.id.Delete:
 			showDialog(R.layout.querydeletecharacter);
 			return true;

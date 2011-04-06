@@ -17,7 +17,6 @@
             <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
                 <Spinner android:entries="@array/JobEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/SubJob"></Spinner>
                 <EditText android:layout_height="wrap_content" android:text="EditText" android:id="@+id/SubJobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
-                <Button android:layout_height="wrap_content" android:id="@+id/Merits" android:layout_width="wrap_content" android:text="@string/Merits"></Button>
             </TableRow>
             <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
             </TableRow>

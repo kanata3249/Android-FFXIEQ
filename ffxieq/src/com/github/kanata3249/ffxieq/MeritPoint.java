@@ -28,13 +28,22 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 	public MeritPoint() {
 		super();
 		
-		mMerits = new int[StatusType.MODIFIER_NUM.ordinal()];
+		loadDefaultValues();
 	}
 
 
 	@Override
 	protected void loadDefaultValues() {
 		super.loadDefaultValues();
+		if (mMerits == null) {
+			mMerits = new int[StatusType.MODIFIER_NUM.ordinal()];
+		} else if (mMerits.length != StatusType.MODIFIER_NUM.ordinal()) {
+			int merits[] = new int[StatusType.MODIFIER_NUM.ordinal()]; 
+			for (int i = 0; i < Math.min(merits.length, mMerits.length); i++) {
+				merits[i] = mMerits[i];
+			}
+			mMerits = merits;
+		}
 	}
 
 
@@ -128,13 +137,11 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 	}
 	
 	public int getMeritPoint(StatusType type) {
-		if (mMerits == null) // quick hack
-			mMerits = new int[StatusType.MODIFIER_NUM.ordinal()];
+		loadDefaultValues();  // quick hack for StatusType length change...
 		return mMerits[type.ordinal()];
 	}
 	public void setMeritPoint(StatusType type, int value) {
-		if (mMerits == null) // quick hack
-			mMerits = new int[StatusType.MODIFIER_NUM.ordinal()];
+		loadDefaultValues();  // quick hack for StatusType length change...
 		mMerits[type.ordinal()] = value;
 	}
 }

@@ -190,15 +190,6 @@ public class CharacterEditFragment extends FFXIEQFragment {
 					}
         		});
         	}
-
-        	btn = (Button)v.findViewById(R.id.Merits);
-        	if (btn != null) {
-        		btn.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View arg0) {
-						MeritPointEditActivity.startActivity(CharacterEditFragment.this, 0);
-					}
-        		});
-        	}
         }
         
         {

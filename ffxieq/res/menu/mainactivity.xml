@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Delete..." android:id="@+id/Delete" android:icon="@android:drawable/ic_menu_delete"></item>
+    <item android:title="@string/Skill" android:id="@+id/EditSkill" android:icon="@android:drawable/ic_menu_edit"></item>
+    <item android:id="@+id/EditMerits" android:title="@string/Merits" android:icon="@android:drawable/ic_menu_edit"></item>
+    <item android:id="@+id/Delete" android:icon="@android:drawable/ic_menu_delete" android:title="@string/Delete"></item>
     <item android:title="@string/InstallDB" android:id="@+id/InstallDB"  android:icon="@android:drawable/ic_menu_manage"></item>
     <item android:title="@string/InstallDBFromSD" android:id="@+id/InstallDBFromSD" android:icon="@android:drawable/ic_menu_save"></item>
     <item android:title="@string/ExportDBToSD" android:id="@+id/ExportDBToSD" android:icon="@android:drawable/ic_menu_save"></item>

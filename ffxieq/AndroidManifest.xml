@@ -16,6 +16,7 @@
         <activity android:name=".android.CharacterEditActivity"></activity>
         <activity android:name=".android.CharacterStatusActivity"></activity>
         <activity android:name=".android.MeritPointEditActivity"></activity>
+        <activity android:name=".android.SkillEditActivity"></activity>
         
         
 
