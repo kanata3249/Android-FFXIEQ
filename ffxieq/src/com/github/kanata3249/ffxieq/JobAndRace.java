@@ -34,7 +34,7 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	static final int MND = 7;
 	static final int CHR = 8;
 	
-	JobTraitSet mJobTraits;
+	transient JobTraitSet mJobTraits;
 	int mSkills[];
 
 	public JobAndRace() {
