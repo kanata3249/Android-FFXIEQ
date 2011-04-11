@@ -18,6 +18,8 @@ package com.github.kanata3249.ffxieq.android;
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.R;
 import com.github.kanata3249.ffxieq.android.db.AtmaTable;
+import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.util.AttributeSet;
@@ -25,7 +27,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class AtmaListView extends ListView {
-	FFXIDAO mDao;
+	FFXIDatabase mDao;
 	String mOrderBy;
 	String mFilter;
 	long mFilterID;
@@ -44,11 +46,11 @@ public class AtmaListView extends ListView {
 		AtmaListViewAdapter adapter;
 		Cursor cursor;
 
-		mDao = dao;
+		mDao = (FFXIDatabase)dao;
 		if (mFilterID != -1) {
 			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
 		}
-		cursor = dao.getAtmaCursor(columns, mOrderBy, mFilter);
+		cursor = mDao.getAtmaCursor(columns, mOrderBy, mFilter);
 		adapter = new AtmaListViewAdapter(getContext(), R.layout.atmalistview, cursor, columns, views);
 		setAdapter(adapter);
 		

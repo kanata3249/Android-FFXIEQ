@@ -18,6 +18,7 @@ package com.github.kanata3249.ffxieq.android;
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.R;
 import com.github.kanata3249.ffxieq.android.db.EquipmentTable;
+import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -26,7 +27,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class EquipmentListView extends ListView {
-	FFXIDAO mDao;
+	FFXIDatabase mDao;
 	String mOrderBy;
 	String mFilter;
 	int mPart;
@@ -53,11 +54,11 @@ public class EquipmentListView extends ListView {
 		mRace = race;
 		mJob = job;
 		mLevel = level;
-		mDao = dao;
+		mDao = (FFXIDatabase)dao;
 		if (mFilterID != -1) {
 			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
 		}
-		cursor = dao.getEquipmentCursor(part, race, job, level, columns, mOrderBy, mFilter);
+		cursor = mDao.getEquipmentCursor(part, race, job, level, columns, mOrderBy, mFilter);
 		adapter = new EquipmentListViewAdapter(getContext(), R.layout.equipmentlistview, cursor, columns, views);
 		setAdapter(adapter);
 		
