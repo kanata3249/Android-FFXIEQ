@@ -449,7 +449,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		case SKILL_POLEARM:
 		case SKILL_GREATKATANA:
 		case SKILL_STAFF:
-			value = strvalue * 75 / 100 + skillvalue;
+			value = strvalue * 75 / 100 + skillvalue + 8;
 			break;
 		}
 		return value;
@@ -567,13 +567,21 @@ public class FFXICharacter implements IStatus, Serializable {
 		return getStatusString(getStatus(mLevel, StatusType.AccuracyMagic), separate);
 	}
 	public String getDefence(int separate) {
-		int stsvalue;
+		int stsvalue, lvlvalue;
 		StatusValue mod;
 		StatusValue sts = getStatus(mLevel, StatusType.VIT);
 
 		stsvalue = sts.getValue() + sts.getAdditional();
+		lvlvalue = mLevel.getLevel();
+		if (lvlvalue > 50) {
+			if (lvlvalue > 60) {
+				lvlvalue += 10;
+			} else {
+				lvlvalue += lvlvalue - 50;
+			}
+		}
 		mod = getStatus(mLevel, StatusType.Defence);
-		mod.setValue(mLevel.getLevel() + stsvalue * 50 / 100 + mod.getValue());
+		mod.setValue(lvlvalue + 8 + stsvalue * 50 / 100 + mod.getValue());
 		return getStatusString(mod, separate);
 	}
 	public String getDefenceMagic(int separate) {
