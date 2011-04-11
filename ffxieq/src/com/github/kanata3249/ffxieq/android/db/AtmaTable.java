@@ -49,11 +49,17 @@ public class AtmaTable {
 		return newInstance;
 	}
 
-	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, String[] columns, String orderBy) {
+	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, String[] columns, String orderBy, String filter) {
 		Cursor cursor;
-		
+		String filterexp;
+
+		filterexp = "";
+		if (filter.length() > 0) {
+			filterexp = "(" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
+		}
+
 		cursor = db.query(TABLE_NAME, columns,
-				null,
+				filterexp,
 				null, null, null, orderBy);
 
 		return cursor;

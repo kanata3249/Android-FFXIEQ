@@ -20,7 +20,10 @@ import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
@@ -34,6 +37,7 @@ import android.widget.TextView;
 public class AtmaSelector extends FFXIEQBaseActivity {
 	long mCurrent;
 	int mIndex;
+	long mFilterID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +53,15 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		
 		mCurrent = param.getLong("Current");
 		mIndex = param.getInt("Index");
-		
+		mFilterID = param.getLong("Filter");
+
 		setContentView(R.layout.atmaselector);
 		
 		AtmaListView alv;
 		
 		alv = (AtmaListView)findViewById(R.id.ListView);
 		if (alv != null) {
+			alv.setFilterByID(mFilterID);
 			alv.setParam(getDAO());
 			
 			alv.setOnItemClickListener(new OnItemClickListener() {
@@ -97,6 +103,7 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		
 		outState.putLong("Current", mCurrent);
 		outState.putInt("Index", mIndex);
+		outState.putLong("Filter", mFilterID);
 	}
 
 	static public boolean startActivity(Activity from, int request, FFXICharacter charInfo, int index, long current) {
@@ -104,7 +111,8 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		
 		intent.putExtra("Current", current);
 		intent.putExtra("Index", index);
-		
+		intent.putExtra("Filter", (long)-1);
+
 		from.startActivityForResult(intent, request);
 		return true;
 	}
@@ -114,7 +122,8 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		
 		intent.putExtra("Current", current);
 		intent.putExtra("Index", index);
-		
+		intent.putExtra("Filter", (long)-1);
+
 		from.startActivityForResult(intent, request);
 		return true;
 	}
@@ -150,8 +159,42 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 			setResult(RESULT_OK, result);
 			finish();
 			return true;
+		case R.id.Filter:
+			showDialog(0);
+			return true;
+		case R.id.ResetFilter:
+			
+			AtmaListView alv = (AtmaListView)findViewById(R.id.ListView);
+			if (alv != null) {
+				alv.setFilter("");
+			}
+			mFilterID = -1;
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle args) {
+		FilterSelectorDialog dialog = new FilterSelectorDialog(this);
+
+		dialog.setOnDismissListener(new OnDismissListener() {
+			public void onDismiss(DialogInterface dialog) {
+				FilterSelectorDialog fsd = (FilterSelectorDialog)dialog;
+				String filter = fsd.getFilterString();
+				mFilterID = fsd.getFilterID();
+
+				if (filter.length() > 0) {
+					AtmaListView alv = (AtmaListView)findViewById(R.id.ListView);
+					if (alv != null) {
+						alv.setFilter(filter);
+					}
+				}
+				
+			}
+			
+		});
+		return dialog;
 	}
 }

@@ -27,20 +27,28 @@ import android.widget.SimpleCursorAdapter;
 public class AtmaListView extends ListView {
 	FFXIDAO mDao;
 	String mOrderBy;
+	String mFilter;
+	long mFilterID;
+
+	final String [] columns = { AtmaTable.C_Id, AtmaTable.C_Name, AtmaTable.C_Description };
+	final int []views = { 0, R.id.Name, R.id.Description };
 
 	public AtmaListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mOrderBy = null;
+		mFilter = "";
+		mFilterID = -1;
 	}
 
 	public boolean setParam(FFXIDAO dao) {
 		AtmaListViewAdapter adapter;
-		String [] columns = { AtmaTable.C_Id, AtmaTable.C_Name, AtmaTable.C_Description };
-		int []views = { 0, R.id.Name, R.id.Description };
 		Cursor cursor;
 
 		mDao = dao;
-		cursor = dao.getAtmaCursor(columns, mOrderBy);
+		if (mFilterID != -1) {
+			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
+		}
+		cursor = dao.getAtmaCursor(columns, mOrderBy, mFilter);
 		adapter = new AtmaListViewAdapter(getContext(), R.layout.atmalistview, cursor, columns, views);
 		setAdapter(adapter);
 		
@@ -55,4 +63,21 @@ public class AtmaListView extends ListView {
 		}
 	}
 
+	public String getFilter() {
+		return mFilter;
+	}
+
+	public void setFilter(String filter) {
+		AtmaListViewAdapter adapter;
+
+		mFilter = filter;
+		adapter = (AtmaListViewAdapter)getAdapter();
+		if (adapter != null) {
+			Cursor cursor = mDao.getAtmaCursor(columns, mOrderBy, mFilter);
+			adapter.changeCursor(cursor);
+		}
+	}
+	public void setFilterByID(long filterid) {
+		mFilterID = filterid;
+	}
 }

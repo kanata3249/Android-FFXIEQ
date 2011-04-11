@@ -23,20 +23,24 @@ public class StatusValue implements Serializable {
 	private int value;
 	private int additional;
 	private int additionalPercent;
+	private int cap;
 
 	public StatusValue() { this(0, 0, 0); };
 	public StatusValue(int value, int additional) { this(value, additional, 0); };
 	public StatusValue(StatusValue from) { this(from.value, from.additional, from.additionalPercent); };
-	public StatusValue(int value, int additional, int percent) { this.value = value; this.additional = additional; this.additionalPercent = percent; };
+	public StatusValue(int value, int additional, int percent) { this(value, additional, percent, 0); };
+	public StatusValue(int value, int additional, int percent, int cap) { this.value = value; this.additional = additional; this.additionalPercent = percent; this.cap = cap; };
 
 	// Accessor
 	public void setValue(int value) { this.value = value; };
 	public void setAdditional(int additional) { this.additional = additional; };
 	public void setAdditionalPercent(int additionalPercent) { this.additionalPercent = additionalPercent; };
+	public void setCap(int cap) { this.cap = cap; };
 
 	public int getValue() { return value; };
 	public int getAdditional() { return additional; };
 	public int getAdditionalPercent() { return additionalPercent; };
+	public int getCap() { return cap; };
 	
-	public void add(StatusValue value) { this.value += value.value; this.additional += value.additional; this.additionalPercent += value.additionalPercent; };
+	public void add(StatusValue value) { this.value += value.value; this.additional += value.additional; this.additionalPercent += value.additionalPercent; if (this.cap == 0) this.cap = value.cap; };
 }

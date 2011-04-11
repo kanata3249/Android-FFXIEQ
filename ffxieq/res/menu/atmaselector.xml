@@ -2,4 +2,6 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/Remove" android:title="@string/Remove"></item>
+    <item android:id="@+id/Filter" android:title="@string/Filter"></item>
+    <item android:id="@+id/ResetFilter" android:title="@string/ResetFilter"></item>
 </menu>

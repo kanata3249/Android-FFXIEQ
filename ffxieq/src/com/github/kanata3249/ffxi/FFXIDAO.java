@@ -35,5 +35,5 @@ public interface FFXIDAO {
 	public Atma instanciateAtma(long id);
 	public JobTrait[] getJobTraits(int job, int level);
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderby, String filter);		// TODO android depenent
-	public Cursor getAtmaCursor(String[] columns, String orderby);		// TODO android depenent
+	public Cursor getAtmaCursor(String[] columns, String orderby, String filter);		// TODO android depenent
 }
