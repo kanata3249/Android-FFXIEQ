@@ -91,6 +91,13 @@
     <string name="DeleteOK">Delete</string>
     <string name="Cancel">Cancel</string>
     <string name="QueryDeleteCharacterTitle">Delete Character</string>
+    <string name="InstallDBSucceeded">Import DB Succeeded.</string>
+    <string name="InstallDBFailed">Import DB Failed.</string>
+    <string name="InstallDBFromSDSucceeded">Import DB from SD Succeeded.</string>
+    <string name="InstallDBFromSDFailed">Import DB from SD Failed.</string>
+    <string name="ExportDBSucceeded">Export DB Succeeded.</string>
+    <string name="ExportDBFailed">Export DB Failed.</string>
+    <string name="OK">OK</string>
     <string name="EditFilterTitle">Enter filter expression.</string>
     <string-array name="AbyssiteOfFurtheranceEntries">
         <item>0</item>

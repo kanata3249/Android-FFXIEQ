@@ -17,6 +17,7 @@ package com.github.kanata3249.ffxieq.android;
 
 import java.io.IOException;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -91,21 +92,27 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 		case R.id.InstallDB:
 			try {
 				((FFXIDatabase)getDAO()).copyDatabaseFromAssets();
+				showDialog(R.string.InstallDBSucceeded);
 			} catch (IOException e) {
+				showDialog(R.string.InstallDBFailed);
 			}
 			return true;
 
 		case R.id.InstallDBFromSD:
 			try {
 				((FFXIDatabase)getDAO()).copyDatabaseFromSD();
+				showDialog(R.string.InstallDBFromSDSucceeded);
 			} catch (IOException e) {
+				showDialog(R.string.InstallDBFromSDFailed);
 			}
 			return true;
 
 		case R.id.ExportDBToSD:
 			try {
 				((FFXIDatabase)getDAO()).copyDatabaseToSD();
+				showDialog(R.string.ExportDBSucceeded);
 			} catch (IOException e) {
+				showDialog(R.string.ExportDBFailed);
 			}
 			return true;
 
@@ -117,6 +124,7 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 	@Override
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		Dialog dialog;
+		AlertDialog.Builder builder;
 
 		switch (id) {
 		case R.layout.querysavecharacter:
@@ -129,6 +137,54 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 	    	dialog = new Dialog(this);
 			dialog.setContentView(R.layout.querydeletecharacter);
 			dialog.setTitle(getString(R.string.QueryDeleteCharacterTitle));
+			return dialog;
+		case R.string.InstallDBSucceeded:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.InstallDBSucceeded));
+	    	builder.setTitle(getString(R.string.InstallDB));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
+			return dialog;
+		case R.string.InstallDBFailed:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.InstallDBSucceeded));
+	    	builder.setTitle(getString(R.string.InstallDB));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
+			return dialog;
+		case R.string.InstallDBFromSDSucceeded:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.InstallDBFromSDSucceeded));
+	    	builder.setTitle(getString(R.string.InstallDB));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
+			return dialog;
+		case R.string.InstallDBFromSDFailed:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.InstallDBFromSDSucceeded));
+	    	builder.setTitle(getString(R.string.InstallDBFromSD));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
+			return dialog;
+		case R.string.ExportDBSucceeded:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.ExportDBSucceeded));
+	    	builder.setTitle(getString(R.string.ExportDBToSD));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
+			return dialog;
+		case R.string.ExportDBFailed:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.ExportDBFailed));
+	    	builder.setTitle(getString(R.string.ExportDBToSD));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
 			return dialog;
 		}
 		return super.onCreateDialog(id, args);
