@@ -29,7 +29,7 @@ public interface FFXIDAO {
 
 	public String getString(int id);		// ids are defined in FFXIString class
 	
-	public Equipment instanciateEquipment(long id);
-	public Atma instanciateAtma(long id);
+	public Equipment instantiateEquipment(long id);
+	public Atma instantiateAtma(long id);
 	public JobTrait[] getJobTraits(int job, int level);
 }

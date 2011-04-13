@@ -103,7 +103,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		}
 		
 		{
-			Equipment cur = getDAO().instanciateEquipment(mCurrent);
+			Equipment cur = getDAO().instantiateEquipment(mCurrent);
 			if (cur != null) {
 				TextView tv;
 				View.OnLongClickListener listener = new View.OnLongClickListener() {
@@ -240,7 +240,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		Equipment eq = getDAO().instanciateEquipment(mLongClickingItemId);
+		Equipment eq = getDAO().instantiateEquipment(mLongClickingItemId);
 		String name = eq.getName();
 		Intent intent;
 		if (eq != null) {

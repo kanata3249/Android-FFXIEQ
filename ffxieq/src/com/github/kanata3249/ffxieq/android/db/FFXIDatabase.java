@@ -556,10 +556,10 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		}
 	}
 	
-	public Equipment instanciateEquipment(long id) {
+	public Equipment instantiateEquipment(long id) {
 		return mEquipmentTable.newInstance(this, getReadableDatabase(), id, -1);
 	}
-	public Atma instanciateAtma(long id) {
+	public Atma instantiateAtma(long id) {
 		return mAtmaTable.newInstance(this, getReadableDatabase(), id);
 	}
 	public JobTrait[] getJobTraits(int job, int level) {

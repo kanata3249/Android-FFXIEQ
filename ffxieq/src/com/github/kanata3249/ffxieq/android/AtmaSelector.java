@@ -81,7 +81,7 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		}
 		
 		{
-			Atma cur = getDAO().instanciateAtma(mCurrent);
+			Atma cur = getDAO().instantiateAtma(mCurrent);
 			if (cur != null) {
 				TextView tv;
 				

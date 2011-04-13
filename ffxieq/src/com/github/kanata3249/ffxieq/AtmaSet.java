@@ -85,7 +85,7 @@ public class AtmaSet extends StatusModifier implements IStatus, Serializable {
 	}
 
 	public void setAtma(int index, long id) {
-		mAtma[index] = Dao.instanciateAtma(id);
+		mAtma[index] = Dao.instantiateAtma(id);
 	}
 	public String getUnknownTokens() {
 		StringBuilder sb = new StringBuilder();

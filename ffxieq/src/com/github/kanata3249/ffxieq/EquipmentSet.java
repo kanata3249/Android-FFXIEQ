@@ -138,7 +138,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	}
 	
 	public void setEquipment(int part, long id) {
-		mEquipments[part] = Dao.instanciateEquipment(id);
+		mEquipments[part] = Dao.instantiateEquipment(id);
 	}
 	
 	public String getUnknownTokens() {
