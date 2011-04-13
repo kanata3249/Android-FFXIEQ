@@ -195,4 +195,10 @@
 		<string name="ApplyFilter">Apply</string>
 		<string name="Skill">Skill...</string>
 		<string name="Delete">Delete...</string>
+   		<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
+		<string name="GoogleSearch">Googleで検索</string>
+    	<string-array name="SearchURIs">
+			<item>http://wiki.ffo.jp/search.cgi?CCC=愛&amp;Command=Search&amp;order=match&amp;ffotype=title&amp;type=title&amp;qf=</item>
+			<item>http://www.google.com/search?ie=utf-8&amp;q=</item>
+    	</string-array>
 </resources>

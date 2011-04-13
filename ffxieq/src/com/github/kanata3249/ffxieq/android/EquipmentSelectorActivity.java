@@ -24,14 +24,18 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
 public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
@@ -41,6 +45,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	int mRace;
 	long mCurrent;
 	long mFilterID;
+	long mLongClickingItemId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,32 +89,60 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 				}
 				
 			});
+			
+			elv.setOnItemLongClickListener(new OnItemLongClickListener() {
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					mLongClickingItemId = arg3;
+					EquipmentSelectorActivity.this.openContextMenu(arg0);
+					return true;
+				}
+			});
+			
+			registerForContextMenu(elv);
 		}
 		
 		{
 			Equipment cur = getDAO().instanciateEquipment(mCurrent);
 			if (cur != null) {
 				TextView tv;
+				View.OnLongClickListener listener = new View.OnLongClickListener() {
+					public boolean onLongClick(View v) {
+						mLongClickingItemId = mCurrent;
+						EquipmentSelectorActivity.this.openContextMenu(v);
+						return true;
+					}
+				};
 				
 				tv = (TextView)findViewById(R.id.Name);
 				if (tv != null) {
 					tv.setText(cur.getName());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 				tv = (TextView)findViewById(R.id.Job);
 				if (tv != null) {
 					tv.setText(cur.getJob());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 				tv = (TextView)findViewById(R.id.Description);
 				if (tv != null) {
 					tv.setText(cur.getDescription());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 				tv = (TextView)findViewById(R.id.Level);
 				if (tv != null) {
 					tv.setText(((Integer)cur.getLevel()).toString());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 				tv = (TextView)findViewById(R.id.Race);
 				if (tv != null) {
 					tv.setText(cur.getRace());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 			}
 		}
@@ -203,6 +236,63 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		Equipment eq = getDAO().instanciateEquipment(mLongClickingItemId);
+		String name = eq.getName();
+		Intent intent;
+		if (eq != null) {
+			String[] urls = getResources().getStringArray(R.array.SearchURIs);
+			String url;
+
+			url = null;
+			switch (item.getItemId()) {
+			case R.id.WebSearch0:
+				url = urls[0];
+				break;
+			case R.id.WebSearch1:
+				url = urls[1];
+				break;
+			case R.id.WebSearch2:
+				url = urls[2];
+				break;
+			case R.id.WebSearch3:
+				url = urls[3];
+				break;
+			case R.id.WebSearch4:
+				url = urls[4];
+				break;
+			case R.id.WebSearch5:
+				url = urls[5];
+				break;
+			case R.id.WebSearch6:
+				url = urls[6];
+				break;
+			case R.id.WebSearch7:
+				url = urls[7];
+				break;
+			default:
+				url = null;
+				break;
+			}
+			if (url != null) {
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("\\+")[0])));
+				startActivity(intent);
+				return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.equipmentselector_context, menu);
 	}
 
 	@Override
