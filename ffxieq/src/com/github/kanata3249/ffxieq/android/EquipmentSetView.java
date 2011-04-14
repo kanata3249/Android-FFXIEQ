@@ -16,7 +16,6 @@
 package com.github.kanata3249.ffxieq.android;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
-import com.github.kanata3249.ffxi.FFXIString;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.EquipmentSet;
 import com.github.kanata3249.ffxieq.FFXICharacter;
@@ -65,8 +64,9 @@ public class EquipmentSetView extends ListView {
 
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
+			String [] parts = getContext().getResources().getStringArray(R.array.Parts);
 			
-			sb.append(mDao.getString(FFXIString.PART_MAIN + mPart));
+			sb.append(parts[mPart]);
 			sb.append(": ");
 			if (mEquipmentID > 0) {
 				sb.append(mName);

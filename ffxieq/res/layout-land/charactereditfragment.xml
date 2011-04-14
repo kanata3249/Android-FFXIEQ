@@ -11,12 +11,12 @@
     <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow2" android:layout_width="wrap_content">
         <TableLayout android:layout_height="wrap_content" android:id="@+id/tableLayout2" android:layout_width="wrap_content">
             <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
-                <Spinner android:entries="@array/JobEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Job"></Spinner>
+                <Spinner android:entries="@array/Jobs" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Job"></Spinner>
                 <EditText android:layout_height="wrap_content" android:text="EditText" android:id="@+id/JobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
-                <Spinner android:entries="@array/RaceEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Race"></Spinner>
+                <Spinner android:entries="@array/Races" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Race"></Spinner>
             </TableRow>
             <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
-                <Spinner android:entries="@array/JobEntries" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/SubJob"></Spinner>
+                <Spinner android:entries="@array/Jobs" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/SubJob"></Spinner>
                 <EditText android:layout_height="wrap_content" android:text="EditText" android:id="@+id/SubJobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
             </TableRow>
         </TableLayout>

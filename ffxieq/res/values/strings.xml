@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ffxieq</string>
-    <string-array name="RaceEntries">
+    <string-array name="Races">
         <item>Hum</item>
         <item>Elv</item>
         <item>Tar</item>
         <item>Mit</item>
         <item>Gal</item>
     </string-array>
-    <string-array name="JobEntries">
+    <string-array name="Jobs">
         <item>WAR</item>
         <item>MNK</item>
         <item>WHM</item>
@@ -29,6 +29,24 @@
         <item>PUP</item>
         <item>DNC</item>
         <item>SCH</item>
+    </string-array>
+    <string-array name="Parts">
+		<item>Main</item>
+		<item>Sub</item>
+		<item>Head</item>
+		<item>Body</item>
+		<item>Hands</item>
+		<item>Feet</item>
+		<item>Legs</item>
+		<item>Back</item>
+		<item>Neck</item>
+		<item>Waist</item>
+		<item>Ring1</item>
+		<item>Ring2</item>
+		<item>Ear1</item>
+		<item>Ear2</item>
+		<item>Range</item>
+		<item>Anmo</item>
     </string-array>
     <string-array name="Merits_0_8_Entries">
         <item>0</item>
@@ -114,91 +132,91 @@
         <item>5</item>
         <item>6</item>
     </string-array>
-        <string name="AbyssiteOfFurtherancePrompt">遊軍</string>
-        <string name="AbyssiteOfMeritPrompt">真価</string>
-        <string name="CriticalRate">クリティカル</string>
-        <string name="CriticalDamage">クリダメージ</string>
-        <string name="Remove">Remove</string>
-        <string name="AccuracySub">サブ命中</string>
-        <string name="AttackSub">サブ攻撃力</string>
-        <string name="Enmity">敵対心</string>
-        <string name="AccuracyMagic">魔命</string>
-        <string name="AttackMagic">魔攻</string>
-        <string name="D">D値</string>
-        <string name="DSub">サブD値</string>
-        <string name="DRange">遠隔D値</string>
-        <string name="Delay">間隔</string>
-        <string name="DelaySub">サブ間隔</string>
-        <string name="DelayRange">遠隔間隔</string>
-        <string name="RegistFire">耐火</string>
-        <string name="RegistIce">耐氷</string>
-        <string name="RegistWind">耐風</string>
-        <string name="RegistEarth">耐土</string>
-        <string name="RegistLightning">耐雷</string>
-        <string name="RegistWater">耐水</string>
-        <string name="RegistLight">耐光</string>
-        <string name="RegistDark">耐闇</string>
-        <string name="Defence">防</string>
-        <string name="DefenceMagic">魔法防御</string>
-        <string name="DamageCutPhysical">物理カット</string>
-        <string name="DamageCutMagic">魔法カット</string>
-        <string name="DamageCutBreath">ブレスカット</string>
-        <string name="HP">HP</string>
-        <string name="MP">MP</string>
-        <string name="STR">STR</string>
-        <string name="DEX">DEX</string>
-        <string name="VIT">VIT</string>
-        <string name="AGI">AGI</string>
-        <string name="INT">INT</string>
-        <string name="MND">MND</string>
-        <string name="CHR">CHR</string>
-		<string name="HANDTOHAND">格闘</string>
-		<string name="DAGGER">短剣</string>
-		<string name="SWORD">片手剣</string>
-		<string name="GREATSWORD">両手剣</string>
-		<string name="AXE">片手斧</string>
-		<string name="GREATAXE">両手斧</string>
-		<string name="SCYTH">両手鎌</string>
-		<string name="POLEARM">槍</string>
-		<string name="KATANA">片手刀</string>
-		<string name="GREATKATANA">両手刀</string>
-		<string name="CLUB">片手棍</string>
-		<string name="STAFF">両手棍</string>
-		<string name="ARCHERY">弓術</string>
-		<string name="MARKSMANSHIP">射撃</string>
-		<string name="THROWING">投擲</string>
-		<string name="DIVINEMAGIC">神聖</string>
-		<string name="HEALINGMAGIC">回復</string>
-		<string name="ENCHANCINGMAGIC">強化</string>
-		<string name="ENFEEBLINGMAGIC">弱体</string>
-		<string name="ELEMENTALMAGIC">精霊</string>
-		<string name="DARKMAGIC">暗黒</string>
-		<string name="SINGING">歌唱</string>
-		<string name="STRINGINSTRUMENT">弦楽器</string>
-		<string name="WINDINSTRUMENT">管楽器</string>
-		<string name="NINJUTSU">忍術</string>
-		<string name="SUMMONING">召喚</string>
-		<string name="BLUEMAGIC">青魔法</string>
-		<string name="GUARDING">ガード</string>
-		<string name="EVASION">回避</string>
-		<string name="SHIELD">盾</string>
-		<string name="PARRYING">受け流し</string>
-		<string name="ENMITY">敵対心</string>
-		<string name="CRITICAL">クリティカル</string>
-		<string name="CRITICALDEFENCE">被クリティカル</string>
-		<string name="SPELLINTERRUPTION">詠唱中断</string>
-		<string name="InstallDB">Install DB</string>
-		<string name="InstallDBFromSD">Install DB from SD</string>
-		<string name="ExportDBToSD">ExportDB To SD</string>
-		<string name="Filter">Filter...</string>
-		<string name="ResetFilter">Reset Filter</string>
-		<string name="ApplyFilter">Apply</string>
-		<string name="Skill">Skill...</string>
-		<string name="Delete">Delete...</string>
-   		<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
-		<string name="GoogleSearch">Googleで検索</string>
-    	<string-array name="SearchURIs">
-			<item>http://wiki.ffo.jp/search.cgi?CCC=愛&amp;Command=Search&amp;order=match&amp;ffotype=title&amp;type=title&amp;qf=</item>
-			<item>http://www.google.com/search?ie=utf-8&amp;q=</item>
-    	</string-array>
+       <string name="AbyssiteOfFurtherancePrompt">遊軍</string>
+       <string name="AbyssiteOfMeritPrompt">真価</string>
+       <string name="CriticalRate">クリティカル</string>
+       <string name="CriticalDamage">クリダメージ</string>
+       <string name="Remove">Remove</string>
+       <string name="AccuracySub">サブ命中</string>
+       <string name="AttackSub">サブ攻撃力</string>
+       <string name="Enmity">敵対心</string>
+       <string name="AccuracyMagic">魔命</string>
+       <string name="AttackMagic">魔攻</string>
+       <string name="D">D値</string>
+       <string name="DSub">サブD値</string>
+       <string name="DRange">遠隔D値</string>
+       <string name="Delay">間隔</string>
+       <string name="DelaySub">サブ間隔</string>
+       <string name="DelayRange">遠隔間隔</string>
+       <string name="RegistFire">耐火</string>
+       <string name="RegistIce">耐氷</string>
+       <string name="RegistWind">耐風</string>
+       <string name="RegistEarth">耐土</string>
+       <string name="RegistLightning">耐雷</string>
+       <string name="RegistWater">耐水</string>
+       <string name="RegistLight">耐光</string>
+       <string name="RegistDark">耐闇</string>
+       <string name="Defence">防</string>
+       <string name="DefenceMagic">魔法防御</string>
+       <string name="DamageCutPhysical">物理カット</string>
+       <string name="DamageCutMagic">魔法カット</string>
+       <string name="DamageCutBreath">ブレスカット</string>
+       <string name="HP">HP</string>
+       <string name="MP">MP</string>
+       <string name="STR">STR</string>
+       <string name="DEX">DEX</string>
+       <string name="VIT">VIT</string>
+       <string name="AGI">AGI</string>
+       <string name="INT">INT</string>
+       <string name="MND">MND</string>
+       <string name="CHR">CHR</string>
+	<string name="HANDTOHAND">格闘</string>
+	<string name="DAGGER">短剣</string>
+	<string name="SWORD">片手剣</string>
+	<string name="GREATSWORD">両手剣</string>
+	<string name="AXE">片手斧</string>
+	<string name="GREATAXE">両手斧</string>
+	<string name="SCYTH">両手鎌</string>
+	<string name="POLEARM">槍</string>
+	<string name="KATANA">片手刀</string>
+	<string name="GREATKATANA">両手刀</string>
+	<string name="CLUB">片手棍</string>
+	<string name="STAFF">両手棍</string>
+	<string name="ARCHERY">弓術</string>
+	<string name="MARKSMANSHIP">射撃</string>
+	<string name="THROWING">投擲</string>
+	<string name="DIVINEMAGIC">神聖</string>
+	<string name="HEALINGMAGIC">回復</string>
+	<string name="ENCHANCINGMAGIC">強化</string>
+	<string name="ENFEEBLINGMAGIC">弱体</string>
+	<string name="ELEMENTALMAGIC">精霊</string>
+	<string name="DARKMAGIC">暗黒</string>
+	<string name="SINGING">歌唱</string>
+	<string name="STRINGINSTRUMENT">弦楽器</string>
+	<string name="WINDINSTRUMENT">管楽器</string>
+	<string name="NINJUTSU">忍術</string>
+	<string name="SUMMONING">召喚</string>
+	<string name="BLUEMAGIC">青魔法</string>
+	<string name="GUARDING">ガード</string>
+	<string name="EVASION">回避</string>
+	<string name="SHIELD">盾</string>
+	<string name="PARRYING">受け流し</string>
+	<string name="ENMITY">敵対心</string>
+	<string name="CRITICAL">クリティカル</string>
+	<string name="CRITICALDEFENCE">被クリティカル</string>
+	<string name="SPELLINTERRUPTION">詠唱中断</string>
+	<string name="InstallDB">Install DB</string>
+	<string name="InstallDBFromSD">Install DB from SD</string>
+	<string name="ExportDBToSD">ExportDB To SD</string>
+	<string name="Filter">Filter...</string>
+	<string name="ResetFilter">Reset Filter</string>
+	<string name="ApplyFilter">Apply</string>
+	<string name="Skill">Skill...</string>
+	<string name="Delete">Delete...</string>
+  		<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
+	<string name="GoogleSearch">Googleで検索</string>
+   	<string-array name="SearchURIs">
+		<item>http://wiki.ffo.jp/search.cgi?CCC=愛&amp;Command=Search&amp;order=match&amp;ffotype=title&amp;type=title&amp;qf=</item>
+		<item>http://www.google.com/search?ie=utf-8&amp;q=</item>
+   	</string-array>
 </resources>
