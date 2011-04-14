@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-    <EditText android:layout_width="fill_parent" android:text="EditText" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:id="@+id/CharacterName"></EditText>
+    <EditText android:layout_width="fill_parent" android:text="EditText" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:id="@+id/CharacterName" android:singleLine="true"></EditText>
     <CheckBox android:layout_width="wrap_content" android:layout_below="@+id/CharacterName" android:layout_height="wrap_content" android:layout_alignLeft="@+id/CharacterName" android:text="@string/SaveNew" android:id="@+id/SaveNew"></CheckBox>
     <Button android:layout_width="wrap_content" android:id="@+id/SaveOK" android:text="@string/SaveOK" android:layout_height="wrap_content" android:layout_below="@+id/CharacterName" android:layout_alignRight="@+id/CharacterName"></Button>
 </RelativeLayout>
