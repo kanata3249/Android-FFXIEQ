@@ -120,6 +120,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		
 		if (cursor.getCount() < 1) {
 			// no matched row in table
+			cursor.close();
 			return null;
 		}
 		cursor.moveToFirst();

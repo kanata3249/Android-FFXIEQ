@@ -46,6 +46,7 @@ public class MPTable {
 								null, null, null, null, null);
 			if (cursor.getCount() < 1) {
 				// no matched row in table
+				cursor.close();
 				return 0;
 			}
 			cursor.moveToFirst();
@@ -57,6 +58,7 @@ public class MPTable {
 						null, null, null, null, null);
 				if (cursor.getCount() < 1) {
 					// no matched row in table
+					cursor.close();
 					return 0;
 				}
 				cursor.moveToFirst();
@@ -70,6 +72,7 @@ public class MPTable {
 						null, null, null, null, null);
 				if (cursor.getCount() < 1) {
 					// no matched row in table
+					cursor.close();
 					return 0;
 				}
 				cursor.moveToFirst();

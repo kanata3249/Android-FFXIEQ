@@ -40,6 +40,7 @@ public class AtmaTable {
 		cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
 		if (cursor.getCount() < 1) {
 			// no match
+			cursor.close();
 			return null;
 		}
 		cursor.moveToFirst();

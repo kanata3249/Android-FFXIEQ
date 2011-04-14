@@ -64,6 +64,7 @@ public class JobTraitTable {
 		}
 		if (cursor.getCount() < 1) {
 			// no match
+			cursor.close();
 			return new JobTrait[0];
 		}
 		cursor.moveToFirst();
