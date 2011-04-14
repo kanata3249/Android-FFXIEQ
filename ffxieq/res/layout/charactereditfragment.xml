@@ -27,10 +27,10 @@
             <CheckBox android:id="@+id/InAbyssea" android:text="@string/InAbyssea" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
             <Spinner android:layout_toRightOf="@+id/InAbyssea" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/AbyssiteOfFurtherance" android:entries="@array/AbyssiteOfFurtheranceEntries" android:prompt="@string/AbyssiteOfFurtherancePrompt"></Spinner>
             <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toRightOf="@+id/AbyssiteOfFurtherance" android:id="@+id/AbyssiteOfMerit" android:entries="@array/AbyssiteOfMeritEntries" android:prompt="@string/AbyssiteOfMeritPrompt"></Spinner>
-            <com.github.kanata3249.ffxieq.android.AtmaSetView android:id="@+id/Atmas" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/InAbyssea"></com.github.kanata3249.ffxieq.android.AtmaSetView>
+            <com.github.kanata3249.ffxieq.android.AtmaSetView android:id="@+id/Atmas" android:layout_height="wrap_content" android:layout_below="@+id/InAbyssea" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.AtmaSetView>
         </RelativeLayout>
     </TableRow>
     <TableRow android:layout_height="fill_parent" android:id="@+id/tableRow4" android:layout_width="wrap_content">
-        <com.github.kanata3249.ffxieq.android.EquipmentSetView android:layout_height="fill_parent" android:id="@+id/Equipments" android:scrollbars="vertical" android:layout_width="wrap_content"></com.github.kanata3249.ffxieq.android.EquipmentSetView>
+        <com.github.kanata3249.ffxieq.android.EquipmentSetView android:layout_height="fill_parent" android:id="@+id/Equipments" android:scrollbars="vertical" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.EquipmentSetView>
     </TableRow>
 </TableLayout>

@@ -25,10 +25,10 @@
         <CheckBox android:id="@+id/InAbyssea" android:layout_width="wrap_content" android:text="@string/InAbyssea" android:layout_height="wrap_content"></CheckBox>
         <Spinner android:entries="@array/AbyssiteOfMeritEntries" android:layout_height="wrap_content" android:layout_toRightOf="@+id/AbyssiteOfFurtherance" android:prompt="@string/AbyssiteOfMeritPrompt" android:id="@+id/AbyssiteOfMerit" android:layout_width="wrap_content">
         </Spinner>
-        <com.github.kanata3249.ffxieq.android.AtmaSetView android:layout_height="wrap_content" android:id="@+id/Atmas" android:layout_below="@+id/InAbyssea" android:layout_width="wrap_content"></com.github.kanata3249.ffxieq.android.AtmaSetView>
+        <com.github.kanata3249.ffxieq.android.AtmaSetView android:layout_height="wrap_content" android:id="@+id/Atmas" android:layout_below="@+id/InAbyssea" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.AtmaSetView>
         <Spinner android:entries="@array/AbyssiteOfFurtheranceEntries" android:layout_height="wrap_content" android:layout_toRightOf="@+id/InAbyssea" android:prompt="@string/AbyssiteOfFurtherancePrompt" android:id="@+id/AbyssiteOfFurtherance" android:layout_width="wrap_content">
         </Spinner>
     </RelativeLayout>
 </TableLayout>
-<com.github.kanata3249.ffxieq.android.EquipmentSetView android:layout_width="wrap_content" android:id="@+id/Equipments" android:scrollbars="vertical" android:layout_height="wrap_content"></com.github.kanata3249.ffxieq.android.EquipmentSetView>
+<com.github.kanata3249.ffxieq.android.EquipmentSetView android:id="@+id/Equipments" android:scrollbars="vertical" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.EquipmentSetView>
 </LinearLayout>
