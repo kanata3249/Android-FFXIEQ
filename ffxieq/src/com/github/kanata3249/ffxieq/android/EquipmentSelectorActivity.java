@@ -296,7 +296,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id, Bundle args) {
+	protected Dialog onCreateDialog(int id) {
 		FilterSelectorDialog dialog = new FilterSelectorDialog(this);
 
 		dialog.setOnDismissListener(new OnDismissListener() {

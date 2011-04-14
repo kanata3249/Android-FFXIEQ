@@ -122,7 +122,7 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id, Bundle args) {
+	protected Dialog onCreateDialog(int id) {
 		Dialog dialog;
 		AlertDialog.Builder builder;
 
@@ -187,11 +187,11 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 			dialog = builder.create();
 			return dialog;
 		}
-		return super.onCreateDialog(id, args);
+		return super.onCreateDialog(id);
 	}
 
 	@Override
-	protected void onPrepareDialog(int id, Dialog dialog, Bundle args) {
+	protected void onPrepareDialog(int id, Dialog dialog) {
         FragmentManager fm = getSupportFragmentManager();
     	final CharacterEditFragment cef = (CharacterEditFragment)fm.findFragmentById(R.id.CharacterEdit);
     	final long charid = cef.getCharacterID();
@@ -244,7 +244,7 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 			});
 			return;
 		}
-		super.onPrepareDialog(id, dialog, args);
+		super.onPrepareDialog(id, dialog);
 	}
 	
 	public static boolean hasStatusView(View myview) {

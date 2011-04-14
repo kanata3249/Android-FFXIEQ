@@ -186,7 +186,7 @@ public class CharacterEditFragment extends FFXIEQFragment {
         	if (btn != null) {
         		btn.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
-						getActivity().showDialog(R.layout.querysavecharacter, null);
+						getActivity().showDialog(R.layout.querysavecharacter);
 					}
         		});
         	}

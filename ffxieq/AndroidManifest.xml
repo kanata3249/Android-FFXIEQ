@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       android:versionCode="1"
-      android:versionName="1.0" android:installLocation="preferExternal" package="com.github.kanata3249.ffxieq">
+      android:versionName="1.0" package="com.github.kanata3249.ffxieq">
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+<uses-sdk android:minSdkVersion="7"></uses-sdk>
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".android.FFXIEQApplication">
         
         <activity android:name=".android.FFXIEQActivity" android:label="@string/app_name">

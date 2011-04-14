@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-	<ScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_above="@+id/button1" android:layout_alignParentTop="true">
-	    <TableLayout android:layout_width="match_parent" android:id="@+id/tableLayout" android:layout_height="match_parent" android:stretchColumns="*">
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@+id/button1" android:layout_alignParentTop="true">
+	    <TableLayout android:layout_width="fill_parent" android:id="@+id/tableLayout" android:layout_height="fill_parent" android:stretchColumns="*">
 	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
 		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/HANDTOHAND"></TextView>
 		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DAGGER"></TextView>
@@ -113,5 +113,5 @@
 	        </TableRow>
 	     </TableLayout>
 	</ScrollView>
-  	<Button android:text="@string/SaveOK" android:onClick="onSave" android:id="@+id/button1" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_alignParentBottom="true"></Button>
+  	<Button android:text="@string/SaveOK" android:onClick="onSave" android:id="@+id/button1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_alignParentBottom="true"></Button>
 </RelativeLayout>

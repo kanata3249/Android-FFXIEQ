@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-	<TableLayout android:layout_height="match_parent" android:id="@+id/tableLayout3" android:layout_width="wrap_content" android:stretchColumns="*">
-	    <TableRow android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableRow1" android:background="@android:color/darker_gray">
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:orientation="vertical">
+	<TableLayout android:layout_height="fill_parent" android:id="@+id/tableLayout3" android:layout_width="wrap_content" android:stretchColumns="*">
+	    <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/tableRow1" android:background="@android:color/darker_gray">
 	        <TextView android:layout_height="wrap_content" android:text="@string/HP" android:layout_width="wrap_content" android:id="@+id/textView11" android:textColor="@android:color/primary_text_light" android:gravity="center" ></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="@string/MP" android:id="@+id/textView12" android:layout_width="wrap_content" android:textColor="@android:color/primary_text_light" android:gravity="center" ></TextView>
 	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView11" android:textColor="@android:color/primary_text_light" android:text="@string/Defence" android:gravity="center" ></TextView>
 	        <TextView android:layout_height="wrap_content" android:id="@+id/textView12" android:layout_width="wrap_content" android:textColor="@android:color/primary_text_light" android:text="@string/DefenceMagic" android:gravity="center" ></TextView>
 	    </TableRow>
-	    <TableRow android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableRow1">
+	    <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/tableRow1">
 	        <TextView android:layout_height="wrap_content" android:text="TextView" android:layout_width="wrap_content" android:id="@+id/HP" android:gravity="center" ></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="TextView" android:id="@+id/MP" android:layout_width="wrap_content" android:gravity="center" ></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="TextView" android:layout_width="wrap_content" android:id="@+id/Defence" android:gravity="center" ></TextView>
@@ -26,13 +26,13 @@
 	        <TextView android:id="@+id/DamageCutMagic" android:text="TextView" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	        <TextView android:id="@+id/DamageCutBreath" android:text="TextView" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	    </TableRow>
-	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow2" android:layout_width="match_parent" android:background="@android:color/darker_gray">
+	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow2" android:layout_width="fill_parent" android:background="@android:color/darker_gray">
 	        <TextView android:layout_height="wrap_content" android:text="@string/STR" android:layout_width="wrap_content" android:id="@+id/textView13" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="@string/DEX" android:id="@+id/textView14" android:layout_width="wrap_content" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="@string/VIT" android:layout_width="wrap_content" android:id="@+id/textView15" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="@string/AGI" android:id="@+id/textView16" android:layout_width="wrap_content" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 	    </TableRow>
-	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow3" android:layout_width="match_parent">
+	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow3" android:layout_width="fill_parent">
 	        <TextView android:layout_height="wrap_content" android:text="TextView" android:layout_width="wrap_content" android:id="@+id/STR" android:gravity="center"></TextView>
 	        <TextView android:layout_height="wrap_content" android:text="TextView" android:id="@+id/DEX" android:layout_width="wrap_content" android:gravity="center"></TextView>
 	    	<TextView android:layout_height="wrap_content" android:text="TextView" android:layout_width="wrap_content" android:id="@+id/VIT" android:gravity="center"></TextView>
@@ -122,13 +122,13 @@
 	        <TextView android:id="@+id/textView2" android:text="@string/DRange" android:textColor="@android:color/primary_text_light" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	        <TextView android:id="@+id/textView3" android:text="@string/DelayRange" android:textColor="@android:color/primary_text_light" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	    </TableRow>
-	    <TableRow android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/tableRow20">
+	    <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow20">
 	        <TextView android:id="@+id/DRange" android:text="TextView" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	        <TextView android:id="@+id/DelayRange" android:text="TextView" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	    </TableRow>
 	</TableLayout>
-	<TableLayout android:layout_width="match_parent" android:id="@+id/tableLayout1" android:layout_height="wrap_content" android:stretchColumns="*">
-		<TableRow android:id="@+id/tableRow12" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	<TableLayout android:layout_width="fill_parent" android:id="@+id/tableLayout1" android:layout_height="wrap_content" android:stretchColumns="*">
+		<TableRow android:id="@+id/tableRow12" android:layout_width="fill_parent" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/RegistFire" android:id="@+id/textView4" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/RegistIce" android:id="@+id/textView8" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/RegistWind" android:id="@+id/textView10" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
@@ -138,7 +138,7 @@
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/RegistLight" android:id="@+id/textView23" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/RegistDark" android:id="@+id/textView24" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 		</TableRow>
-		<TableRow android:id="@+id/tableRow13" android:layout_width="match_parent" android:layout_height="wrap_content">
+		<TableRow android:id="@+id/tableRow13" android:layout_width="fill_parent" android:layout_height="wrap_content">
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="TextView" android:id="@+id/RegistFire" android:gravity="center"></TextView>
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="TextView" android:id="@+id/RegistIce" android:gravity="center"></TextView>
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="TextView" android:id="@+id/RegistWind" android:gravity="center"></TextView>
