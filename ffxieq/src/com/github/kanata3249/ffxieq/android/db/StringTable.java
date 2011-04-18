@@ -53,7 +53,7 @@ public class StringTable {
 		int i, l, r;
 		
 		l = 0;
-		r = mCachedItems.size();
+		r = mCachedItems.size() - 1;
 		while (r >= l) {
 			StringItem item;
 			long cid;
