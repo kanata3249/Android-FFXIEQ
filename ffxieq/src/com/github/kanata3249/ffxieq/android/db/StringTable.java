@@ -54,7 +54,7 @@ public class StringTable {
 		
 		l = 0;
 		r = mCachedItems.size();
-		while (r != l) {
+		while (r >= l) {
 			StringItem item;
 			long cid;
 
@@ -64,9 +64,9 @@ public class StringTable {
 			if (cid == id) {
 				return mCachedItems.get(i).getValue();
 			} else if (cid > id) {
-				r = i;
+				r = i - 1;
 			} else /* if (cid < id) */ {
-				l = i;
+				l = i + 1;
 			}
 		}
 		return "";
