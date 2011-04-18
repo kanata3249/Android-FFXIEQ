@@ -59,8 +59,6 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 		switch (type) {
 		case HP:
 		case MP:
-			merit = Math.min(merit, 8);
-			merit = Math.max(merit, 0);
 			v.setValue(Math.min(meritcap, merit) * 10);
 			break;
 		case STR:
@@ -70,8 +68,6 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 		case INT:
 		case MND:
 		case CHR:
-			merit = Math.min(merit, 5);
-			merit = Math.max(merit, 0);
 			v.setValue(Math.min(meritcap, merit));
 			break;
 			
@@ -102,33 +98,25 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 		case SKILL_NINJUTSU:
 		case SKILL_SUMMONING:
 		case SKILL_BLUE_MAGIC:
-			merit = Math.min(merit, 8);
-			merit = Math.max(merit, 0);
 			v.setValue(Math.min(meritcap, merit) * 2);
 			break;
 		case SKILL_GUARDING:
 		case SKILL_EVASION:
 		case SKILL_SHIELD:
 		case SKILL_PARRYING:
-			merit = Math.min(merit, 4);
-			merit = Math.max(merit, 0);
 			v.setValue(Math.min(meritcap, merit) * 2);
 			break;
 			
 		case Enmity:
 			if (merit >= 0) {
-				merit = Math.min(merit, 4);
 				v.setValue(Math.min(meritcap, merit));
 			} else {
-				merit = Math.max(merit, -4);
 				v.setValue(Math.max(-meritcap, merit));
 			}
 			break;
 		case CriticalRate:
 		case CriticalRateDefence:	        	
 		case SpellInterruptionRate:
-			merit = Math.min(merit, 4);
-			merit = Math.max(merit, 0);
 			v.setValue(Math.min(meritcap, merit));
 			break;
 		}

@@ -93,11 +93,13 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			MeritPoint merits = new MeritPoint();
 			StatusType[] types = StatusType.values();
 			ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
+			String []enmity_entries;
 
+			enmity_entries = getResources().getStringArray(R.array.Merits_Enmity_Entries);
 			for (int i = 0; i < values.length; i++) {
 				merits.setMeritPoint(types[i], values[i].getIntValue());
 			}
-			merits.setMeritPoint(StatusType.Enmity, values[StatusType.Enmity.ordinal()].getIntValue() - 4);
+			merits.setMeritPoint(StatusType.Enmity, values[StatusType.Enmity.ordinal()].getIntValue() - enmity_entries.length / 2);
 			
 			getFFXICharacter().setMeritPoint(merits);
 		}
@@ -118,10 +120,13 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			merits = from.getFFXICharacter().getMeritPoint();
 			values = new ControlBindableInteger[StatusType.MODIFIER_NUM.ordinal()];
 			StatusType[] types = StatusType.values();
+			String []enmity_entries;
+
+			enmity_entries = from.getResources().getStringArray(R.array.Merits_Enmity_Entries);
 			for (int i = 0; i < values.length; i++) {
 				values[i] = new ControlBindableInteger(merits.getMeritPoint(types[i]));
 			}
-			values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + 4);
+			values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + enmity_entries.length / 2);
 			from.setTemporaryValues(values);
 		}
 

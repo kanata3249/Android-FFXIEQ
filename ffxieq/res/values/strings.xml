@@ -48,7 +48,22 @@
 		<item>Range</item>
 		<item>Anmo</item>
     </string-array>
-    <string-array name="Merits_0_8_Entries">
+    <string-array name="Merits_HPMP_Entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="Merits_Skill_Entries">
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -59,14 +74,25 @@
         <item>7</item>
         <item>8</item>
     </string-array>
-    <string-array name="Merits_0_4_Entries">
+    <string-array name="Merits_Skill2_Entries">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
     </string-array>
-    <string-array name="Merits_0_5_Entries">
+    <string-array name="Merits_Status_Entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="Merits_Other_Entries">
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -74,7 +100,8 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <string-array name="Merits_m4_p4_Entries">
+    <string-array name="Merits_Enmity_Entries">
+        <item>-5</item>
         <item>-4</item>
         <item>-3</item>
         <item>-2</item>
@@ -84,6 +111,7 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
     </string-array>
     <string name="NewCharacterName">NewCharacter 1.</string>
     <string name="Save">Save...</string>
