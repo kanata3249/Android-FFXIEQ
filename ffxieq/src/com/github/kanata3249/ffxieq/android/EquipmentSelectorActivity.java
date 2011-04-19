@@ -67,7 +67,12 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		mFilterID = param.getLong("Filter");
 		
 		setContentView(R.layout.equipmentselector);
-		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+
 		EquipmentListView elv;
 		
 		elv = (EquipmentListView)findViewById(R.id.ListView);
@@ -146,6 +151,41 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void onStop() {
+		EquipmentListView elv;
+		
+		elv = (EquipmentListView)findViewById(R.id.ListView);
+		if (elv != null) {
+			elv.setOnItemClickListener(null);
+			elv.setOnItemLongClickListener(null);
+		}
+
+		TextView tv;
+		
+		tv = (TextView)findViewById(R.id.Name);
+		if (tv != null) {
+			tv.setOnLongClickListener(null);
+		}
+		tv = (TextView)findViewById(R.id.Job);
+		if (tv != null) {
+			tv.setOnLongClickListener(null);
+		}
+		tv = (TextView)findViewById(R.id.Description);
+		if (tv != null) {
+			tv.setOnLongClickListener(null);
+		}
+		tv = (TextView)findViewById(R.id.Level);
+		if (tv != null) {
+			tv.setOnLongClickListener(null);
+		}
+		tv = (TextView)findViewById(R.id.Race);
+		if (tv != null) {
+			tv.setOnLongClickListener(null);
+		}
+		super.onStop();
 	}
 
 	@Override

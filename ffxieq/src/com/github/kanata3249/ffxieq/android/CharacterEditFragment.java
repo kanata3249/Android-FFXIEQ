@@ -57,8 +57,8 @@ public class CharacterEditFragment extends FFXIEQFragment {
     }
     
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-    	super.onActivityCreated(savedInstanceState);
+    public void onStart() {
+    	super.onStart();
 
    		updateValues();
 
@@ -279,6 +279,105 @@ public class CharacterEditFragment extends FFXIEQFragment {
         }
     }
     @Override
+	public void onStop() {
+		View v = getView();
+
+        // reset listeners
+        {
+	        Spinner spin;
+	
+	    	spin = (Spinner)v.findViewById(R.id.Race);
+	    	if (spin != null) {
+				spin.setOnItemSelectedListener(null);
+	    	}
+	    	spin = (Spinner)v.findViewById(R.id.Job);
+	    	if (spin != null) {
+				spin.setOnItemSelectedListener(null);
+	    	}
+	    	spin = (Spinner)v.findViewById(R.id.SubJob);
+	    	if (spin != null) {
+				spin.setOnItemSelectedListener(null);
+	    	}
+	    	
+	    	spin = (Spinner)v.findViewById(R.id.AbyssiteOfFurtherance);
+	    	if (spin != null) {
+				spin.setOnItemSelectedListener(null);
+	    	}
+	    	spin = (Spinner)v.findViewById(R.id.AbyssiteOfMerit);
+	    	if (spin != null) {
+				spin.setOnItemSelectedListener(null);
+	    	}
+        }
+
+        {
+	        EditText et;
+	        et = (EditText)v.findViewById(R.id.JobLevel);
+	        if (et != null) {
+	        	et.setOnEditorActionListener(null);
+	        }
+	        et = (EditText)v.findViewById(R.id.SubJobLevel);
+	        if (et != null) {
+	        	et.setOnEditorActionListener(null);
+	        }
+        }
+        
+        {
+        	EquipmentSetView es;
+        	
+        	es = (EquipmentSetView)v.findViewById(R.id.Equipments);
+        	if (es != null) {
+            	es.setOnItemClickListener(null);
+        	}
+        }
+
+        {
+        	AtmaSetView as;
+        	
+        	as = (AtmaSetView)v.findViewById(R.id.Atmas);
+        	if (as != null) {
+            	as.setOnItemClickListener(null);
+        	}
+        }
+        
+        {
+        	Button btn;
+        	
+        	btn = (Button)v.findViewById(R.id.Save);
+        	if (btn != null) {
+        		btn.setOnClickListener(null);
+        	}
+        }
+        
+        {
+        	CheckBox cb;
+        	
+        	cb = (CheckBox)v.findViewById(R.id.InAbyssea);
+        	if (cb != null) {
+        		cb.setOnCheckedChangeListener(null);
+        	}
+        	cb = (CheckBox)v.findViewById(R.id.Compare);
+        	if (cb != null) {
+        		cb.setOnCheckedChangeListener(null);
+        	}
+        }
+        
+        {
+        	CharacterSelectorView cs;
+        	
+        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelector);
+        	if (cs != null) {
+   				cs.setOnItemSelectedListener(null);
+        	}
+
+        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelectorToCompare);
+        	if (cs != null) {
+   				cs.setOnItemSelectedListener(null);
+        	}
+        }
+		super.onStop();
+	}
+
+	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result;
 

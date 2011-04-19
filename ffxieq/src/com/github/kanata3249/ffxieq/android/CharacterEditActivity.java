@@ -67,6 +67,18 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
     }
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		FragmentManager fm = getSupportFragmentManager();
+    	CharacterEditFragment cef = (CharacterEditFragment)fm.findFragmentById(R.id.CharacterEdit);
+    	
+    	if (cef != null) {
+    		cef.setOnDatasetChangedListener(null);
+    	}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 

@@ -56,7 +56,12 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		mFilterID = param.getLong("Filter");
 
 		setContentView(R.layout.atmaselector);
-		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+
 		AtmaListView alv;
 		
 		alv = (AtmaListView)findViewById(R.id.ListView);
@@ -95,6 +100,17 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void onStop() {
+		AtmaListView alv;
+		
+		alv = (AtmaListView)findViewById(R.id.ListView);
+		if (alv != null) {
+			alv.setOnItemClickListener(null);
+		}
+		super.onStop();
 	}
 
 	@Override
