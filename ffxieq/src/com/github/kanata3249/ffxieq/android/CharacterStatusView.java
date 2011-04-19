@@ -15,6 +15,8 @@
 */
 package com.github.kanata3249.ffxieq.android;
 
+import com.github.kanata3249.ffxi.status.StatusType;
+import com.github.kanata3249.ffxi.status.StatusValue;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
@@ -28,19 +30,23 @@ import android.app.Activity;
 public class CharacterStatusView extends ScrollView {
 	int mDisplayParam;
 	FFXICharacter mCharInfo;
+	FFXICharacter mCharInfoToCompare;
+	static public final int GETSTATUS_STRING_TOTAL = 0;
+	static public final int GETSTATUS_STRING_SEPARATE = 1;
 
 	public CharacterStatusView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
-		mDisplayParam = FFXICharacter.GETSTATUS_STRING_SEPARATE;
+		mDisplayParam = GETSTATUS_STRING_SEPARATE;
 		mCharInfo = null;
 		View children = ((Activity)context).getLayoutInflater().inflate(R.layout.statusview, null);
 		this.addView(children);
 	}
 
-	public boolean bindFFXICharacter(FFXICharacter charinfo) {
+	public boolean bindFFXICharacter(FFXICharacter charinfo, FFXICharacter toCompare) {
 		mCharInfo = charinfo;
-		notifyDatasetChanged(charinfo);
+		mCharInfoToCompare = toCompare;
+		notifyDatasetChanged();
 
 		return true;
 	}
@@ -49,211 +55,406 @@ public class CharacterStatusView extends ScrollView {
 		if (mDisplayParam != param) {
 			mDisplayParam = param;
 			if (mCharInfo != null) {
-				notifyDatasetChanged(mCharInfo);
+				notifyDatasetChanged();
 			}
 		}
 	}
 
-	public void notifyDatasetChanged(FFXICharacter charInfo) {
+	public void notifyDatasetChanged() {
 		TextView tv;
 
     	tv = (TextView)findViewById(R.id.HP);
     	if (tv != null) {
-    		tv.setText(charInfo.getHP(mDisplayParam));
+    		tv.setText(getHP(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.MP);
     	if (tv != null) {
-    		tv.setText(charInfo.getMP(mDisplayParam));
+    		tv.setText(getMP(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.STR);
     	if (tv != null) {
-    		tv.setText(charInfo.getSTR(mDisplayParam));
+    		tv.setText(getSTR(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DEX);
     	if (tv != null) {
-    		tv.setText(charInfo.getDEX(mDisplayParam));
+    		tv.setText(getDEX(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.VIT);
     	if (tv != null) {
-    		tv.setText(charInfo.getVIT(mDisplayParam));
+    		tv.setText(getVIT(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AGI);
     	if (tv != null) {
-    		tv.setText(charInfo.getAGI(mDisplayParam));
+    		tv.setText(getAGI(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.INT);
     	if (tv != null) {
-    		tv.setText(charInfo.getINT(mDisplayParam));
+    		tv.setText(getINT(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.MND);
     	if (tv != null) {
-    		tv.setText(charInfo.getMND(mDisplayParam));
+    		tv.setText(getMND(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.CHR);
     	if (tv != null) {
-    		tv.setText(charInfo.getCHR(mDisplayParam));
+    		tv.setText(getCHR(mDisplayParam));
     	}
 
     	tv = (TextView)findViewById(R.id.Accuracy);
     	if (tv != null) {
-    		tv.setText(charInfo.getAccuracy(mDisplayParam));
+    		tv.setText(getAccuracy(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Attack);
     	if (tv != null) {
-    		tv.setText(charInfo.getAttack(mDisplayParam));
+    		tv.setText(getAttack(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AccuracySub);
     	if (tv != null) {
-    		tv.setText(charInfo.getAccuracySub(mDisplayParam));
+    		tv.setText(getAccuracySub(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AttackSub);
     	if (tv != null) {
-    		tv.setText(charInfo.getAttackSub(mDisplayParam));
+    		tv.setText(getAttackSub(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AccuracyRange);
     	if (tv != null) {
-    		tv.setText(charInfo.getAccuracyRange(mDisplayParam));
+    		tv.setText(getAccuracyRange(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AttackRange);
     	if (tv != null) {
-    		tv.setText(charInfo.getAttackRange(mDisplayParam));
+    		tv.setText(getAttackRange(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Haste);
     	if (tv != null) {
-    		tv.setText(charInfo.getHaste(mDisplayParam));
+    		tv.setText(getHaste(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Slow);
     	if (tv != null) {
-    		tv.setText(charInfo.getSlow(mDisplayParam));
+    		tv.setText(getSlow(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.SubtleBlow);
     	if (tv != null) {
-    		tv.setText(charInfo.getSubtleBlow(mDisplayParam));
+    		tv.setText(getSubtleBlow(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.StoreTP);
     	if (tv != null) {
-    		tv.setText(charInfo.getStoreTP(mDisplayParam));
+    		tv.setText(getStoreTP(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Evasion);
     	if (tv != null) {
-    		tv.setText(charInfo.getEvasion(mDisplayParam));
+    		tv.setText(getEvasion(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DoubleAttack);
     	if (tv != null) {
-    		tv.setText(charInfo.getDoubleAttack(mDisplayParam));
+    		tv.setText(getDoubleAttack(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.TrippleAttack);
     	if (tv != null) {
-    		tv.setText(charInfo.getTrippleAttack(mDisplayParam));
+    		tv.setText(getTrippleAttack(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.QuadAttack);
     	if (tv != null) {
-    		tv.setText(charInfo.getQuadAttack(mDisplayParam));
+    		tv.setText(getQuadAttack(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.CriticalRate);
     	if (tv != null) {
-    		tv.setText(charInfo.getCriticalRate(mDisplayParam));
+    		tv.setText(getCriticalRate(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.CriticalDamage);
     	if (tv != null) {
-    		tv.setText(charInfo.getCriticalDamage(mDisplayParam));
+    		tv.setText(getCriticalDamage(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.CriticalDamage);
     	if (tv != null) {
-    		tv.setText(charInfo.getCriticalDamage(mDisplayParam));
+    		tv.setText(getCriticalDamage(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Enmity);
     	if (tv != null) {
-    		tv.setText(charInfo.getEnmity(mDisplayParam));
+    		tv.setText(getEnmity(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AccuracyMagic);
     	if (tv != null) {
-    		tv.setText(charInfo.getAccuracyMagic(mDisplayParam));
+    		tv.setText(getAccuracyMagic(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.AttackMagic);
     	if (tv != null) {
-    		tv.setText(charInfo.getAttackMagic(mDisplayParam));
+    		tv.setText(getAttackMagic(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.D);
     	if (tv != null) {
-    		tv.setText(charInfo.getD(mDisplayParam));
+    		tv.setText(getD(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DSub);
     	if (tv != null) {
-    		tv.setText(charInfo.getDSub(mDisplayParam));
+    		tv.setText(getDSub(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DRange);
     	if (tv != null) {
-    		tv.setText(charInfo.getDRange(mDisplayParam));
+    		tv.setText(getDRange(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Delay);
     	if (tv != null) {
-    		tv.setText(charInfo.getDelay(mDisplayParam));
+    		tv.setText(getDelay(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DelaySub);
     	if (tv != null) {
-    		tv.setText(charInfo.getDelaySub(mDisplayParam));
+    		tv.setText(getDelaySub(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DelayRange);
     	if (tv != null) {
-    		tv.setText(charInfo.getDelayRange(mDisplayParam));
+    		tv.setText(getDelayRange(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.Defence);
     	if (tv != null) {
-    		tv.setText(charInfo.getDefence(mDisplayParam));
+    		tv.setText(getDefence(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DefenceMagic);
     	if (tv != null) {
-    		tv.setText(charInfo.getDefenceMagic(mDisplayParam));
+    		tv.setText(getDefenceMagic(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DamageCutPhysical);
     	if (tv != null) {
-    		tv.setText(charInfo.getDamageCutPhysical(mDisplayParam));
+    		tv.setText(getDamageCutPhysical(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DamageCutMagic);
     	if (tv != null) {
-    		tv.setText(charInfo.getDamageCutMagic(mDisplayParam));
+    		tv.setText(getDamageCutMagic(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DamageCutBreath);
     	if (tv != null) {
-    		tv.setText(charInfo.getDamageCutBreath(mDisplayParam));
+    		tv.setText(getDamageCutBreath(mDisplayParam));
     	}
 
     	tv = (TextView)findViewById(R.id.RegistFire);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistFire(mDisplayParam));
+    		tv.setText(getRegistFire(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistIce);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistIce(mDisplayParam));
+    		tv.setText(getRegistIce(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistWind);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistWind(mDisplayParam));
+    		tv.setText(getRegistWind(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistEarth);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistEarth(mDisplayParam));
+    		tv.setText(getRegistEarth(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistLightning);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistLightning(mDisplayParam));
+    		tv.setText(getRegistLightning(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistWater);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistWater(mDisplayParam));
+    		tv.setText(getRegistWater(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistLight);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistLight(mDisplayParam));
+    		tv.setText(getRegistLight(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.RegistDark);
     	if (tv != null) {
-    		tv.setText(charInfo.getRegistDark(mDisplayParam));
+    		tv.setText(getRegistDark(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.UnknownTokens);
     	if (tv != null) {
-    		tv.setText(charInfo.getUnknownTokens());
+    		tv.setText(mCharInfo.getUnknownTokens());
     	}
+	}
+
+	private String getStatusString(StatusValue v, int separate) {
+		int value;
+		
+		if (v.getAdditionalPercent() != 0 && (v.getValue() == 0 && v.getAdditional() == 0)) {
+			StringBuilder sb = new StringBuilder();
+
+			value = v.getAdditionalPercent();
+			sb.append(v.getAdditionalPercent());
+			sb.append('%');
+			return sb.toString();
+		} else if (separate == GETSTATUS_STRING_SEPARATE) {
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append(v.getValue());
+			value = v.getAdditional();
+			if (value != 0) {
+				sb.append(' ');
+				if (value > 0) {
+					sb.append('+');
+				}
+				sb.append(v.getAdditional());
+			}
+			value = v.getAdditionalPercent();
+			if (value != 0) {
+				sb.append(' ');
+				if (value > 0) {
+					sb.append('+');
+				}
+				sb.append(v.getAdditionalPercent());
+				sb.append('%');
+			}
+			return sb.toString();
+		} else {
+			value = v.getValue()+ v.getAdditional();
+			if (v.getAdditionalPercent() != 0) {
+				value += value * v.getAdditionalPercent() / 100;
+			}
+			return ((Integer)value).toString();
+		}
+	}
+	
+	private StatusValue getStatus(StatusType type) {
+		if (mCharInfoToCompare != null) {
+			StatusValue base = new StatusValue(0, 0, 0);
+			
+			base.add(mCharInfoToCompare.getStatus(type));
+			base.diff(mCharInfo.getStatus(type));
+			return base;
+		} else {
+			return mCharInfo.getStatus(type);
+		}
+	}
+
+	public String getHP(int separate) {
+		return getStatusString(getStatus(StatusType.HP), separate);
+	}
+	public String getMP(int separate) {
+		return getStatusString(getStatus(StatusType.MP), separate);
+	}
+	public String getSTR(int separate) {
+		return getStatusString(getStatus(StatusType.STR), separate);
+	}
+	public String getDEX(int separate) {
+		return getStatusString(getStatus(StatusType.DEX), separate);
+	}
+	public String getVIT(int separate) {
+		return getStatusString(getStatus(StatusType.VIT), separate);
+	}
+	public String getAGI(int separate) {
+		return getStatusString(getStatus(StatusType.AGI), separate);
+	}
+	public String getINT(int separate) {
+		return getStatusString(getStatus(StatusType.INT), separate);
+	}
+	public String getMND(int separate) {
+		return getStatusString(getStatus(StatusType.MND), separate);
+	}
+	public String getCHR(int separate) {
+		return getStatusString(getStatus(StatusType.CHR), separate);
+	}
+	public String getD(int separate) {
+		return getStatusString(getStatus(StatusType.D), separate);
+	}
+	public String getDSub(int separate) {
+		return getStatusString(getStatus(StatusType.DSub), separate);
+	}
+	public String getDRange(int separate) {
+		return getStatusString(getStatus(StatusType.DRange), separate);
+	}
+	public String getDelay(int separate) {
+		return getStatusString(getStatus(StatusType.Delay), separate);
+	}
+	public String getDelaySub(int separate) {
+		return getStatusString(getStatus(StatusType.DelaySub), separate);
+	}
+	public String getDelayRange(int separate) {
+		return getStatusString(getStatus(StatusType.DelayRange), separate);
+	}
+	public String getAccuracy(int separate) {
+		return getStatusString(getStatus(StatusType.Accuracy), separate);
+	}
+	public String getAccuracySub(int separate) {
+		return getStatusString(getStatus(StatusType.AccuracySub), separate);
+	}
+	public String getAttack(int separate) {
+		return getStatusString(getStatus(StatusType.Attack), separate);
+	}
+	public String getAttackSub(int separate) {
+		return getStatusString(getStatus(StatusType.AttackSub), separate);
+	}
+	public String getAccuracyRange(int separate) {
+		return getStatusString(getStatus(StatusType.AccuracyRange), separate);
+	}
+	public String getAttackRange(int separate) {
+		return getStatusString(getStatus(StatusType.AttackRange), separate);
+	}
+	public String getHaste(int separate) {
+		return getStatusString(getStatus(StatusType.Haste), separate);
+	}
+	public String getSlow(int separate) {
+		return getStatusString(getStatus(StatusType.Slow), separate);
+	}
+	public String getSubtleBlow(int separate) {
+		return getStatusString(getStatus(StatusType.SubtleBlow), separate);
+	}
+	public String getStoreTP(int separate) {
+		return getStatusString(getStatus(StatusType.StoreTP), separate);
+	}
+	public String getEvasion(int separate) {
+		return getStatusString(getStatus(StatusType.Evasion), separate);
+	}
+	public String getDoubleAttack(int separate) {
+		return getStatusString(getStatus(StatusType.DoubleAttack), separate);
+	}
+	public String getTrippleAttack(int separate) {
+		return getStatusString(getStatus(StatusType.TrippleAttack), separate);
+	}
+	public String getQuadAttack(int separate) {
+		return getStatusString(getStatus(StatusType.QuadAttack), separate);
+	}
+	public String getCriticalRate(int separate) {
+		return getStatusString(getStatus(StatusType.CriticalRate), separate);
+	}
+	public String getCriticalDamage(int separate) {
+		return getStatusString(getStatus(StatusType.CriticalDamage), separate);
+	}
+	public String getEnmity(int separate) {
+		return getStatusString(getStatus(StatusType.Enmity), separate);
+	}
+	public String getAttackMagic(int separate) {
+		return getStatusString(getStatus(StatusType.AttackMagic), separate);
+	}
+	public String getAccuracyMagic(int separate) {
+		return getStatusString(getStatus(StatusType.AccuracyMagic), separate);
+	}
+	public String getDefence(int separate) {
+		return getStatusString(getStatus(StatusType.Defence), separate);
+	}
+	public String getDefenceMagic(int separate) {
+		return getStatusString(getStatus(StatusType.DefenceMagic), separate);
+	}
+	public String getDamageCutPhysical(int separate) {
+		return getStatusString(getStatus(StatusType.DamageCutPhysical), separate);
+	}
+	public String getDamageCutMagic(int separate) {
+		return getStatusString(getStatus(StatusType.DamageCutMagic), separate);
+	}
+	public String getDamageCutBreath(int separate) {
+		return getStatusString(getStatus(StatusType.DamageCutBreath), separate);
+	}
+	public String getRegistFire(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Fire), separate);
+	}
+	public String getRegistIce(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Ice), separate);
+	}
+	public String getRegistWind(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Wind), separate);
+	}
+	public String getRegistEarth(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Earth), separate);
+	}
+	public String getRegistLightning(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Lightning), separate);
+	}
+	public String getRegistWater(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Water), separate);
+	}
+	public String getRegistLight(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Light), separate);
+	}
+	public String getRegistDark(int separate) {
+		return getStatusString(getStatus(StatusType.Regist_Dark), separate);
 	}
 }

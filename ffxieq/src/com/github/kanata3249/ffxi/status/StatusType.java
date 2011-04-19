@@ -66,6 +66,7 @@ public enum StatusType {
 	DRange,
 	DelayRange,
 	Attack,
+	AttackSub,
 	Accuracy,
 	AccuracySub,
 	Haste,

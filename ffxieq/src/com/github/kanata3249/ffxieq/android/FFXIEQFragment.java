@@ -50,6 +50,20 @@ public class FFXIEQFragment extends Fragment {
 		((FFXIEQApplication)activity.getApplication()).setCharacterID(characterID);
 	}
 
+	public long getCharacterIDToCompare() {
+		Activity activity;
+		
+		activity = getActivity();
+		return ((FFXIEQApplication)activity.getApplication()).getCharacterIDToCompare();
+	}
+
+	public void setCharacterIDToCompare(long characterID) {
+		Activity activity;
+		
+		activity = getActivity();
+		((FFXIEQApplication)activity.getApplication()).setCharacterIDToCompare(characterID);
+	}
+
 	public FFXICharacter getFFXICharacter() {
 		Activity activity;
 		
@@ -62,6 +76,20 @@ public class FFXIEQFragment extends Fragment {
 		
 		activity = getActivity();
 		((FFXIEQApplication)activity.getApplication()).setFFXICharacter(charInfo);
+	}
+
+	public FFXICharacter getFFXICharacterToCompare() {
+		Activity activity;
+		
+		activity = getActivity();
+		return ((FFXIEQApplication)activity.getApplication()).getFFXICharacterToCompare();
+	}
+
+	public void setFFXICharacterToCompare(FFXICharacter charInfo) {
+		Activity activity;
+		
+		activity = getActivity();
+		((FFXIEQApplication)activity.getApplication()).setFFXICharacterToCompare(charInfo);
 	}
 	
 	static public abstract class OnDatasetChangedListener {

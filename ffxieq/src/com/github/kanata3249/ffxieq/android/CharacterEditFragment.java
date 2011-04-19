@@ -204,6 +204,26 @@ public class CharacterEditFragment extends FFXIEQFragment {
 					}
         		});
         	}
+        	cb = (CheckBox)v.findViewById(R.id.Compare);
+        	if (cb != null) {
+        		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+						if (arg1) {
+							CharacterSelectorView cs = (CharacterSelectorView)getView().findViewById(R.id.CharacterSelectorToCompare);
+							long id;
+							
+							id = cs.getSelectedItemId();
+			    			setCharacterIDToCompare(id);
+			    			setFFXICharacterToCompare(getSettings().loadCharInfo(id));						
+	        		   		updateValues();
+						} else {
+			    			setCharacterIDToCompare(-1);
+			    			setFFXICharacterToCompare(null);
+	        		   		updateValues();
+						}
+					}
+        		});
+        	}
         }
         
         {
@@ -224,6 +244,34 @@ public class CharacterEditFragment extends FFXIEQFragment {
     					}
     				}
     				public void onNothingSelected(AdapterView<?> arg0) {
+    				}
+    			};
+   				cs.setOnItemSelectedListener(listener);
+        	}
+
+        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelectorToCompare);
+        	if (cs != null) {
+    	        AdapterView.OnItemSelectedListener listener;
+
+    	        cs.setParam(getSettings(), getDAO(), getCharacterID());
+    	    	listener = new AdapterView.OnItemSelectedListener() {
+    				public void onItemSelected(AdapterView<?> arg0, View arg1,
+    						int arg2, long arg3) {
+    					if (arg3 != getCharacterIDToCompare()) {
+    						CheckBox cb = (CheckBox)CharacterEditFragment.this.getView().findViewById(R.id.Compare);
+    						if (cb.isChecked()) {
+    							setCharacterIDToCompare(arg3);
+    							setFFXICharacterToCompare(getSettings().loadCharInfo(arg3));
+    	        		   		updateValues();
+    	        		   	}
+    					}
+    				}
+    				public void onNothingSelected(AdapterView<?> arg0) {
+						CheckBox cb;
+		    			setCharacterIDToCompare(-1);
+		    			setFFXICharacterToCompare(null);
+		            	cb = (CheckBox)CharacterEditFragment.this.getView().findViewById(R.id.Compare);
+		            	cb.setChecked(false);
     				}
     			};
    				cs.setOnItemSelectedListener(listener);
@@ -312,6 +360,7 @@ public class CharacterEditFragment extends FFXIEQFragment {
     		} catch (NumberFormatException e) {
     			v = 0;
     		}
+    		v = Math.min(v, charInfo.getJobLevel() / 2);
     		charInfo.setSubJobLevel(v);
     	}
 

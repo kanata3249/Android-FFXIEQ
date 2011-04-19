@@ -23,9 +23,6 @@ import com.github.kanata3249.ffxi.status.*;
 public class FFXICharacter implements IStatus, Serializable {
 	private static final long serialVersionUID = 1L;
 
-	static public final int GETSTATUS_STRING_TOTAL = 0;
-	static public final int GETSTATUS_STRING_SEPARATE = 1;
-
 	JobLevelAndRace mLevel;
 
 	EquipmentSet mEquipment;
@@ -141,75 +138,86 @@ public class FFXICharacter implements IStatus, Serializable {
 		mAtmaset.setAtma(index, id);
 	}
 
-	private String getStatusString(StatusValue v, int separate) {
-		int value;
-		
-		if (v.getAdditionalPercent() != 0 && (v.getValue() == 0 && v.getAdditional() == 0)) {
-			StringBuilder sb = new StringBuilder();
+	public StatusValue getStatus(StatusType type) {
+		switch (type) {
+		case HP:
+		case MP:
+		case STR:
+		case DEX:
+		case VIT:
+		case AGI:
+		case INT:
+		case MND:
+		case CHR:
+		case DSub:
+		case DRange:
+		case DelayRange:
+		case Haste:
+		case Slow:
+		case AttackMagic:
+		case AccuracyMagic:
+		case DefenceMagic:
+		case Regist_Fire:
+		case Regist_Ice:
+		case Regist_Wind:
+		case Regist_Earth:
+		case Regist_Lightning:
+		case Regist_Water:
+		case Regist_Light:
+		case Regist_Dark:
+		case CriticalRate:
+		case CriticalDamage:
+		case CriticalRateDefence:
+		case CriticalDamageDefence:
+		case SubtleBlow:
+		case StoreTP:
+		case Enmity:
+		case MagicEvasion:
+		case HealingHP:
+		case HealingMP:
+		case DualWield:
+		case MartialArts:
+		case DoubleAttack:
+		case TrippleAttack:
+		case QuadAttack:
+		case DamageCut:
+		case Counter:
+		case SpellInterruptionRate:
+			return getStatus(mLevel, type);
 
-			value = v.getAdditionalPercent();
-			sb.append(v.getAdditionalPercent());
-			sb.append('%');
-			return sb.toString();
-		} else if (separate == GETSTATUS_STRING_SEPARATE) {
-			StringBuilder sb = new StringBuilder();
-			
-			sb.append(v.getValue());
-			value = v.getAdditional();
-			if (value != 0) {
-				sb.append(' ');
-				if (value > 0) {
-					sb.append('+');
-				}
-				sb.append(v.getAdditional());
-			}
-			value = v.getAdditionalPercent();
-			if (value != 0) {
-				sb.append(' ');
-				if (value > 0) {
-					sb.append('+');
-				}
-				sb.append(v.getAdditionalPercent());
-				sb.append('%');
-			}
-			return sb.toString();
-		} else {
-			value = v.getValue()+ v.getAdditional();
-			if (v.getAdditionalPercent() != 0) {
-				value += value * v.getAdditionalPercent() / 100;
-			}
-			return ((Integer)value).toString();
+		case D:
+			return getD();
+		case Delay:
+			return getDelay();
+		case DelaySub:
+			return getDelaySub();
+		case Accuracy:
+			return getAccuracy();
+		case AccuracySub:
+			return getAccuracySub();
+		case Attack:
+			return getAttack();
+		case AttackSub:
+			return getAttackSub();
+		case AccuracyRange:
+			return getAccuracyRange();
+		case AttackRange:
+			return getAttackRange();
+		case Evasion:
+			return getEvasion();
+		case Defence:
+			return getDefence();
+		case DamageCutPhysical:
+			return getDamageCutPhysical();
+		case DamageCutMagic:
+			return getDamageCutMagic();
+		case DamageCutBreath:
+			return getDamageCutBreath();
 		}
+		return null;
 	}
 
-	public String getHP(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.HP), separate);
-	}
-	public String getMP(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.MP), separate);
-	}
-	public String getSTR(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.STR), separate);
-	}
-	public String getDEX(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DEX), separate);
-	}
-	public String getVIT(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.VIT), separate);
-	}
-	public String getAGI(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.AGI), separate);
-	}
-	public String getINT(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.INT), separate);
-	}
-	public String getMND(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.MND), separate);
-	}
-	public String getCHR(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.CHR), separate);
-	}
-	public String getD(int separate) {
+	public StatusValue getD() {
 		StatusType type;
 		Equipment eq;
 
@@ -229,18 +237,13 @@ public class FFXICharacter implements IStatus, Serializable {
 			value = new StatusValue(D, 0, 0);
 			
 			value.add(getStatus(mLevel, StatusType.D));
-			return getStatusString(value, separate);
+			return value;
 		} else {
-			return getStatusString(getStatus(mLevel, StatusType.D), separate);
+			return getStatus(mLevel, StatusType.D);
 		}
 	}
-	public String getDSub(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DSub), separate);
-	}
-	public String getDRange(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DRange), separate);
-	}
-	public String getDelay(int separate) {
+
+	public StatusValue getDelay() {
 		StatusType type, subtype;
 		Equipment eq;
 
@@ -268,7 +271,7 @@ public class FFXICharacter implements IStatus, Serializable {
 				} else {
 					base.setValue(480);
 				}
-				return getStatusString(base, separate);
+				return base;
 			}
 
 		case SKILL_DAGGER:
@@ -289,14 +292,14 @@ public class FFXICharacter implements IStatus, Serializable {
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
 						base.setAdditionalPercent(-(dualwield.getAdditional() + dualwield.getAdditionalPercent()));
 						
-						return getStatusString(base, separate);
+						return base;
 					}
 				}
 			}
 		}
-		return getStatusString(getStatus(mLevel, StatusType.Delay), separate);
+		return getStatus(mLevel, StatusType.Delay);
 	}
-	public String getDelaySub(int separate) {
+	public StatusValue getDelaySub() {
 		StatusType type, subtype;
 		Equipment eq;
 
@@ -331,16 +334,14 @@ public class FFXICharacter implements IStatus, Serializable {
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
 						base.setAdditionalPercent(-(dualwield.getAdditional() + dualwield.getAdditionalPercent()));
 
-						return getStatusString(base, separate);
+						return base;
 					}
 				}
 			}
 		}
-		return getStatusString(new StatusValue(0, 0, 0), separate);
+		return new StatusValue(0, 0, 0);
 	}
-	public String getDelayRange(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DelayRange), separate);
-	}
+
 	int calcAccuracyByWeaponType(StatusType type) {
 		int value;
 		int skillvalue, modvalue;
@@ -393,7 +394,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		return value;
 	}
-	public String getAccuracy(int separate) {
+	public StatusValue getAccuracy() {
 		StatusType type;
 		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
@@ -405,9 +406,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (type != null) {
 			mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 		}
-		return getStatusString(mod, separate);
+		return mod;
 	}
-	public String getAccuracySub(int separate) {
+	public StatusValue getAccuracySub() {
 		StatusType type;
 		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
@@ -416,9 +417,9 @@ public class FFXICharacter implements IStatus, Serializable {
 			if (type != null) {
 				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 			}
-			return getStatusString(mod, separate);
+			return mod;
 		} else {
-			return getStatusString(new StatusValue(0, 0, 0), separate);
+			return new StatusValue(0, 0, 0);
 		}
 	}
 	int calcAttackByWeaponType(StatusType type) {
@@ -454,7 +455,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		return value;
 	}
-	public String getAttack(int separate) {
+	public StatusValue getAttack() {
 		StatusType type;
 		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
@@ -466,9 +467,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (type != null) {
 			mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 		}
-		return getStatusString(mod, separate);
+		return mod;
 	}
-	public String getAttackSub(int separate) {
+	public StatusValue getAttackSub() {
 		StatusType type;
 		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
@@ -477,12 +478,12 @@ public class FFXICharacter implements IStatus, Serializable {
 			if (type != null) {
 				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 			}
-			return getStatusString(mod, separate);
+			return mod;
 		} else {
-			return getStatusString(new StatusValue(0, 0, 0), separate);
+			return new StatusValue(0, 0, 0);
 		}
 	}
-	public String getAccuracyRange(int separate) {
+	public StatusValue getAccuracyRange() {
 		StatusType type;
 		StatusValue mod = getStatus(mLevel, StatusType.AccuracyRange);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.RANGE);
@@ -495,9 +496,9 @@ public class FFXICharacter implements IStatus, Serializable {
 				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
 			}
 		}
-		return getStatusString(mod, separate);
+		return mod;
 	}
-	public String getAttackRange(int separate) {
+	public StatusValue getAttackRange() {
 		StatusType type;
 		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.RANGE);
@@ -510,21 +511,10 @@ public class FFXICharacter implements IStatus, Serializable {
 				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
 			}
 		}
-		return getStatusString(mod, separate);
+		return mod;
 	}
-	public String getHaste(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Haste), separate);
-	}
-	public String getSlow(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Slow), separate);
-	}
-	public String getSubtleBlow(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.SubtleBlow), separate);
-	}
-	public String getStoreTP(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.StoreTP), separate);
-	}
-	public String getEvasion(int separate) {
+
+	public StatusValue getEvasion() {
 		int value;
 		int skillvalue, stsvalue;
 		StatusValue skill = getStatus(mLevel, StatusType.SKILL_EVASION);
@@ -540,33 +530,9 @@ public class FFXICharacter implements IStatus, Serializable {
 			value = stsvalue * 50 / 100 + 200 + (skillvalue - 200) * 90 / 100;
 		}
 		mod.setValue(value + mod.getValue());
-		return getStatusString(mod, separate);
+		return mod;
 	}
-	public String getDoubleAttack(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DoubleAttack), separate);
-	}
-	public String getTrippleAttack(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.TrippleAttack), separate);
-	}
-	public String getQuadAttack(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.QuadAttack), separate);
-	}
-	public String getCriticalRate(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.CriticalRate), separate);
-	}
-	public String getCriticalDamage(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.CriticalDamage), separate);
-	}
-	public String getEnmity(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Enmity), separate);
-	}
-	public String getAttackMagic(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.AttackMagic), separate);
-	}
-	public String getAccuracyMagic(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.AccuracyMagic), separate);
-	}
-	public String getDefence(int separate) {
+	public StatusValue getDefence() {
 		int stsvalue, lvlvalue;
 		StatusValue mod;
 		StatusValue sts = getStatus(mLevel, StatusType.VIT);
@@ -582,55 +548,28 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		mod = getStatus(mLevel, StatusType.Defence);
 		mod.setValue(lvlvalue + 8 + stsvalue * 50 / 100 + mod.getValue());
-		return getStatusString(mod, separate);
+		return mod;
 	}
-	public String getDefenceMagic(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.DefenceMagic), separate);
-	}
-	public String getDamageCutPhysical(int separate) {
+	public StatusValue getDamageCutPhysical() {
 		StatusValue value;
 		
 		value = getStatus(mLevel, StatusType.DamageCut);
 		value.add(getStatus(mLevel, StatusType.DamageCutPhysical));
-		return getStatusString(value, separate);
+		return value;
 	}
-	public String getDamageCutMagic(int separate) {
+	public StatusValue getDamageCutMagic() {
 		StatusValue value;
 		
 		value = getStatus(mLevel, StatusType.DamageCut);
 		value.add(getStatus(mLevel, StatusType.DamageCutMagic));
-		return getStatusString(value, separate);
+		return value;
 	}
-	public String getDamageCutBreath(int separate) {
+	public StatusValue getDamageCutBreath() {
 		StatusValue value;
 		
 		value = getStatus(mLevel, StatusType.DamageCut);
 		value.add(getStatus(mLevel, StatusType.DamageCutBreath));
-		return getStatusString(value, separate);
-	}
-	public String getRegistFire(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Fire), separate);
-	}
-	public String getRegistIce(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Ice), separate);
-	}
-	public String getRegistWind(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Wind), separate);
-	}
-	public String getRegistEarth(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Earth), separate);
-	}
-	public String getRegistLightning(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Lightning), separate);
-	}
-	public String getRegistWater(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Water), separate);
-	}
-	public String getRegistLight(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Light), separate);
-	}
-	public String getRegistDark(int separate) {
-		return getStatusString(getStatus(mLevel, StatusType.Regist_Dark), separate);
+		return value;
 	}
 
 	public String getUnknownTokens() {

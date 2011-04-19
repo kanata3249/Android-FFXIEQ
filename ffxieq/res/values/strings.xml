@@ -247,4 +247,5 @@
 		<item>http://wiki.ffo.jp/search.cgi?CCC=愛&amp;Command=Search&amp;order=match&amp;ffotype=title&amp;type=title&amp;qf=</item>
 		<item>http://www.google.com/search?ie=utf-8&amp;q=</item>
    	</string-array>
+		<string name="Compare">比較</string>
 </resources>

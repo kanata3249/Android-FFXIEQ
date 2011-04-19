@@ -30,11 +30,14 @@ public class FFXIEQApplication extends Application {
 	
 	long mCharacterID;
 	FFXICharacter mFFXICharacter;
+	long mCharacterIDToCompare;
+	FFXICharacter mFFXICharacterToCompare;
 
 	public FFXIEQApplication() {
 		mFFXIDatabase = null;
 		mFFXIEQSettings = null;
 		mCharacterID = -1;
+		mCharacterIDToCompare = -1;
 	}
 
 	public FFXIDAO getFFXIDatabase() {
@@ -66,6 +69,14 @@ public class FFXIEQApplication extends Application {
 		this.mCharacterID = characterID;
 	}
 
+	public long getCharacterIDToCompare() {
+		return mCharacterIDToCompare;
+	}
+
+	public void setCharacterIDToCompare(long characterID) {
+		this.mCharacterIDToCompare = characterID;
+	}
+
 	public FFXICharacter getFFXICharacter() {
 		if (mCharacterID == -1) {
         	mCharacterID = getFFXIEQSettings().getFirstCharacterId();
@@ -78,6 +89,16 @@ public class FFXIEQApplication extends Application {
 		mFFXICharacter = charInfo;
 	}
 
+	public FFXICharacter getFFXICharacterToCompare() {
+		if (mCharacterID == -1) {
+        	return null;
+		}
+		return mFFXICharacterToCompare;
+	}
+
+	public void setFFXICharacterToCompare(FFXICharacter charInfo) {
+		mFFXICharacterToCompare = charInfo;
+	}
 	public ControlBindableValue[] getTemporaryValues() {
 		return mTemporaryValues;
 	}

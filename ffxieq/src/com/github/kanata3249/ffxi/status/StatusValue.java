@@ -43,4 +43,32 @@ public class StatusValue implements Serializable {
 	public int getCap() { return cap; };
 	
 	public void add(StatusValue value) { this.value += value.value; this.additional += value.additional; this.additionalPercent += value.additionalPercent; if (this.cap == 0) this.cap = value.cap; };
+	public void diff(StatusValue value) {
+		int v1, p1;
+		int v2, p2;
+
+		if (this.value == 0 && this.additional == 0 && this.additionalPercent != 0) {
+			this.value = this.additionalPercent;
+			this.additional = 0;
+			this.additionalPercent = value.additionalPercent - this.additionalPercent;
+			this.cap = 0;
+		} else {
+			v1 = (this.value + this.additional);
+			p1 = v1 * (this.additionalPercent) / 100;
+			if (cap > 0)
+				p1 = Math.min(p1, this.cap);
+			v1 += p1;
+			v2 = (value.value + value.additional);
+			p2 = v2 * (value.additionalPercent) / 100;
+			if (value.cap > 0)
+				p2 = Math.min(p2, value.cap);
+			v2 += p2;
+			
+			this.value = v1;
+			this.additional = v2 - v1;
+			this.additionalPercent = 0;
+			this.cap = 0;
+		}
+		return;
+	}
 }

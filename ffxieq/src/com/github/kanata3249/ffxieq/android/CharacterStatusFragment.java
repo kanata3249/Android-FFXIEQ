@@ -40,7 +40,7 @@ public class CharacterStatusFragment extends FFXIEQFragment {
     public void notifyDatasetChanged() {
     	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
     	if (sv != null) {
-    		sv.bindFFXICharacter(getFFXICharacter());
+    		sv.bindFFXICharacter(getFFXICharacter(), getFFXICharacterToCompare());
     	}
     }
 }

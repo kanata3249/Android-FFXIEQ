@@ -56,6 +56,21 @@ public class FFXIEQBaseActivity extends FragmentActivity {
 		((FFXIEQApplication)getApplication()).setFFXICharacter(charInfo);
 	}
 
+	public long getCharacterIDToCompare() {
+		return ((FFXIEQApplication)getApplication()).getCharacterIDToCompare();
+	}
+
+	public void setCharacterIDToCompare(long characterID) {
+		((FFXIEQApplication)getApplication()).setCharacterIDToCompare(characterID);
+	}
+	public FFXICharacter getFFXICharacterToCompare() {
+		return ((FFXIEQApplication)getApplication()).getFFXICharacterToCompare();
+	}
+
+	public void setFFXICharacterToCompare(FFXICharacter charInfo) {
+		((FFXIEQApplication)getApplication()).setFFXICharacterToCompare(charInfo);
+	}
+
 	public ControlBindableValue[] getTemporaryValues() {
 		return ((FFXIEQApplication)getApplication()).getTemporaryValues();
 	}
