@@ -83,20 +83,17 @@ public class StringTable {
 			return;
 		}
 		
-		if (cursor.getCount() < 1) {
-			// no matched row in table
-			cursor.close();
-			return;
+		if (cursor.moveToFirst()) {
+			for (;;) {
+				StringItem item;
+				
+				item = new StringItem(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getString(cursor.getColumnIndex(C_Value)));
+				mCachedItems.add(item);
+	
+				if (cursor.moveToNext() == false)
+					break;
+			};
 		}
-		cursor.moveToFirst();
-		do {
-			StringItem item;
-			
-			item = new StringItem(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getString(cursor.getColumnIndex(C_Value)));
-			mCachedItems.add(item);
-
-			cursor.moveToNext();
-		} while (!cursor.isLast());
 		cursor.close();
 	}
 }
