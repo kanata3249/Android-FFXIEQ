@@ -44,9 +44,13 @@ public class CharacterSelectorView extends Spinner {
 		mSettings = settings;
 		
 		cursor = settings.getCharactersCursor(columns, FFXIEQSettings.C_Name + " ASC");
-		adapter = new CharacterSelectorAdapter(getContext(), android.R.layout.simple_spinner_item, cursor, columns, views);
-		adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-		setAdapter(adapter);
+		if (getAdapter() == null) {
+			adapter = new CharacterSelectorAdapter(getContext(), android.R.layout.simple_spinner_item, cursor, columns, views);
+			adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+			setAdapter(adapter);
+		} else {
+			((CharacterSelectorAdapter)getAdapter()).changeCursor(cursor);
+		}
 		setSelectionById(current);
 		
 		return true;

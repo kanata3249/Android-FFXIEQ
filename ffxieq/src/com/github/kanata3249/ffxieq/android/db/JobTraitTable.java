@@ -77,15 +77,5 @@ public class JobTraitTable {
 
 		return result;
 	}
-
-	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, String[] columns, String orderBy) {
-		Cursor cursor;
-		
-		cursor = db.query(TABLE_NAME, columns,
-				null,
-				null, null, null, orderBy);
-
-		return cursor;
-	}
 }
 

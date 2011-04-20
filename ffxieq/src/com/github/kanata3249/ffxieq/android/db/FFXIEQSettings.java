@@ -268,6 +268,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 				cursor.moveToNext();
 			}
 		}
+		cursor.close();
 	}
 	public void useFilter(long id) {
 		ContentValues values = new ContentValues();

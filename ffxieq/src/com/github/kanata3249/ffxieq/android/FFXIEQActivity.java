@@ -96,13 +96,12 @@ public class FFXIEQActivity extends TabActivity {
 			/* disable tab */
 			getTabWidget().setVisibility(View.GONE);
 		}
+		updateValues();
 	}
 	
     @Override
     public void onStart() {
     	super.onStart();
-
-   		updateValues();
 
         {
         	Button btn;
@@ -149,7 +148,6 @@ public class FFXIEQActivity extends TabActivity {
         	if (cs != null) {
     	        AdapterView.OnItemSelectedListener listener;
 
-    	        cs.setParam(getSettings(), getDAO(), getCharacterID());
     	    	listener = new AdapterView.OnItemSelectedListener() {
     				public void onItemSelected(AdapterView<?> arg0, View arg1,
     						int arg2, long arg3) {
@@ -169,7 +167,6 @@ public class FFXIEQActivity extends TabActivity {
         	if (cs != null) {
     	        AdapterView.OnItemSelectedListener listener;
 
-    	        cs.setParam(getSettings(), getDAO(), getCharacterIDToCompare());
     	    	listener = new AdapterView.OnItemSelectedListener() {
     				public void onItemSelected(AdapterView<?> arg0, View arg1,
     						int arg2, long arg3) {
@@ -423,10 +420,14 @@ public class FFXIEQActivity extends TabActivity {
     	
     	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
     	if (cs != null) {
-    		cs.notifyDatasetChanged(getCharacterID());
+	        cs.setParam(getSettings(), getDAO(), getCharacterID());
     	}
-    	
-    	((FFXIEQBaseActivity)getCurrentActivity()).notifyDatasetChanged();
+    	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelectorToCompare);
+    	if (cs != null) {
+	        cs.setParam(getSettings(), getDAO(), getCharacterIDToCompare());
+    	}
+
+        ((FFXIEQBaseActivity)getCurrentActivity()).notifyDatasetChanged();
     }
 
     public String getName() {
