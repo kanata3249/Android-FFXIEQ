@@ -112,7 +112,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		finish();
 	}
 	
-	static public boolean startActivity(FFXIEQBaseActivity from, int request) {
+	static public boolean startActivity(FFXIEQActivity from, int request) {
 		{  // Create temporary copy of merit point values
 			ControlBindableInteger values[];
 			MeritPoint merits;

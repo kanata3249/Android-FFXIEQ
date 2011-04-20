@@ -19,18 +19,18 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import com.github.kanata3249.ffxieq.R;
 
-public class CharacterStatusActivity extends FFXIEQBaseActivity {
+public class BasicEditActivity extends FFXIEQBaseActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.characterstatusactivity);
+        setContentView(R.layout.basiceditactivity);
     }
 
 	public void notifyDatasetChanged() {
 		FragmentManager fm = getSupportFragmentManager();
-		CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
+        BasicEditFragment fragment = (BasicEditFragment)fm.findFragmentById(R.id.BasicEdit);
         
         fragment.updateValues();
 	}

@@ -18,21 +18,11 @@ package com.github.kanata3249.ffxieq.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
@@ -40,17 +30,6 @@ public class CharacterEditFragment extends FFXIEQFragment {
 	private View mView;
 	private boolean mUpdating;
     
-	public void loadFFXICharacter(long id) {
-		setCharacterID(id);
-		setFFXICharacter(getSettings().loadCharInfo(id));
-		
-		updateValues();
-	}
-	
-	public String getName() {
-		return getSettings().getCharacterName(getCharacterID());
-	}
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,89 +46,6 @@ public class CharacterEditFragment extends FFXIEQFragment {
 
         // setup controls
         {
-	        Spinner spin;
-	        AdapterView.OnItemSelectedListener listener;
-	
-	    	listener = new AdapterView.OnItemSelectedListener() {
-				public void onItemSelected(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
-					switch (arg0.getId()) {
-					case R.id.Race:
-						if (getFFXICharacter().getRace() != arg2) {
-							saveAndUpdateValues();
-						}
-						break;
-					case R.id.Job:
-						if (getFFXICharacter().getJob() != arg2) {
-							saveAndUpdateValues();
-						}
-						break;
-					case R.id.SubJob:
-						if (getFFXICharacter().getSubJob() != arg2) {
-							saveAndUpdateValues();
-						}
-						break;
-					case R.id.AbyssiteOfFurtherance:
-						if (getFFXICharacter().getAbyssiteOfFurtherance() != arg2) {
-							saveAndUpdateValues();
-						}
-						break;
-					case R.id.AbyssiteOfMerit:
-						if (getFFXICharacter().getAbyssiteOfMerit() != arg2) {
-							saveAndUpdateValues();
-						}
-						break;
-					}
-				}
-				public void onNothingSelected(AdapterView<?> arg0) {
-					saveAndUpdateValues();
-				}
-			};
-	    	spin = (Spinner)v.findViewById(R.id.Race);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(listener);
-	    	}
-	    	spin = (Spinner)v.findViewById(R.id.Job);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(listener);
-	    	}
-	    	spin = (Spinner)v.findViewById(R.id.SubJob);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(listener);
-	    	}
-	    	
-	    	spin = (Spinner)v.findViewById(R.id.AbyssiteOfFurtherance);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(listener);
-	    	}
-	    	spin = (Spinner)v.findViewById(R.id.AbyssiteOfMerit);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(listener);
-	    	}
-        }
-
-        {
-	        EditText et;
-	        OnEditorActionListener listener;
-        
-	        listener = new OnEditorActionListener() {
-				public boolean onEditorAction(TextView v, int actionId,
-						KeyEvent event) {
-					saveAndUpdateValues();
-					return false;
-				}
-	        };
-	        et = (EditText)v.findViewById(R.id.JobLevel);
-	        if (et != null) {
-	        	et.setOnEditorActionListener(listener);
-	        }
-	        et = (EditText)v.findViewById(R.id.SubJobLevel);
-	        if (et != null) {
-	        	et.setOnEditorActionListener(listener);
-	        }
-        }
-        
-        {
         	EquipmentSetView es;
         	
         	es = (EquipmentSetView)v.findViewById(R.id.Equipments);
@@ -163,120 +59,6 @@ public class CharacterEditFragment extends FFXIEQFragment {
             	});
         	}
         }
-
-        {
-        	AtmaSetView as;
-        	
-        	as = (AtmaSetView)v.findViewById(R.id.Atmas);
-        	if (as != null) {
-        		as.bindFFXICharacter(charInfo);
-            	as.setOnItemClickListener(new OnItemClickListener() {
-    				public void onItemClick(AdapterView<?> arg0, View arg1,
-    						int arg2, long arg3) {
-    					AtmaSelector.startActivity(CharacterEditFragment.this, 0, getFFXICharacter(), arg2, ((AtmaSetView)arg0).getItemId(arg2));
-    				}
-            	});
-        	}
-        }
-        
-        {
-        	Button btn;
-        	
-        	btn = (Button)v.findViewById(R.id.Save);
-        	if (btn != null) {
-        		btn.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View arg0) {
-						getActivity().showDialog(R.layout.querysavecharacter);
-					}
-        		});
-        	}
-        }
-        
-        {
-        	CheckBox cb;
-        	
-        	cb = (CheckBox)v.findViewById(R.id.InAbyssea);
-        	if (cb != null) {
-        		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-        		   		getFFXICharacter().setInAbbisea(arg1);
-        		   		updateValues();
-					}
-        		});
-        	}
-        	cb = (CheckBox)v.findViewById(R.id.Compare);
-        	if (cb != null) {
-        		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-						if (arg1) {
-							CharacterSelectorView cs = (CharacterSelectorView)getView().findViewById(R.id.CharacterSelectorToCompare);
-							long id;
-							
-							id = cs.getSelectedItemId();
-			    			setCharacterIDToCompare(id);
-			    			setFFXICharacterToCompare(getSettings().loadCharInfo(id));						
-	        		   		updateValues();
-						} else {
-			    			setCharacterIDToCompare(-1);
-			    			setFFXICharacterToCompare(null);
-	        		   		updateValues();
-						}
-					}
-        		});
-        	}
-        }
-        
-        {
-        	CharacterSelectorView cs;
-        	
-        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelector);
-        	if (cs != null) {
-    	        AdapterView.OnItemSelectedListener listener;
-
-    	        cs.setParam(getSettings(), getDAO(), getCharacterID());
-    	    	listener = new AdapterView.OnItemSelectedListener() {
-    				public void onItemSelected(AdapterView<?> arg0, View arg1,
-    						int arg2, long arg3) {
-    					if (arg3 != getCharacterID()) {
-    		    			setCharacterID(arg3);
-    		    			setFFXICharacter(getSettings().loadCharInfo(arg3));
-    		    			updateValues();
-    					}
-    				}
-    				public void onNothingSelected(AdapterView<?> arg0) {
-    				}
-    			};
-   				cs.setOnItemSelectedListener(listener);
-        	}
-
-        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelectorToCompare);
-        	if (cs != null) {
-    	        AdapterView.OnItemSelectedListener listener;
-
-    	        cs.setParam(getSettings(), getDAO(), getCharacterID());
-    	    	listener = new AdapterView.OnItemSelectedListener() {
-    				public void onItemSelected(AdapterView<?> arg0, View arg1,
-    						int arg2, long arg3) {
-    					if (arg3 != getCharacterIDToCompare()) {
-    						CheckBox cb = (CheckBox)CharacterEditFragment.this.getView().findViewById(R.id.Compare);
-    						if (cb.isChecked()) {
-    							setCharacterIDToCompare(arg3);
-    							setFFXICharacterToCompare(getSettings().loadCharInfo(arg3));
-    	        		   		updateValues();
-    	        		   	}
-    					}
-    				}
-    				public void onNothingSelected(AdapterView<?> arg0) {
-						CheckBox cb;
-		    			setCharacterIDToCompare(-1);
-		    			setFFXICharacterToCompare(null);
-		            	cb = (CheckBox)CharacterEditFragment.this.getView().findViewById(R.id.Compare);
-		            	cb.setChecked(false);
-    				}
-    			};
-   				cs.setOnItemSelectedListener(listener);
-        	}
-        }
     }
     @Override
 	public void onStop() {
@@ -284,94 +66,11 @@ public class CharacterEditFragment extends FFXIEQFragment {
 
         // reset listeners
         {
-	        Spinner spin;
-	
-	    	spin = (Spinner)v.findViewById(R.id.Race);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(null);
-	    	}
-	    	spin = (Spinner)v.findViewById(R.id.Job);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(null);
-	    	}
-	    	spin = (Spinner)v.findViewById(R.id.SubJob);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(null);
-	    	}
-	    	
-	    	spin = (Spinner)v.findViewById(R.id.AbyssiteOfFurtherance);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(null);
-	    	}
-	    	spin = (Spinner)v.findViewById(R.id.AbyssiteOfMerit);
-	    	if (spin != null) {
-				spin.setOnItemSelectedListener(null);
-	    	}
-        }
-
-        {
-	        EditText et;
-	        et = (EditText)v.findViewById(R.id.JobLevel);
-	        if (et != null) {
-	        	et.setOnEditorActionListener(null);
-	        }
-	        et = (EditText)v.findViewById(R.id.SubJobLevel);
-	        if (et != null) {
-	        	et.setOnEditorActionListener(null);
-	        }
-        }
-        
-        {
         	EquipmentSetView es;
         	
         	es = (EquipmentSetView)v.findViewById(R.id.Equipments);
         	if (es != null) {
             	es.setOnItemClickListener(null);
-        	}
-        }
-
-        {
-        	AtmaSetView as;
-        	
-        	as = (AtmaSetView)v.findViewById(R.id.Atmas);
-        	if (as != null) {
-            	as.setOnItemClickListener(null);
-        	}
-        }
-        
-        {
-        	Button btn;
-        	
-        	btn = (Button)v.findViewById(R.id.Save);
-        	if (btn != null) {
-        		btn.setOnClickListener(null);
-        	}
-        }
-        
-        {
-        	CheckBox cb;
-        	
-        	cb = (CheckBox)v.findViewById(R.id.InAbyssea);
-        	if (cb != null) {
-        		cb.setOnCheckedChangeListener(null);
-        	}
-        	cb = (CheckBox)v.findViewById(R.id.Compare);
-        	if (cb != null) {
-        		cb.setOnCheckedChangeListener(null);
-        	}
-        }
-        
-        {
-        	CharacterSelectorView cs;
-        	
-        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelector);
-        	if (cs != null) {
-   				cs.setOnItemSelectedListener(null);
-        	}
-
-        	cs = (CharacterSelectorView)v.findViewById(R.id.CharacterSelectorToCompare);
-        	if (cs != null) {
-   				cs.setOnItemSelectedListener(null);
         	}
         }
 		super.onStop();
@@ -398,128 +97,22 @@ public class CharacterEditFragment extends FFXIEQFragment {
 					charInfo.setEquipment(part, id);
 				}
 		        updateValues();
-			} else if (AtmaSelector.isComeFrom(data)) {
-				int index = AtmaSelector.getIndex(data);
-				long id = AtmaSelector.getAtmaId(data);
-				
-				if (index != -1) {
-					charInfo.setAtma(index, id);
-				}
-		        updateValues();
-			} else if (MeritPointEditActivity.isComeFrom(data)) {
-		        updateValues();
+
+		        if (mListener != null) {
+		    		mListener.notifyDatasetChanged();
+		    	}
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void saveAndUpdateValues() {
-        Spinner spin;
-        EditText edit;
-        int v;
-        
-        FFXICharacter charInfo;
-        
-        if (getActivity() == null) {
-        	return;
-        }
-        charInfo = getFFXICharacter();
-
-    	spin = (Spinner)mView.findViewById(R.id.Race);
-    	if (spin != null) {
-    		v = spin.getSelectedItemPosition();
-    		charInfo.setRace(v);
-    	}
-    	spin = (Spinner)mView.findViewById(R.id.Job);
-    	if (spin != null) {
-    		v = spin.getSelectedItemPosition();
-    		charInfo.setJob(v);
-    	}
-    	spin = (Spinner)mView.findViewById(R.id.SubJob);
-    	if (spin != null) {
-    		v = spin.getSelectedItemPosition();
-    		charInfo.setSubJob(v);
-    	}
-
-    	edit = (EditText)mView.findViewById(R.id.JobLevel);
-    	if (edit != null) {
-    		String str = edit.getText().toString();
-    		try {
-    			v = Integer.valueOf(str);
-    		} catch (NumberFormatException e) {
-    			v = 0;
-    		}
-    		charInfo.setJobLevel(v);
-    	}
-    	edit = (EditText)mView.findViewById(R.id.SubJobLevel);
-    	if (edit != null) {
-    		String str = edit.getText().toString();
-    		try {
-    			v = Integer.valueOf(str);
-    		} catch (NumberFormatException e) {
-    			v = 0;
-    		}
-    		v = Math.min(v, charInfo.getJobLevel() / 2);
-    		charInfo.setSubJobLevel(v);
-    	}
-
-    	spin = (Spinner)mView.findViewById(R.id.AbyssiteOfFurtherance);
-    	if (spin != null) {
-    		v = spin.getSelectedItemPosition();
-    		charInfo.setAbyssiteOfFurtherance(v);
-    	}
-    	spin = (Spinner)mView.findViewById(R.id.AbyssiteOfMerit);
-    	if (spin != null) {
-    		v = spin.getSelectedItemPosition();
-    		charInfo.setAbyssiteOfMerit(v);
-    	}
-    	
-    	updateValues();
-    }
-    private void updateValues() {
-    	TextView tv;
-    	Spinner spin;
-        FFXICharacter charInfo = getFFXICharacter();
+    public void updateValues() {
+    	FFXICharacter charInfo = getFFXICharacter();
 
         if (mUpdating)
         	return;
         mUpdating = true;
-    	spin = (Spinner)mView.findViewById(R.id.Race);
-    	if (spin != null) {
-    		spin.setSelection(charInfo.getRace());
-    	}
-    	spin = (Spinner)mView.findViewById(R.id.Job);
-    	if (spin != null) {
-    		spin.setSelection(charInfo.getJob());
-    	}
-    	spin = (Spinner)mView.findViewById(R.id.SubJob);
-    	if (spin != null) {
-    		spin.setSelection(charInfo.getSubJob());
-    	}
-    	tv = (TextView)mView.findViewById(R.id.JobLevel);
-    	if (tv != null) {
-    		tv.setText(((Integer)charInfo.getJobLevel()).toString());
-    	}
-    	tv = (TextView)mView.findViewById(R.id.SubJobLevel);
-    	if (tv != null) {
-    		tv.setText(((Integer)charInfo.getSubJobLevel()).toString());
-    	}
 
-    	CheckBox cb;
-    	
-    	cb = (CheckBox)mView.findViewById(R.id.InAbyssea);
-    	if (cb != null) {
-    		cb.setChecked(charInfo.isInAbbisea());
-    	}
-    		
-    	spin = (Spinner)mView.findViewById(R.id.AbyssiteOfFurtherance);
-    	if (spin != null) {
-    		spin.setSelection(charInfo.getAbyssiteOfFurtherance());
-    	}
-    	spin = (Spinner)mView.findViewById(R.id.AbyssiteOfMerit);
-    	if (spin != null) {
-    		spin.setSelection(charInfo.getAbyssiteOfMerit());
-    	}
     	EquipmentSetView es;
     	
     	es = (EquipmentSetView)mView.findViewById(R.id.Equipments);
@@ -527,27 +120,6 @@ public class CharacterEditFragment extends FFXIEQFragment {
     		es.bindFFXICharacter(charInfo);
     	}
     	
-    	AtmaSetView as;
-    	
-    	as = (AtmaSetView)mView.findViewById(R.id.Atmas);
-    	if (as != null) {
-    		as.bindFFXICharacter(charInfo);
-    	}
-    	
-    	CharacterSelectorView cs;
-    	
-    	cs = (CharacterSelectorView)mView.findViewById(R.id.CharacterSelector);
-    	if (cs != null) {
-    		cs.notifyDatasetChanged(getCharacterID());
-    	}
-    	
-    	if (mListener != null) {
-    		mListener.notifyDatasetChanged();
-    	}
     	mUpdating = false;
-    }
-    
-    public void setOnDatasetChangedListener(OnDatasetChangedListener listener) {
-    	mListener = listener;
     }
 }

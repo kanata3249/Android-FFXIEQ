@@ -97,7 +97,7 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 		finish();
 	}
 	
-	static public boolean startActivity(FFXIEQBaseActivity from, int request) {
+	static public boolean startActivity(FFXIEQActivity from, int request) {
 		{ // Create temporary copy of skill values
 			ControlBindableInteger values[];
 	

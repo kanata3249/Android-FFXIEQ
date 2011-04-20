@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/linearLayout1" xmlns:android="http://schemas.android.com/apk/res/android">
+	<fragment class="com.github.kanata3249.ffxieq.android.OtherEditFragment" android:layout_height="fill_parent" android:id="@+id/OtherEdit" android:layout_width="wrap_content"/>
+</LinearLayout>

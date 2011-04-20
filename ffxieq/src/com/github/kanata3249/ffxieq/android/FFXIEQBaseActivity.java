@@ -144,4 +144,8 @@ public class FFXIEQBaseActivity extends FragmentActivity {
 			}
 		}
 	}
+	
+	public void notifyDatasetChanged() {
+    	updateValues();
+    }
 }

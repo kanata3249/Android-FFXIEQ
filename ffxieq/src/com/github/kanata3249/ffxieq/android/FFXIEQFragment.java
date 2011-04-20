@@ -23,7 +23,12 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 public class FFXIEQFragment extends Fragment {
-	protected FFXIDAO getDAO() {
+	static public abstract class OnDatasetChangedListener {
+    	abstract public void notifyDatasetChanged();
+    }
+    OnDatasetChangedListener mListener;
+
+    protected FFXIDAO getDAO() {
 		Activity activity;
 		
 		activity = getActivity();
@@ -92,8 +97,7 @@ public class FFXIEQFragment extends Fragment {
 		((FFXIEQApplication)activity.getApplication()).setFFXICharacterToCompare(charInfo);
 	}
 	
-	static public abstract class OnDatasetChangedListener {
-    	abstract public void notifyDatasetChanged();
+    public void setOnDatasetChangedListener(OnDatasetChangedListener listener) {
+    	mListener = listener;
     }
-    OnDatasetChangedListener mListener;
 }
