@@ -27,12 +27,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 	protected transient String mUnknownTokens;
 	protected transient boolean mNeedParseDescription;
 	private transient Hashtable<String, DescriptionTokenHandler> fTokenHandler;
-
+	static transient String mConvertCharactersFrom;
+	static transient String mConvertCharactersTo;
 	
 	abstract class DescriptionTokenHandler {
 		abstract boolean handleToken(String token, String parameter);
 	}
-
 
 	public boolean parseDescription() {
 		boolean updated = false;
@@ -107,20 +107,25 @@ public class StatusModifierWithDescription extends StatusModifier {
 		String tmpString = new String(string);
 		// TODO Convert SPC to UNDERLINE for some multi-word token.  (for English/German version?)
 		
-		// Canonicalize some error characters in Japanese database
-		final String SIGN_CHARS = "I”“•ij–{C|D^FGƒ„H—mnOQobp";
+		// Canonicalize some error characters in database
 		boolean skipwhite = false;
+		
+		String from = Dao.getString(FFXIString.ItemDescriptionConvertCharsFrom);
+		String to = Dao.getString(FFXIString.ItemDescriptionConvertCharsTo);
+		boolean convert = (from.length() > 0
+						   && from.length() == to.length());
 		for (int i =0; i < tmpString.length(); i++) {
-			char ch = tmpString.charAt(i);
-			if ((ch >= '‚`' && ch <= '‚y')
-				|| (ch >= '‚O' && ch <= '‚X')
-				|| SIGN_CHARS.indexOf(ch) >= 0) {
-				ch = (char) ('A' + (ch - '‚`'));
-				skipwhite = false;
-			} else if (ch == '`') {
-				ch = '-';
-				skipwhite = false;
-			} else if (Character.isWhitespace(ch) || ch == '@') {
+			char ch;
+			int index;
+			
+			ch = tmpString.charAt(i);
+			if (convert) {
+				index = from.indexOf(ch);
+				if (index >= 0) {
+					ch = to.charAt(index);
+				}
+			}
+			if (Character.isWhitespace(ch)) {
 				if (skipwhite)
 					continue;
 				ch = ' ';
