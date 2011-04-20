@@ -109,16 +109,24 @@ public class StatusModifierWithDescription extends StatusModifier {
 		
 		// Canonicalize some error characters in Japanese database
 		final String SIGN_CHARS = "I”“•ij–{C|D^FGƒ„H—mnOQobp";
+		boolean skipwhite = false;
 		for (int i =0; i < tmpString.length(); i++) {
 			char ch = tmpString.charAt(i);
 			if ((ch >= '‚`' && ch <= '‚y')
 				|| (ch >= '‚O' && ch <= '‚X')
 				|| SIGN_CHARS.indexOf(ch) >= 0) {
 				ch = (char) ('A' + (ch - '‚`'));
+				skipwhite = false;
 			} else if (ch == '`') {
 				ch = '-';
-			} else if (ch == '@') {
+				skipwhite = false;
+			} else if (Character.isWhitespace(ch) || ch == '@') {
+				if (skipwhite)
+					continue;
 				ch = ' ';
+				skipwhite = true;
+			} else {
+				skipwhite = false;
 			}
 			newString.append(ch);
 		}
