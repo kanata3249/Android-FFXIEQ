@@ -43,8 +43,8 @@ public class SkillCapTable {
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
 			value = cursor.getInt(0);
-			cursor.close();
 		}
+		cursor.close();
 
 		if (subjoblevel > 0 && !subjobrank.equals("-")) {
 			cursor = db.query(TABLE_NAME, columns,
@@ -54,8 +54,8 @@ public class SkillCapTable {
 			if (cursor.getCount() > 0) {
 				cursor.moveToFirst();
 				value = Math.max(value, cursor.getInt(0));
-				cursor.close();
 			}
+			cursor.close();
 		}
 
 		return value;
