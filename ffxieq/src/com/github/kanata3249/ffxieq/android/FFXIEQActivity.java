@@ -130,11 +130,11 @@ public class FFXIEQActivity extends TabActivity {
 							id = cs.getSelectedItemId();
 			    			setCharacterIDToCompare(id);
 			    			setFFXICharacterToCompare(getSettings().loadCharInfo(id));						
-	        		   		updateValues();
+			    			updateSubViewValues();
 						} else {
 			    			setCharacterIDToCompare(-1);
 			    			setFFXICharacterToCompare(null);
-	        		   		updateValues();
+			    			updateSubViewValues();
 						}
 					}
         		});
@@ -154,7 +154,7 @@ public class FFXIEQActivity extends TabActivity {
     					if (arg3 != getCharacterID()) {
     		    			setCharacterID(arg3);
     		    			setFFXICharacter(getSettings().loadCharInfo(arg3));
-    		    			updateValues();
+    		    			updateSubViewValues();
     					}
     				}
     				public void onNothingSelected(AdapterView<?> arg0) {
@@ -175,7 +175,7 @@ public class FFXIEQActivity extends TabActivity {
     						if (cb.isChecked()) {
     							setCharacterIDToCompare(arg3);
     							setFFXICharacterToCompare(getSettings().loadCharInfo(arg3));
-    	        		   		updateValues();
+    							updateSubViewValues();
     	        		   	}
     					}
     				}
@@ -426,7 +426,9 @@ public class FFXIEQActivity extends TabActivity {
     	if (cs != null) {
 	        cs.setParam(getSettings(), getDAO(), getCharacterIDToCompare());
     	}
+    }
 
+    protected void updateSubViewValues() {
         ((FFXIEQBaseActivity)getCurrentActivity()).notifyDatasetChanged();
     }
 

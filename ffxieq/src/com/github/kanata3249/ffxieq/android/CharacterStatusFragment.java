@@ -36,13 +36,6 @@ public class CharacterStatusFragment extends FFXIEQFragment {
         mView = inflater.inflate(R.layout.characterstatusfragment, container, false);
         return mView;
     }
-    
-    @Override
-    public void onStart() {
-    	super.onStart();
-
-   		updateValues();
-    }
 
     public void updateValues() {
     	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
