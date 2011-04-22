@@ -164,7 +164,8 @@
        <string name="AbyssiteOfMeritPrompt">真価</string>
        <string name="CriticalRate">クリ率</string>
        <string name="CriticalDamage">クリダメ</string>
-       <string name="Remove">Remove</string>
+       <string name="Remove">はずす</string>
+       <string name="RemoveAll">全てはずす</string>
        <string name="AccuracySub">サブ命</string>
        <string name="AttackSub">サブ攻</string>
        <string name="Enmity">敵対心</string>
