@@ -57,12 +57,12 @@ public class FFXIEQActivity extends TabActivity {
 		TabHost.TabSpec spec;
 		Intent intent;
 		
-		intent = new Intent().setClass(this, CharacterEditActivity.class);
+		intent = new Intent().setClass(this, EquipmentSetEditActivity.class);
 		spec = tabHost.newTabSpec("equipment").setIndicator("Equipment", res.getDrawable(android.R.drawable.ic_menu_edit));
 		spec.setContent(intent);
 		tabHost.addTab(spec);
 		
-		if (!CharacterEditActivity.hasAllView(tabHost.getCurrentView())) {
+		if (!EquipmentSetEditActivity.hasAllView(tabHost.getCurrentView())) {
 			intent = new Intent().setClass(this, BasicEditActivity.class);
 			spec = tabHost.newTabSpec("basic").setIndicator("Basic", res.getDrawable(android.R.drawable.ic_menu_edit));
 			spec.setContent(intent);
@@ -82,9 +82,9 @@ public class FFXIEQActivity extends TabActivity {
 						imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 					}
 					if (tabId.equals("equipment")) {
-						CharacterEditActivity activity;
+						EquipmentSetEditActivity activity;
 
-						activity = (CharacterEditActivity)getCurrentActivity();
+						activity = (EquipmentSetEditActivity)getCurrentActivity();
 						activity.notifyDatasetChanged();
 					} else if (tabId.equals("basic")) {
 						BasicEditActivity activity;

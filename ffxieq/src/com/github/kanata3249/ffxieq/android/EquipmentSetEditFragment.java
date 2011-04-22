@@ -35,7 +35,7 @@ import com.github.kanata3249.ffxieq.EquipmentSet;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
-public class CharacterEditFragment extends FFXIEQFragment {
+public class EquipmentSetEditFragment extends FFXIEQFragment {
 	private View mView;
 	private boolean mUpdating;
 	int mLongClickingItemPosition;
@@ -57,7 +57,7 @@ public class CharacterEditFragment extends FFXIEQFragment {
             	es.setOnItemClickListener(new OnItemClickListener() {
     				public void onItemClick(AdapterView<?> arg0, View arg1,
     						int arg2, long arg3) {
-    					EquipmentSelectorActivity.startActivity(CharacterEditFragment.this, 0, getFFXICharacter(), arg2, ((EquipmentSetView)arg0).getItemId(arg2));
+    					EquipmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), arg2, ((EquipmentSetView)arg0).getItemId(arg2));
     				}
             	});
             	es.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -94,7 +94,7 @@ public class CharacterEditFragment extends FFXIEQFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result;
 
-        result = mView = inflater.inflate(R.layout.charactereditfragment, container, false);
+        result = mView = inflater.inflate(R.layout.equipmentseteditfragment, container, false);
 
         return result;
     }

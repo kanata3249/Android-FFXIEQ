@@ -14,7 +14,7 @@
         </activity>
         <activity android:name=".android.EquipmentSelectorActivity"></activity>
         <activity android:name=".android.AtmaSelector"></activity>
-        <activity android:name=".android.CharacterEditActivity"></activity>
+        <activity android:name=".android.EquipmentSetEditActivity"></activity>
         <activity android:name=".android.BasicEditActivity"></activity>
         <activity android:name=".android.CharacterStatusActivity"></activity>
         <activity android:name=".android.MeritPointEditActivity"></activity>

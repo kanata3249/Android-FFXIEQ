@@ -20,13 +20,13 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import com.github.kanata3249.ffxieq.R;
 
-public class CharacterEditActivity extends FFXIEQBaseActivity {
+public class EquipmentSetEditActivity extends FFXIEQBaseActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.charactereditactivity);
+        setContentView(R.layout.equipmentseteditactivity);
 
         notifyDatasetChanged();
 
@@ -34,12 +34,12 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
         FFXIEQFragment.OnDatasetChangedListener listener = new FFXIEQFragment.OnDatasetChangedListener() {
 			@Override
 			public void notifyDatasetChanged() {
-				CharacterEditActivity.this.notifyDatasetChanged();
+				EquipmentSetEditActivity.this.notifyDatasetChanged();
 			}
 		};
 
 		{
-			CharacterEditFragment fragment = (CharacterEditFragment)fm.findFragmentById(R.id.CharacterEdit);
+			EquipmentSetEditFragment fragment = (EquipmentSetEditFragment)fm.findFragmentById(R.id.CharacterEdit);
 	        if (fragment != null)
 	        	fragment.setOnDatasetChangedListener(listener);
 	    }
@@ -61,7 +61,7 @@ public class CharacterEditActivity extends FFXIEQBaseActivity {
 		FragmentManager fm = getSupportFragmentManager();
 
 		{
-			CharacterEditFragment fragment = (CharacterEditFragment)fm.findFragmentById(R.id.CharacterEdit);
+			EquipmentSetEditFragment fragment = (EquipmentSetEditFragment)fm.findFragmentById(R.id.CharacterEdit);
 	        if (fragment != null)
 	        	fragment.updateValues();
 	    }
