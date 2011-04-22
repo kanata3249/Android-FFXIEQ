@@ -35,6 +35,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -74,6 +75,12 @@ public class FFXIEQActivity extends TabActivity {
 			
 			tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 				public void onTabChanged(String tabId) {
+					InputMethodManager imm;
+					
+					imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+					if (imm != null && getCurrentFocus() != null) {
+						imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+					}
 					if (tabId.equals("equipment")) {
 						CharacterEditActivity activity;
 
