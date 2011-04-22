@@ -114,9 +114,9 @@
         <item>5</item>
     </string-array>
     <string name="NewCharacterName">NewCharacter 1.</string>
-    <string name="Save">Save...</string>
-    <string name="InAbyssea">Abyssea</string>
-    <string name="Merits">Merits...</string>
+    <string name="Save">保存...</string>
+    <string name="InAbyssea">アビセア</string>
+    <string name="Merits">メリポ...</string>
     <string name="Accuracy">命中</string>
     <string name="Attack">攻撃力</string>
     <string name="RangeAccuracy">飛命</string>
@@ -129,14 +129,14 @@
     <string name="DoubleAttack">ダブル</string>
     <string name="TrippleAttack">トリプル</string>
     <string name="QuadAttack">クワッド</string>
-    <string name="SaveOK">Save</string>
-    <string name="QuerySaveCharacterTitle">Save Character info</string>
-    <string name="SaveNew">Save as new character.</string>
-    <string name="CharacterSelectorDropDownTitle">Select character</string>
-    <string name="QueryDeleteCharacter">Are you sure to delete this character?</string>
-    <string name="DeleteOK">Delete</string>
-    <string name="Cancel">Cancel</string>
-    <string name="QueryDeleteCharacterTitle">Delete Character</string>
+    <string name="SaveOK">保存</string>
+    <string name="QuerySaveCharacterTitle">キャラクタ保存</string>
+    <string name="SaveNew">別キャラクタとして保存</string>
+    <string name="CharacterSelectorDropDownTitle">キャラクタ選択</string>
+    <string name="QueryDeleteCharacter">このキャラクタデータを削除しますか？</string>
+    <string name="DeleteOK">削除</string>
+    <string name="Cancel">キャンセル</string>
+    <string name="QueryDeleteCharacterTitle">キャラクタ削除</string>
     <string name="InstallDBSucceeded">Import DB Succeeded.</string>
     <string name="InstallDBFailed">Import DB Failed.</string>
     <string name="InstallDBFromSDSucceeded">Import DB from SD Succeeded.</string>
@@ -144,7 +144,7 @@
     <string name="ExportDBSucceeded">Export DB Succeeded.</string>
     <string name="ExportDBFailed">Export DB Failed.</string>
     <string name="OK">OK</string>
-    <string name="EditFilterTitle">Enter filter expression.</string>
+    <string name="EditFilterTitle">フィルタ文字列</string>
     <string-array name="AbyssiteOfFurtheranceEntries">
         <item>0</item>
         <item>1</item>
@@ -162,11 +162,11 @@
     </string-array>
        <string name="AbyssiteOfFurtherancePrompt">遊軍</string>
        <string name="AbyssiteOfMeritPrompt">真価</string>
-       <string name="CriticalRate">クリティカル</string>
-       <string name="CriticalDamage">クリダメージ</string>
+       <string name="CriticalRate">クリ率</string>
+       <string name="CriticalDamage">クリダメ</string>
        <string name="Remove">Remove</string>
-       <string name="AccuracySub">サブ命中</string>
-       <string name="AttackSub">サブ攻撃力</string>
+       <string name="AccuracySub">サブ命</string>
+       <string name="AttackSub">サブ攻</string>
        <string name="Enmity">敵対心</string>
        <string name="AccuracyMagic">魔命</string>
        <string name="AttackMagic">魔攻</string>
@@ -236,11 +236,11 @@
 	<string name="InstallDB">Install DB</string>
 	<string name="InstallDBFromSD">Install DB from SD</string>
 	<string name="ExportDBToSD">ExportDB To SD</string>
-	<string name="Filter">Filter...</string>
-	<string name="ResetFilter">Reset Filter</string>
-	<string name="ApplyFilter">Apply</string>
-	<string name="Skill">Skill...</string>
-	<string name="Delete">Delete...</string>
+	<string name="Filter">フィルタ...</string>
+	<string name="ResetFilter">フィルタ解除</string>
+	<string name="ApplyFilter">適用</string>
+	<string name="Skill">スキル...</string>
+	<string name="Delete">削除...</string>
   		<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
 	<string name="GoogleSearch">Googleで検索</string>
    	<string-array name="SearchURIs">
