@@ -137,6 +137,9 @@
     <string name="DeleteOK">削除</string>
     <string name="Cancel">キャンセル</string>
     <string name="QueryDeleteCharacterTitle">キャラクタ削除</string>
+    <string name="QueryDiscardChangesTitle">編集破棄</string>
+    <string name="QueryDiscardChanges">変更されています。破棄しますか？</string>
+    <string name="DiscardOK">破棄</string>
     <string name="InstallDBSucceeded">Import DB Succeeded.</string>
     <string name="InstallDBFailed">Import DB Failed.</string>
     <string name="InstallDBFromSDSucceeded">Import DB from SD Succeeded.</string>

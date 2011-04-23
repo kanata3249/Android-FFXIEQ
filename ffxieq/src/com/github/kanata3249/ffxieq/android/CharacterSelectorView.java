@@ -56,7 +56,7 @@ public class CharacterSelectorView extends Spinner {
 		return true;
 	}
 	
-	private void setSelectionById(long selectionid) {
+	public void setSelectionById(long selectionid) {
 		if (getSelectedItemId() == selectionid) {
 			return;
 		}

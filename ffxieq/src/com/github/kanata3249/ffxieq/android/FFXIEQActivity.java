@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -159,9 +160,11 @@ public class FFXIEQActivity extends TabActivity {
     				public void onItemSelected(AdapterView<?> arg0, View arg1,
     						int arg2, long arg3) {
     					if (arg3 != getCharacterID()) {
-    		    			setCharacterID(arg3);
-    		    			setFFXICharacter(getSettings().loadCharInfo(arg3));
-    		    			updateSubViewValues();
+	    					if (getFFXICharacter().isModified()) {
+	    						showDialog(R.string.QueryDiscardChanges);
+	    					} else {
+	    						loadFFXICharacter(arg3);
+	    					}
     					}
     				}
     				public void onNothingSelected(AdapterView<?> arg0) {
@@ -314,6 +317,35 @@ public class FFXIEQActivity extends TabActivity {
 			dialog.setContentView(R.layout.querydeletecharacter);
 			dialog.setTitle(getString(R.string.QueryDeleteCharacterTitle));
 			return dialog;
+		case R.string.QueryDiscardChanges:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.QueryDiscardChanges));
+	    	builder.setTitle(getString(R.string.QueryDiscardChangesTitle));
+	    	builder.setPositiveButton(R.string.DiscardOK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+		        	CharacterSelectorView cs;
+		        	long id;
+
+		        	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
+		        	id = cs.getSelectedItemId();
+		   			setCharacterID(id);
+	    			setFFXICharacter(getSettings().loadCharInfo(id));
+		    		updateSubViewValues();
+					dismissDialog(R.string.QueryDiscardChanges);
+				}
+			});
+	    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+		        	CharacterSelectorView cs;
+
+		        	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
+		        	cs.setSelectionById(getCharacterID());
+					dismissDialog(R.string.QueryDiscardChanges);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
 		case R.string.InstallDBSucceeded:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
@@ -396,6 +428,8 @@ public class FFXIEQActivity extends TabActivity {
 					dismissDialog(R.layout.querysavecharacter);
 					if (newid != charid || !name.equals(old_name)) {
 						loadFFXICharacter(newid);
+					} else {
+						getFFXICharacter().setNotModified();
 					}
 				}
 			});
@@ -447,7 +481,7 @@ public class FFXIEQActivity extends TabActivity {
 		setCharacterID(id);
 		setFFXICharacter(getSettings().loadCharInfo(id));
 		
-		updateValues();
+		updateSubViewValues();
 	}
 	protected FFXIDAO getDAO() {
 		return ((FFXIEQApplication)getApplication()).getFFXIDatabase();

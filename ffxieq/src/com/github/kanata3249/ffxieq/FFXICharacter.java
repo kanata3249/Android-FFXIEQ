@@ -29,9 +29,10 @@ public class FFXICharacter implements IStatus, Serializable {
 	JobAndRace mJobAndRace;
 	MeritPoint mMerits;
 	boolean mInAbyssea;
-
 	AtmaSet mAtmaset;
 	// TODO food
+
+	transient boolean mModified;
 	
 	static FFXIDAO Dao;
 	
@@ -42,6 +43,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		mMerits = new MeritPoint();
 		mAtmaset = new AtmaSet();
 		mInAbyssea = false;
+		mModified = false;
 	}
 
 	public static FFXIDAO getDao() {
@@ -69,60 +71,71 @@ public class FFXICharacter implements IStatus, Serializable {
 		return mLevel.getRace();
 	}
 	public void setRace(int race) {
+		mModified = true;
 		mLevel.setRace(race);
 	}
 	public int getJob() {
 		return mLevel.getJob();
 	}
 	public void setJob(int job) {
+		mModified = true;
 		mLevel.setJob(job);
 	}
 	public int getJobLevel() {
 		return ((Integer)mLevel.getLevel());
 	}
 	public void setJobLevel(int level) {
+		mModified = true;
 		mLevel.setLevel(level);
 	}
 	public int getSubJob() {
 		return mLevel.getSubJob();
 	}
 	public void setSubJob(int subjob) {
+		mModified = true;
 		mLevel.setSubJob(subjob);
 	}
 	public int getSubJobLevel() {
 		return ((Integer)mLevel.getSubLevel());
 	}
 	public void setSubJobLevel(int sublevel) {
+		mModified = true;
 		mLevel.setSubLevel(sublevel);
 	}
 	public JobAndRace getJobAndRace() {
 		return mJobAndRace;
 	}
 	public void setJobAndRace(JobAndRace jobandrace) {
+		mModified = true;
 		mJobAndRace = jobandrace;
 	}
 	public Equipment getEquipment(int part) {
 		return mEquipment.getEquipment(part);
 	}
 	public void setEquipment(int part, long id) {
+		mModified = true;
 		mEquipment.setEquipment(part, id);
 	}
 	public MeritPoint getMeritPoint() {
 		return mMerits;
 	}
 	public void setMeritPoint(MeritPoint merits) {
+		mModified = true;
 		mMerits = merits;
 	}
 	public boolean isInAbbisea() {
 		return mInAbyssea;
 	}
 	public void setInAbbisea(boolean inAbbisea) {
+		mModified = true;
 		this.mInAbyssea = inAbbisea;
 	}
 	public void setAbyssiteOfFurtherance(int n) {
+		mModified = true;
 		mAtmaset.setAbyssiteOfFurtherance(n);
 	}
 	public void setAbyssiteOfMerit(int n) {
+		mModified = true;
 		mAtmaset.setAbyssiteOfMerit(n);
 	}
 	public int getAbyssiteOfFurtherance() {
@@ -135,7 +148,14 @@ public class FFXICharacter implements IStatus, Serializable {
 		return mAtmaset.getAtma(index);
 	}
 	public void setAtma(int index, long id) {
+		mModified = true;
 		mAtmaset.setAtma(index, id);
+	}
+	public boolean isModified() {
+		return mModified;
+	}
+	public void setNotModified() {
+		mModified = false;
 	}
 
 	public StatusValue getStatus(StatusType type) {
