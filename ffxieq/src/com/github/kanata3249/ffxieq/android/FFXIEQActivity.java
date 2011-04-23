@@ -161,9 +161,10 @@ public class FFXIEQActivity extends TabActivity {
     						int arg2, long arg3) {
     					if (arg3 != getCharacterID()) {
 	    					if (getFFXICharacter().isModified()) {
-	    						showDialog(R.string.QueryDiscardChanges);
+	    						showDialog(R.string.QueryLoadCharacter);
 	    					} else {
 	    						loadFFXICharacter(arg3);
+	    						updateValues();
 	    					}
     					}
     				}
@@ -267,7 +268,21 @@ public class FFXIEQActivity extends TabActivity {
 		case R.id.Delete:
 			showDialog(R.layout.querydeletecharacter);
 			return true;
-			
+		case R.id.DiscardChanges:
+			if (getFFXICharacter().isModified()) {
+				showDialog(R.string.QueryDiscardChanges);
+			}
+			return true;
+		case R.id.NewCharacter:
+			if (getFFXICharacter().isModified()) {
+				showDialog(R.string.QueryNewCharacter);
+			} else {
+				long id = getSettings().saveCharInfo(-1, getString(R.string.NewCharacterName), new FFXICharacter());
+				loadFFXICharacter(id);
+				updateValues();
+			}
+			return true;
+
 		case R.id.InstallDB:
 			try {
 				((FFXIDatabase)getDAO()).copyDatabaseFromAssets();
@@ -342,6 +357,79 @@ public class FFXIEQActivity extends TabActivity {
 		        	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
 		        	cs.setSelectionById(getCharacterID());
 					dismissDialog(R.string.QueryDiscardChanges);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		case R.string.QueryLoadCharacter:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.QueryLoadCharacter));
+	    	builder.setTitle(getString(R.string.QueryLoadCharacterTitle));
+	    	builder.setNeutralButton(R.string.DiscardAndLoad, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+		        	CharacterSelectorView cs;
+		        	long id;
+
+		        	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
+		        	id = cs.getSelectedItemId();
+		   			setCharacterID(id);
+	    			setFFXICharacter(getSettings().loadCharInfo(id));
+		    		updateSubViewValues();
+					dismissDialog(R.string.QueryLoadCharacter);
+				}
+			});
+	    	builder.setPositiveButton(R.string.SaveAndLoad, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					/* save */
+					getSettings().saveCharInfo(getCharacterID(), getName(), getFFXICharacter());
+					/* load character */
+					CharacterSelectorView cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
+		        	long id = cs.getSelectedItemId();
+		   			setCharacterID(id);
+	    			setFFXICharacter(getSettings().loadCharInfo(id));
+		    		updateSubViewValues();
+					dismissDialog(R.string.QueryLoadCharacter);
+				}
+			});
+	    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+		        	CharacterSelectorView cs;
+
+		        	cs = (CharacterSelectorView)findViewById(R.id.CharacterSelector);
+		        	cs.setSelectionById(getCharacterID());
+					dismissDialog(R.string.QueryLoadCharacter);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		case R.string.QueryNewCharacter:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.QueryNewCharacter));
+	    	builder.setTitle(getString(R.string.QueryNewCharacterTitle));
+	    	builder.setPositiveButton(R.string.DiscardAndNewCharacterOK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					long id = getSettings().saveCharInfo(-1, getString(R.string.NewCharacterName), new FFXICharacter());
+					loadFFXICharacter(id);
+					updateValues();
+					dismissDialog(R.string.QueryNewCharacter);
+				}
+			});
+	    	builder.setNeutralButton(R.string.SaveAndNewCharacterOK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					/* save */
+					getSettings().saveCharInfo(getCharacterID(), getName(), getFFXICharacter());
+					/* create new character */
+					long id = getSettings().saveCharInfo(-1, getString(R.string.NewCharacterName), new FFXICharacter());
+					loadFFXICharacter(id);
+					updateValues();
+					dismissDialog(R.string.QueryNewCharacter);
+				}
+			});
+	    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.QueryNewCharacter);
 				}
 			});
 			dialog = builder.create();
@@ -443,6 +531,7 @@ public class FFXIEQActivity extends TabActivity {
 					getSettings().deleteCharInfo(getCharacterID());
 					dismissDialog(R.layout.querydeletecharacter);
 					loadFFXICharacter(getSettings().getFirstCharacterId());
+					updateValues();
 				}
 			});
 			btn = (Button)dialog.findViewById(R.id.Cancel);

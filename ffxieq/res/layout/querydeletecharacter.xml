@@ -4,7 +4,7 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <TextView android:layout_width="wrap_content" android:id="@+id/textView1" android:text="@string/QueryDeleteCharacter" android:layout_height="wrap_content"></TextView>
-    <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CharacterName" android:text="EditText" android:layout_below="@+id/textView1" android:layout_alignLeft="@+id/textView1"></EditText>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/DeleteOK" android:text="@string/DeleteOK" android:layout_below="@+id/CharacterName" android:layout_alignRight="@+id/CharacterName"></Button>
-    <Button android:layout_width="wrap_content" android:id="@+id/Cancel" android:text="@string/Cancel" android:layout_height="wrap_content" android:layout_below="@+id/CharacterName"></Button>
+    <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CharacterName" android:text="EditText" android:layout_below="@+id/textView1" android:layout_alignLeft="@+id/textView1" android:editable="false"></EditText>
+    <Button android:text="@string/DeleteOK" android:id="@+id/DeleteOK" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/CharacterName" android:layout_alignLeft="@+id/CharacterName"></Button>
+    <Button android:text="@string/Cancel" android:id="@+id/Cancel" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/CharacterName" android:layout_alignRight="@+id/CharacterName"></Button>
 </RelativeLayout>

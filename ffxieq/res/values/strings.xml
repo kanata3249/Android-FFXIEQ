@@ -138,8 +138,16 @@
     <string name="Cancel">キャンセル</string>
     <string name="QueryDeleteCharacterTitle">キャラクタ削除</string>
     <string name="QueryDiscardChangesTitle">編集破棄</string>
-    <string name="QueryDiscardChanges">変更されています。破棄しますか？</string>
+    <string name="QueryDiscardChanges">本当に破棄しますか？</string>
     <string name="DiscardOK">破棄</string>
+    <string name="QueryLoadCharacterTitle">キャラクタ読込</string>
+    <string name="QueryLoadCharacter">変更されています。読み込みますか？</string>
+    <string name="DiscardAndLoad">破棄して読込</string>
+    <string name="SaveAndLoad">保存して読込</string>
+    <string name="QueryNewCharacterTitle">新規キャラクタ</string>
+    <string name="QueryNewCharacter">変更されています。本当に新規キャラクタを作成しますか？</string>
+    <string name="SaveAndNewCharacterOK">保存して作成</string>
+    <string name="DiscardAndNewCharacterOK">破棄して作成</string>
     <string name="InstallDBSucceeded">Import DB Succeeded.</string>
     <string name="InstallDBFailed">Import DB Failed.</string>
     <string name="InstallDBFromSDSucceeded">Import DB from SD Succeeded.</string>
@@ -252,4 +260,6 @@
 		<item>http://www.google.com/search?ie=utf-8&amp;q=</item>
    	</string-array>
 		<string name="Compare">比較</string>
+		<string name="NewCharacter">新規キャラクタ</string>
+		<string name="Discard">変更破棄</string>
 </resources>
