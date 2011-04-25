@@ -4,6 +4,6 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <EditText android:layout_width="fill_parent" android:text="EditText" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:id="@+id/CharacterName" android:singleLine="true"></EditText>
-    <CheckBox android:layout_width="wrap_content" android:layout_below="@+id/CharacterName" android:layout_height="wrap_content" android:layout_alignLeft="@+id/CharacterName" android:text="@string/SaveNew" android:id="@+id/SaveNew"></CheckBox>
-    <Button android:layout_width="wrap_content" android:id="@+id/SaveOK" android:text="@string/SaveOK" android:layout_height="wrap_content" android:layout_below="@+id/CharacterName" android:layout_alignRight="@+id/CharacterName"></Button>
+    <CheckBox android:id="@+id/SaveNew" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/SaveNew" android:layout_below="@+id/CharacterName" android:layout_alignRight="@+id/CharacterName"></CheckBox>
+    <Button android:text="@string/SaveOK" android:id="@+id/SaveOK" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/CharacterName" android:layout_alignLeft="@+id/CharacterName"></Button>
 </RelativeLayout>
