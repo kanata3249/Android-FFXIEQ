@@ -51,8 +51,12 @@ public class AtmaListView extends ListView {
 			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
 		}
 		cursor = mDao.getAtmaCursor(columns, mOrderBy, mFilter);
-		adapter = new AtmaListViewAdapter(getContext(), R.layout.atmalistview, cursor, columns, views);
-		setAdapter(adapter);
+		if (getAdapter() != null) {
+			((AtmaListViewAdapter)getAdapter()).changeCursor(cursor);
+		} else {
+			adapter = new AtmaListViewAdapter(getContext(), R.layout.atmalistview, cursor, columns, views);
+			setAdapter(adapter);
+		}
 		
 		return true;
 	}
