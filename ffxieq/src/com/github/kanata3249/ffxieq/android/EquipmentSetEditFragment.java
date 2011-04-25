@@ -65,7 +65,7 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 					public boolean onItemLongClick(AdapterView<?> arg0,
 							View arg1, int arg2, long arg3) {
 						mLongClickingItemPosition = arg2;
-						getActivity().openContextMenu(arg0);						// TODO Auto-generated method stub
+						getActivity().openContextMenu(arg0);
 						return true;
 					}
             		
