@@ -63,6 +63,10 @@ public class CharacterStatusView extends ScrollView {
 	public void notifyDatasetChanged() {
 		TextView tv;
 
+		mCharInfo.cacheStatusValues();
+		if (mCharInfoToCompare != null) {
+			mCharInfoToCompare.cacheStatusValues();
+		}
     	tv = (TextView)findViewById(R.id.HP);
     	if (tv != null) {
     		tv.setText(getHP(mDisplayParam));

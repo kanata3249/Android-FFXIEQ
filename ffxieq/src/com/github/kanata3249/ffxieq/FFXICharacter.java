@@ -33,7 +33,9 @@ public class FFXICharacter implements IStatus, Serializable {
 	// TODO food
 
 	transient boolean mModified;
-	
+	transient boolean mStatusCacheValid;
+	transient private StatusValue mCachedValues[];
+
 	static FFXIDAO Dao;
 	
 	public FFXICharacter() {
@@ -44,6 +46,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		mAtmaset = new AtmaSet();
 		mInAbyssea = false;
 		mModified = false;
+		mStatusCacheValid = false;
 	}
 
 	public static FFXIDAO getDao() {
@@ -72,6 +75,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setRace(int race) {
 		mModified = true;
+		mStatusCacheValid = (mLevel.getRace() == race);
 		mLevel.setRace(race);
 	}
 	public int getJob() {
@@ -79,6 +83,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setJob(int job) {
 		mModified = true;
+		mStatusCacheValid = (mLevel.getJob() == job);
 		mLevel.setJob(job);
 	}
 	public int getJobLevel() {
@@ -86,6 +91,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setJobLevel(int level) {
 		mModified = true;
+		mStatusCacheValid = (mLevel.getLevel() == level);
 		mLevel.setLevel(level);
 	}
 	public int getSubJob() {
@@ -93,6 +99,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setSubJob(int subjob) {
 		mModified = true;
+		mStatusCacheValid = (mLevel.getSubJob() == subjob);
 		mLevel.setSubJob(subjob);
 	}
 	public int getSubJobLevel() {
@@ -100,6 +107,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setSubJobLevel(int sublevel) {
 		mModified = true;
+		mStatusCacheValid = (mLevel.getSubLevel() == sublevel);
 		mLevel.setSubLevel(sublevel);
 	}
 	public JobAndRace getJobAndRace() {
@@ -107,6 +115,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setJobAndRace(JobAndRace jobandrace) {
 		mModified = true;
+		mStatusCacheValid = false;
 		mJobAndRace = jobandrace;
 	}
 	public Equipment getEquipment(int part) {
@@ -114,6 +123,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setEquipment(int part, long id) {
 		mModified = true;
+		mStatusCacheValid = false;
 		mEquipment.setEquipment(part, id);
 	}
 	public MeritPoint getMeritPoint() {
@@ -121,21 +131,25 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setMeritPoint(MeritPoint merits) {
 		mModified = true;
+		mStatusCacheValid = false;
 		mMerits = merits;
 	}
-	public boolean isInAbbisea() {
+	public boolean isInAbbysea() {
 		return mInAbyssea;
 	}
-	public void setInAbbisea(boolean inAbbisea) {
+	public void setInAbysea(boolean inAbbysea) {
 		mModified = true;
-		this.mInAbyssea = inAbbisea;
+		mStatusCacheValid = (mInAbyssea == inAbbysea);
+		this.mInAbyssea = inAbbysea;
 	}
 	public void setAbyssiteOfFurtherance(int n) {
 		mModified = true;
+		mStatusCacheValid = (mAtmaset.getAbyssiteOfFurtherance() == n);
 		mAtmaset.setAbyssiteOfFurtherance(n);
 	}
 	public void setAbyssiteOfMerit(int n) {
 		mModified = true;
+		mStatusCacheValid = (mAtmaset.getAbyssiteOfMerit() == n);
 		mAtmaset.setAbyssiteOfMerit(n);
 	}
 	public int getAbyssiteOfFurtherance() {
@@ -149,6 +163,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setAtma(int index, long id) {
 		mModified = true;
+		mStatusCacheValid = false;
 		mAtmaset.setAtma(index, id);
 	}
 	public boolean isModified() {
@@ -158,7 +173,122 @@ public class FFXICharacter implements IStatus, Serializable {
 		mModified = false;
 	}
 
+	public void cacheStatusValues() {
+		if (mStatusCacheValid && mCachedValues != null) {
+			return;
+		}
+
+		mStatusCacheValid = false;
+		mCachedValues = new StatusValue[StatusType.MODIFIER_NUM.ordinal()];
+		
+		StatusType types[] = StatusType.values();
+
+		for (int i = 0; i < types.length; i++) {
+			StatusType type = types[i];
+
+			switch (type) {
+			case HP:
+			case MP:
+			case STR:
+			case DEX:
+			case VIT:
+			case AGI:
+			case INT:
+			case MND:
+			case CHR:
+			case DSub:
+			case DRange:
+			case DelayRange:
+			case Haste:
+			case Slow:
+			case AttackMagic:
+			case AccuracyMagic:
+			case DefenceMagic:
+			case Regist_Fire:
+			case Regist_Ice:
+			case Regist_Wind:
+			case Regist_Earth:
+			case Regist_Lightning:
+			case Regist_Water:
+			case Regist_Light:
+			case Regist_Dark:
+			case CriticalRate:
+			case CriticalDamage:
+			case CriticalRateDefence:
+			case CriticalDamageDefence:
+			case SubtleBlow:
+			case StoreTP:
+			case Enmity:
+			case MagicEvasion:
+			case HealingHP:
+			case HealingMP:
+			case DualWield:
+			case MartialArts:
+			case DoubleAttack:
+			case TrippleAttack:
+			case QuadAttack:
+			case DamageCut:
+			case Counter:
+			case SpellInterruptionRate:
+				mCachedValues[type.ordinal()] = getStatus(mLevel, type);
+				break;
+
+			case D:
+				mCachedValues[type.ordinal()] = getD();
+				break;
+			case Delay:
+				mCachedValues[type.ordinal()] = getDelay();
+				break;
+			case DelaySub:
+				mCachedValues[type.ordinal()] = getDelaySub();
+				break;
+			case Accuracy:
+				mCachedValues[type.ordinal()] = getAccuracy();
+				break;
+			case AccuracySub:
+				mCachedValues[type.ordinal()] = getAccuracySub();
+				break;
+			case Attack:
+				mCachedValues[type.ordinal()] = getAttack();
+				break;
+			case AttackSub:
+				mCachedValues[type.ordinal()] = getAttackSub();
+				break;
+			case AccuracyRange:
+				mCachedValues[type.ordinal()] = getAccuracyRange();
+				break;
+			case AttackRange:
+				mCachedValues[type.ordinal()] = getAttackRange();
+				break;
+			case Evasion:
+				mCachedValues[type.ordinal()] = getEvasion();
+				break;
+			case Defence:
+				mCachedValues[type.ordinal()] = getDefence();
+				break;
+			case DamageCutPhysical:
+				mCachedValues[type.ordinal()] = getDamageCutPhysical();
+				break;
+			case DamageCutMagic:
+				mCachedValues[type.ordinal()] = getDamageCutMagic();
+				break;
+			case DamageCutBreath:
+				mCachedValues[type.ordinal()] = getDamageCutBreath();
+				break;
+			case MODIFIER_NUM:
+				break;
+			default:
+				mCachedValues[type.ordinal()] = new StatusValue(0, 0, 0);
+			}
+		}
+		mStatusCacheValid = true;
+	}
+
 	public StatusValue getStatus(StatusType type) {
+		if (mStatusCacheValid && mCachedValues != null) {
+			return mCachedValues[type.ordinal()];
+		}
+		
 		switch (type) {
 		case HP:
 		case MP:

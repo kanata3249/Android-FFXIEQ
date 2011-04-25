@@ -160,7 +160,7 @@ public class BasicEditFragment extends FFXIEQFragment {
         	if (cb != null) {
         		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-        		   		getFFXICharacter().setInAbbisea(arg1);
+        		   		getFFXICharacter().setInAbysea(arg1);
         		   		updateValues();
 					}
         		});
@@ -357,7 +357,7 @@ public class BasicEditFragment extends FFXIEQFragment {
     	
     	cb = (CheckBox)mView.findViewById(R.id.InAbyssea);
     	if (cb != null) {
-    		cb.setChecked(charInfo.isInAbbisea());
+    		cb.setChecked(charInfo.isInAbbysea());
     	}
     		
     	spin = (Spinner)mView.findViewById(R.id.AbyssiteOfFurtherance);
