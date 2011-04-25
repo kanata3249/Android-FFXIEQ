@@ -263,14 +263,36 @@ public class CharacterStatusView extends ScrollView {
     	}
 	}
 
-	private String getStatusString(StatusValue v, int separate) {
+	private String getStatusString(StatusType type, int separate) {
+		StatusValue v = getStatus(type);
 		int value;
 		
+		if (mCharInfoToCompare != null) {
+			StatusValue v1, v2;
+			
+			v1 = mCharInfo.getStatus(type);
+			v2 = mCharInfoToCompare.getStatus(type);
+			if (v1.getValue() == 0 && v1.getAdditional() == 0 && v2.getValue() == 0 && v1.getAdditional() == 0
+				&& (v1.getAdditionalPercent() != 0 || v2.getAdditionalPercent() != 0)) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(v.getValue());
+				sb.append('%');
+				if (v.getAdditionalPercent() != 0) {
+					if (v.getAdditionalPercent() > 0) {
+						sb.append('+');
+					}
+					sb.append(v.getAdditionalPercent());
+					sb.append('%');
+				}
+				return sb.toString();
+			}
+		}
 		if (v.getAdditionalPercent() != 0 && (v.getValue() == 0 && v.getAdditional() == 0)) {
 			StringBuilder sb = new StringBuilder();
 
 			value = v.getAdditionalPercent();
-			sb.append(v.getAdditionalPercent());
+			sb.append(value);
 			sb.append('%');
 			return sb.toString();
 		} else if (separate == GETSTATUS_STRING_SEPARATE) {
@@ -317,144 +339,144 @@ public class CharacterStatusView extends ScrollView {
 	}
 
 	public String getHP(int separate) {
-		return getStatusString(getStatus(StatusType.HP), separate);
+		return getStatusString(StatusType.HP, separate);
 	}
 	public String getMP(int separate) {
-		return getStatusString(getStatus(StatusType.MP), separate);
+		return getStatusString(StatusType.MP, separate);
 	}
 	public String getSTR(int separate) {
-		return getStatusString(getStatus(StatusType.STR), separate);
+		return getStatusString(StatusType.STR, separate);
 	}
 	public String getDEX(int separate) {
-		return getStatusString(getStatus(StatusType.DEX), separate);
+		return getStatusString(StatusType.DEX, separate);
 	}
 	public String getVIT(int separate) {
-		return getStatusString(getStatus(StatusType.VIT), separate);
+		return getStatusString(StatusType.VIT, separate);
 	}
 	public String getAGI(int separate) {
-		return getStatusString(getStatus(StatusType.AGI), separate);
+		return getStatusString(StatusType.AGI, separate);
 	}
 	public String getINT(int separate) {
-		return getStatusString(getStatus(StatusType.INT), separate);
+		return getStatusString(StatusType.INT, separate);
 	}
 	public String getMND(int separate) {
-		return getStatusString(getStatus(StatusType.MND), separate);
+		return getStatusString(StatusType.MND, separate);
 	}
 	public String getCHR(int separate) {
-		return getStatusString(getStatus(StatusType.CHR), separate);
+		return getStatusString(StatusType.CHR, separate);
 	}
 	public String getD(int separate) {
-		return getStatusString(getStatus(StatusType.D), separate);
+		return getStatusString(StatusType.D, separate);
 	}
 	public String getDSub(int separate) {
-		return getStatusString(getStatus(StatusType.DSub), separate);
+		return getStatusString(StatusType.DSub, separate);
 	}
 	public String getDRange(int separate) {
-		return getStatusString(getStatus(StatusType.DRange), separate);
+		return getStatusString(StatusType.DRange, separate);
 	}
 	public String getDelay(int separate) {
-		return getStatusString(getStatus(StatusType.Delay), separate);
+		return getStatusString(StatusType.Delay, separate);
 	}
 	public String getDelaySub(int separate) {
-		return getStatusString(getStatus(StatusType.DelaySub), separate);
+		return getStatusString(StatusType.DelaySub, separate);
 	}
 	public String getDelayRange(int separate) {
-		return getStatusString(getStatus(StatusType.DelayRange), separate);
+		return getStatusString(StatusType.DelayRange, separate);
 	}
 	public String getAccuracy(int separate) {
-		return getStatusString(getStatus(StatusType.Accuracy), separate);
+		return getStatusString(StatusType.Accuracy, separate);
 	}
 	public String getAccuracySub(int separate) {
-		return getStatusString(getStatus(StatusType.AccuracySub), separate);
+		return getStatusString(StatusType.AccuracySub, separate);
 	}
 	public String getAttack(int separate) {
-		return getStatusString(getStatus(StatusType.Attack), separate);
+		return getStatusString(StatusType.Attack, separate);
 	}
 	public String getAttackSub(int separate) {
-		return getStatusString(getStatus(StatusType.AttackSub), separate);
+		return getStatusString(StatusType.AttackSub, separate);
 	}
 	public String getAccuracyRange(int separate) {
-		return getStatusString(getStatus(StatusType.AccuracyRange), separate);
+		return getStatusString(StatusType.AccuracyRange, separate);
 	}
 	public String getAttackRange(int separate) {
-		return getStatusString(getStatus(StatusType.AttackRange), separate);
+		return getStatusString(StatusType.AttackRange, separate);
 	}
 	public String getHaste(int separate) {
-		return getStatusString(getStatus(StatusType.Haste), separate);
+		return getStatusString(StatusType.Haste, separate);
 	}
 	public String getSlow(int separate) {
-		return getStatusString(getStatus(StatusType.Slow), separate);
+		return getStatusString(StatusType.Slow, separate);
 	}
 	public String getSubtleBlow(int separate) {
-		return getStatusString(getStatus(StatusType.SubtleBlow), separate);
+		return getStatusString(StatusType.SubtleBlow, separate);
 	}
 	public String getStoreTP(int separate) {
-		return getStatusString(getStatus(StatusType.StoreTP), separate);
+		return getStatusString(StatusType.StoreTP, separate);
 	}
 	public String getEvasion(int separate) {
-		return getStatusString(getStatus(StatusType.Evasion), separate);
+		return getStatusString(StatusType.Evasion, separate);
 	}
 	public String getDoubleAttack(int separate) {
-		return getStatusString(getStatus(StatusType.DoubleAttack), separate);
+		return getStatusString(StatusType.DoubleAttack, separate);
 	}
 	public String getTrippleAttack(int separate) {
-		return getStatusString(getStatus(StatusType.TrippleAttack), separate);
+		return getStatusString(StatusType.TrippleAttack, separate);
 	}
 	public String getQuadAttack(int separate) {
-		return getStatusString(getStatus(StatusType.QuadAttack), separate);
+		return getStatusString(StatusType.QuadAttack, separate);
 	}
 	public String getCriticalRate(int separate) {
-		return getStatusString(getStatus(StatusType.CriticalRate), separate);
+		return getStatusString(StatusType.CriticalRate, separate);
 	}
 	public String getCriticalDamage(int separate) {
-		return getStatusString(getStatus(StatusType.CriticalDamage), separate);
+		return getStatusString(StatusType.CriticalDamage, separate);
 	}
 	public String getEnmity(int separate) {
-		return getStatusString(getStatus(StatusType.Enmity), separate);
+		return getStatusString(StatusType.Enmity, separate);
 	}
 	public String getAttackMagic(int separate) {
-		return getStatusString(getStatus(StatusType.AttackMagic), separate);
+		return getStatusString(StatusType.AttackMagic, separate);
 	}
 	public String getAccuracyMagic(int separate) {
-		return getStatusString(getStatus(StatusType.AccuracyMagic), separate);
+		return getStatusString(StatusType.AccuracyMagic, separate);
 	}
 	public String getDefence(int separate) {
-		return getStatusString(getStatus(StatusType.Defence), separate);
+		return getStatusString(StatusType.Defence, separate);
 	}
 	public String getDefenceMagic(int separate) {
-		return getStatusString(getStatus(StatusType.DefenceMagic), separate);
+		return getStatusString(StatusType.DefenceMagic, separate);
 	}
 	public String getDamageCutPhysical(int separate) {
-		return getStatusString(getStatus(StatusType.DamageCutPhysical), separate);
+		return getStatusString(StatusType.DamageCutPhysical, separate);
 	}
 	public String getDamageCutMagic(int separate) {
-		return getStatusString(getStatus(StatusType.DamageCutMagic), separate);
+		return getStatusString(StatusType.DamageCutMagic, separate);
 	}
 	public String getDamageCutBreath(int separate) {
-		return getStatusString(getStatus(StatusType.DamageCutBreath), separate);
+		return getStatusString(StatusType.DamageCutBreath, separate);
 	}
 	public String getRegistFire(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Fire), separate);
+		return getStatusString(StatusType.Regist_Fire, separate);
 	}
 	public String getRegistIce(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Ice), separate);
+		return getStatusString(StatusType.Regist_Ice, separate);
 	}
 	public String getRegistWind(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Wind), separate);
+		return getStatusString(StatusType.Regist_Wind, separate);
 	}
 	public String getRegistEarth(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Earth), separate);
+		return getStatusString(StatusType.Regist_Earth, separate);
 	}
 	public String getRegistLightning(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Lightning), separate);
+		return getStatusString(StatusType.Regist_Lightning, separate);
 	}
 	public String getRegistWater(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Water), separate);
+		return getStatusString(StatusType.Regist_Water, separate);
 	}
 	public String getRegistLight(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Light), separate);
+		return getStatusString(StatusType.Regist_Light, separate);
 	}
 	public String getRegistDark(int separate) {
-		return getStatusString(getStatus(StatusType.Regist_Dark), separate);
+		return getStatusString(StatusType.Regist_Dark, separate);
 	}
 }
