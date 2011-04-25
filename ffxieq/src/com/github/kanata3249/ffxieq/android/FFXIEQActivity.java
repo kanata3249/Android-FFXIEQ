@@ -516,6 +516,7 @@ public class FFXIEQActivity extends TabActivity {
 					dismissDialog(R.layout.querysavecharacter);
 					if (newid != charid || !name.equals(old_name)) {
 						loadFFXICharacter(newid);
+						updateValues();
 					} else {
 						getFFXICharacter().setNotModified();
 					}
