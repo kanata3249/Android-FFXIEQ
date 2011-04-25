@@ -163,11 +163,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 			percent = true;
 			end--;
 		}
-// TODO range value		
+
 		try {
 			value = Integer.parseInt(parameter.substring(start, end));
 		} catch (NumberFormatException e) {
-			value = 0;
+			// TODO range value
+			return null;
 		}
 		value *= modifier;
 
