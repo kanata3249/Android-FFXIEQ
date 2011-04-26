@@ -57,8 +57,4 @@ public class Atma extends StatusModifierWithDescription implements Serializable 
 	public void setDescription(String mDescription) {
 		this.mDescription = mDescription;
 	}
-
-	public String getUnknownTokens() {
-		return mUnknownTokens;
-	}
 }

@@ -722,9 +722,13 @@ public class FFXICharacter implements IStatus, Serializable {
 		return value;
 	}
 
-	public String getUnknownTokens() {
+	public SortedStringList getUnknownTokens() {
 		if (mInAbyssea) {
-			return mEquipment.getUnknownTokens() + mAtmaset.getUnknownTokens();
+			SortedStringList unknownTokens = new SortedStringList();
+			unknownTokens.mergeList(mEquipment.getUnknownTokens());
+			unknownTokens.mergeList(mAtmaset.getUnknownTokens());
+			
+			return unknownTokens;
 		} else {
 			return mEquipment.getUnknownTokens();
 		}

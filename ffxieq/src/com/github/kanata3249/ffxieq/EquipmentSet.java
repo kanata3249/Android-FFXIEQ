@@ -141,13 +141,13 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		mEquipments[part] = Dao.instantiateEquipment(id);
 	}
 	
-	public String getUnknownTokens() {
-		StringBuilder sb = new StringBuilder();
+	public SortedStringList getUnknownTokens() {
+		SortedStringList unknownTokens = new SortedStringList();
 		for (int i = 0; i < mEquipments.length; i++) {
 			if (mEquipments[i] != null) {
-				sb.append(mEquipments[i].getUnknownTokens());
+				unknownTokens.mergeList(mEquipments[i].getUnknownTokens());
 			}
 		}
-		return sb.toString();
+		return unknownTokens;
 	}
 }

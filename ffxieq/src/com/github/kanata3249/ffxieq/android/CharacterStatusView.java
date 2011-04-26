@@ -15,6 +15,7 @@
 */
 package com.github.kanata3249.ffxieq.android;
 
+import com.github.kanata3249.ffxi.status.SortedStringList;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxi.status.StatusValue;
 import com.github.kanata3249.ffxieq.FFXICharacter;
@@ -263,7 +264,7 @@ public class CharacterStatusView extends ScrollView {
     	}
     	tv = (TextView)findViewById(R.id.UnknownTokens);
     	if (tv != null) {
-    		tv.setText(mCharInfo.getUnknownTokens());
+    		tv.setText(getUnknownTokens());
     	}
 	}
 
@@ -482,5 +483,14 @@ public class CharacterStatusView extends ScrollView {
 	}
 	public String getRegistDark(int separate) {
 		return getStatusString(StatusType.Regist_Dark, separate);
+	}
+	public String getUnknownTokens() {
+		SortedStringList tokens;
+
+		tokens = mCharInfo.getUnknownTokens();
+		if (mCharInfoToCompare != null) {
+			return tokens.diffList(mCharInfoToCompare.getUnknownTokens());
+		}
+		return tokens.toString();
 	}
 }

@@ -24,7 +24,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 
 	protected String mDescription;
 	
-	protected transient String mUnknownTokens;
+	protected transient SortedStringList mUnknownTokens;
 	protected transient boolean mNeedParseDescription;
 	private transient Hashtable<String, DescriptionTokenHandler> fTokenHandler;
 	static transient String mConvertCharactersFrom;
@@ -37,7 +37,6 @@ public class StatusModifierWithDescription extends StatusModifier {
 	public boolean parseDescription() {
 		boolean updated = false;
 		String tokens[];
-		StringBuilder unknownTokens;
 
 		if (fTokenHandler == null) {
 			setupTokenHandler();
@@ -47,31 +46,26 @@ public class StatusModifierWithDescription extends StatusModifier {
 		}
 
 		loadDefaultValues();
-		unknownTokens = new StringBuilder();
+		mUnknownTokens = new SortedStringList();
 		tokens = mDescription.split(Dao.getString(FFXIString.TOKEN_Latent_Effect));
 		if (tokens.length > 1) {
-			unknownTokens.append(Dao.getString(FFXIString.TOKEN_Latent_Effect) + tokens[1]);
-			unknownTokens.append('\n');
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Latent_Effect) + tokens[1]);
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Assult));
 		if (tokens.length > 1) {
-			unknownTokens.append(Dao.getString(FFXIString.TOKEN_Assult) + tokens[1]);
-			unknownTokens.append('\n');
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Assult) + tokens[1]);
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Besieged));
 		if (tokens.length > 1) {
-			unknownTokens.append(Dao.getString(FFXIString.TOKEN_Besieged) + tokens[1]);
-			unknownTokens.append('\n');
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Besieged) + tokens[1]);
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Campaign));
 		if (tokens.length > 1) {
-			unknownTokens.append(Dao.getString(FFXIString.TOKEN_Campaign) + tokens[1]);
-			unknownTokens.append('\n');
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Campaign) + tokens[1]);
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Dynamis));
 		if (tokens.length > 1) {
-			unknownTokens.append(Dao.getString(FFXIString.TOKEN_Dynamis) + tokens[1]);
-			unknownTokens.append('\n');
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Dynamis) + tokens[1]);
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
 		for (int i = 0; i < tokens.length; i++) {
@@ -86,15 +80,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 				if (handler.handleToken(token, parameter)) {
 					updated = true;
 				} else {
-					unknownTokens.append(tokens[i]);
-					unknownTokens.append('\n');
+					mUnknownTokens.addString(tokens[i]);
 				}
 			} else {
-				unknownTokens.append(tokens[i]);
-				unknownTokens.append('\n');
+				mUnknownTokens.addString(tokens[i]);
 			}
 		}
-		mUnknownTokens = unknownTokens.toString();
 		mNeedParseDescription = false;
 		return updated;
 	}
@@ -290,4 +281,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 	}
 
 
+	public SortedStringList getUnknownTokens() {
+		return mUnknownTokens;
+	}
 }

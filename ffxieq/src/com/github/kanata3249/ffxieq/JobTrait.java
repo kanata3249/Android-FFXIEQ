@@ -69,8 +69,4 @@ public class JobTrait extends StatusModifierWithDescription implements Serializa
 	public void setDescription(String mDescription) {
 		this.mDescription = mDescription;
 	}
-
-	public String getUnknownTokens() {
-		return mUnknownTokens;
-	}
 }
