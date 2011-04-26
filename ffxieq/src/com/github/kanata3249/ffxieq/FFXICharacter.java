@@ -75,7 +75,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setRace(int race) {
 		mModified = true;
-		mStatusCacheValid = (mLevel.getRace() == race);
+		mStatusCacheValid = (mLevel.getRace() == race) && mStatusCacheValid;
 		mLevel.setRace(race);
 	}
 	public int getJob() {
@@ -83,7 +83,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setJob(int job) {
 		mModified = true;
-		mStatusCacheValid = (mLevel.getJob() == job);
+		mStatusCacheValid = (mLevel.getJob() == job) && mStatusCacheValid;
 		mLevel.setJob(job);
 	}
 	public int getJobLevel() {
@@ -91,7 +91,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setJobLevel(int level) {
 		mModified = true;
-		mStatusCacheValid = (mLevel.getLevel() == level);
+		mStatusCacheValid = (mLevel.getLevel() == level) && mStatusCacheValid;
 		mLevel.setLevel(level);
 	}
 	public int getSubJob() {
@@ -99,7 +99,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setSubJob(int subjob) {
 		mModified = true;
-		mStatusCacheValid = (mLevel.getSubJob() == subjob);
+		mStatusCacheValid = (mLevel.getSubJob() == subjob) && mStatusCacheValid;
 		mLevel.setSubJob(subjob);
 	}
 	public int getSubJobLevel() {
@@ -107,7 +107,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setSubJobLevel(int sublevel) {
 		mModified = true;
-		mStatusCacheValid = (mLevel.getSubLevel() == sublevel);
+		mStatusCacheValid = (mLevel.getSubLevel() == sublevel) && mStatusCacheValid;
 		mLevel.setSubLevel(sublevel);
 	}
 	public JobAndRace getJobAndRace() {
@@ -139,17 +139,17 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public void setInAbysea(boolean inAbbysea) {
 		mModified = true;
-		mStatusCacheValid = (mInAbyssea == inAbbysea);
+		mStatusCacheValid = (mInAbyssea == inAbbysea) && mStatusCacheValid;
 		this.mInAbyssea = inAbbysea;
 	}
 	public void setAbyssiteOfFurtherance(int n) {
 		mModified = true;
-		mStatusCacheValid = (mAtmaset.getAbyssiteOfFurtherance() == n);
+		mStatusCacheValid = (mAtmaset.getAbyssiteOfFurtherance() == n) && mStatusCacheValid;
 		mAtmaset.setAbyssiteOfFurtherance(n);
 	}
 	public void setAbyssiteOfMerit(int n) {
 		mModified = true;
-		mStatusCacheValid = (mAtmaset.getAbyssiteOfMerit() == n);
+		mStatusCacheValid = (mAtmaset.getAbyssiteOfMerit() == n) && mStatusCacheValid;
 		mAtmaset.setAbyssiteOfMerit(n);
 	}
 	public int getAbyssiteOfFurtherance() {
