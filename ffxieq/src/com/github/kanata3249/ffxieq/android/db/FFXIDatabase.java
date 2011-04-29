@@ -28,6 +28,7 @@ import java.util.zip.ZipInputStream;
 import com.github.kanata3249.ffxi.*;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
+import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.JobTrait;
 
@@ -208,6 +209,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public JobTrait[] getJobTraits(int job, int level) {
 		return mJobTraitTable.getJobTraits(this, getReadableDatabase(), getString(FFXIString.JOB_DB_WAR + job), level);
+	}
+	public Combination instantiateCombination(long combiID, int numMatches) {
+		return mEquipmentTable.newCombinationInstance(this, getReadableDatabase(), combiID, numMatches);
 	}
 
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter) {

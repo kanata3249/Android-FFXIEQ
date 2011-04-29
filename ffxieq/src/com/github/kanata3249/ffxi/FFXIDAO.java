@@ -17,6 +17,7 @@ package com.github.kanata3249.ffxi;
 
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
+import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.JobTrait;
 
@@ -32,4 +33,5 @@ public interface FFXIDAO {
 	public Equipment instantiateEquipment(long id);
 	public Atma instantiateAtma(long id);
 	public JobTrait[] getJobTraits(int job, int level);
+	public Combination instantiateCombination(long combiID, int numMatches);
 }

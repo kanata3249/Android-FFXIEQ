@@ -496,7 +496,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		int value;
 		int skillvalue, modvalue;
 		StatusValue skill = getStatus(mLevel, type);
-		StatusValue mod = getStatus(mLevel, StatusType.DEX);
+		StatusValue mod;
 
 		value = 0;
 		skillvalue = skill.getValue() + skill.getAdditional();
@@ -560,7 +560,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public StatusValue getAccuracySub() {
 		StatusType type;
-		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
+		StatusValue mod = getStatus(mLevel, StatusType.AccuracySub);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
@@ -607,7 +607,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public StatusValue getAttack() {
 		StatusType type;
-		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
+		StatusValue mod = getStatus(mLevel, StatusType.Attack);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
@@ -621,7 +621,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public StatusValue getAttackSub() {
 		StatusType type;
-		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
+		StatusValue mod = getStatus(mLevel, StatusType.AttackSub);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
@@ -650,7 +650,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public StatusValue getAttackRange() {
 		StatusType type;
-		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
+		StatusValue mod = getStatus(mLevel, StatusType.AttackRange);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.RANGE);
 		if (eq == null) {
 			eq = mEquipment.getEquipment(EquipmentSet.ANMO);
@@ -732,5 +732,10 @@ public class FFXICharacter implements IStatus, Serializable {
 		} else {
 			return mEquipment.getUnknownTokens();
 		}
+	}
+	
+	public void reloadEquipments() {
+		mEquipment.reloadEquipments();
+		mModified = true;
 	}
 }

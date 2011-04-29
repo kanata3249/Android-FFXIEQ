@@ -34,6 +34,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	private boolean mRare;
 	private boolean mEx;
 	private String mAugment;
+	private long mCombinationID;
 	
 	transient SortedStringList mRangedTokens;
 	
@@ -56,6 +57,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		mEx = ex;
 		mDescription = canonicalizeDescription(description);
 		mAugment = augment;
+		mCombinationID = -1;
 		
 		mNeedParseDescription = true;
 	}
@@ -201,6 +203,13 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 
 	public void setAugment(String mAugment) {
 		this.mAugment = mAugment;
+	}
+	
+	public long getCombinationID() {
+		return mCombinationID;
+	}
+	public void setCombinationID(long id) {
+		mCombinationID = id;
 	}
 
 	@Override
@@ -375,5 +384,18 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		/* not happen */
 		return null;
 	}
-		
+
+	public void removeCombinationToken() {
+		if (mUnknownTokens == null)
+			return;
+		String combination = Dao.getString(FFXIString.TOKEN_Combination);
+		for (int i = 0; i < mUnknownTokens.size(); i++) {
+			String str = mUnknownTokens.get(i);
+			if (str.startsWith(combination)) {
+				mUnknownTokens.remove(i);
+				return;
+			}
+			
+		}
+	}
 }

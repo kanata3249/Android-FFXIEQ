@@ -17,6 +17,7 @@ package com.github.kanata3249.ffxieq.android.db;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxi.FFXIString;
+import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 
 import android.database.Cursor;
@@ -26,6 +27,7 @@ public class EquipmentTable {
 	//
 	static final String TABLE_NAME = "Equipment";
 	static final String TABLE_NAME_AUGMENT = "Augment";
+	static final String TABLE_NAME_COMBINATION = "Combination";
 	//
 	public static final String C_Id = "_id";
 	public static final String C_BaseId = "BaseEquipmentID";
@@ -39,6 +41,12 @@ public class EquipmentTable {
 	public static final String C_Ex = "Ex";
 	public static final String C_OriginalDescription = "DescriptionOrg";
 	public static final String C_Description = "Description";
+	
+	public static final String C_Combi_ID = "_id";
+	public static final String C_Combi_CombinationID = "CombinationID";
+	public static final String C_Combi_Equipments = "Equipments";
+	public static final String C_Combi_NumMatches = "NumMatch";
+	public static final String C_Combi_Description = "Description";
 
 	public EquipmentTable() { };
 
@@ -46,7 +54,7 @@ public class EquipmentTable {
 	public Equipment newInstance(FFXIDAO dao, SQLiteDatabase db, long id, int augId) {
 		Cursor cursor;
 		Equipment newInstance;
-		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description };
+		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description};
 
 		cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
 		if (cursor.getCount() < 1) {
@@ -55,7 +63,11 @@ public class EquipmentTable {
 			return null;
 		}
 		cursor.moveToFirst();
-		newInstance = new Equipment(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6), cursor.getInt(7) != 0, cursor.getInt(8) != 0, cursor.getString(9));
+		newInstance = new Equipment(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getString(cursor.getColumnIndex(C_Name)),
+									cursor.getString(cursor.getColumnIndex(C_Part)), cursor.getString(cursor.getColumnIndex(C_Weapon)),
+									cursor.getString(cursor.getColumnIndex(C_Job)), cursor.getString(cursor.getColumnIndex(C_Race)),
+									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0,
+									cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0, cursor.getString(cursor.getColumnIndex(C_Description)));
 		cursor.close();
 		
 		if (augId != -1) {
@@ -69,6 +81,14 @@ public class EquipmentTable {
 			newInstance.setAugment(augId, cursor.getString(0));
 			cursor.close();
 		}
+		
+		String []combi_columns = { C_Combi_CombinationID };
+		cursor = db.query(TABLE_NAME_COMBINATION, combi_columns, C_Combi_Equipments + " LIKE '%" + newInstance.getName() + "%'", null, null, null, null);
+		if (cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			newInstance.setCombinationID(cursor.getLong(cursor.getColumnIndex(C_Combi_CombinationID)));
+		}
+		cursor.close();
 
 		return newInstance;
 	}
@@ -93,6 +113,25 @@ public class EquipmentTable {
 				null, null, null, orderBy);
 
 		return cursor;
+	}
+
+	public Combination newCombinationInstance(FFXIDAO dao, SQLiteDatabase db, long combiId, int numMatches) {
+		Cursor cursor;
+		Combination newInstance;
+		String []columns = { C_Combi_ID, C_Combi_CombinationID, C_Combi_Description };
+
+		cursor = db.query(TABLE_NAME_COMBINATION, columns,
+							C_Combi_CombinationID + " = '" + combiId + "' AND " + C_Combi_NumMatches + " = '" + numMatches + "'", null, null, null, null, null);
+		if (cursor.getCount() < 1) {
+			// no match
+			cursor.close();
+			return null;
+		}
+		cursor.moveToFirst();
+		newInstance = new Combination(cursor.getLong(cursor.getColumnIndex(C_Combi_ID)), combiId, cursor.getString(cursor.getColumnIndex(C_Combi_Description)));
+		cursor.close();
+
+		return newInstance;
 	}
 }
 

@@ -16,6 +16,7 @@
 package com.github.kanata3249.ffxieq;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.github.kanata3249.ffxi.status.*;
 
@@ -41,6 +42,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	public static final int EQUIPMENT_NUM = 16;
 	
 	private Equipment[] mEquipments;
+	private transient ArrayList<Combination> mCombinations;
 	
 	public EquipmentSet () {
 		super();
@@ -52,9 +54,14 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	public StatusValue getStatus(JobLevelAndRace level, StatusType type) {
 		StatusValue total = new StatusValue(0, 0);
 
-		for (int i = 0; i < mEquipments.length; i++) {
-			if (mEquipments[i] != null) {
-				mEquipments[i].parseDescription();
+		parseDescriptions();
+		if (mCombinations != null) {
+			for (int i = 0; i < mCombinations.size(); i++) {
+				Combination combi;
+				
+				combi = mCombinations.get(i);
+				combi.parseDescription();
+				total.add(combi.getStatus(level, type));
 			}
 		}
 		if (mEquipments[HEAD] != null)
@@ -141,6 +148,20 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		mEquipments[part] = Dao.instantiateEquipment(id);
 	}
 	
+	public boolean reloadEquipments() {
+		boolean updated = false;
+		for (int i = 0; i < mEquipments.length; i++) {
+			if (mEquipments[i] != null) {
+				mEquipments[i] = Dao.instantiateEquipment(mEquipments[i].getId());
+				updated = true;
+			}
+		}
+		if (updated) {
+			parseDescriptions();			
+		}
+		return updated;
+	}
+	
 	public SortedStringList getUnknownTokens() {
 		SortedStringList unknownTokens = new SortedStringList();
 		for (int i = 0; i < mEquipments.length; i++) {
@@ -148,6 +169,63 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 				unknownTokens.mergeList(mEquipments[i].getUnknownTokens());
 			}
 		}
+		if (mCombinations != null) {
+			for (int i = 0; i < mCombinations.size(); i++) {
+				unknownTokens.mergeList(mCombinations.get(i).getUnknownTokens());
+			}
+		}
 		return unknownTokens;
+	}
+	
+	private void parseDescriptions() {
+		boolean updated;
+
+		updated = false;
+		for (int i = 0; i < mEquipments.length; i++) {
+			if (mEquipments[i] != null) {
+				updated = mEquipments[i].parseDescription() || updated;
+			}
+		}
+		if (updated) {
+			// check combination
+			boolean used[] = new boolean[EQUIPMENT_NUM];
+			
+			for (int i = 0; i < used.length; i++)
+				used[i] = false;
+			mCombinations = new ArrayList<Combination>();
+			for (int i = 0; i < mEquipments.length; i++) {
+				if (mEquipments[i] != null && used[i] == false) {
+					long combiID;
+					int numMatches;
+					Combination combi;
+					
+					combiID = mEquipments[i].getCombinationID();
+					if (combiID >= 0) {
+						numMatches = 1;
+						used[i] = true;
+						for (int ii = i + 1; ii < mEquipments.length; ii++) {
+							if (mEquipments[ii] != null && used[ii] == false && mEquipments[ii].getCombinationID() == combiID) {
+								used[ii] = true;
+								numMatches++;
+							}
+						}
+						if (numMatches > 1) {
+							// instantiate
+							combi = Dao.instantiateCombination(combiID, numMatches);
+							if (combi != null) {
+								mCombinations.add(combi);
+								
+								// Remove combination token from unkonwn token list.
+								for (int ii = i; ii < mEquipments.length; ii++) {
+									if (mEquipments[ii] != null && used[ii] == true && mEquipments[ii].getCombinationID() == combiID) {
+										mEquipments[ii].removeCombinationToken();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

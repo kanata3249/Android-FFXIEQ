@@ -144,6 +144,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		byte [] chardata;
 		long newId;
 		
+		charInfo.reloadEquipments();
 		try {
 			ObjectOutputStream oos;
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();;
