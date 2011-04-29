@@ -34,4 +34,5 @@ public interface FFXIDAO {
 	public Atma instantiateAtma(long id);
 	public JobTrait[] getJobTraits(int job, int level);
 	public Combination instantiateCombination(long combiID, int numMatches);
+	public Combination searchCombination(String names[]);
 }

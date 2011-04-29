@@ -213,6 +213,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Combination instantiateCombination(long combiID, int numMatches) {
 		return mEquipmentTable.newCombinationInstance(this, getReadableDatabase(), combiID, numMatches);
 	}
+	public Combination searchCombination(String names[]) {
+		return mEquipmentTable.searchCombinationAndNewInstance(this, getReadableDatabase(), names);
+	}
 
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter) {
 		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy, filter);

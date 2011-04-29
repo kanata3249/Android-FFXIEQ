@@ -190,8 +190,11 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 			// check combination
 			boolean used[] = new boolean[EQUIPMENT_NUM];
 			
-			for (int i = 0; i < used.length; i++)
+			for (int i = 0; i < used.length; i++) {
 				used[i] = false;
+				if (mEquipments[i] != null)
+					mEquipments[i].RestoreCombinationToken();
+			}
 			mCombinations = new ArrayList<Combination>();
 			for (int i = 0; i < mEquipments.length; i++) {
 				if (mEquipments[i] != null && used[i] == false) {
@@ -202,10 +205,8 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 					combiID = mEquipments[i].getCombinationID();
 					if (combiID >= 0) {
 						numMatches = 1;
-						used[i] = true;
 						for (int ii = i + 1; ii < mEquipments.length; ii++) {
 							if (mEquipments[ii] != null && used[ii] == false && mEquipments[ii].getCombinationID() == combiID) {
-								used[ii] = true;
 								numMatches++;
 							}
 						}
@@ -217,8 +218,70 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 								
 								// Remove combination token from unkonwn token list.
 								for (int ii = i; ii < mEquipments.length; ii++) {
-									if (mEquipments[ii] != null && used[ii] == true && mEquipments[ii].getCombinationID() == combiID) {
+									if (mEquipments[ii] != null && used[ii] == false && mEquipments[ii].getCombinationID() == combiID) {
+										used[ii] = true;
 										mEquipments[ii].removeCombinationToken();
+									}
+								}
+							}
+						}
+					} else {
+						used[i] = true;
+					}
+				} else {
+					used[i] = true;
+				}
+			}
+			
+			// Check all combination they are not used...
+			int maxCombi = 0;
+			int parts[];
+			
+			// check free parts.
+			for (int i = 0; i < mEquipments.length; i++) {
+				if (used[i] == false) {
+					maxCombi++;
+				}
+			}
+			parts = new int[maxCombi];
+			for (int n = 0, i = 0; i < mEquipments.length; i++) {
+				if (used[i] == false) {
+					parts[n++] = i;
+				}
+			}
+			
+			if (maxCombi > 1) {
+				for (int match = maxCombi; match > 1; match--) {
+					for (int n = 3; n < (1 << maxCombi); n++) { /* Number 3 is first value that has two bits. */
+						int bits = 0;
+						
+						// count bits
+						for (int i = 0; i < maxCombi; i++) {
+							if ((n & (1 << i)) != 0) {
+								if (used[parts[i]] == false) {
+									bits++;
+								}
+							}
+						}
+						if (bits == match) {
+							// check this combination
+							String names[] = new String[match];
+							int ii = 0;
+							for (int i = 0; i < maxCombi; i++) {
+								if ((n & (1 << i)) != 0) {
+									names[ii++] = mEquipments[parts[i]].getName();
+								}
+							}
+							// instantiate
+							Combination combi = Dao.searchCombination(names);
+							if (combi != null) {
+								mCombinations.add(combi);
+								
+								// Remove combination token from unknown token list.
+								for (int i = 0; i < maxCombi; i++) {
+									if ((n & (1 << i)) != 0) {
+										used[parts[i]] = true;
+										mEquipments[parts[i]].removeCombinationToken();
 									}
 								}
 							}

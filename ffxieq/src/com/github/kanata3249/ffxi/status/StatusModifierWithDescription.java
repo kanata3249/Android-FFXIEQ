@@ -50,22 +50,32 @@ public class StatusModifierWithDescription extends StatusModifier {
 		tokens = mDescription.split(Dao.getString(FFXIString.TOKEN_Latent_Effect));
 		if (tokens.length > 1) {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Latent_Effect) + tokens[1]);
+			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Assult));
 		if (tokens.length > 1) {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Assult) + tokens[1]);
+			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Besieged));
 		if (tokens.length > 1) {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Besieged) + tokens[1]);
+			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Campaign));
 		if (tokens.length > 1) {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Campaign) + tokens[1]);
+			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Dynamis));
 		if (tokens.length > 1) {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Dynamis) + tokens[1]);
+			updated = true;
+		}
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Combination));
+		if (tokens.length > 1) {
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Combination) + tokens[1]);
+			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
 		for (int i = 0; i < tokens.length; i++) {
@@ -81,9 +91,11 @@ public class StatusModifierWithDescription extends StatusModifier {
 					updated = true;
 				} else {
 					mUnknownTokens.addString(tokens[i]);
+					updated = true;
 				}
 			} else {
 				mUnknownTokens.addString(tokens[i]);
+				updated = true;
 			}
 		}
 		mNeedParseDescription = false;

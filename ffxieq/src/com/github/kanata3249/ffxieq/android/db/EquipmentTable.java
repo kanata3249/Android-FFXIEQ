@@ -133,5 +133,35 @@ public class EquipmentTable {
 
 		return newInstance;
 	}
+
+	public Combination searchCombinationAndNewInstance(FFXIDAO dao, SQLiteDatabase db, String names[]) {
+		Cursor cursor;
+		Combination newInstance;
+		String []columns = { C_Combi_ID, C_Combi_CombinationID, C_Combi_Description };
+		StringBuilder where;
+
+		where = new StringBuilder();
+		for (int i = 0; i < names.length; i++) {
+			if (i != 0)
+				where.append(" AND ");
+			where.append(C_Combi_Equipments);
+			where.append(" LIKE '%");
+			where.append(names[i]);
+			where.append("%'");
+		}
+
+		cursor = db.query(TABLE_NAME_COMBINATION, columns,
+							where.toString(), null, null, null, null, null);
+		if (cursor.getCount() < 1) {
+			// no match
+			cursor.close();
+			return null;
+		}
+		cursor.moveToFirst();
+		newInstance = new Combination(cursor.getLong(cursor.getColumnIndex(C_Combi_ID)), cursor.getLong(cursor.getColumnIndex(C_Combi_CombinationID)), cursor.getString(cursor.getColumnIndex(C_Combi_Description)));
+		cursor.close();
+
+		return newInstance;
+	}
 }
 
