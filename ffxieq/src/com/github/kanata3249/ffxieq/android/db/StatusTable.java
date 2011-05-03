@@ -37,9 +37,13 @@ public class StatusTable {
 		int value;
 		String []columns = { C_Status };
 
-		cursor = db.query(TABLE_NAME, columns,
-							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + jobrank + "' AND " + C_JobLevel + " = '" + joblevel + "'",
-							null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME, columns,
+								C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + jobrank + "' AND " + C_JobLevel + " = '" + joblevel + "'",
+								null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return 0;
+		}
 		
 		if (cursor.getCount() < 1) {
 			// no matched row in table
@@ -51,9 +55,13 @@ public class StatusTable {
 		cursor.close();
 
 		if (subjoblevel > 0) {
-			cursor = db.query(TABLE_NAME_SUB, columns,
-					C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
-					null, null, null, null, null);
+			try {
+				cursor = db.query(TABLE_NAME_SUB, columns,
+						C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
+						null, null, null, null, null);
+			} catch (SQLiteException e) {
+				return 0;
+			}
 	
 			if (cursor.getCount() < 1) {
 				// no matched row in table

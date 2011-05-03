@@ -77,7 +77,12 @@ public class JobRankTable {
 				StatusType.SKILL_BLUE_MAGIC.name(),
 		};
 
-		cursor = db.query(TABLE_NAME, columns, null, null, null, null, C_Id, null);
+		try {
+			cursor = db.query(TABLE_NAME, columns, null, null, null, null, C_Id, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
+
 		if (cursor.getCount() != JobLevelAndRace.JOB_MAX) {
 			return null;
 		}

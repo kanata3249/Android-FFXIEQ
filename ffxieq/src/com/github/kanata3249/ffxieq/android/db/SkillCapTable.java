@@ -36,9 +36,13 @@ public class SkillCapTable {
 		String []columns = { C_Value };
 
 		value = 0;
-		cursor = db.query(TABLE_NAME, columns,
-							C_Rank + " = '" + jobrank + "' AND " + C_Level + " = '" + joblevel + "'",
-							null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME, columns,
+								C_Rank + " = '" + jobrank + "' AND " + C_Level + " = '" + joblevel + "'",
+								null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return 0;
+		}
 		
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
@@ -47,9 +51,13 @@ public class SkillCapTable {
 		cursor.close();
 
 		if (subjoblevel > 0 && !subjobrank.equals("-")) {
-			cursor = db.query(TABLE_NAME, columns,
-					C_Rank + " = '" + subjobrank + "' AND " + C_Level + " = '" + subjoblevel + "'",
-					null, null, null, null, null);
+			try {
+				cursor = db.query(TABLE_NAME, columns,
+						C_Rank + " = '" + subjobrank + "' AND " + C_Level + " = '" + subjoblevel + "'",
+						null, null, null, null, null);
+			} catch (SQLiteException e) {
+				return 0;
+			}
 	
 			if (cursor.getCount() > 0) {
 				cursor.moveToFirst();

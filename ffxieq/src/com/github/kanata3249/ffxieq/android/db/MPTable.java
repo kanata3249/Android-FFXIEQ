@@ -41,9 +41,14 @@ public class MPTable {
 
 		value = 0;
 		if (!jobrank.equals("-")) {
-			cursor = db.query(true, TABLE_NAME, columns,
-								C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + jobrank + "' AND " + C_JobLevel + " = '" + joblevel + "'",
-								null, null, null, null, null);
+			try {
+				cursor = db.query(true, TABLE_NAME, columns,
+									C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + jobrank + "' AND " + C_JobLevel + " = '" + joblevel + "'",
+									null, null, null, null, null);
+			} catch (SQLiteException e) {
+				return 0;
+			}
+
 			if (cursor.getCount() < 1) {
 				// no matched row in table
 				cursor.close();
@@ -53,9 +58,14 @@ public class MPTable {
 			value = cursor.getInt(0);
 			cursor.close();
 			if (!subjobrank.equals("-") && subjoblevel > 0) {
-				cursor = db.query(true, TABLE_NAME_SUB, columns2,
-						C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
-						null, null, null, null, null);
+				try {
+					cursor = db.query(true, TABLE_NAME_SUB, columns2,
+							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
+							null, null, null, null, null);
+				} catch (SQLiteException e) {
+					return 0;
+				}
+
 				if (cursor.getCount() < 1) {
 					// no matched row in table
 					cursor.close();
@@ -67,9 +77,14 @@ public class MPTable {
 			}
 		} else {
 			if (!subjobrank.equals("-")&& subjoblevel > 0) {
-				cursor = db.query(true, TABLE_NAME_SUB, columns2,
-						C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
-						null, null, null, null, null);
+				try {
+					cursor = db.query(true, TABLE_NAME_SUB, columns2,
+							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
+							null, null, null, null, null);
+				} catch (SQLiteException e) {
+					return 0;
+				}
+
 				if (cursor.getCount() < 1) {
 					// no matched row in table
 					cursor.close();

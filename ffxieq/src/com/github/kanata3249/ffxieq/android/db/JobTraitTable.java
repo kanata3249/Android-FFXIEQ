@@ -40,7 +40,12 @@ public class JobTraitTable {
 		JobTrait newInstance;
 		String []columns = { C_Id, C_Name, C_Job, C_Level, C_Description };
 
-		cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
+
 		if (cursor.getCount() < 1) {
 			// no match
 			return null;

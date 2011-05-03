@@ -56,7 +56,11 @@ public class EquipmentTable {
 		Equipment newInstance;
 		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description};
 
-		cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
 		if (cursor.getCount() < 1) {
 			// no match
 			cursor.close();
@@ -71,7 +75,11 @@ public class EquipmentTable {
 		cursor.close();
 		
 		if (augId != -1) {
-			cursor = db.query(TABLE_NAME_AUGMENT, columns, C_Id + " = '" + augId + "'", null, null, null, null, null);
+			try {
+				cursor = db.query(TABLE_NAME_AUGMENT, columns, C_Id + " = '" + augId + "'", null, null, null, null, null);
+			} catch (SQLiteException e) {
+				return null;
+			}
 			if (cursor.getCount() < 1) {
 				// no match
 				cursor.close();
@@ -83,7 +91,11 @@ public class EquipmentTable {
 		}
 		
 		String []combi_columns = { C_Combi_CombinationID };
-		cursor = db.query(TABLE_NAME_COMBINATION, combi_columns, C_Combi_Equipments + " LIKE '%" + newInstance.getName() + "%'", null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME_COMBINATION, combi_columns, C_Combi_Equipments + " LIKE '%" + newInstance.getName() + "%'", null, null, null, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
 			newInstance.setCombinationID(cursor.getLong(cursor.getColumnIndex(C_Combi_CombinationID)));
@@ -106,11 +118,15 @@ public class EquipmentTable {
 			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
 		}
 		
-		cursor = db.query(TABLE_NAME, columns,
-				C_Part + " LIKE '%" + partStr + "%' AND " +
-				C_Level + " <= '" + level + "' AND " +
-				"(" + C_Job + " LIKE '%" + jobStr + "%' OR " + C_Job + " = '" + alljobStr + "')" + filterexp,
-				null, null, null, orderBy);
+		try {
+			cursor = db.query(TABLE_NAME, columns,
+					C_Part + " LIKE '%" + partStr + "%' AND " +
+					C_Level + " <= '" + level + "' AND " +
+					"(" + C_Job + " LIKE '%" + jobStr + "%' OR " + C_Job + " = '" + alljobStr + "')" + filterexp,
+					null, null, null, orderBy);
+		} catch (SQLiteException e) {
+			cursor = null;
+		}
 
 		return cursor;
 	}
@@ -119,9 +135,12 @@ public class EquipmentTable {
 		Cursor cursor;
 		Combination newInstance;
 		String []columns = { C_Combi_ID, C_Combi_CombinationID, C_Combi_Description };
-
-		cursor = db.query(TABLE_NAME_COMBINATION, columns,
-							C_Combi_CombinationID + " = '" + combiId + "' AND " + C_Combi_NumMatches + " = '" + numMatches + "'", null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME_COMBINATION, columns,
+								C_Combi_CombinationID + " = '" + combiId + "' AND " + C_Combi_NumMatches + " = '" + numMatches + "'", null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
 		if (cursor.getCount() < 1) {
 			// no match
 			cursor.close();
@@ -150,8 +169,12 @@ public class EquipmentTable {
 			where.append("%'");
 		}
 
-		cursor = db.query(TABLE_NAME_COMBINATION, columns,
-							where.toString(), null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME_COMBINATION, columns,
+								where.toString(), null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
 		if (cursor.getCount() < 1) {
 			// no match
 			cursor.close();

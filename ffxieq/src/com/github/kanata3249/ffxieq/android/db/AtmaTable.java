@@ -37,7 +37,11 @@ public class AtmaTable {
 		Atma newInstance;
 		String []columns = { C_Id, C_Name, C_Description };
 
-		cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+		try {
+			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+		} catch (SQLiteException e) {
+			return null;
+		}
 		if (cursor.getCount() < 1) {
 			// no match
 			cursor.close();
@@ -59,9 +63,13 @@ public class AtmaTable {
 			filterexp = "(" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
 		}
 
-		cursor = db.query(TABLE_NAME, columns,
-				filterexp,
-				null, null, null, orderBy);
+		try {
+			cursor = db.query(TABLE_NAME, columns,
+					filterexp,
+					null, null, null, orderBy);
+		} catch (SQLiteException e) {
+			return null;
+		}
 
 		return cursor;
 	}
