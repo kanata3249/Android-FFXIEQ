@@ -161,7 +161,7 @@ public class BasicEditFragment extends FFXIEQFragment {
         		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
         		   		getFFXICharacter().setInAbysea(arg1);
-        		   		updateValues();
+        		   		saveAndUpdateValues();
 					}
         		});
         	}
