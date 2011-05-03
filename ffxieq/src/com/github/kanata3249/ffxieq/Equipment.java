@@ -58,7 +58,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		mEx = ex;
 		mDescription = canonicalizeDescription(description);
 		mAugment = augment;
-		mCombinationID = -1;
+		mCombinationID = 0;
 		
 		mNeedParseDescription = true;
 	}

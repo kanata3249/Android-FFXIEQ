@@ -203,7 +203,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 					Combination combi;
 					
 					combiID = mEquipments[i].getCombinationID();
-					if (combiID >= 0) {
+					if (combiID > 0) {
 						numMatches = 1;
 						for (int ii = i + 1; ii < mEquipments.length; ii++) {
 							if (mEquipments[ii] != null && used[ii] == false && mEquipments[ii].getCombinationID() == combiID) {
