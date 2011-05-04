@@ -263,7 +263,8 @@ public class BasicEditFragment extends FFXIEQFragment {
         int v;
         
         FFXICharacter charInfo;
-        
+        if (mUpdating)
+        	return;
         if (getActivity() == null) {
         	return;
         }
