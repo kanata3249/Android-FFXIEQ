@@ -30,11 +30,7 @@ public class JobTraitSet extends StatusModifier implements IStatus, Serializable
 	}
 	
 	public void setLevel(JobLevelAndRace level) {
-		if (mLevel != null
-			&& mLevel.getJob() == level.getJob()
-			&& mLevel.getLevel() == level.getLevel()
-			&& mLevel.getSubJob() == level.getSubJob()
-			&& mLevel.getSubLevel() == level.getSubLevel())
+		if (mLevel != null && mLevel.equals(level))
 			return;
 		mLevel = new JobLevelAndRace(level);
 		

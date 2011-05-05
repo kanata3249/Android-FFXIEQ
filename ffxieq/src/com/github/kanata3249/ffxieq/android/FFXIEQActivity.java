@@ -241,7 +241,7 @@ public class FFXIEQActivity extends TabActivity {
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
-	        updateValues();
+	        updateSubViewValues();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

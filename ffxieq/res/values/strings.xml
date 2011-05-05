@@ -113,6 +113,14 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <string-array name="Merits_JobSpecific_Entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
     <string name="NewCharacterName">NewCharacter 1.</string>
     <string name="Save">保存...</string>
     <string name="InAbyssea">アビセア</string>
@@ -171,45 +179,45 @@
         <item>5</item>
         <item>6</item>
     </string-array>
-       <string name="AbyssiteOfFurtherancePrompt">遊軍</string>
-       <string name="AbyssiteOfMeritPrompt">真価</string>
-       <string name="CriticalRate">クリ率</string>
-       <string name="CriticalDamage">クリダメ</string>
-       <string name="Remove">はずす</string>
-       <string name="RemoveAll">全てはずす</string>
-       <string name="AccuracySub">サブ命</string>
-       <string name="AttackSub">サブ攻</string>
-       <string name="Enmity">敵対心</string>
-       <string name="AccuracyMagic">魔命</string>
-       <string name="AttackMagic">魔攻</string>
-       <string name="D">D値</string>
-       <string name="DSub">サブD値</string>
-       <string name="DRange">遠隔D値</string>
-       <string name="Delay">間隔</string>
-       <string name="DelaySub">サブ間隔</string>
-       <string name="DelayRange">遠隔間隔</string>
-       <string name="RegistFire">耐火</string>
-       <string name="RegistIce">耐氷</string>
-       <string name="RegistWind">耐風</string>
-       <string name="RegistEarth">耐土</string>
-       <string name="RegistLightning">耐雷</string>
-       <string name="RegistWater">耐水</string>
-       <string name="RegistLight">耐光</string>
-       <string name="RegistDark">耐闇</string>
-       <string name="Defence">防</string>
-       <string name="DefenceMagic">魔法防御</string>
-       <string name="DamageCutPhysical">物理カット</string>
-       <string name="DamageCutMagic">魔法カット</string>
-       <string name="DamageCutBreath">ブレスカット</string>
-       <string name="HP">HP</string>
-       <string name="MP">MP</string>
-       <string name="STR">STR</string>
-       <string name="DEX">DEX</string>
-       <string name="VIT">VIT</string>
-       <string name="AGI">AGI</string>
-       <string name="INT">INT</string>
-       <string name="MND">MND</string>
-       <string name="CHR">CHR</string>
+    <string name="AbyssiteOfFurtherancePrompt">遊軍</string>
+    <string name="AbyssiteOfMeritPrompt">真価</string>
+    <string name="CriticalRate">クリ率</string>
+    <string name="CriticalDamage">クリダメ</string>
+    <string name="Remove">はずす</string>
+    <string name="RemoveAll">全てはずす</string>
+    <string name="AccuracySub">サブ命</string>
+    <string name="AttackSub">サブ攻</string>
+    <string name="Enmity">敵対心</string>
+    <string name="AccuracyMagic">魔命</string>
+    <string name="AttackMagic">魔攻</string>
+    <string name="D">D値</string>
+    <string name="DSub">サブD値</string>
+    <string name="DRange">遠隔D値</string>
+    <string name="Delay">間隔</string>
+    <string name="DelaySub">サブ間隔</string>
+    <string name="DelayRange">遠隔間隔</string>
+    <string name="RegistFire">耐火</string>
+    <string name="RegistIce">耐氷</string>
+    <string name="RegistWind">耐風</string>
+    <string name="RegistEarth">耐土</string>
+    <string name="RegistLightning">耐雷</string>
+    <string name="RegistWater">耐水</string>
+    <string name="RegistLight">耐光</string>
+    <string name="RegistDark">耐闇</string>
+    <string name="Defence">防</string>
+    <string name="DefenceMagic">魔法防御</string>
+    <string name="DamageCutPhysical">物理カット</string>
+    <string name="DamageCutMagic">魔法カット</string>
+    <string name="DamageCutBreath">ブレスカット</string>
+    <string name="HP">HP</string>
+    <string name="MP">MP</string>
+    <string name="STR">STR</string>
+    <string name="DEX">DEX</string>
+    <string name="VIT">VIT</string>
+    <string name="AGI">AGI</string>
+    <string name="INT">INT</string>
+    <string name="MND">MND</string>
+    <string name="CHR">CHR</string>
 	<string name="HANDTOHAND">格闘</string>
 	<string name="DAGGER">短剣</string>
 	<string name="SWORD">片手剣</string>
@@ -253,13 +261,15 @@
 	<string name="ApplyFilter">適用</string>
 	<string name="Skill">スキル...</string>
 	<string name="Delete">削除...</string>
-  		<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
+	<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
 	<string name="GoogleSearch">Googleで検索</string>
    	<string-array name="SearchURIs">
 		<item>http://wiki.ffo.jp/search.cgi?CCC=愛&amp;Command=Search&amp;order=match&amp;ffotype=title&amp;type=title&amp;qf=</item>
 		<item>http://www.google.com/search?ie=utf-8&amp;q=</item>
    	</string-array>
-		<string name="Compare">比較</string>
-		<string name="NewCharacter">新規キャラクタ</string>
-		<string name="Discard">変更破棄</string>
+	<string name="Compare">比較</string>
+	<string name="NewCharacter">新規キャラクタ</string>
+	<string name="Discard">変更破棄</string>
+	<string name="JobSpecificMeritPointEdit">ジョブ別メリポ</string>
+	<string name="Revert">元に戻す</string>
 </resources>

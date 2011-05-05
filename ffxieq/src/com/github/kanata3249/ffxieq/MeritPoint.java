@@ -23,8 +23,12 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//
-	int mMerits[];
-	
+	public static final int MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY = 2;
+	public static final int MAX_JOB_SPECIFIC_MERIT_POINT = 10;
+	int mMeritPoints[];
+	int mJobSpecificMeritPoints[][][];
+	transient MeritPointJobTraitSet mJobTraits;
+
 	public MeritPoint() {
 		super();
 		
@@ -35,26 +39,39 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 	@Override
 	protected void loadDefaultValues() {
 		super.loadDefaultValues();
-		if (mMerits == null) {
-			mMerits = new int[StatusType.MODIFIER_NUM.ordinal()];
-		} else if (mMerits.length != StatusType.MODIFIER_NUM.ordinal()) {
+		if (mMeritPoints == null) {
+			mMeritPoints = new int[StatusType.MODIFIER_NUM.ordinal()];
+		} else if (mMeritPoints.length != StatusType.MODIFIER_NUM.ordinal()) {
 			int merits[] = new int[StatusType.MODIFIER_NUM.ordinal()]; 
-			for (int i = 0; i < Math.min(merits.length, mMerits.length); i++) {
-				merits[i] = mMerits[i];
+			for (int i = 0; i < Math.min(merits.length, mMeritPoints.length); i++) {
+				merits[i] = mMeritPoints[i];
 			}
-			mMerits = merits;
+			mMeritPoints = merits;
+		}
+		if (mJobSpecificMeritPoints == null) {
+			mJobSpecificMeritPoints = new int[JobLevelAndRace.JOB_MAX][][];
+			for (int i = 0; i < mJobSpecificMeritPoints.length; i++) {
+				mJobSpecificMeritPoints[i] = new int[MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY][];
+				for (int ii = 0; ii < mJobSpecificMeritPoints[i].length; ii++) {
+					mJobSpecificMeritPoints[i][ii] = new int[MAX_JOB_SPECIFIC_MERIT_POINT];
+				}
+			}
 		}
 	}
 
 
 	@Override
 	public StatusValue getStatus(JobLevelAndRace level, StatusType type) {
-		if (mMerits == null) // quick hack
-			mMerits = new int[StatusType.MODIFIER_NUM.ordinal()];
+		loadDefaultValues();
+		if (mJobTraits == null)
+			mJobTraits = new MeritPointJobTraitSet(level, mJobSpecificMeritPoints);
+		else
+			mJobTraits.setLevel(level, mJobSpecificMeritPoints);
 
-		StatusValue v = new StatusValue(0, 0, 0);
+		StatusValue v;
 		int merit = getMeritPoint(type);
 		int meritcap = level.getLevel() / 10;
+		v = mJobTraits.getStatus(level, type);
 		
 		switch (type) {
 		case HP:
@@ -126,10 +143,18 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 	
 	public int getMeritPoint(StatusType type) {
 		loadDefaultValues();  // quick hack for StatusType length change...
-		return mMerits[type.ordinal()];
+		return mMeritPoints[type.ordinal()];
 	}
 	public void setMeritPoint(StatusType type, int value) {
 		loadDefaultValues();  // quick hack for StatusType length change...
-		mMerits[type.ordinal()] = value;
+		mMeritPoints[type.ordinal()] = value;
+	}
+	public int getJobSpecificMeritPoint(int job, int category, int index) {
+		loadDefaultValues();
+		return mJobSpecificMeritPoints[job][category][index];
+	}
+	public void setJobSpecificMeritPoint(int job, int category, int index, int value) {
+		loadDefaultValues();
+		mJobSpecificMeritPoints[job][category][index] = value;
 	}
 }

@@ -6,7 +6,7 @@
 	<ScrollView
 	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
-	  android:layout_height="fill_parent" android:layout_above="@+id/button1">
+	  android:layout_height="fill_parent">
 	    <TableLayout android:id="@+id/tableLayout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:shrinkColumns="*">
 	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
 	            <TextView android:id="@+id/textView" android:text="@string/HP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
@@ -131,5 +131,4 @@
 	        </TableRow>
 	    </TableLayout>
 	</ScrollView>
-  	<Button android:text="@string/SaveOK" android:onClick="onSave" android:id="@+id/button1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_alignParentBottom="true"></Button>
 </RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/Revert" android:id="@+id/Revert"></item>
+    <item android:title="@string/JobSpecificMeritPointEdit" android:id="@+id/JobSpecificMeritPoint">
+        <menu>
+            <item android:id="@+id/JobSpecificMeritPointEdit01"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit02"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit03"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit04"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit05"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit06"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit07"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit08"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit09"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit10"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit11"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit12"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit13"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit14"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit15"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit16"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit17"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit18"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit19"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit20"></item>
+        </menu>
+    </item>
+</menu>

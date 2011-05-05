@@ -63,6 +63,14 @@ public class JobLevelAndRace implements Serializable {
 		mRace = from.mRace;
 	}
 	
+	public boolean equals(JobLevelAndRace other) {
+		return 	mJob == other.mJob
+				&& mSubJob == other.mSubJob
+				&& mLevel == other.mLevel
+				&& mSubLevel == other.mSubLevel
+				&& mRace == other.mRace;
+	}
+
 	public int getJob() { return mJob; };
 	public int getSubJob() { return mSubJob; };
 	public int getLevel() { return mLevel; };

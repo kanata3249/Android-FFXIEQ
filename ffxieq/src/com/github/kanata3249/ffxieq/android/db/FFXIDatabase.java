@@ -66,6 +66,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	EquipmentTable mEquipmentTable;
 	AtmaTable mAtmaTable;
 	JobTraitTable mJobTraitTable;
+	MeritPointTable mMeritPointTable;
 	StringTable mStringTable;
 
 	// Constructor
@@ -84,6 +85,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mEquipmentTable = new EquipmentTable();
 		mAtmaTable = new AtmaTable();
 		mJobTraitTable = new JobTraitTable();
+		mMeritPointTable = new MeritPointTable();
 		mStringTable = new StringTable();
 
 		if (checkDatabase()) {
@@ -223,5 +225,13 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Cursor getAtmaCursor(String[] columns, String orderBy, String filter) {
 		return mAtmaTable.getCursor(this, getReadableDatabase(), columns, orderBy, filter);
 	}
-
+	public String[] getJobSpecificMeritPointItems(int job, int category) {
+		return mMeritPointTable.getJobSpecificMeritPointItems(this, getReadableDatabase(), getString(FFXIString.JOB_DB_WAR + job), category);
+	}
+	public long[] getJobSpecificMeritPointItemIds(int job, int category) {
+		return mMeritPointTable.getJobSpecificMeritPointItemIds(this, getReadableDatabase(), getString(FFXIString.JOB_DB_WAR + job), category);
+	}
+	public JobTrait instantiateMeritPointJobTrait(long id, int level) {
+		return mMeritPointTable.newInstance(this, getReadableDatabase(), id, level);
+	}
 }
