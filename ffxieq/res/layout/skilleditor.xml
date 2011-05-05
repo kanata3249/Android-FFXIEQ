@@ -1,117 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@+id/button1" android:layout_alignParentTop="true">
-	    <TableLayout android:layout_width="fill_parent" android:id="@+id/tableLayout" android:layout_height="fill_parent" android:stretchColumns="*">
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/HANDTOHAND"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DAGGER"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SWORD"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/HANDTOHAND" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/DAGGER" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/SWORD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GREATSWORD"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/AXE"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GREATAXE"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/GREATSWORD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/AXE" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/GREATAXE" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SCYTH"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/POLEARM"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/KATANA"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/SCYTH" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/POLEARM" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/KATANA" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GREATKATANA"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/CLUB"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/STAFF"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/GREATKATANA" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/CLUB" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/STAFF" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ARCHERY"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/MARKSMANSHIP"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/THROWING"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/ARCHERY" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/MARKSMANSHIP" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/THROWING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GUARDING"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/EVASION"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SHIELD"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/GUARDING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/EVASION" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/SHIELD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/PARRYING"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/PARRYING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DIVINEMAGIC"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/HEALINGMAGIC"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ENCHANCINGMAGIC"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/DIVINEMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/HEALINGMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/ENCHANCINGMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ENFEEBLINGMAGIC"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ELEMENTALMAGIC"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DARKMAGIC"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/ENFEEBLINGMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/ELEMENTALMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/DARKMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SINGING"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/STRINGINSTRUMENT"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/WINDINSTRUMENT"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/SINGING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/STRINGINSTRUMENT" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WINDINSTRUMENT" android:inputType="number"></EditText>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/NINJUTSU"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SUMMONING"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/BLUEMAGIC"></TextView>
-	        </TableRow>
-	        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
-	            <EditText android:text="" android:id="@+id/NINJUTSU" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/SUMMONING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	            <EditText android:text="" android:id="@+id/BLUEMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
-	        </TableRow>
-	     </TableLayout>
-	</ScrollView>
-  	<Button android:text="@string/SaveOK" android:onClick="onSave" android:id="@+id/button1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_alignParentBottom="true"></Button>
-</RelativeLayout>
+    <TableLayout android:layout_width="fill_parent" android:id="@+id/tableLayout" android:layout_height="fill_parent" android:stretchColumns="*">
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/HANDTOHAND"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DAGGER"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SWORD"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/HANDTOHAND" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/DAGGER" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/SWORD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GREATSWORD"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/AXE"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GREATAXE"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/GREATSWORD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/AXE" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/GREATAXE" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SCYTH"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/POLEARM"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/KATANA"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/SCYTH" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/POLEARM" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/KATANA" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GREATKATANA"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/CLUB"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/STAFF"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/GREATKATANA" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/CLUB" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/STAFF" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ARCHERY"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/MARKSMANSHIP"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/THROWING"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/ARCHERY" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/MARKSMANSHIP" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/THROWING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GUARDING"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/EVASION"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SHIELD"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/GUARDING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/EVASION" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/SHIELD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/PARRYING"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/PARRYING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DIVINEMAGIC"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/HEALINGMAGIC"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ENCHANCINGMAGIC"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/DIVINEMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/HEALINGMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/ENCHANCINGMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ENFEEBLINGMAGIC"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/ELEMENTALMAGIC"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/DARKMAGIC"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/ENFEEBLINGMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/ELEMENTALMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/DARKMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SINGING"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/STRINGINSTRUMENT"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/WINDINSTRUMENT"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/SINGING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/STRINGINSTRUMENT" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WINDINSTRUMENT" android:inputType="number"></EditText>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/NINJUTSU"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/SUMMONING"></TextView>
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/BLUEMAGIC"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/NINJUTSU" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/SUMMONING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+            <EditText android:text="" android:id="@+id/BLUEMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
+    </TableLayout>
+</ScrollView>

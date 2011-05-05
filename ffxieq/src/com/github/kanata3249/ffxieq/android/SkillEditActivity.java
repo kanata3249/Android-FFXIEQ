@@ -21,7 +21,9 @@ import com.github.kanata3249.ffxieq.R;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class SkillEditActivity extends FFXIEQBaseActivity {
 	@Override
@@ -74,19 +76,27 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 		saveValues();
 	}
 
-	public void onSave(View view) {
+	@Override
+	public void onBackPressed() {
 		saveValues();
 		
 		{
 			JobAndRace jobandrace = new JobAndRace();
+			JobAndRace oldjobandrace = getFFXICharacter().getJobAndRace();
 			StatusType[] types = StatusType.values();
 			ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
+			boolean modified;
 
+			
+			modified = false;
 			for (int i = 0; i < values.length - 1; i++) {
+				if (oldjobandrace.getSkill(types[i]) != values[i].getIntValue())
+					modified = true;
 				jobandrace.setSkill(types[i], values[i].getIntValue());
 			}
 			
-			getFFXICharacter().setJobAndRace(jobandrace);
+			if (modified)
+				getFFXICharacter().setJobAndRace(jobandrace);
 		}
 		
 		Intent result = new Intent();
@@ -120,4 +130,35 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 
 	static public boolean isComeFrom(Intent data) {
 		return data.getStringExtra("From").equals("MeritPointEdit");
-	}}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.skilledit, menu);
+		
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.Revert:
+			{  // Reload from character data.
+				ControlBindableInteger values[];
+		
+				JobAndRace jobandrace = getFFXICharacter().getJobAndRace();
+				values = (ControlBindableInteger[])getTemporaryValues();
+				StatusType[] types = StatusType.values();
+				for (int i = 0; i < values.length; i++) {
+					values[i] = new ControlBindableInteger(jobandrace.getSkill(types[i]));
+				}
+				updateValues();
+			}
+			return true;
+		}
+		return false;
+	}
+}

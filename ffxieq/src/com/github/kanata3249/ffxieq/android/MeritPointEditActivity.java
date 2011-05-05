@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MeritPointEditActivity extends FFXIEQBaseActivity {
 
@@ -124,40 +123,6 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			
 			if (modified)
 				getFFXICharacter().setMeritPoint(merits);
-		}
-		
-		Intent result = new Intent();
-		
-		result.putExtra("From", "MeritPointEdit");
-		setResult(RESULT_OK, result);
-		
-		finish();
-	}
-
-	public void onSave(View view) {
-		saveValues();
-		
-		{
-			MeritPoint merits = new MeritPoint();
-			StatusType[] types = StatusType.values();
-			ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-			String []enmity_entries;
-
-			enmity_entries = getResources().getStringArray(R.array.Merits_Enmity_Entries);
-			int i;
-			for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
-				merits.setMeritPoint(types[i], values[i].getIntValue());
-			}
-			merits.setMeritPoint(StatusType.Enmity, values[StatusType.Enmity.ordinal()].getIntValue() - enmity_entries.length / 2);
-			for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
-				for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
-					for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
-						merits.setJobSpecificMeritPoint(job, category, index, values[i++].getIntValue());
-					}
-				}
-			}
-			
-			getFFXICharacter().setMeritPoint(merits);
 		}
 		
 		Intent result = new Intent();
