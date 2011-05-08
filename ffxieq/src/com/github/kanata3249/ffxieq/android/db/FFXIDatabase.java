@@ -39,10 +39,10 @@ import android.database.sqlite.*;
 import android.os.Environment;
 
 public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
-	private static final String DB_NAME = "ffxieq";
-	private static final String DB_NAME_ASSET = "db.zip";
-	private static String DB_PATH;
-	private static String SD_PATH;
+	public static final String DB_NAME = "ffxieq";
+	public static final String DB_NAME_ASSET = "db.zip";
+	public static String DB_PATH;
+	public static String SD_PATH;
 
 	static final Character[][] RaceToStatusRank = {
 		// TODO This table should be read from DB.
@@ -68,11 +68,14 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	JobTraitTable mJobTraitTable;
 	MeritPointTable mMeritPointTable;
 	StringTable mStringTable;
+	
+	boolean mUseExternalDB;
+	String mDBPath;
 
 	// Constructor
-	public FFXIDatabase(Context context) {
+	public FFXIDatabase(Context context, boolean useExternal) {
 		super(context, DB_NAME, null, 1);
-		
+
 		DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
 		SD_PATH = Environment.getExternalStorageDirectory() + "/" + context.getPackageName() + "/"; 
 
@@ -87,15 +90,32 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mJobTraitTable = new JobTraitTable();
 		mMeritPointTable = new MeritPointTable();
 		mStringTable = new StringTable();
+		
+		if (useExternal)
+			mDBPath = SD_PATH;
+		else
+			mDBPath = DB_PATH;
 
-		if (checkDatabase()) {
+		if (checkDatabase(mDBPath)) {
 			try {
-				copyDatabaseFromAssets();
+				copyDatabaseFromAssets(mDBPath);
 			} catch (IOException e) {
 			}
 		}
 	}
 
+	static public String getDBPath(boolean useExternalDB) {
+		String path; 
+		if (DB_PATH == null)
+			return DB_NAME;
+
+		if (useExternalDB) {
+			path = SD_PATH + DB_NAME;
+		} else {
+			path = DB_PATH + DB_NAME;
+		}
+		return path;
+	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -105,19 +125,19 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	}
 	
-	public boolean checkDatabase() {
-		File in = new File(DB_PATH + DB_NAME);
+	public boolean checkDatabase(String pathToCheck) {
+		File in = new File(pathToCheck + DB_NAME);
 		
 		if (in.isFile())
 			return false;
 		return true;
 	}
 	
-	public void copyDatabaseFromAssets() throws IOException {
+	public void copyDatabaseFromAssets(String pathToCopy) throws IOException {
 		InputStream in = mContext.getAssets().open(DB_NAME_ASSET, AssetManager.ACCESS_STREAMING);
 		ZipInputStream zipIn = new ZipInputStream(in);
 		ZipEntry zipEntry = zipIn.getNextEntry();
-		File outDir = new File(DB_PATH);
+		File outDir = new File(pathToCopy);
 		
 		SQLiteDatabase db;
 
@@ -130,7 +150,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			byte[] buffer = new byte[4096];
 			int size;
 			
-			OutputStream out = new FileOutputStream(DB_PATH + zipEntry.getName());
+			OutputStream out = new FileOutputStream(pathToCopy + zipEntry.getName());
 			while ((size = zipIn.read(buffer, 0, buffer.length)) > -1) {
 				out.write(buffer, 0, size);
 			}
@@ -172,6 +192,30 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 
 		channelSource.close();
 		channelTarget.close();
+	}
+	
+	public boolean setUseExternalDB(boolean useExternalDB) {
+		if (useExternalDB == mUseExternalDB)
+			return true;
+		
+		try {
+			if (useExternalDB) {
+				copyDatabaseToSD();
+				getReadableDatabase().close();
+				File oldDB = new File(DB_PATH + DB_NAME);
+				oldDB.delete();
+			} else {
+				copyDatabaseFromSD();
+				getReadableDatabase().close();
+				File oldDB = new File(SD_PATH + DB_NAME);
+				oldDB.delete();
+			}
+			mUseExternalDB = useExternalDB;
+			
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
 	}
 
 	// DA methods

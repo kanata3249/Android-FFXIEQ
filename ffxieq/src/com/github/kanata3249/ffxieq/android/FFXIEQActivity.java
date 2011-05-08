@@ -28,9 +28,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,10 +55,27 @@ public class FFXIEQActivity extends TabActivity {
 		getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.ffxieqactivity);
 
+		if (getSettings().useExternalDB()) {
+			// check SD card...
+			String status = Environment.getExternalStorageState();
+			if (status.equals(Environment.MEDIA_MOUNTED)) {
+				// valid status for read
+			} else {
+				showDialog(R.string.SDNotMounted);
+				return;
+			}
+		}
+		setupSubViews();
+	}
+	
+	void setupSubViews() {
         Resources res = getResources();
 		TabHost tabHost = getTabHost();
 		TabHost.TabSpec spec;
 		Intent intent;
+		
+		/* make sure that Database is exist */
+		getDAO();
 		
 		intent = new Intent().setClass(this, EquipmentSetEditActivity.class);
 		spec = tabHost.newTabSpec("equipment").setIndicator("Equipment", res.getDrawable(android.R.drawable.ic_menu_edit));
@@ -252,7 +271,40 @@ public class FFXIEQActivity extends TabActivity {
 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.mainactivity, menu);
+		
 		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		FFXIEQSettings settings = getSettings();
+		boolean useExternalDB;
+		MenuItem useExternalDBItem, installDBItem;
+		boolean writable;
+
+		useExternalDB = settings.useExternalDB();
+		useExternalDBItem = menu.findItem(R.id.useExternalDB);
+		installDBItem = menu.findItem(R.id.InstallDB);
+	
+		// check SD card...
+		String status = Environment.getExternalStorageState();
+		if (status.equals(Environment.MEDIA_MOUNTED)) {
+			// valid status for write
+			writable = true;
+		} else {
+			writable = false;
+		}
+
+		useExternalDBItem.setChecked(useExternalDB);
+		if (useExternalDB) {
+			useExternalDBItem.setEnabled(true);
+			installDBItem.setEnabled(writable);
+		} else {
+			useExternalDBItem.setEnabled(writable);
+			installDBItem.setEnabled(true);
+		}
+		
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -283,30 +335,33 @@ public class FFXIEQActivity extends TabActivity {
 			}
 			return true;
 
+		case R.id.useExternalDB:
+			{
+				FFXIDatabase db = (FFXIDatabase)getDAO();
+				FFXIEQSettings settings = getSettings();
+				boolean useExternalDB;
+
+				useExternalDB = settings.useExternalDB();
+				if (useExternalDB)
+					useExternalDB = false;
+				else
+					useExternalDB = true;
+				
+				if (db.setUseExternalDB(useExternalDB)) {
+					settings.setUseExternalDB(useExternalDB);
+					item.setChecked(useExternalDB);
+				} else {
+					showDialog(R.string.UseExternalDBFailed);
+				}
+				return true;
+			}
+
 		case R.id.InstallDB:
 			try {
-				((FFXIDatabase)getDAO()).copyDatabaseFromAssets();
+				((FFXIDatabase)getDAO()).copyDatabaseFromAssets(""); // TODO
 				showDialog(R.string.InstallDBSucceeded);
 			} catch (IOException e) {
 				showDialog(R.string.InstallDBFailed);
-			}
-			return true;
-
-		case R.id.InstallDBFromSD:
-			try {
-				((FFXIDatabase)getDAO()).copyDatabaseFromSD();
-				showDialog(R.string.InstallDBFromSDSucceeded);
-			} catch (IOException e) {
-				showDialog(R.string.InstallDBFromSDFailed);
-			}
-			return true;
-
-		case R.id.ExportDBToSD:
-			try {
-				((FFXIDatabase)getDAO()).copyDatabaseToSD();
-				showDialog(R.string.ExportDBSucceeded);
-			} catch (IOException e) {
-				showDialog(R.string.ExportDBFailed);
 			}
 			return true;
 
@@ -450,36 +505,32 @@ public class FFXIEQActivity extends TabActivity {
 	    	builder.setPositiveButton(R.string.OK, null);
 			dialog = builder.create();
 			return dialog;
-		case R.string.InstallDBFromSDSucceeded:
+		case R.string.UseExternalDBFailed:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.InstallDBFromSDSucceeded));
-	    	builder.setTitle(getString(R.string.InstallDB));
+	    	builder.setMessage(getString(R.string.UseExternalDBFailed));
+	    	builder.setTitle(getString(R.string.app_name));
 	    	builder.setPositiveButton(R.string.OK, null);
 			dialog = builder.create();
 			return dialog;
-		case R.string.InstallDBFromSDFailed:
+		case R.string.SDNotMounted:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.InstallDBFromSDSucceeded));
-	    	builder.setTitle(getString(R.string.InstallDBFromSD));
-	    	builder.setPositiveButton(R.string.OK, null);
-			dialog = builder.create();
-			return dialog;
-		case R.string.ExportDBSucceeded:
-			builder = new AlertDialog.Builder(this);
-			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.ExportDBSucceeded));
-	    	builder.setTitle(getString(R.string.ExportDBToSD));
-	    	builder.setPositiveButton(R.string.OK, null);
-			dialog = builder.create();
-			return dialog;
-		case R.string.ExportDBFailed:
-			builder = new AlertDialog.Builder(this);
-			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.ExportDBFailed));
-	    	builder.setTitle(getString(R.string.ExportDBToSD));
-	    	builder.setPositiveButton(R.string.OK, null);
+	    	builder.setMessage(getString(R.string.SDNotMounted));
+	    	builder.setTitle(getString(R.string.app_name));
+	    	builder.setPositiveButton(R.string.YesAndRestart, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					getSettings().setUseExternalDB(false);
+					dismissDialog(R.string.SDNotMounted);
+					setupSubViews();
+				}
+	    	});
+	    	builder.setNegativeButton(R.string.NoAndDismiss, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.SDNotMounted);
+					finish();
+				}
+	    	});
 			dialog = builder.create();
 			return dialog;
 		}

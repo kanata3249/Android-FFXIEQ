@@ -156,12 +156,8 @@
     <string name="QueryNewCharacter">変更されています。本当に新規キャラクタを作成しますか？</string>
     <string name="SaveAndNewCharacterOK">保存して作成</string>
     <string name="DiscardAndNewCharacterOK">破棄して作成</string>
-    <string name="InstallDBSucceeded">Import DB Succeeded.</string>
-    <string name="InstallDBFailed">Import DB Failed.</string>
-    <string name="InstallDBFromSDSucceeded">Import DB from SD Succeeded.</string>
-    <string name="InstallDBFromSDFailed">Import DB from SD Failed.</string>
-    <string name="ExportDBSucceeded">Export DB Succeeded.</string>
-    <string name="ExportDBFailed">Export DB Failed.</string>
+    <string name="InstallDBSucceeded">DB更新しました。</string>
+    <string name="InstallDBFailed">DB更新に失敗しました。</string>
     <string name="OK">OK</string>
     <string name="EditFilterTitle">フィルタ文字列</string>
     <string-array name="AbyssiteOfFurtheranceEntries">
@@ -253,9 +249,11 @@
 	<string name="CRITICAL">クリティカル</string>
 	<string name="CRITICALDEFENCE">被クリティカル</string>
 	<string name="SPELLINTERRUPTION">詠唱中断</string>
-	<string name="InstallDB">Install DB</string>
-	<string name="InstallDBFromSD">Install DB from SD</string>
-	<string name="ExportDBToSD">ExportDB To SD</string>
+	<string name="InstallDB">DB更新</string>
+	<string name="SDNotMounted">SDカードを使う設定ですが、SDカードがありません。設定変更しますか？</string>
+	<string name="YesAndRestart">変更する</string>
+	<string name="NoAndDismiss">終了</string>
+	<string name="UseExternalDBFailed">設定変更できませんでした。</string>
 	<string name="Filter">フィルタ...</string>
 	<string name="ResetFilter">フィルタ解除</string>
 	<string name="ApplyFilter">適用</string>
@@ -272,4 +270,5 @@
 	<string name="Discard">変更破棄</string>
 	<string name="JobSpecificMeritPointEdit">ジョブ別メリポ</string>
 	<string name="Revert">元に戻す</string>
+	<string name="useExternalDB">SD上のDBを使用</string>
 </resources>

@@ -25,8 +25,10 @@ import java.io.StreamCorruptedException;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.*;
 
@@ -299,5 +301,18 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		
 		return filter;
 	}
+	
+	public boolean useExternalDB() {
+		return mContext.getSharedPreferences("ffxieq", Activity.MODE_PRIVATE).getBoolean("useExternalDB", false);
+	}
+	
+	public void setUseExternalDB(boolean useExternalDB) {
+		SharedPreferences.Editor editor;
+		
+		editor = mContext.getSharedPreferences("ffxieq", Activity.MODE_PRIVATE).edit(); 
+		editor.putBoolean("useExternalDB", useExternalDB);
+		editor.commit();
+	}
+
 }
 

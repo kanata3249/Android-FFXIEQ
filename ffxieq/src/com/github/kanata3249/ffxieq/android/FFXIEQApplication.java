@@ -15,6 +15,8 @@
 */
 package com.github.kanata3249.ffxieq.android;
 
+import java.io.File;
+
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxi.status.StatusModifier;
 import com.github.kanata3249.ffxieq.FFXICharacter;
@@ -22,6 +24,8 @@ import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 import com.github.kanata3249.ffxieq.android.db.FFXIEQSettings;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
 public class FFXIEQApplication extends Application {
 	FFXIDatabase mFFXIDatabase;
@@ -41,8 +45,11 @@ public class FFXIEQApplication extends Application {
 	}
 
 	public FFXIDAO getFFXIDatabase() {
+		if (mFFXIEQSettings == null) {
+			mFFXIEQSettings = new FFXIEQSettings(this);
+		}
 		if (mFFXIDatabase == null) {
-			mFFXIDatabase = new FFXIDatabase(this);
+			mFFXIDatabase = new FFXIDatabase(this, mFFXIEQSettings.useExternalDB());
 		}
 		StatusModifier.setDao(mFFXIDatabase);
 		FFXICharacter.setDao(mFFXIDatabase);
@@ -50,7 +57,6 @@ public class FFXIEQApplication extends Application {
 	}
 
 	public FFXIEQSettings getFFXIEQSettings() {
-		getFFXIDatabase();
 		if (mFFXIEQSettings == null) {
 			mFFXIEQSettings = new FFXIEQSettings(this);
 		}
@@ -104,5 +110,20 @@ public class FFXIEQApplication extends Application {
 	}
 	public void setTemporaryValues(ControlBindableValue []values) {
 		mTemporaryValues = values;
+	}
+
+	@Override
+	public File getDatabasePath(String name) {
+		// TODO Auto-generated method stub
+		return super.getDatabasePath(name);
+	}
+
+	@Override
+	public SQLiteDatabase openOrCreateDatabase(String name, int mode,
+			CursorFactory factory) {
+		if (name.equals(FFXIDatabase.DB_NAME)) {
+			name = FFXIDatabase.getDBPath(getFFXIEQSettings().useExternalDB());
+		}
+		return super.openOrCreateDatabase(name, mode, factory);
 	}
 }
