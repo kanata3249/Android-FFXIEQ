@@ -358,7 +358,7 @@ public class FFXIEQActivity extends TabActivity {
 
 		case R.id.InstallDB:
 			try {
-				((FFXIDatabase)getDAO()).copyDatabaseFromAssets(""); // TODO
+				((FFXIDatabase)getDAO()).copyDatabaseFromAssets(null);
 				showDialog(R.string.InstallDBSucceeded);
 			} catch (IOException e) {
 				showDialog(R.string.InstallDBFailed);

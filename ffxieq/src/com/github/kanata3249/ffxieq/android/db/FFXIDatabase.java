@@ -95,6 +95,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			mDBPath = SD_PATH;
 		else
 			mDBPath = DB_PATH;
+		mUseExternalDB = useExternal;
 
 		if (checkDatabase(mDBPath)) {
 			try {
@@ -137,6 +138,13 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		InputStream in = mContext.getAssets().open(DB_NAME_ASSET, AssetManager.ACCESS_STREAMING);
 		ZipInputStream zipIn = new ZipInputStream(in);
 		ZipEntry zipEntry = zipIn.getNextEntry();
+		
+		if (pathToCopy == null) {
+			if (mUseExternalDB)
+				pathToCopy = SD_PATH;
+			else
+				pathToCopy = DB_PATH;
+		}
 		File outDir = new File(pathToCopy);
 		
 		SQLiteDatabase db;
