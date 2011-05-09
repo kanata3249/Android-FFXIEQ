@@ -126,6 +126,12 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	}
 	
+	@Override
+	public synchronized SQLiteDatabase getWritableDatabase() {
+		SQLiteException e = new SQLiteException();
+		throw e;
+	}
+	
 	public boolean checkDatabase(String pathToCheck) {
 		File in = new File(pathToCheck + DB_NAME);
 		
@@ -157,13 +163,18 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		while (zipEntry != null) {
 			byte[] buffer = new byte[4096];
 			int size;
-			
-			OutputStream out = new FileOutputStream(pathToCopy + zipEntry.getName());
-			while ((size = zipIn.read(buffer, 0, buffer.length)) > -1) {
-				out.write(buffer, 0, size);
+
+			if (zipEntry.getName().equalsIgnoreCase(DB_NAME)) {
+				OutputStream out = new FileOutputStream(pathToCopy + zipEntry.getName());
+				while ((size = zipIn.read(buffer, 0, buffer.length)) > -1) {
+					out.write(buffer, 0, size);
+				}
+				out.flush();
+				out.close();
+				
+				File to = new File(pathToCopy + zipEntry.getName());
+				to.setLastModified(zipEntry.getTime());
 			}
-			out.flush();
-			out.close();
 			zipIn.closeEntry();
 			zipEntry = zipIn.getNextEntry();
 		}
@@ -188,6 +199,10 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		channelSource.close();
 		channelTarget.close();
 		
+		// Copy last modified
+		File from = new File(SD_PATH + DB_NAME);
+		File to = new File(DB_PATH + DB_NAME);
+		to.setLastModified(from.lastModified());
 	}
 
 	public void copyDatabaseToSD() throws IOException {
@@ -200,6 +215,11 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 
 		channelSource.close();
 		channelTarget.close();
+		
+		// Copy last modified
+		File from = new File(DB_PATH + DB_NAME);
+		File to = new File(SD_PATH + DB_NAME);
+		to.setLastModified(from.lastModified());
 	}
 	
 	public boolean setUseExternalDB(boolean useExternalDB) {

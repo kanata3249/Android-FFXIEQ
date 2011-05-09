@@ -114,7 +114,9 @@ public class FFXIEQApplication extends Application {
 
 	@Override
 	public File getDatabasePath(String name) {
-		// TODO Auto-generated method stub
+		if (name.equals(FFXIDatabase.DB_NAME)) {
+			name = FFXIDatabase.getDBPath(getFFXIEQSettings().useExternalDB());
+		}
 		return super.getDatabasePath(name);
 	}
 
