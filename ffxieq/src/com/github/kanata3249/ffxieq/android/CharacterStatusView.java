@@ -20,8 +20,8 @@ import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxi.status.StatusValue;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
-
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ScrollView;
@@ -64,11 +64,11 @@ public class CharacterStatusView extends ScrollView {
 	public void notifyDatasetChanged() {
 		TextView tv;
 
-		mCharInfo.cacheStatusValues();
-		if (mCharInfoToCompare != null) {
-			mCharInfoToCompare.cacheStatusValues();
+		if (cacheStatusAsync()) {
+			return;
 		}
-    	tv = (TextView)findViewById(R.id.HP);
+
+		tv = (TextView)findViewById(R.id.HP);
     	if (tv != null) {
     		tv.setText(getHP(mDisplayParam));
     	}
@@ -492,5 +492,30 @@ public class CharacterStatusView extends ScrollView {
 			return tokens.diffList(mCharInfoToCompare.getUnknownTokens());
 		}
 		return tokens.toString();
+	}
+	
+	public boolean cacheStatusAsync() {
+		if (mCharInfo.isCacheValid() && (mCharInfoToCompare == null || mCharInfoToCompare.isCacheValid()))
+			return false;
+		final ProgressDialog dlg = new ProgressDialog(getContext());
+		dlg.show();
+		AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				mCharInfo.cacheStatusValues();
+				if (mCharInfoToCompare != null)
+					mCharInfoToCompare.cacheStatusValues();
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				notifyDatasetChanged();
+				dlg.dismiss();
+			}
+		};
+		task.execute();
+		
+		return true;
 	}
 }

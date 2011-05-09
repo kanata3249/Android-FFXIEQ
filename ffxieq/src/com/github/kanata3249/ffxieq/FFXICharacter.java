@@ -172,6 +172,9 @@ public class FFXICharacter implements IStatus, Serializable {
 	public void setNotModified() {
 		mModified = false;
 	}
+	public boolean isCacheValid() {
+		return mStatusCacheValid;
+	}
 
 	public void cacheStatusValues() {
 		if (mStatusCacheValid && mCachedValues != null) {

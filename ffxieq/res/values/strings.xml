@@ -253,6 +253,7 @@
 	<string name="SDNotMounted">SDカードを使う設定ですが、SDカードがありません。設定変更しますか？</string>
 	<string name="YesAndRestart">変更する</string>
 	<string name="NoAndDismiss">終了</string>
+	<string name="UseExternalDBSucceeded">設定変更しました。</string>
 	<string name="UseExternalDBFailed">設定変更できませんでした。</string>
 	<string name="Filter">フィルタ...</string>
 	<string name="ResetFilter">フィルタ解除</string>

@@ -31,6 +31,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -337,33 +338,73 @@ public class FFXIEQActivity extends TabActivity {
 
 		case R.id.useExternalDB:
 			{
-				FFXIDatabase db = (FFXIDatabase)getDAO();
-				FFXIEQSettings settings = getSettings();
+				final FFXIDatabase db = (FFXIDatabase)getDAO();
+				final FFXIEQSettings settings = getSettings();
 				boolean useExternalDB;
+				final MenuItem menuItem = item;
 
 				useExternalDB = settings.useExternalDB();
 				if (useExternalDB)
 					useExternalDB = false;
 				else
 					useExternalDB = true;
-				
-				if (db.setUseExternalDB(useExternalDB)) {
-					settings.setUseExternalDB(useExternalDB);
-					item.setChecked(useExternalDB);
-				} else {
-					showDialog(R.string.UseExternalDBFailed);
-				}
+
+				final ProgressDialog dlg = new ProgressDialog(this);
+				dlg.show();
+				AsyncTask<Boolean, Void, Boolean> task = new AsyncTask<Boolean, Void, Boolean>() {
+					boolean mNewSetting;
+					@Override
+					protected Boolean doInBackground(Boolean... params) {
+						mNewSetting = params[0];
+						return db.setUseExternalDB(mNewSetting);
+					}
+
+					@Override
+					protected void onPostExecute(Boolean result) {
+						if (result) {
+							settings.setUseExternalDB(mNewSetting);
+							menuItem.setChecked(mNewSetting);
+							showDialog(R.string.UseExternalDBSucceeded);
+						} else {
+							showDialog(R.string.UseExternalDBFailed);
+						}
+						dlg.dismiss();
+					}
+				};
+				task.execute(useExternalDB);
+
 				return true;
 			}
 
 		case R.id.InstallDB:
-			try {
-				((FFXIDatabase)getDAO()).copyDatabaseFromAssets(null);
-				showDialog(R.string.InstallDBSucceeded);
-			} catch (IOException e) {
-				showDialog(R.string.InstallDBFailed);
+			{
+				final ProgressDialog dlg = new ProgressDialog(this);
+				dlg.show();
+				AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
+					@Override
+					protected Boolean doInBackground(Void... params) {
+						try {
+							((FFXIDatabase)getDAO()).copyDatabaseFromAssets(null);
+							return true;
+						} catch (IOException e) {
+							return false;
+						}
+					}
+	
+					@Override
+					protected void onPostExecute(Boolean result) {
+						if (result) {
+							showDialog(R.string.InstallDBSucceeded);
+						} else {
+							showDialog(R.string.InstallDBFailed);
+						}
+						dlg.dismiss();
+					}
+				};
+				task.execute();
+	
+				return true;
 			}
-			return true;
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -490,25 +531,20 @@ public class FFXIEQActivity extends TabActivity {
 			dialog = builder.create();
 			return dialog;
 		case R.string.InstallDBSucceeded:
-			builder = new AlertDialog.Builder(this);
-			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.InstallDBSucceeded));
-	    	builder.setTitle(getString(R.string.InstallDB));
-	    	builder.setPositiveButton(R.string.OK, null);
-			dialog = builder.create();
-			return dialog;
 		case R.string.InstallDBFailed:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.InstallDBSucceeded));
+	    	builder.setMessage(getString(id));
 	    	builder.setTitle(getString(R.string.InstallDB));
 	    	builder.setPositiveButton(R.string.OK, null);
 			dialog = builder.create();
 			return dialog;
+
+		case R.string.UseExternalDBSucceeded:
 		case R.string.UseExternalDBFailed:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
-	    	builder.setMessage(getString(R.string.UseExternalDBFailed));
+	    	builder.setMessage(getString(id));
 	    	builder.setTitle(getString(R.string.app_name));
 	    	builder.setPositiveButton(R.string.OK, null);
 			dialog = builder.create();
