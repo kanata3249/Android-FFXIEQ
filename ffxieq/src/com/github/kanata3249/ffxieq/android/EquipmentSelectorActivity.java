@@ -152,6 +152,25 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 					tv.setOnLongClickListener(listener);
 					registerForContextMenu(tv);
 				}
+				tv = (TextView)findViewById(R.id.Ex);
+				if (tv != null) {
+					if (cur.isEx())
+						tv.setVisibility(View.VISIBLE);
+					else
+						tv.setVisibility(View.INVISIBLE);
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
+				}
+				tv = (TextView)findViewById(R.id.Rare);
+				if (tv != null) {
+					if (cur.isRare())
+						tv.setVisibility(View.VISIBLE);
+					else
+						tv.setVisibility(View.INVISIBLE);
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
+				}
+				
 			}
 		}
 	}

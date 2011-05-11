@@ -174,20 +174,20 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		this.mLevel = mLevel;
 	}
 
-	public boolean ismRare() {
+	public boolean isRare() {
 		return mRare;
 	}
 
-	public void setRare(boolean mRare) {
-		this.mRare = mRare;
+	public void setRare(boolean rare) {
+		this.mRare = rare;
 	}
 
-	public boolean ismEx() {
+	public boolean isEx() {
 		return mEx;
 	}
 
-	public void setEx(boolean mEx) {
-		this.mEx = mEx;
+	public void setEx(boolean ex) {
+		this.mEx = ex;
 	}
 
 	public String getDescription() {

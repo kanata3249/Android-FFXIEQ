@@ -7,4 +7,6 @@
     <TextView android:layout_width="wrap_content" android:text="Description" android:id="@+id/Description" android:layout_height="wrap_content" android:layout_below="@+id/Name" android:textAppearance="?android:attr/textAppearanceSmall" android:lines="2"></TextView>
     <TextView android:layout_width="wrap_content" android:text="Lv" android:id="@+id/Level" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:gravity="right"></TextView>
     <TextView android:layout_width="wrap_content" android:text="Race" android:id="@+id/Race" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_toRightOf="@+id/Level" android:paddingLeft="10dip"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="Rare" android:id="@+id/Rare" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_alignParentRight="true"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="Ex" android:id="@+id/Ex" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_toLeftOf="@+id/Rare" android:paddingRight="10dip"></TextView>
 </RelativeLayout>

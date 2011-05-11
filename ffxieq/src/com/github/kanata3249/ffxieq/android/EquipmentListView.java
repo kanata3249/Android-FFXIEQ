@@ -23,6 +23,7 @@ import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -36,8 +37,8 @@ public class EquipmentListView extends ListView {
 	int mLevel;
 	long mFilterID;
 
-	final String [] columns = { EquipmentTable.C_Id, EquipmentTable.C_Name, EquipmentTable.C_Level, EquipmentTable.C_Description, EquipmentTable.C_Job, EquipmentTable.C_Race };
-	final int []views = { 0, R.id.Name, R.id.Level, R.id.Description, R.id.Job, R.id.Race };
+	final String [] columns = { EquipmentTable.C_Id, EquipmentTable.C_Name, EquipmentTable.C_Level, EquipmentTable.C_Description, EquipmentTable.C_Job, EquipmentTable.C_Race, EquipmentTable.C_Ex, EquipmentTable.C_Rare };
+	final int []views = { 0, R.id.Name, R.id.Level, R.id.Description, R.id.Job, R.id.Race, R.id.Ex, R.id.Rare };
 
 	public EquipmentListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -107,6 +108,25 @@ public class EquipmentListView extends ListView {
 		public EquipmentListViewAdapter(Context context,
 				int textViewResourceId, Cursor c, String[] from, int[] to) {
 			super(context, textViewResourceId, c, from, to);
+			
+			setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+					int id = view.getId();
+					switch (id) {
+					case R.id.Ex:
+					case R.id.Rare:
+						if (cursor.getInt(columnIndex) == 0) {
+							view.setVisibility(INVISIBLE);
+						} else {
+							view.setVisibility(VISIBLE);
+						}
+						return true;
+					}
+
+					return false;
+				}
+				
+			});
 		}
 	}
 
