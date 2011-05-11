@@ -39,8 +39,8 @@ import android.database.sqlite.*;
 import android.os.Environment;
 
 public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
-	public static final String DB_NAME = "ffxieq";
-	public static final String DB_NAME_ASSET = "db.zip";
+	public static final String DB_NAME = "ffxieq.db";
+	public static final String DB_NAME_ASSET = "ffxieq.zip";
 	public static String DB_PATH;
 	public static String SD_PATH;
 
