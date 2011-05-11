@@ -46,6 +46,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	long mCurrent;
 	long mFilterID;
 	long mLongClickingItemId;
+	boolean mOrderByName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		mJob = param.getInt("Job");
 		mCurrent = param.getLong("Current");
 		mFilterID = param.getLong("Filter");
+		mOrderByName = param.getBoolean("OrderByName");
 		
 		setContentView(R.layout.equipmentselector);
 	}
@@ -78,6 +80,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		elv = (EquipmentListView)findViewById(R.id.ListView);
 		if (elv != null) {
 			elv.setFilterByID(mFilterID);
+			elv.setOrderByName(mOrderByName);
 			elv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
 			
 			elv.setOnItemClickListener(new OnItemClickListener() {
@@ -198,6 +201,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		outState.putInt("Level", mLevel);
 		outState.putLong("Current", mCurrent);
 		outState.putLong("Filter", mFilterID);
+		outState.putBoolean("OrderByName", mOrderByName);
 	}
 
 	static public boolean startActivity(Activity from, int request, FFXICharacter charInfo, int part, long current) {
@@ -209,6 +213,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		intent.putExtra("Level", charInfo.getJobLevel());
 		intent.putExtra("Current", current);
 		intent.putExtra("Filter", (long)-1);
+		intent.putExtra("OrderByName", false);
 		
 		from.startActivityForResult(intent, request);
 		return true;
@@ -223,6 +228,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		intent.putExtra("Level", charInfo.getJobLevel());
 		intent.putExtra("Current", current);
 		intent.putExtra("Filter", (long)-1);
+		intent.putExtra("OrderByName", false);
 		
 		from.startActivityForResult(intent, request);
 		return true;
@@ -248,10 +254,31 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem item;
+		
+		item = menu.findItem(R.id.OrderByName);
+		if (item != null) {
+			if (mOrderByName)
+				item.setTitle(getString(R.string.OrderByLevel));
+			else
+				item.setTitle(getString(R.string.OrderByName));
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		EquipmentListView elv;
 
 		switch (item.getItemId()) {
+		case R.id.OrderByName:
+			mOrderByName = !mOrderByName;
+			elv = (EquipmentListView)findViewById(R.id.ListView);
+			if (elv != null) {
+				elv.setOrderByName(mOrderByName);
+			}
+			return true;
 		case R.id.Remove:
 			Intent result = new Intent();
 			

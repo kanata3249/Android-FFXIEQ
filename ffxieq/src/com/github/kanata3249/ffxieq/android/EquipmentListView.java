@@ -82,6 +82,25 @@ public class EquipmentListView extends ListView {
 	public void setFilterByID(long filterid) {
 		mFilterID = filterid;
 	}
+	
+	public void setOrderByName(boolean orderByName) {
+		String order;
+		
+		if (orderByName)
+			order = EquipmentTable.C_Name + " ASC, " + EquipmentTable.C_Level;
+		else
+			order = EquipmentTable.C_Level + " DESC, " + EquipmentTable.C_Name + " ASC";
+		if (!mOrderBy.equals(order)) {
+			EquipmentListViewAdapter adapter;
+			mOrderBy = order;
+
+			adapter = (EquipmentListViewAdapter)getAdapter();
+			if (adapter != null) {
+				Cursor cursor = mDao.getEquipmentCursor(mPart, mRace, mJob, mLevel, columns, mOrderBy, mFilter);
+				adapter.changeCursor(cursor);
+			}
+		}
+	}
 
 	private class EquipmentListViewAdapter extends SimpleCursorAdapter {
 
