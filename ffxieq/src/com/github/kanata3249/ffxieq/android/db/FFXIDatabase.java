@@ -153,11 +153,15 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		}
 		File outDir = new File(pathToCopy);
 		
-		SQLiteDatabase db;
+		try {
+			SQLiteDatabase db;
 
-		db = getReadableDatabase();
-		if (db != null)
-			db.close();
+			db = getReadableDatabase();
+			if (db != null)
+				db.close();
+		} catch (SQLiteException e) {
+			// ignore this
+		}
 
 		outDir.mkdir();
 		while (zipEntry != null) {
