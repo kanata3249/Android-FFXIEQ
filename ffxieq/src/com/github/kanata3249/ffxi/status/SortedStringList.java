@@ -51,6 +51,8 @@ public class SortedStringList extends LinkedList<String> {
 		int i1, i2;
 		String s1, s2;
 		
+		if (list == null)
+			return;
 		i1 = 0;
 		for (i2 = 0; i2 < list.size(); i2++) {
 			s2 = list.get(i2);
@@ -73,6 +75,8 @@ public class SortedStringList extends LinkedList<String> {
 		String s1, s2;
 		SortedStringList result; /* This list may not be sorted. */
 		
+		if (list == null)
+			list = new SortedStringList();
 		result = new SortedStringList();
 		for (i1 = i2 = 0; i1 < size() || i2 < list.size(); /* nop */) {
 			s1 = s2 = null;
