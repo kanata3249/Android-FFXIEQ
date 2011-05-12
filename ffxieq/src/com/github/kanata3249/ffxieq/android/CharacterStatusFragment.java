@@ -24,10 +24,13 @@ import android.view.ViewGroup;
 
 public class CharacterStatusFragment extends FFXIEQFragment {
 	View mView;
+	int mDisplayParam;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE; 
         setRetainInstance(true);
     }
     
@@ -40,7 +43,19 @@ public class CharacterStatusFragment extends FFXIEQFragment {
     public void updateValues() {
     	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
     	if (sv != null) {
+    		sv.setDisplayParam(mDisplayParam);
     		sv.bindFFXICharacter(getFFXICharacter(), getFFXICharacterToCompare());
+    	}
+    }
+    
+    public void setDisplayParam(int param) {
+    	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
+    	
+    	if (mDisplayParam == param)
+    		return;
+    	mDisplayParam = param;
+    	if (sv != null) {
+    		sv.setDisplayParam(mDisplayParam);
     	}
     }
 }

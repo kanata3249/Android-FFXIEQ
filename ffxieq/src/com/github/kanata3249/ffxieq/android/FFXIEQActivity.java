@@ -49,10 +49,17 @@ import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class FFXIEQActivity extends TabActivity {
+	private int mDisplayParam;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE;
+		if (savedInstanceState != null) {
+			mDisplayParam = savedInstanceState.getInt("DisplayParam");
+		}
+
 		getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.ffxieqactivity);
 
@@ -79,18 +86,21 @@ public class FFXIEQActivity extends TabActivity {
 		getDAO();
 		
 		intent = new Intent().setClass(this, EquipmentSetEditActivity.class);
-		spec = tabHost.newTabSpec("equipment").setIndicator("Equipment", res.getDrawable(android.R.drawable.ic_menu_edit));
+		spec = tabHost.newTabSpec("equipment");
+		spec.setIndicator("Equipment", res.getDrawable(android.R.drawable.ic_menu_edit));
 		spec.setContent(intent);
 		tabHost.addTab(spec);
 		
 		if (!EquipmentSetEditActivity.hasAllView(tabHost.getCurrentView())) {
 			intent = new Intent().setClass(this, BasicEditActivity.class);
-			spec = tabHost.newTabSpec("basic").setIndicator("Basic", res.getDrawable(android.R.drawable.ic_menu_edit));
+			spec = tabHost.newTabSpec("basic");
+			spec.setIndicator("Basic", res.getDrawable(android.R.drawable.ic_menu_edit));
 			spec.setContent(intent);
 			tabHost.addTab(spec);
 			
 			intent = new Intent().setClass(this, CharacterStatusActivity.class);
-			spec = tabHost.newTabSpec("status").setIndicator("Status", res.getDrawable(android.R.drawable.ic_menu_view));
+			spec = tabHost.newTabSpec("status");
+			spec.setIndicator("Status", res.getDrawable(android.R.drawable.ic_menu_view));
 			spec.setContent(intent);
 			tabHost.addTab(spec);
 			
@@ -116,6 +126,7 @@ public class FFXIEQActivity extends TabActivity {
 						CharacterStatusActivity activity;
 
 						activity = (CharacterStatusActivity)getCurrentActivity();
+						activity.setDisplayParam(mDisplayParam);
 						activity.notifyDatasetChanged();
 					}
 				}
@@ -258,7 +269,16 @@ public class FFXIEQActivity extends TabActivity {
         }
 		super.onStop();
 	}
+    
+    
     @Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putInt("DisplayParam", mDisplayParam);
+
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 	        updateSubViewValues();
@@ -305,6 +325,14 @@ public class FFXIEQActivity extends TabActivity {
 			installDBItem.setEnabled(true);
 		}
 		
+		MenuItem item = menu.findItem(R.id.ToggleShowStatusSeparate);
+		if (item != null) {
+			if (mDisplayParam == CharacterStatusView.GETSTATUS_STRING_SEPARATE) {
+				item.setTitle(getString(R.string.ShowStatusTotal));
+			} else {
+				item.setTitle(getString(R.string.ShowStatusSeparate));
+			}
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -405,6 +433,27 @@ public class FFXIEQActivity extends TabActivity {
 	
 				return true;
 			}
+		case R.id.ToggleShowStatusSeparate:
+			if (mDisplayParam == CharacterStatusView.GETSTATUS_STRING_SEPARATE) {
+				mDisplayParam = CharacterStatusView.GETSTATUS_STRING_TOTAL;
+			} else {
+				mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE;
+			}
+			TabHost tabHost = getTabHost();
+			if (tabHost.getChildCount() == 1) {
+				EquipmentSetEditActivity activity;
+
+				activity = (EquipmentSetEditActivity)getCurrentActivity();
+				activity.setDisplayParam(mDisplayParam);
+			} else {
+				if (tabHost.getCurrentTabTag().equals("status")) {
+					CharacterStatusActivity activity;
+
+					activity = (CharacterStatusActivity)getCurrentActivity();
+					activity.setDisplayParam(mDisplayParam);
+				}
+			}
+			return true;
 
 		default:
 			return super.onOptionsItemSelected(item);

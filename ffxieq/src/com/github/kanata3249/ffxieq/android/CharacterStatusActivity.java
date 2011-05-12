@@ -34,4 +34,11 @@ public class CharacterStatusActivity extends FFXIEQBaseActivity {
         
         fragment.updateValues();
 	}
+	
+	public void setDisplayParam(int param) {
+		FragmentManager fm = getSupportFragmentManager();
+		CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
+        
+        fragment.setDisplayParam(param);
+	}
 }

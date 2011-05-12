@@ -276,4 +276,6 @@
 	<string name="OrderByName">名前順</string>
 	<string name="FilterByType">種別</string>
 	<string name="ResetFilterByType">全て</string>
+	<string name="ShowStatusSeparate">補正別表示</string>
+	<string name="ShowStatusTotal">合計値表示</string>
 </resources>

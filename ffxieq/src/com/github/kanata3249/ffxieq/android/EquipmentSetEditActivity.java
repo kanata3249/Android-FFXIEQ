@@ -84,4 +84,11 @@ public class EquipmentSetEditActivity extends FFXIEQBaseActivity {
         	return true;
         return false;
 	}
+	
+	public void setDisplayParam(int param) {
+		FragmentManager fm = getSupportFragmentManager();
+		CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
+        if (fragment != null)
+        	fragment.setDisplayParam(param);
+	}
 }
