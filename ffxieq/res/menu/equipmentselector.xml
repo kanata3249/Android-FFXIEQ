@@ -2,6 +2,11 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/OrderByName" android:title="@string/OrderByName"></item>
+    <item android:id="@+id/FilterByType" android:title="@string/FilterByType">
+        <menu>
+            <item android:enabled="false" android:visible="false" android:id="@+id/item1"></item>
+        </menu>
+    </item>
     <item android:id="@+id/Remove" android:title="@string/Remove"></item>
     <item android:id="@+id/Filter" android:title="@string/Filter"></item>
     <item android:id="@+id/ResetFilter" android:title="@string/ResetFilter"></item>

@@ -105,10 +105,43 @@ public class EquipmentTable {
 		return newInstance;
 	}
 
-	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String[] columns, String orderBy, String filter) {
+	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
 		Cursor cursor;
 		String partStr, jobStr, alljobStr;
 		String filterexp;
+		String weaponexp;
+		
+		partStr = dao.getString(FFXIString.PART_DB_MAIN + part);
+		jobStr = dao.getString(FFXIString.JOB_DB_WAR + job);
+		alljobStr = dao.getString(FFXIString.JOB_DB_ALL);
+		filterexp = "";
+		if (filter.length() > 0) {
+			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
+		}
+		weaponexp = "";
+		if (weaponType.length() > 0) {
+			weaponexp = " AND (" + C_Weapon + " LIKE '%" + weaponType + "%')";
+		}
+		
+		try {
+			cursor = db.query(TABLE_NAME, columns,
+					C_Part + " LIKE '%" + partStr + "%' AND " +
+					C_Level + " <= '" + level + "' AND " +
+					"(" + C_Job + " LIKE '%" + jobStr + "%' OR " + C_Job + " = '" + alljobStr + "')" + weaponexp + filterexp,
+					null, null, null, orderBy);
+		} catch (SQLiteException e) {
+			cursor = null;
+		}
+
+		return cursor;
+	}
+	
+	public String []getAvailableWeaponTypes(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String filter) {
+		Cursor cursor;
+		String partStr, jobStr, alljobStr;
+		String filterexp;
+		String result[];
+		String columns[] = { C_Weapon };
 		
 		partStr = dao.getString(FFXIString.PART_DB_MAIN + part);
 		jobStr = dao.getString(FFXIString.JOB_DB_WAR + job);
@@ -118,17 +151,29 @@ public class EquipmentTable {
 			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
 		}
 		
+		result = null;
 		try {
 			cursor = db.query(TABLE_NAME, columns,
 					C_Part + " LIKE '%" + partStr + "%' AND " +
 					C_Level + " <= '" + level + "' AND " +
 					"(" + C_Job + " LIKE '%" + jobStr + "%' OR " + C_Job + " = '" + alljobStr + "')" + filterexp,
-					null, null, null, orderBy);
+					null, C_Weapon, null, C_Weapon);
+			
+			if (cursor.getCount() > 0) {
+				result = new String[cursor.getCount()];
+				
+				cursor.moveToFirst();
+				for (int i = 0; i < result.length; i++) {
+					result[i] = cursor.getString(cursor.getColumnIndex(C_Weapon));
+					cursor.moveToNext();
+				}
+			}
+			
+			cursor.close();
 		} catch (SQLiteException e) {
-			cursor = null;
 		}
 
-		return cursor;
+		return result;
 	}
 
 	public Combination newCombinationInstance(FFXIDAO dao, SQLiteDatabase db, long combiId, int numMatches) {

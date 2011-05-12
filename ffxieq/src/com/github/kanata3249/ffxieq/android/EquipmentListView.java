@@ -36,6 +36,7 @@ public class EquipmentListView extends ListView {
 	int mJob;
 	int mLevel;
 	long mFilterID;
+	String mFilterByType;
 
 	final String [] columns = { EquipmentTable.C_Id, EquipmentTable.C_Name, EquipmentTable.C_Level, EquipmentTable.C_Description, EquipmentTable.C_Job, EquipmentTable.C_Race, EquipmentTable.C_Ex, EquipmentTable.C_Rare };
 	final int []views = { 0, R.id.Name, R.id.Level, R.id.Description, R.id.Job, R.id.Race, R.id.Ex, R.id.Rare };
@@ -45,6 +46,7 @@ public class EquipmentListView extends ListView {
 		mFilter = "";
 		mFilterID = -1;
 		mOrderBy = EquipmentTable.C_Level + " DESC, " + EquipmentTable.C_Name + " ASC";
+		mFilterByType = "";
 	}
 
 	public boolean setParam(FFXIDAO dao, int part, int race, int job, int level) {
@@ -59,7 +61,7 @@ public class EquipmentListView extends ListView {
 		if (mFilterID != -1) {
 			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
 		}
-		cursor = mDao.getEquipmentCursor(part, race, job, level, columns, mOrderBy, mFilter);
+		cursor = mDao.getEquipmentCursor(part, race, job, level, columns, mOrderBy, mFilter, mFilterByType);
 		adapter = new EquipmentListViewAdapter(getContext(), R.layout.equipmentlistview, cursor, columns, views);
 		setAdapter(adapter);
 		
@@ -71,14 +73,10 @@ public class EquipmentListView extends ListView {
 	}
 
 	public void setFilter(String filter) {
-		EquipmentListViewAdapter adapter;
-
+		if (mFilter.equals(filter))
+			return;
 		mFilter = filter;
-		adapter = (EquipmentListViewAdapter)getAdapter();
-		if (adapter != null) {
-			Cursor cursor = mDao.getEquipmentCursor(mPart, mRace, mJob, mLevel, columns, mOrderBy, mFilter);
-			adapter.changeCursor(cursor);
-		}
+		updateCursor();
 	}
 	public void setFilterByID(long filterid) {
 		mFilterID = filterid;
@@ -92,14 +90,33 @@ public class EquipmentListView extends ListView {
 		else
 			order = EquipmentTable.C_Level + " DESC, " + EquipmentTable.C_Name + " ASC";
 		if (!mOrderBy.equals(order)) {
-			EquipmentListViewAdapter adapter;
 			mOrderBy = order;
 
-			adapter = (EquipmentListViewAdapter)getAdapter();
-			if (adapter != null) {
-				Cursor cursor = mDao.getEquipmentCursor(mPart, mRace, mJob, mLevel, columns, mOrderBy, mFilter);
-				adapter.changeCursor(cursor);
-			}
+			updateCursor();
+		}
+	}
+
+	public String []getAvailableWeaponTypes() {
+		return mDao.getAvailableWeaponTypes(mPart, mRace, mJob, mLevel, mFilter);
+	}
+	
+	public void setFilterByType(String filterByType) {
+		
+		if (filterByType.equals(mFilterByType)) {
+			return;
+		}
+		mFilterByType = filterByType;
+
+		updateCursor();
+	}
+
+	private void updateCursor() {
+		EquipmentListViewAdapter adapter;
+
+		adapter = (EquipmentListViewAdapter)getAdapter();
+		if (adapter != null) {
+			Cursor cursor = mDao.getEquipmentCursor(mPart, mRace, mJob, mLevel, columns, mOrderBy, mFilter, mFilterByType);
+			adapter.changeCursor(cursor);
 		}
 	}
 

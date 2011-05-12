@@ -274,4 +274,6 @@
 	<string name="useExternalDB">SD上のDBを使用</string>
 	<string name="OrderByLevel">レベル順</string>
 	<string name="OrderByName">名前順</string>
+	<string name="FilterByType">種別</string>
+	<string name="ResetFilterByType">全て</string>
 </resources>

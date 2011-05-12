@@ -32,6 +32,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -47,6 +48,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	long mFilterID;
 	long mLongClickingItemId;
 	boolean mOrderByName;
+	String mFilterByType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		mCurrent = param.getLong("Current");
 		mFilterID = param.getLong("Filter");
 		mOrderByName = param.getBoolean("OrderByName");
+		mFilterByType = param.getString("FilterByType");
 		
 		setContentView(R.layout.equipmentselector);
 	}
@@ -81,6 +84,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		if (elv != null) {
 			elv.setFilterByID(mFilterID);
 			elv.setOrderByName(mOrderByName);
+			elv.setFilterByType(mFilterByType);
 			elv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
 			
 			elv.setOnItemClickListener(new OnItemClickListener() {
@@ -221,6 +225,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		outState.putLong("Current", mCurrent);
 		outState.putLong("Filter", mFilterID);
 		outState.putBoolean("OrderByName", mOrderByName);
+		outState.putString("FilterByType", mFilterByType);
 	}
 
 	static public boolean startActivity(Activity from, int request, FFXICharacter charInfo, int part, long current) {
@@ -233,6 +238,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		intent.putExtra("Current", current);
 		intent.putExtra("Filter", (long)-1);
 		intent.putExtra("OrderByName", false);
+		intent.putExtra("FilterByType", "");
 		
 		from.startActivityForResult(intent, request);
 		return true;
@@ -248,6 +254,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		intent.putExtra("Current", current);
 		intent.putExtra("Filter", (long)-1);
 		intent.putExtra("OrderByName", false);
+		intent.putExtra("FilterByType", "");
 		
 		from.startActivityForResult(intent, request);
 		return true;
@@ -283,17 +290,49 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 			else
 				item.setTitle(getString(R.string.OrderByName));
 		}
+		
+		EquipmentListView elv;
+		
+		item = menu.findItem(R.id.FilterByType);
+		SubMenu submenu = item.getSubMenu();
+		submenu.removeGroup(R.id.FilterByType);
+
+		elv = (EquipmentListView)findViewById(R.id.ListView);
+		if (elv != null) {
+			String types[] = elv.getAvailableWeaponTypes();
+			
+			if (types == null || types.length == 1) {
+				item.setEnabled(false);
+			} else {
+				item.setEnabled(true);
+				submenu.add(R.id.FilterByType, -1, Menu.NONE, getString(R.string.ResetFilterByType));
+				for (int i = 0; i < types.length; i++) {
+					submenu.add(R.id.FilterByType, i, Menu.NONE, types[i]);
+				}
+			}
+			
+		}
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		EquipmentListView elv;
+		EquipmentListView elv = (EquipmentListView)findViewById(R.id.ListView);
+
+		if (item.getGroupId() == R.id.FilterByType) {
+			if (item.getItemId() < 0) {
+				mFilterByType = "";
+			} else {
+				mFilterByType = (String)item.getTitle();
+			}
+			elv.setFilterByType(mFilterByType);
+			return true;
+		}
 
 		switch (item.getItemId()) {
 		case R.id.OrderByName:
 			mOrderByName = !mOrderByName;
-			elv = (EquipmentListView)findViewById(R.id.ListView);
 			if (elv != null) {
 				elv.setOrderByName(mOrderByName);
 			}
@@ -311,8 +350,6 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 			showDialog(0);
 			return true;
 		case R.id.ResetFilter:
-			
-			elv = (EquipmentListView)findViewById(R.id.ListView);
 			if (elv != null) {
 				elv.setFilter("");
 			}

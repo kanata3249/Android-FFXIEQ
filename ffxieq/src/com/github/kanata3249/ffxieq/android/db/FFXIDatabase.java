@@ -295,8 +295,11 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		return mEquipmentTable.searchCombinationAndNewInstance(this, getReadableDatabase(), names);
 	}
 
-	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter) {
-		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy, filter);
+	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
+		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy, filter, weaponType);
+	}
+	public String []getAvailableWeaponTypes(int part, int race, int job, int level, String filter) {
+		return mEquipmentTable.getAvailableWeaponTypes(this, getReadableDatabase(), part, race, job, level, filter);
 	}
 	public Cursor getAtmaCursor(String[] columns, String orderBy, String filter) {
 		return mAtmaTable.getCursor(this, getReadableDatabase(), columns, orderBy, filter);
