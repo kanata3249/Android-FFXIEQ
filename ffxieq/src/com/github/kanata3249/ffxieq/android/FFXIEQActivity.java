@@ -439,19 +439,11 @@ public class FFXIEQActivity extends TabActivity {
 			} else {
 				mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE;
 			}
-			TabHost tabHost = getTabHost();
-			if (tabHost.getChildCount() == 1) {
-				EquipmentSetEditActivity activity;
-
-				activity = (EquipmentSetEditActivity)getCurrentActivity();
-				activity.setDisplayParam(mDisplayParam);
-			} else {
-				if (tabHost.getCurrentTabTag().equals("status")) {
-					CharacterStatusActivity activity;
-
-					activity = (CharacterStatusActivity)getCurrentActivity();
-					activity.setDisplayParam(mDisplayParam);
-				}
+			Activity activity = getCurrentActivity();
+			if (activity instanceof EquipmentSetEditActivity) {
+				((EquipmentSetEditActivity)activity).setDisplayParam(mDisplayParam);
+			} else if (activity instanceof CharacterStatusActivity) {
+				((CharacterStatusActivity)activity).setDisplayParam(mDisplayParam);
 			}
 			return true;
 
