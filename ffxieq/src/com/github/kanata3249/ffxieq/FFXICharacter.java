@@ -563,7 +563,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public StatusValue getAccuracySub() {
 		StatusType type;
-		StatusValue mod = getStatus(mLevel, StatusType.AccuracySub);
+		StatusValue mod = getStatus(mLevel, StatusType.Accuracy);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
@@ -624,7 +624,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 	public StatusValue getAttackSub() {
 		StatusType type;
-		StatusValue mod = getStatus(mLevel, StatusType.AttackSub);
+		StatusValue mod = getStatus(mLevel, StatusType.Attack);
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
