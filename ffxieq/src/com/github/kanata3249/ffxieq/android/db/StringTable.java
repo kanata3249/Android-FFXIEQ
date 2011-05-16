@@ -96,4 +96,8 @@ public class StringTable {
 		}
 		cursor.close();
 	}
+	
+	public void invalidateStringCache() {
+		mCachedItems = null;
+	}
 }

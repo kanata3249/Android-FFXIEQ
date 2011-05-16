@@ -96,4 +96,22 @@ public class AtmaSet extends StatusModifier implements IStatus, Serializable {
 		}
 		return unknownTokens;
 	}
+
+	public boolean reloadAtmas() {
+		boolean updated = false;
+		for (int i = 0; i < mAtma.length; i++) {
+			if (mAtma[i] != null) {
+				mAtma[i] = Dao.instantiateAtma(mAtma[i].getId());
+				updated = true;
+			}
+		}
+		if (updated) {
+			for (int i = 0; i < mAtma.length; i++) {
+				if (mAtma[i] != null) {
+					mAtma[i].parseDescription();
+				}
+			}
+		}
+		return updated;
+	}
 }

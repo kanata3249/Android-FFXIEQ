@@ -737,8 +737,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 	}
 	
-	public void reloadEquipments() {
+	public void reload() {
 		mEquipment.reloadEquipments();
+		mAtmaset.reloadAtmas();
 		mModified = true;
 	}
 }

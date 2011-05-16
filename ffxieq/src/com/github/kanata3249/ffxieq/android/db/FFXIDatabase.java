@@ -159,6 +159,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			db = getReadableDatabase();
 			if (db != null)
 				db.close();
+			mStringTable.invalidateStringCache();
 		} catch (SQLiteException e) {
 			// ignore this
 		}
@@ -187,13 +188,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		in.close();
 	}
 
-	public void copyDatabaseFromSD() throws IOException {
+	void copyDatabaseFromSD() throws IOException {
 		File outDir = new File(DB_PATH);
-		SQLiteDatabase db;
-
-		db = getReadableDatabase();
-		if (db != null)
-			db.close();
 
 		outDir.mkdir();
 		FileChannel channelSource = new FileInputStream(SD_PATH + DB_NAME).getChannel();
@@ -209,7 +205,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		to.setLastModified(from.lastModified());
 	}
 
-	public void copyDatabaseToSD() throws IOException {
+	void copyDatabaseToSD() throws IOException {
 		File outDir = new File(SD_PATH);
 
 		outDir.mkdir();
@@ -234,11 +230,13 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			if (useExternalDB) {
 				copyDatabaseToSD();
 				getReadableDatabase().close();
+				mStringTable.invalidateStringCache();
 				File oldDB = new File(DB_PATH + DB_NAME);
 				oldDB.delete();
 			} else {
 				copyDatabaseFromSD();
 				getReadableDatabase().close();
+				mStringTable.invalidateStringCache();
 				File oldDB = new File(SD_PATH + DB_NAME);
 				oldDB.delete();
 			}
