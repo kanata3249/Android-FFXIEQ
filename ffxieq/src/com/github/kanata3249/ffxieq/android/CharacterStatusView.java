@@ -24,6 +24,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.app.Activity;
@@ -497,8 +498,10 @@ public class CharacterStatusView extends ScrollView {
 	public boolean cacheStatusAsync() {
 		if (mCharInfo.isCacheValid() && (mCharInfoToCompare == null || mCharInfoToCompare.isCacheValid()))
 			return false;
-		final ProgressDialog dlg = new ProgressDialog(getContext());
-		dlg.show();
+		final ProgressBar progress = (ProgressBar)findViewById(R.id.ProgressBar);
+		if (progress != null) {
+			progress.setVisibility(VISIBLE);
+		}
 		AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
@@ -511,7 +514,8 @@ public class CharacterStatusView extends ScrollView {
 			@Override
 			protected void onPostExecute(Void result) {
 				notifyDatasetChanged();
-				dlg.dismiss();
+				if (progress != null)
+					progress.setVisibility(INVISIBLE);
 			}
 		};
 		task.execute();
