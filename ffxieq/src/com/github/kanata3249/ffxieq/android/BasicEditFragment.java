@@ -125,6 +125,26 @@ public class BasicEditFragment extends FFXIEQFragment {
 	        listener = new OnEditorActionListener() {
 				public boolean onEditorAction(TextView v, int actionId,
 						KeyEvent event) {
+					if (v.getId() == R.id.JobLevel){
+						FFXICharacter charInfo = getFFXICharacter();
+						if (charInfo.getSubJobLevel() == charInfo.getJobLevel() / 2) {
+					    	EditText edit = (EditText)mView.findViewById(R.id.JobLevel);
+					    	if (edit != null) {
+						    	int value;
+					    		String str = edit.getText().toString();
+					    		try {
+					    			value = Integer.valueOf(str);
+					    		} catch (NumberFormatException e) {
+					    			value = 0;
+					    		}
+					    		value = value / 2;
+					    		edit = (EditText)mView.findViewById(R.id.SubJobLevel);
+					    		if (edit != null) {
+					    			edit.setText(((Integer)value).toString());
+					    		}
+					    	}
+						}
+					}
 					saveAndUpdateValues();
 					return false;
 				}
