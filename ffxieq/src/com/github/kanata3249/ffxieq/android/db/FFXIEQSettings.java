@@ -26,6 +26,7 @@ import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
 import android.app.Activity;
+import android.app.backup.BackupManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -43,6 +44,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public static final String C_LastUsed = "LastUsed";
 	private static final int MAX_FILTERS = 16;
 	
+	BackupManager mBackupManager;
 	Context mContext;
 
 	// Constructor
@@ -50,6 +52,15 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		super(context, DB_NAME, null, 1);
 		
 		mContext = context;
+		if (android.os.Build.VERSION.SDK_INT > 7) {
+			mBackupManager = new BackupManager(context);
+		}
+	}
+
+	private void dataChanged() {
+		if (mBackupManager != null) {
+			mBackupManager.dataChanged();
+		}
 	}
 
 
@@ -141,10 +152,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		return charInfo;
 	}
 	public long saveCharInfo(long id, String name, FFXICharacter charInfo) {
-		SQLiteDatabase db;
-		ContentValues values = new ContentValues();;
 		byte [] chardata;
-		long newId;
 		
 		charInfo.reload();
 		try {
@@ -159,6 +167,14 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		} catch (IOException e) {
 			return -1;
 		}
+
+		return saveCharInfo(id, name, chardata);
+	}
+	public long saveCharInfo(long id, String name, byte chardata[]) {
+		SQLiteDatabase db;
+		ContentValues values = new ContentValues();;
+		long newId;
+		
 		db = getWritableDatabase();
 
 		values.put(C_Name, name);
@@ -174,6 +190,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 		} finally {
 			db.endTransaction();
+			dataChanged();
 		}
 		return newId;
 	}
@@ -183,6 +200,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 		db = getWritableDatabase();
 		db.delete(TABLE_NAME_CHARINFO, C_Id + " = '" + id + "'", null);
+		dataChanged();
 
 		return;
 	}
@@ -249,6 +267,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		}
 		
 		removeOldFilters();
+		dataChanged();
 		return id;
 	}
 	
@@ -285,6 +304,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		} finally {
 			db.endTransaction();
 		}
+		dataChanged();
 	}
 	
 	public String getFilter(long id) {
