@@ -104,10 +104,17 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			}
 		}
 	}
+	
+	static public boolean supportsDBonSD() {
+		return android.os.Build.VERSION.SDK_INT > 7;
+	}
 
 	static public String getDBPath(boolean useExternalDB) {
 		String path; 
 		if (DB_PATH == null)
+			return DB_NAME;
+
+		if (!supportsDBonSD())
 			return DB_NAME;
 
 		if (useExternalDB) {

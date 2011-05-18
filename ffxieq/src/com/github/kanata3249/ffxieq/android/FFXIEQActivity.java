@@ -324,6 +324,9 @@ public class FFXIEQActivity extends TabActivity {
 			useExternalDBItem.setEnabled(writable);
 			installDBItem.setEnabled(true);
 		}
+		if (!FFXIDatabase.supportsDBonSD()) {
+			useExternalDBItem.setEnabled(false);
+		}
 		
 		MenuItem item = menu.findItem(R.id.ToggleShowStatusSeparate);
 		if (item != null) {
