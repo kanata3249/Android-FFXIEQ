@@ -447,6 +447,10 @@ public class FFXIEQActivity extends TabActivity {
 			}
 			return true;
 
+		case R.id.showCredit:
+			showDialog(R.id.showCredit);
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -609,6 +613,10 @@ public class FFXIEQActivity extends TabActivity {
 				}
 	    	});
 			dialog = builder.create();
+			return dialog;
+		case R.id.showCredit:
+			dialog = new WebViewDialog(this);
+			((WebViewDialog)dialog).loadURL("file:///android_asset/about/about.html");
 			return dialog;
 		}
 		return super.onCreateDialog(id);
