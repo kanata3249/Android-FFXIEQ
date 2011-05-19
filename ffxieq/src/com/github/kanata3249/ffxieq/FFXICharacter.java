@@ -30,7 +30,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	MeritPoint mMerits;
 	boolean mInAbyssea;
 	AtmaSet mAtmaset;
-	// TODO food
+	Food mFood;
 
 	transient boolean mModified;
 	transient boolean mStatusCacheValid;
@@ -63,6 +63,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		total.add(mJobAndRace.getStatus(level, type));
 		total.add(mMerits.getStatus(level, type));
 		total.add(mEquipment.getStatus(level, type));
+		if (mFood != null) {
+			total.add(mFood.getStatus(level, type));
+		}
 		if (mInAbyssea) {
 			total.add(mAtmaset.getStatus(level, type));
 		}
@@ -165,6 +168,24 @@ public class FFXICharacter implements IStatus, Serializable {
 		mModified = true;
 		mStatusCacheValid = false;
 		mAtmaset.setAtma(index, id);
+	}
+	public Food getFood(int index) {
+		return mFood;
+	}
+	public void setFood(int index, Food food) {
+		long cId, nId;
+		
+		cId = nId = -1;
+		if (food != null)
+			nId = food.getId();
+		if (mFood != null)
+			cId = mFood.getId();
+		if (nId == cId)
+			return;
+
+		mModified = true;
+		mStatusCacheValid = false;
+		mFood = food;
 	}
 	public boolean isModified() {
 		return mModified;
@@ -726,15 +747,15 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 
 	public SortedStringList getUnknownTokens() {
+		SortedStringList unknownTokens = new SortedStringList();
+		unknownTokens.mergeList(mEquipment.getUnknownTokens());
 		if (mInAbyssea) {
-			SortedStringList unknownTokens = new SortedStringList();
-			unknownTokens.mergeList(mEquipment.getUnknownTokens());
 			unknownTokens.mergeList(mAtmaset.getUnknownTokens());
-			
-			return unknownTokens;
-		} else {
-			return mEquipment.getUnknownTokens();
 		}
+		if (mFood != null) {
+			unknownTokens.mergeList(mFood.getUnknownTokens());
+		}
+		return unknownTokens;
 	}
 	
 	public void reload() {

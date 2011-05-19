@@ -322,12 +322,20 @@ public class CharacterStatusView extends ScrollView {
 				sb.append(v.getAdditionalPercent());
 				sb.append('%');
 			}
+			value = v.getAdditionalPercentWithCap();
+			if (value != 0) {
+				sb.append(' ');
+				if (value > 0) {
+					sb.append('+');
+				}
+				sb.append(v.getAdditionalPercentWithCap());
+				sb.append("%(");
+				sb.append(v.getCap());
+				sb.append(')');
+			}
 			return sb.toString();
 		} else {
-			value = v.getValue()+ v.getAdditional();
-			if (v.getAdditionalPercent() != 0) {
-				value += value * v.getAdditionalPercent() / 100;
-			}
+			value = v.getTotal();
 			return ((Integer)value).toString();
 		}
 	}

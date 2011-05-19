@@ -172,6 +172,20 @@ public class BasicEditFragment extends FFXIEQFragment {
             	});
         	}
         }
+        {
+        	FoodSetView fs;
+        	
+        	fs = (FoodSetView)v.findViewById(R.id.Foods);
+        	if (fs != null) {
+        		fs.bindFFXICharacter(charInfo);
+            	fs.setOnItemClickListener(new OnItemClickListener() {
+    				public void onItemClick(AdapterView<?> arg0, View arg1,
+    						int arg2, long arg3) {
+    					FoodSelectorActivity.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), ((FoodSetView)arg0).getItemId(arg2));
+    				}
+            	});
+        	}
+        }
         
         {
         	CheckBox cb;
@@ -238,6 +252,14 @@ public class BasicEditFragment extends FFXIEQFragment {
             	as.setOnItemClickListener(null);
         	}
         }
+        {
+        	FoodSetView fs;
+        	
+        	fs = (FoodSetView)v.findViewById(R.id.Foods);
+        	if (fs != null) {
+            	fs.setOnItemClickListener(null);
+        	}
+        }
         
         {
         	CheckBox cb;
@@ -271,7 +293,11 @@ public class BasicEditFragment extends FFXIEQFragment {
 				if (index != -1) {
 					charInfo.setAtma(index, id);
 				}
-		        updateValues();
+		        saveAndUpdateValues();
+			} else if (FoodSelectorActivity.isComeFrom(data)) {
+				long id = FoodSelectorActivity.getFoodId(data);
+				charInfo.setFood(0, getDAO().instantiateFood(id));
+		        saveAndUpdateValues();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -395,6 +421,13 @@ public class BasicEditFragment extends FFXIEQFragment {
     	as = (AtmaSetView)mView.findViewById(R.id.Atmas);
     	if (as != null) {
     		as.bindFFXICharacter(charInfo);
+    	}
+
+    	FoodSetView fs;
+    	
+    	fs = (FoodSetView)mView.findViewById(R.id.Foods);
+    	if (fs != null) {
+    		fs.bindFFXICharacter(charInfo);
     	}
 
     	mUpdating = false;

@@ -18,5 +18,9 @@
 	        <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toRightOf="@+id/AbyssiteOfFurtherance" android:id="@+id/AbyssiteOfMerit" android:entries="@array/AbyssiteOfMeritEntries" android:prompt="@string/AbyssiteOfMeritPrompt"></Spinner>
 	    </RelativeLayout>
 	</TableLayout>
-    <com.github.kanata3249.ffxieq.android.AtmaSetView android:id="@+id/Atmas" android:layout_height="wrap_content" android:layout_below="@+id/InAbyssea" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.AtmaSetView>
+	<LinearLayout
+		android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="vertical">
+	    <com.github.kanata3249.ffxieq.android.AtmaSetView android:id="@+id/Atmas" android:layout_height="wrap_content" android:layout_below="@+id/InAbyssea" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.AtmaSetView>
+	    <com.github.kanata3249.ffxieq.android.FoodSetView android:id="@+id/Foods" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.FoodSetView>
+	</LinearLayout>
 </LinearLayout>

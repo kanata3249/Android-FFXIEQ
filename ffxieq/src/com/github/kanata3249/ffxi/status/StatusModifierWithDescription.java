@@ -144,11 +144,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 	
 	protected StatusValue handleCommonToken(StatusValue base, String parameter) {
 		StatusValue newValue = new StatusValue();
-		int modifier, start, end, value;
+		int modifier, start, end, value, cap;
 		boolean additional, percent;
 
 		additional = true;
 		percent = false;
+		cap = 0;
 		start = 0;
 		end = parameter.length();
 		modifier = 1;
@@ -161,6 +162,21 @@ public class StatusModifierWithDescription extends StatusModifier {
 			additional = true;
 			start++;
 		}
+		if (parameter.endsWith(")")) {
+			String tmp[] = parameter.split("\\(");
+			if (tmp.length == 2) {
+				try {
+					cap = Integer.parseInt(tmp[1].substring(0, tmp[1].length() - 1)); // Ignore tailing ')'.
+				} catch (NumberFormatException e) {
+					return null;
+				}
+				if (cap <= 0) { // Something wrong.
+					return null;
+				}
+				parameter = tmp[0];
+				end = parameter.length();
+			}
+		}
 		if (parameter.endsWith("%")) {
 			additional = true;
 			percent = true;
@@ -170,14 +186,18 @@ public class StatusModifierWithDescription extends StatusModifier {
 		try {
 			value = Integer.parseInt(parameter.substring(start, end));
 		} catch (NumberFormatException e) {
-			// TODO range value
 			return null;
 		}
 		value *= modifier;
 
 		if (additional) {
 			if (percent) {
-				newValue.setAdditionalPercent(value);
+				if (cap > 0) {
+					newValue.setAdditionalPercentWithCap(value);
+					newValue.setCap(cap);
+				} else {
+					newValue.setAdditionalPercent(value);
+				}
 			} else {
 				newValue.setAdditional(value);
 			}

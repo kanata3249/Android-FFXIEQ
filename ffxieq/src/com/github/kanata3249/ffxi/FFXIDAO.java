@@ -19,6 +19,7 @@ import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
 import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
+import com.github.kanata3249.ffxieq.Food;
 import com.github.kanata3249.ffxieq.JobTrait;
 
 public interface FFXIDAO {
@@ -39,4 +40,6 @@ public interface FFXIDAO {
 	public String[] getJobSpecificMeritPointItems(int job, int category);
 	public long[] getJobSpecificMeritPointItemIds(int job, int category);
 	public JobTrait instantiateMeritPointJobTrait(long id, int level);
+	
+	public Food instantiateFood(long id);
 }

@@ -21,6 +21,7 @@
         <activity android:name=".android.MeritPointEditActivity"></activity>
         <activity android:name=".android.SkillEditActivity"></activity>
         <activity android:name=".android.JobSpecificMeritPointEditActivity"></activity>
+        <activity android:name=".android.FoodSelectorActivity"></activity>
         
         
 

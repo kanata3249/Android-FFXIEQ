@@ -30,6 +30,7 @@ import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
 import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
+import com.github.kanata3249.ffxieq.Food;
 import com.github.kanata3249.ffxieq.JobTrait;
 
 import android.content.Context;
@@ -67,6 +68,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	AtmaTable mAtmaTable;
 	JobTraitTable mJobTraitTable;
 	MeritPointTable mMeritPointTable;
+	FoodTable mFoodTable;
 	StringTable mStringTable;
 	
 	boolean mUseExternalDB;
@@ -89,6 +91,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mAtmaTable = new AtmaTable();
 		mJobTraitTable = new JobTraitTable();
 		mMeritPointTable = new MeritPointTable();
+		mFoodTable = new FoodTable();
 		mStringTable = new StringTable();
 		
 		if (useExternal)
@@ -317,5 +320,14 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public JobTrait instantiateMeritPointJobTrait(long id, int level) {
 		return mMeritPointTable.newInstance(this, getReadableDatabase(), id, level);
+	}
+	public Food instantiateFood(long id) {
+		return mFoodTable.newInstance(this, getReadableDatabase(), id);
+	}
+	public Cursor getFoodsCursor(String[] columns, String orderBy, String filter, String foodType) {
+		return mFoodTable.getCursor(this, getReadableDatabase(), columns, orderBy, filter, foodType);
+	}
+	public String []getAvailableFoodTypes(String filter) {
+		return mFoodTable.getAvailableFoodTypes(this, getReadableDatabase(), filter);
 	}
 }
