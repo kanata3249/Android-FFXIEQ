@@ -279,4 +279,5 @@
 	<string name="ShowStatusSeparate">補正別表示</string>
 	<string name="ShowStatusTotal">合計値表示</string>
 	<string name="showCredit">このアプリについて...</string>
+	<string name="AtmaNotSelected">アートマ未選択</string>
 </resources>
