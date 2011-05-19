@@ -31,7 +31,6 @@ import android.os.ParcelFileDescriptor;
 public class FFXIEQBackupAgent extends BackupAgent {
 	FFXIEQSettings mSettings;
 	
-	private final String KEY_CHARNAME = "CharacterName";
 	private final String KEY_CHARDATA = "CharacterData";
 	private final String KEY_FILTER = "Filter";
 
