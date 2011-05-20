@@ -100,11 +100,11 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			mDBPath = DB_PATH;
 		mUseExternalDB = useExternal;
 
-		if (checkDatabase(mDBPath)) {
-			try {
+		try {
+			if (checkDatabase(mDBPath)) {
 				copyDatabaseFromAssets(mDBPath);
-			} catch (IOException e) {
 			}
+		} catch (IOException e) {
 		}
 	}
 	
@@ -142,14 +142,40 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		throw e;
 	}
 	
-	public boolean checkDatabase(String pathToCheck) {
+	public boolean checkDatabase(String pathToCheck) throws IOException {
 		File in = new File(pathToCheck + DB_NAME);
+		long lastmod;
 		
-		if (in.isFile())
-			return false;
+		if (in.isFile()) {
+			lastmod = getLastModifiedFromAssets();
+			if (in.lastModified() >= lastmod) {
+				return false;
+			}
+		}
 		return true;
 	}
 	
+	public long getLastModifiedFromAssets() throws IOException {
+		InputStream in = mContext.getAssets().open(DB_NAME_ASSET, AssetManager.ACCESS_STREAMING);
+		ZipInputStream zipIn = new ZipInputStream(in);
+		ZipEntry zipEntry = zipIn.getNextEntry();
+		long result;
+		
+		result = 0;
+		while (zipEntry != null) {
+			if (zipEntry.getName().equalsIgnoreCase(DB_NAME)) {
+				result = zipEntry.getTime();
+			}
+			zipIn.closeEntry();
+			zipEntry = zipIn.getNextEntry();
+		}
+		
+		zipIn.close();
+		in.close();
+
+		return result;
+	}
+
 	public void copyDatabaseFromAssets(String pathToCopy) throws IOException {
 		InputStream in = mContext.getAssets().open(DB_NAME_ASSET, AssetManager.ACCESS_STREAMING);
 		ZipInputStream zipIn = new ZipInputStream(in);
