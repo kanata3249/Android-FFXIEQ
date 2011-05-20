@@ -355,7 +355,7 @@ public class CharacterStatusView extends ScrollView {
 			}
 			value = v.getAdditionalPercentWithCap();
 			if (value != 0) {
-				sb.append(' ');
+				sb.append('\n');
 				if (value > 0) {
 					sb.append('+');
 				}
