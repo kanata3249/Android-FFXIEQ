@@ -143,69 +143,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 	}
 	
 	protected StatusValue handleCommonToken(StatusValue base, String parameter) {
-		StatusValue newValue = new StatusValue();
-		int modifier, start, end, value, cap;
-		boolean additional, percent;
+		StatusValue newValue;
 
-		additional = true;
-		percent = false;
-		cap = 0;
-		start = 0;
-		end = parameter.length();
-		modifier = 1;
-		if (parameter.startsWith("-")) {
-			modifier = -1;
-			additional = true;
-			start++;
-		} else if (parameter.startsWith("+")) {
-			modifier = 1;
-			additional = true;
-			start++;
+		newValue = StatusValue.valueOf(parameter);
+		if (newValue != null) {
+			newValue.add(base);
 		}
-		if (parameter.endsWith(")")) {
-			String tmp[] = parameter.split("\\(");
-			if (tmp.length == 2) {
-				try {
-					cap = Integer.parseInt(tmp[1].substring(0, tmp[1].length() - 1)); // Ignore tailing ')'.
-				} catch (NumberFormatException e) {
-					return null;
-				}
-				if (cap <= 0) { // Something wrong.
-					return null;
-				}
-				parameter = tmp[0];
-				end = parameter.length();
-			}
-		}
-		if (parameter.endsWith("%")) {
-			additional = true;
-			percent = true;
-			end--;
-		}
-
-		try {
-			value = Integer.parseInt(parameter.substring(start, end));
-		} catch (NumberFormatException e) {
-			return null;
-		}
-		value *= modifier;
-
-		if (additional) {
-			if (percent) {
-				if (cap > 0) {
-					newValue.setAdditionalPercentWithCap(value);
-					newValue.setCap(cap);
-				} else {
-					newValue.setAdditionalPercent(value);
-				}
-			} else {
-				newValue.setAdditional(value);
-			}
-		} else {
-			newValue.setValue(value);
-		}
-		
-		newValue.add(base);
 		
 		return newValue;
 	}

@@ -464,7 +464,7 @@ public class FFXICharacter implements IStatus, Serializable {
 						// Dual Wield
 						StatusValue base = getStatus(mLevel, StatusType.Delay);
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
-						base.setAdditionalPercent(-(dualwield.getAdditional() + dualwield.getAdditionalPercent()));
+						base.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
 						
 						return base;
 					}
@@ -506,7 +506,7 @@ public class FFXICharacter implements IStatus, Serializable {
 						// Dual Wield
 						StatusValue base = getStatus(mLevel, StatusType.DelaySub);
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
-						base.setAdditionalPercent(-(dualwield.getAdditional() + dualwield.getAdditionalPercent()));
+						base.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
 
 						return base;
 					}

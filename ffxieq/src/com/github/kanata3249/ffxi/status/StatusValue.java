@@ -45,11 +45,15 @@ public class StatusValue implements Serializable {
 	public int getAdditionalPercentWithCap() { return additionalPercentWithCap; };
 	public int getCap() { return cap; };
 	
+	static public int makePercentValue(int value, int decimal) {
+		return value * 100 + decimal % 100;
+	}
+	
 	public int getTotal() {
 		int v, p;
 		v = value + additional;
-		v += v * additionalPercent / 100;
-		p = v * additionalPercentWithCap / 100;
+		v += v * additionalPercent / 10000;
+		p = v * additionalPercentWithCap / 10000;
 		if (cap > 0)
 			p = Math.min(p, cap);
 		v += p;
@@ -86,5 +90,108 @@ public class StatusValue implements Serializable {
 			this.cap = 0;
 		}
 		return;
+	}
+
+	static public StatusValue valueOf(String parameter) {
+		StatusValue newValue = new StatusValue();
+		int modifier, start, end, value, cap;
+		boolean additional, percent;
+
+		additional = true;
+		percent = false;
+		cap = 0;
+		start = 0;
+		end = parameter.length();
+		modifier = 1;
+		if (parameter.startsWith("-")) {
+			modifier = -1;
+			additional = true;
+			start++;
+		} else if (parameter.startsWith("+")) {
+			modifier = 1;
+			additional = true;
+			start++;
+		}
+		if (parameter.endsWith(")")) {
+			String tmp[] = parameter.split("\\(");
+			if (tmp.length == 2) {
+				try {
+					cap = Integer.parseInt(tmp[1].substring(0, tmp[1].length() - 1)); // Ignore tailing ')'.
+				} catch (NumberFormatException e) {
+					return null;
+				}
+				if (cap <= 0) { // Something wrong.
+					return null;
+				}
+				parameter = tmp[0];
+				end = parameter.length();
+			}
+		}
+		if (parameter.endsWith("%")) {
+			String tmp[] = parameter.split("\\.");
+			int decimal;
+
+			additional = true;
+			percent = true;
+			end--;
+			
+			decimal = 0;
+			if (tmp.length == 2) {
+				try {
+					decimal = Integer.parseInt(tmp[1].substring(0, tmp[1].length() - 1));  // ignore trailing '%'
+					switch (tmp[1].length() - 1) {
+					case 0:
+						break;
+					case 1:
+						decimal *= 10;
+						break;
+					case 2:
+						break;
+					default:
+						while (decimal >= 1000) {
+							decimal /= 10;
+						}
+						break;
+					}
+				} catch (NumberFormatException e) {
+					return null;
+				}
+				
+				parameter = tmp[0];
+				end = parameter.length();
+			}
+			
+			try {
+				value = Integer.parseInt(parameter.substring(start, end));
+			} catch (NumberFormatException e) {
+				return null;
+			}
+			value = value * 100 + decimal;
+		} else {
+	
+			try {
+				value = Integer.parseInt(parameter.substring(start, end));
+			} catch (NumberFormatException e) {
+				return null;
+			}
+		}
+		value *= modifier;
+
+		if (additional) {
+			if (percent) {
+				if (cap > 0) {
+					newValue.setAdditionalPercentWithCap(value);
+					newValue.setCap(cap);
+				} else {
+					newValue.setAdditionalPercent(value);
+				}
+			} else {
+				newValue.setAdditional(value);
+			}
+		} else {
+			newValue.setValue(value);
+		}
+		
+		return newValue;
 	}
 }

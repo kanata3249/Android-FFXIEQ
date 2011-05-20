@@ -284,11 +284,22 @@ public class CharacterStatusView extends ScrollView {
 
 				sb.append(v.getValue());
 				sb.append('%');
-				if (v.getAdditionalPercent() != 0) {
-					if (v.getAdditionalPercent() > 0) {
+				value = v.getAdditionalPercent();
+				if (value != 0) {
+					if (value > 0) {
 						sb.append('+');
 					}
-					sb.append(v.getAdditionalPercent());
+					sb.append(value / 100);
+					if ((value % 100) != 0) {
+						if (value < 0)
+							value = -value;
+						sb.append('.');
+						if (value % 100 < 10)
+							sb.append('0');
+						sb.append(value % 100);
+						if (value % 10 == 0)
+							sb.deleteCharAt(sb.length() - 1);
+					}
 					sb.append('%');
 				}
 				return sb.toString();
@@ -298,7 +309,17 @@ public class CharacterStatusView extends ScrollView {
 			StringBuilder sb = new StringBuilder();
 
 			value = v.getAdditionalPercent();
-			sb.append(value);
+			sb.append(value / 100);
+			if ((value % 100) != 0) {
+				if (value < 0)
+					value = -value;
+				sb.append('.');
+				if (value % 100 < 10)
+					sb.append('0');
+				sb.append(value % 100);
+				if (value % 10 == 0)
+					sb.deleteCharAt(sb.length() - 1);
+			}
 			sb.append('%');
 			return sb.toString();
 		} else if (separate == GETSTATUS_STRING_SEPARATE) {
@@ -319,7 +340,17 @@ public class CharacterStatusView extends ScrollView {
 				if (value > 0) {
 					sb.append('+');
 				}
-				sb.append(v.getAdditionalPercent());
+				sb.append(value / 100);
+				if ((value % 100) != 0) {
+					if (value < 0)
+						value = -value;
+					sb.append('.');
+					if (value % 100 < 10)
+						sb.append('0');
+					sb.append(value % 100);
+					if (value % 10 == 0)
+						sb.deleteCharAt(sb.length() - 1);
+				}
 				sb.append('%');
 			}
 			value = v.getAdditionalPercentWithCap();
@@ -328,7 +359,17 @@ public class CharacterStatusView extends ScrollView {
 				if (value > 0) {
 					sb.append('+');
 				}
-				sb.append(v.getAdditionalPercentWithCap());
+				sb.append(value / 100);
+				if ((value % 100) != 0) {
+					if (value < 0)
+						value = -value;
+					sb.append('.');
+					if (value % 100 < 10)
+						sb.append('0');
+					sb.append(value % 100);
+					if (value % 10 == 0)
+						sb.deleteCharAt(sb.length() - 1);
+				}
 				sb.append("%(");
 				sb.append(v.getCap());
 				sb.append(')');

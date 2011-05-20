@@ -51,10 +51,10 @@ public class AtmaSet extends StatusModifier implements IStatus, Serializable {
 			total.add(new StatusValue(0, mAbyssiteOfFurtherance * 10 + 10));
 			break;
 		case HP:
-			total.add(new StatusValue(0, 0, mAbyssiteOfMerit * 10 + 20));
+			total.add(new StatusValue(0, 0, StatusValue.makePercentValue(mAbyssiteOfMerit * 10 + 20, 0)));
 			break;
 		case MP:
-			total.add(new StatusValue(0, 0, mAbyssiteOfMerit * 5 + 10));
+			total.add(new StatusValue(0, 0, StatusValue.makePercentValue(mAbyssiteOfMerit * 5 + 10, 0)));
 			break;
 		}
 		return total;
