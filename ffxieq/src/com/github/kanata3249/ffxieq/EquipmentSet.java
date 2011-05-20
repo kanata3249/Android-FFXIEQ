@@ -158,6 +158,14 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		}
 		if (updated) {
 			parseDescriptions();			
+			if (mCombinations != null) {
+				for (int i = 0; i < mCombinations.size(); i++) {
+					Combination combi;
+					
+					combi = mCombinations.get(i);
+					combi.parseDescription();
+				}
+			}
 		}
 		return updated;
 	}
