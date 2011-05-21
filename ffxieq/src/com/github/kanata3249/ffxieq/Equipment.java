@@ -388,7 +388,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	public void removeCombinationToken() {
 		if (mUnknownTokens == null)
 			return;
-		String combination = Dao.getString(FFXIString.TOKEN_Combination);
+		String combination = Dao.getString(FFXIString.TOKEN_SetBonus);
 		for (int i = 0; i < mUnknownTokens.size(); i++) {
 			String str = mUnknownTokens.get(i);
 			if (str.startsWith(combination)) {

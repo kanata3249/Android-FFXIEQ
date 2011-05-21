@@ -72,9 +72,14 @@ public class StatusModifierWithDescription extends StatusModifier {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Dynamis) + tokens[1]);
 			updated = true;
 		}
-		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Combination));
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_SetBonus));
 		if (tokens.length > 1) {
-			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Combination) + tokens[1]);
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_SetBonus) + tokens[1]);
+			updated = true;
+		}
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_AugmentComment));
+		if (tokens.length > 1) {
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_AugmentComment) + tokens[1]);
 			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
