@@ -37,7 +37,6 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	private long mCombinationID;
 	
 	private transient SortedStringList mRangedTokens;
-	private transient String mCombinationToken;
 	
 	public Equipment(long id, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description) {
 		this(id, -1, name, part, weapon, job, race, level, rare, ex, description, "");
@@ -393,20 +392,10 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		for (int i = 0; i < mUnknownTokens.size(); i++) {
 			String str = mUnknownTokens.get(i);
 			if (str.startsWith(combination)) {
-				mCombinationToken = str;
 				mUnknownTokens.remove(i);
 				return;
 			}
 			
-		}
-	}
-	
-	public void RestoreCombinationToken() {
-		if (mCombinationToken != null) {
-			if (mUnknownTokens == null)
-				mUnknownTokens = new SortedStringList();
-			mUnknownTokens.addString(mCombinationToken);
-			mCombinationToken = null;
 		}
 	}
 }

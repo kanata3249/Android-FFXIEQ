@@ -201,7 +201,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 			for (int i = 0; i < used.length; i++) {
 				used[i] = false;
 				if (mEquipments[i] != null)
-					mEquipments[i].RestoreCombinationToken();
+					mEquipments[i].removeCombinationToken();
 			}
 			mCombinations = new ArrayList<Combination>();
 			for (int i = 0; i < mEquipments.length; i++) {
@@ -224,11 +224,9 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 							if (combi != null) {
 								mCombinations.add(combi);
 								
-								// Remove combination token from unkonwn token list.
 								for (int ii = i; ii < mEquipments.length; ii++) {
 									if (mEquipments[ii] != null && used[ii] == false && mEquipments[ii].getCombinationID() == combiID) {
 										used[ii] = true;
-										mEquipments[ii].removeCombinationToken();
 									}
 								}
 							}
@@ -285,11 +283,9 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 							if (combi != null) {
 								mCombinations.add(combi);
 								
-								// Remove combination token from unknown token list.
 								for (int i = 0; i < maxCombi; i++) {
 									if ((n & (1 << i)) != 0) {
 										used[parts[i]] = true;
-										mEquipments[parts[i]].removeCombinationToken();
 									}
 								}
 							}
