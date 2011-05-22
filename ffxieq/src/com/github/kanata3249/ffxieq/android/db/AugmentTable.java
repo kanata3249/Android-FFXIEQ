@@ -17,17 +17,15 @@ package com.github.kanata3249.ffxieq.android.db;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxi.FFXIString;
-import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.*;
 
-public class EquipmentTable {
+public class AugmentTable {
 	//
-	static final String TABLE_NAME = "Equipment";
-	static final String TABLE_NAME_AUGMENT = "Augment";
-	static final String TABLE_NAME_COMBINATION = "Combination";
+	static final String TABLE_NAME = "Augment";
 	//
 	public static final String C_Id = "_id";
 	public static final String C_BaseId = "BaseEquipmentID";
@@ -39,25 +37,40 @@ public class EquipmentTable {
 	public static final String C_Level = "Lv";
 	public static final String C_Rare = "Rare";
 	public static final String C_Ex = "Ex";
-	public static final String C_OriginalDescription = "DescriptionOrg";
 	public static final String C_Description = "Description";
+	public static final String C_Augment = "Augment";
 	
-	public static final String C_Combi_ID = "_id";
-	public static final String C_Combi_CombinationID = "CombinationID";
-	public static final String C_Combi_Equipments = "Equipments";
-	public static final String C_Combi_NumMatches = "NumMatch";
-	public static final String C_Combi_Description = "Description";
+	public AugmentTable() { };
 
-	public EquipmentTable() { };
+	public void create_table(SQLiteDatabase db) {
+		StringBuilder createSql = new StringBuilder();
+		
+		createSql.append("create table " + TABLE_NAME + " (");
+		createSql.append(C_Id + " integer primary key autoincrement not null,");
+		createSql.append(C_BaseId + " integer not null,");
+		createSql.append(C_Name + " text not null,");
+		createSql.append(C_Part + " text not null,");
+		createSql.append(C_Weapon + " text not null,");
+		createSql.append(C_Job + " text not null,");
+		createSql.append(C_Race + " text not null,");
+		createSql.append(C_Level + " integer not null,");
+		createSql.append(C_Rare + " integer not null,");
+		createSql.append(C_Ex + " integer not null,");
+		createSql.append(C_Description + " text, ");
+		createSql.append(C_Augment + " text");
+		createSql.append(")");
+		
+		db.execSQL(createSql.toString());
+	}
 
 	// DA methods
-	public Equipment newInstance(FFXIDAO dao, SQLiteDatabase db, long id, int augId) {
+	public Equipment newInstance(FFXIDAO dao, SQLiteDatabase db, long id, long augId) {
 		Cursor cursor;
 		Equipment newInstance;
-		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description};
+		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description, C_BaseId, C_Augment};
 
 		try {
-			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
+			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + augId + "'", null, null, null, null, null);
 		} catch (SQLiteException e) {
 			return null;
 		}
@@ -67,46 +80,18 @@ public class EquipmentTable {
 			return null;
 		}
 		cursor.moveToFirst();
-		newInstance = new Equipment(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getString(cursor.getColumnIndex(C_Name)),
+		newInstance = new Equipment(cursor.getLong(cursor.getColumnIndex(C_BaseId)), cursor.getString(cursor.getColumnIndex(C_Name)),
 									cursor.getString(cursor.getColumnIndex(C_Part)), cursor.getString(cursor.getColumnIndex(C_Weapon)),
 									cursor.getString(cursor.getColumnIndex(C_Job)), cursor.getString(cursor.getColumnIndex(C_Race)),
 									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0,
 									cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0, cursor.getString(cursor.getColumnIndex(C_Description)));
-		cursor.close();
-		
-		if (augId != -1) {
-			try {
-				cursor = db.query(TABLE_NAME_AUGMENT, columns, C_Id + " = '" + augId + "'", null, null, null, null, null);
-			} catch (SQLiteException e) {
-				return null;
-			}
-			if (cursor.getCount() < 1) {
-				// no match
-				cursor.close();
-				return null;
-			}
-			cursor.moveToFirst();
-			newInstance.setAugment(augId, cursor.getString(0));
-			cursor.close();
+		if (newInstance != null) {
+			newInstance.setAugId(augId);
+			newInstance.setAugment(cursor.getString(cursor.getColumnIndex(C_Augment)));
 		}
+		cursor.close();
 		
 		return newInstance;
-	}
-	
-	public void setCombinationID(SQLiteDatabase db, Equipment equipment) {
-		Cursor cursor;
-		String []combi_columns = { C_Combi_CombinationID };
-
-		try {
-			cursor = db.query(TABLE_NAME_COMBINATION, combi_columns, C_Combi_Equipments + " LIKE '%" + equipment.getName() + "%'", null, null, null, null);
-		} catch (SQLiteException e) {
-			return;
-		}
-		if (cursor.getCount() > 0) {
-			cursor.moveToFirst();
-			equipment.setCombinationID(cursor.getLong(cursor.getColumnIndex(C_Combi_CombinationID)));
-		}
-		cursor.close();
 	}
 
 	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
@@ -180,60 +165,50 @@ public class EquipmentTable {
 		return result;
 	}
 
-	public Combination newCombinationInstance(FFXIDAO dao, SQLiteDatabase db, long combiId, int numMatches) {
-		Cursor cursor;
-		Combination newInstance;
-		String []columns = { C_Combi_ID, C_Combi_CombinationID, C_Combi_Description };
-		try {
-			cursor = db.query(TABLE_NAME_COMBINATION, columns,
-								C_Combi_CombinationID + " = '" + combiId + "' AND " + C_Combi_NumMatches + " = '" + numMatches + "'", null, null, null, null, null);
-		} catch (SQLiteException e) {
-			return null;
-		}
-		if (cursor.getCount() < 1) {
-			// no match
-			cursor.close();
-			return null;
-		}
-		cursor.moveToFirst();
-		newInstance = new Combination(cursor.getLong(cursor.getColumnIndex(C_Combi_ID)), combiId, cursor.getString(cursor.getColumnIndex(C_Combi_Description)));
-		cursor.close();
+	public long saveAugment(SQLiteDatabase db, long id, String augment, Equipment base) {
+		ContentValues values = new ContentValues();;
+		long newId;
 
-		return newInstance;
+		values.put(C_BaseId, base.getId());
+		values.put(C_Name, base.getName());
+		values.put(C_Part, base.getPart());
+		values.put(C_Weapon, base.getWeapon());
+		values.put(C_Job, base.getJob());
+		values.put(C_Race, base.getRace());
+		values.put(C_Level, base.getLevel());
+		values.put(C_Rare, base.isRare() ? 1 : 0);
+		values.put(C_Ex, base.isEx() ? 1 : 0);
+		values.put(C_Description, base.getDescription());
+		values.put(C_Augment, augment);
+
+		db.beginTransaction();
+		newId = id;
+		try {
+			create_table(db);
+		} catch (SQLiteException e) {
+			// Ignore
+		}
+		try {
+			if (id >= 0) {
+				db.update(TABLE_NAME, values, C_Id + " ='" + id + "'", null);
+			} else {
+				newId = db.insert(TABLE_NAME, null, values);
+			}
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+		}
+		return newId;
 	}
-
-	public Combination searchCombinationAndNewInstance(FFXIDAO dao, SQLiteDatabase db, String names[]) {
-		Cursor cursor;
-		Combination newInstance;
-		String []columns = { C_Combi_ID, C_Combi_CombinationID, C_Combi_Description };
-		StringBuilder where;
-
-		where = new StringBuilder();
-		for (int i = 0; i < names.length; i++) {
-			if (i != 0)
-				where.append(" AND ");
-			where.append(C_Combi_Equipments);
-			where.append(" LIKE '%");
-			where.append(names[i]);
-			where.append("%'");
-		}
-
+	
+	public void deleteAugment(SQLiteDatabase db, long id) {
 		try {
-			cursor = db.query(TABLE_NAME_COMBINATION, columns,
-								where.toString(), null, null, null, null, null);
+			db.delete(TABLE_NAME, C_Id + " = '" + id + "'", null);
 		} catch (SQLiteException e) {
-			return null;
+			// Ignore
 		}
-		if (cursor.getCount() < 1) {
-			// no match
-			cursor.close();
-			return null;
-		}
-		cursor.moveToFirst();
-		newInstance = new Combination(cursor.getLong(cursor.getColumnIndex(C_Combi_ID)), cursor.getLong(cursor.getColumnIndex(C_Combi_CombinationID)), cursor.getString(cursor.getColumnIndex(C_Combi_Description)));
-		cursor.close();
 
-		return newInstance;
+		return;
 	}
 }
 

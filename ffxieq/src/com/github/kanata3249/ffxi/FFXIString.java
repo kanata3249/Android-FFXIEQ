@@ -160,5 +160,8 @@ public class FFXIString {
 	public static final int TOKEN_Campaign = 1203;
 	public static final int TOKEN_Dynamis = 1204;
 	public static final int TOKEN_SetBonus = 1205;
-	public static final int TOKEN_AugmentComment = 1206;
+	public static final int TOKEN_Aftermath = 1206;
+	public static final int TOKEN_Pet = 1207;
+
+	public static final int TOKEN_AugmentComment = 1300;
 }

@@ -10,6 +10,6 @@
     <item android:id="@+id/Remove" android:title="@string/Remove"></item>
     <item android:id="@+id/Filter" android:title="@string/Filter"></item>
     <item android:id="@+id/ResetFilter" android:title="@string/ResetFilter"></item>
-    <item android:id="@+id/AugmentList" android:title="@string/SelectFromAugmentList"></item>
+    <item android:id="@+id/EquipmentList" android:title="@string/SelectFromEquipmentList"></item>
     
 </menu>

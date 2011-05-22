@@ -37,6 +37,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	private long mCombinationID;
 	
 	private transient SortedStringList mRangedTokens;
+	private transient String mAugmentComment;
 	
 	public Equipment(long id, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description) {
 		this(id, -1, name, part, weapon, job, race, level, rare, ex, description, "");
@@ -79,8 +80,8 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		return mAugId;
 	}
 
-	public void setAugId(int mAugId) {
-		this.mAugId = mAugId;
+	public void setAugId(long augId) {
+		this.mAugId = augId;
 	}
 
 	public String getName() {
@@ -210,6 +211,13 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	}
 	public void setCombinationID(long id) {
 		mCombinationID = id;
+	}
+
+	@Override
+	public String getAdditionalDescription() {
+		if (mAugment != null && mAugment.length() > 0)
+			return mAugment;
+		return null;
 	}
 
 	@Override
@@ -397,5 +405,24 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 			}
 			
 		}
+	}
+
+	public void removeAugmentCommentFromUnknownToken() {
+		if (mUnknownTokens == null)
+			return;
+		String marker = Dao.getString(FFXIString.TOKEN_AugmentComment);
+		for (int i = 0; i < mUnknownTokens.size(); i++) {
+			String str = mUnknownTokens.get(i);
+			if (str.startsWith(marker)) {
+				mUnknownTokens.remove(i);
+				mAugmentComment = str;
+				return;
+			}
+			
+		}
+	}
+	
+	public String getAugmentComment() {
+		return mAugmentComment;
 	}
 }

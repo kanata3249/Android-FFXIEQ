@@ -34,9 +34,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 		abstract boolean handleToken(String token, String parameter);
 	}
 
+	public String getAdditionalDescription() {
+		return null;
+	}
+
 	public boolean parseDescription() {
 		boolean updated = false;
-		String tokens[];
 
 		if (fTokenHandler == null) {
 			setupTokenHandler();
@@ -47,7 +50,28 @@ public class StatusModifierWithDescription extends StatusModifier {
 
 		loadDefaultValues();
 		mUnknownTokens = new SortedStringList();
-		tokens = mDescription.split(Dao.getString(FFXIString.TOKEN_Latent_Effect));
+		updated = parseDescriptionSub(mDescription);
+		if (getAdditionalDescription() != null) {
+			if (parseDescriptionSub(getAdditionalDescription()))
+				updated = true;
+		}
+		mNeedParseDescription = false;
+		
+		return updated;
+	}
+	
+	public boolean parseDescriptionSub(String description) {
+		boolean updated = false;
+		String tokens[];
+
+		tokens = new String[1];
+		tokens[0] = description;
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_AugmentComment));
+		if (tokens.length > 1) {
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_AugmentComment) + tokens[1]);
+			updated = true;
+		}
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Latent_Effect));
 		if (tokens.length > 1) {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Latent_Effect) + tokens[1]);
 			updated = true;
@@ -77,9 +101,14 @@ public class StatusModifierWithDescription extends StatusModifier {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_SetBonus) + tokens[1]);
 			updated = true;
 		}
-		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_AugmentComment));
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Pet));
 		if (tokens.length > 1) {
-			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_AugmentComment) + tokens[1]);
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Pet) + tokens[1]);
+			updated = true;
+		}
+		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_Aftermath));
+		if (tokens.length > 1) {
+			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_Aftermath) + tokens[1]);
 			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
@@ -103,7 +132,6 @@ public class StatusModifierWithDescription extends StatusModifier {
 				updated = true;
 			}
 		}
-		mNeedParseDescription = false;
 		return updated;
 	}
 	

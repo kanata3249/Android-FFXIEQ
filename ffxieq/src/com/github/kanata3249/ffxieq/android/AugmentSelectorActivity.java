@@ -18,8 +18,10 @@ package com.github.kanata3249.ffxieq.android;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
+import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -39,7 +41,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
-public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
+public class AugmentSelectorActivity extends FFXIEQBaseActivity {
 	int mPart;
 	int mJob;
 	int mLevel;
@@ -48,7 +50,6 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	long mAugID;
 	long mFilterID;
 	long mLongClickingItemId;
-	boolean mLongClickingItemIsCurrent;
 	boolean mOrderByName;
 	String mFilterByType;
 
@@ -74,49 +75,48 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		mOrderByName = param.getBoolean("OrderByName");
 		mFilterByType = param.getString("FilterByType");
 		
-		setContentView(R.layout.equipmentselector);
+		setContentView(R.layout.augmentselector);
 	}
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-		EquipmentListView elv;
+		AugmentListView lv;
 		
-		elv = (EquipmentListView)findViewById(R.id.ListView);
-		if (elv != null) {
-			elv.setFilterByID(mFilterID);
-			elv.setOrderByName(mOrderByName);
-			elv.setFilterByType(mFilterByType);
-			elv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
+		lv = (AugmentListView)findViewById(R.id.ListView);
+		if (lv != null) {
+			lv.setFilterByID(mFilterID);
+			lv.setOrderByName(mOrderByName);
+			lv.setFilterByType(mFilterByType);
+			lv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
 			
-			elv.setOnItemClickListener(new OnItemClickListener() {
+			lv.setOnItemClickListener(new OnItemClickListener() {
 
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					Intent result = new Intent();
 					
-					result.putExtra("From", "EquipmentSelector");
+					result.putExtra("From", "AugmentSelector");
 					result.putExtra("Part", mPart);
-					result.putExtra("Id", arg3);
-					result.putExtra("AugId", -1);
+					result.putExtra("Id", -1);
+					result.putExtra("AugId", arg3);
 					setResult(RESULT_OK, result);
 					finish();
 				}
 				
 			});
 			
-			elv.setOnItemLongClickListener(new OnItemLongClickListener() {
+			lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					mLongClickingItemId = arg3;
-					mLongClickingItemIsCurrent = false;
-					EquipmentSelectorActivity.this.openContextMenu(arg0);
+					AugmentSelectorActivity.this.openContextMenu(arg0);
 					return true;
 				}
 			});
 			
-			registerForContextMenu(elv);
+			registerForContextMenu(lv);
 		}
 		
 		{
@@ -125,9 +125,8 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 				TextView tv;
 				View.OnLongClickListener listener = new View.OnLongClickListener() {
 					public boolean onLongClick(View v) {
-						mLongClickingItemId = mCurrent;
-						mLongClickingItemIsCurrent = true;
-						EquipmentSelectorActivity.this.openContextMenu(v);
+						mLongClickingItemId = mAugID;
+						AugmentSelectorActivity.this.openContextMenu(v);
 						return true;
 					}
 				};
@@ -193,12 +192,12 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 
 	@Override
 	protected void onStop() {
-		EquipmentListView elv;
+		AugmentListView lv;
 		
-		elv = (EquipmentListView)findViewById(R.id.ListView);
-		if (elv != null) {
-			elv.setOnItemClickListener(null);
-			elv.setOnItemLongClickListener(null);
+		lv = (AugmentListView)findViewById(R.id.ListView);
+		if (lv != null) {
+			lv.setOnItemClickListener(null);
+			lv.setOnItemLongClickListener(null);
 		}
 
 		TextView tv;
@@ -246,7 +245,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	}
 
 	static public boolean startActivity(Activity from, int request, FFXICharacter charInfo, int part, long current, long augId) {
-		Intent intent = new Intent(from, EquipmentSelectorActivity.class);
+		Intent intent = new Intent(from, AugmentSelectorActivity.class);
 		
 		intent.putExtra("Part", part);
 		intent.putExtra("Race", charInfo.getRace());
@@ -263,7 +262,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	}
 
 	static public boolean startActivity(Fragment from, int request, FFXICharacter charInfo, int part, long current, long augId) {
-		Intent intent = new Intent(from.getActivity(), EquipmentSelectorActivity.class);
+		Intent intent = new Intent(from.getActivity(), AugmentSelectorActivity.class);
 		
 		intent.putExtra("Part", part);
 		intent.putExtra("Race", charInfo.getRace());
@@ -279,7 +278,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		return true;
 	}
 	static public boolean isComeFrom(Intent data) {
-		return data.getStringExtra("From").equals("EquipmentSelector");
+		return data.getStringExtra("From").equals("AugmentSelector");
 	}
 	static public int getPart(Intent data) {
 		return data.getIntExtra("Part", -1);
@@ -298,7 +297,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		super.onCreateOptionsMenu(menu);
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.equipmentselector, menu);
+		inflater.inflate(R.menu.augmentselector, menu);
 		return true;
 	}
 
@@ -314,15 +313,15 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 				item.setTitle(getString(R.string.OrderByName));
 		}
 		
-		EquipmentListView elv;
+		AugmentListView lv;
 		
 		item = menu.findItem(R.id.FilterByType);
 		SubMenu submenu = item.getSubMenu();
 		submenu.removeGroup(R.id.FilterByType);
 
-		elv = (EquipmentListView)findViewById(R.id.ListView);
-		if (elv != null) {
-			String types[] = elv.getAvailableWeaponTypes();
+		lv = (AugmentListView)findViewById(R.id.ListView);
+		if (lv != null) {
+			String types[] = lv.getAvailableWeaponTypes();
 			
 			if (types == null || types.length == 1) {
 				item.setEnabled(false);
@@ -341,7 +340,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		EquipmentListView elv = (EquipmentListView)findViewById(R.id.ListView);
+		AugmentListView lv = (AugmentListView)findViewById(R.id.ListView);
 
 		if (item.getGroupId() == R.id.FilterByType) {
 			if (item.getItemId() < 0) {
@@ -349,22 +348,22 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 			} else {
 				mFilterByType = (String)item.getTitle();
 			}
-			elv.setFilterByType(mFilterByType);
+			lv.setFilterByType(mFilterByType);
 			return true;
 		}
 
 		switch (item.getItemId()) {
 		case R.id.OrderByName:
 			mOrderByName = !mOrderByName;
-			if (elv != null) {
-				elv.setOrderByName(mOrderByName);
+			if (lv != null) {
+				lv.setOrderByName(mOrderByName);
 			}
 			return true;
 		case R.id.Remove:
 			{
 				Intent result = new Intent();
 				
-				result.putExtra("From", "EquipmentSelector");
+				result.putExtra("From", "AugmentSelector");
 				result.putExtra("Part", mPart);
 				result.putExtra("Id", -1);
 				result.putExtra("AugId", -1);
@@ -376,22 +375,21 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 			showDialog(0);
 			return true;
 		case R.id.ResetFilter:
-			if (elv != null) {
-				elv.setFilter("");
+			if (lv != null) {
+				lv.setFilter("");
 			}
 			mFilterID = -1;
 			return true;
-		case R.id.AugmentList:
+		case R.id.EquipmentList:
 			{
 				Intent result = new Intent();
 				
-				result.putExtra("From", "EquipmentSelector");
+				result.putExtra("From", "AugmentSelector");
 				result.putExtra("Part", mPart);
 				setResult(RESULT_FIRST_USER, result);
 				finish();
 				return true;
 			}
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -401,14 +399,17 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.EditAugment:
-			if (mLongClickingItemIsCurrent)
-				AugmentEditActivity.startActivity(this, 0, getFFXICharacter(), mPart, mLongClickingItemId, mAugID);
+			if (mLongClickingItemId == -1)
+				AugmentEditActivity.startActivity(this, 0, getFFXICharacter(), mPart, mCurrent, -1);
 			else
-				AugmentEditActivity.startActivity(this, 0, getFFXICharacter(), mPart, mLongClickingItemId, -1);
+				AugmentEditActivity.startActivity(this, 0, getFFXICharacter(), mPart, -1, mLongClickingItemId);
+			return true;
+		case R.id.DeleteAugment:
+			showDialog(R.string.QueryDeleteAugment);
 			return true;
 		}
 
-		Equipment eq = getDAO().instantiateEquipment(mLongClickingItemId, -1);
+		Equipment eq = getDAO().instantiateEquipment(-1, mLongClickingItemId);
 		String name = eq.getName();
 		Intent intent;
 		if (eq != null) {
@@ -460,33 +461,70 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.equipmentselector_context, menu);
+		inflater.inflate(R.menu.augmentselector_context, menu);
+		
+		MenuItem item = menu.findItem(R.id.DeleteAugment);
+		if (item != null) {
+			item.setEnabled(mLongClickingItemId != mAugID);
+		}
 	}
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		FilterSelectorDialog dialog = new FilterSelectorDialog(this);
+		switch (id) {
+		case R.string.QueryDeleteAugment:
+			{
+				Dialog dialog;
+				AlertDialog.Builder builder;
 
-		dialog.setOnDismissListener(new OnDismissListener() {
-			public void onDismiss(DialogInterface dialog) {
-				FilterSelectorDialog fsd = (FilterSelectorDialog)dialog;
-				String filter = fsd.getFilterString();
-				mFilterID = fsd.getFilterID();
+				builder = new AlertDialog.Builder(this);
+				builder.setCancelable(true);
+		    	builder.setMessage(getString(R.string.QueryDeleteAugment));
+		    	builder.setTitle(getString(R.string.app_name));
+		    	builder.setPositiveButton(R.string.DeleteOK, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+		    			((FFXIDatabase)getDAO()).deleteAugment(mLongClickingItemId);
 
-				if (filter.length() > 0) {
-					EquipmentListView elv = (EquipmentListView)findViewById(R.id.ListView);
-					if (elv != null) {
-						elv.setFilter(filter);
+		    			AugmentListView lv = (AugmentListView)findViewById(R.id.ListView);
+		    			if (lv != null)
+		    				lv.setParam(getDAO(), mPart, mRace, mJob, mLevel);
+						dismissDialog(R.string.QueryDeleteAugment);
 					}
-				}
-				
+				});
+		    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dismissDialog(R.string.QueryDeleteAugment);
+					}
+				});
+				dialog = builder.create();
+				return dialog;
 			}
-			
-		});
-		return dialog;
+		default:
+			{
+				FilterSelectorDialog dialog = new FilterSelectorDialog(this);
+		
+				dialog.setOnDismissListener(new OnDismissListener() {
+					public void onDismiss(DialogInterface dialog) {
+						FilterSelectorDialog fsd = (FilterSelectorDialog)dialog;
+						String filter = fsd.getFilterString();
+						mFilterID = fsd.getFilterID();
+		
+						if (filter.length() > 0) {
+							AugmentListView lv = (AugmentListView)findViewById(R.id.ListView);
+							if (lv != null) {
+								lv.setFilter(filter);
+							}
+						}
+						
+					}
+					
+				});
+				return dialog;
+			}
+		}
 	}
 
-    @Override
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 			int part;
@@ -503,7 +541,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 			if (part == mPart) {
 				Intent result = new Intent();
 				
-				result.putExtra("From", "EquipmentSelector");
+				result.putExtra("From", "AugmentSelector");
 				result.putExtra("Part", mPart);
 				result.putExtra("Id", id);
 				result.putExtra("AugId", augid);

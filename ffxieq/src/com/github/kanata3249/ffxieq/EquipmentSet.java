@@ -144,15 +144,15 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		return mEquipments[part];
 	}
 	
-	public void setEquipment(int part, long id) {
-		mEquipments[part] = Dao.instantiateEquipment(id);
+	public void setEquipment(int part, long id, long augId) {
+		mEquipments[part] = Dao.instantiateEquipment(id, augId);
 	}
 	
 	public boolean reloadEquipments() {
 		boolean updated = false;
 		for (int i = 0; i < mEquipments.length; i++) {
 			if (mEquipments[i] != null) {
-				mEquipments[i] = Dao.instantiateEquipment(mEquipments[i].getId());
+				mEquipments[i] = Dao.instantiateEquipment(mEquipments[i].getId(), mEquipments[i].getAugId());
 				updated = true;
 			}
 		}
@@ -192,17 +192,14 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		for (int i = 0; i < mEquipments.length; i++) {
 			if (mEquipments[i] != null) {
 				updated = mEquipments[i].parseDescription() || updated;
+				mEquipments[i].removeCombinationToken();
+				mEquipments[i].removeAugmentCommentFromUnknownToken();
 			}
 		}
 		if (updated) {
 			// check combination
 			boolean used[] = new boolean[EQUIPMENT_NUM];
 			
-			for (int i = 0; i < used.length; i++) {
-				used[i] = false;
-				if (mEquipments[i] != null)
-					mEquipments[i].removeCombinationToken();
-			}
 			mCombinations = new ArrayList<Combination>();
 			for (int i = 0; i < mEquipments.length; i++) {
 				if (mEquipments[i] != null && used[i] == false) {

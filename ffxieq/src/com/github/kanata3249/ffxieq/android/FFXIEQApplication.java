@@ -49,7 +49,7 @@ public class FFXIEQApplication extends Application {
 			mFFXIEQSettings = new FFXIEQSettings(this);
 		}
 		if (mFFXIDatabase == null) {
-			mFFXIDatabase = new FFXIDatabase(this, mFFXIEQSettings.useExternalDB());
+			mFFXIDatabase = new FFXIDatabase(this, mFFXIEQSettings.useExternalDB(), mFFXIEQSettings);
 		}
 		StatusModifier.setDao(mFFXIDatabase);
 		FFXICharacter.setDao(mFFXIDatabase);

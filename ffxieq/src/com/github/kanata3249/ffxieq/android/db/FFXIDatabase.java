@@ -73,9 +73,10 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	
 	boolean mUseExternalDB;
 	String mDBPath;
+	FFXIEQSettings mSettings;
 
 	// Constructor
-	public FFXIDatabase(Context context, boolean useExternal) {
+	public FFXIDatabase(Context context, boolean useExternal, FFXIEQSettings settings) {
 		super(context, DB_NAME, null, 1);
 
 		DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
@@ -100,6 +101,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			mDBPath = DB_PATH;
 		mUseExternalDB = useExternal;
 
+		mSettings = settings;
 		try {
 			if (checkDatabase(mDBPath)) {
 				copyDatabaseFromAssets(mDBPath);
@@ -313,8 +315,16 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		return mStringTable.getString(getReadableDatabase(), (long)id);
 	}
 	
-	public Equipment instantiateEquipment(long id) {
-		return mEquipmentTable.newInstance(this, getReadableDatabase(), id, -1);
+	public Equipment instantiateEquipment(long id, long augId) {
+		Equipment instance;
+		if (augId >= 0)
+			instance = mSettings.instantiateEquipment(this, id, augId);
+		else
+			instance = mEquipmentTable.newInstance(this, getReadableDatabase(), id, -1);
+		if (instance != null)
+			mEquipmentTable.setCombinationID(getReadableDatabase(), instance);
+		
+		return instance;
 	}
 	public Atma instantiateAtma(long id) {
 		return mAtmaTable.newInstance(this, getReadableDatabase(), id);
@@ -334,6 +344,18 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public String []getAvailableWeaponTypes(int part, int race, int job, int level, String filter) {
 		return mEquipmentTable.getAvailableWeaponTypes(this, getReadableDatabase(), part, race, job, level, filter);
+	}
+	public Cursor getAugmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
+		return mSettings.getAugmentCursor(this, part, race, job, level, columns, orderBy, filter, weaponType);
+	}
+	public String []getAvailableAugmentWeaponTypes(int part, int race, int job, int level, String filter) {
+		return mSettings.getAvailableAugmentWeaponTypes(this, part, race, job, level, filter);
+	}
+	public long saveAugment(long augId, String augment, long baseId) {
+		return mSettings.saveAugment(this, baseId, augId, augment);
+	}
+	public void deleteAugment(long augId) {
+		mSettings.deleteAugment(this, augId);
 	}
 	public Cursor getAtmaCursor(String[] columns, String orderBy, String filter) {
 		return mAtmaTable.getCursor(this, getReadableDatabase(), columns, orderBy, filter);

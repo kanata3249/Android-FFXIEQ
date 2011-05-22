@@ -10,4 +10,5 @@
     <item android:visible="false" android:id="@+id/WebSearch6"></item>
     <item android:visible="false" android:id="@+id/WebSearch7"></item>
     <item android:title="@string/EditAugment" android:id="@+id/EditAugment"></item>
+    <item android:title="@string/DeleteAugment" android:id="@+id/DeleteAugment"></item>
 </menu>

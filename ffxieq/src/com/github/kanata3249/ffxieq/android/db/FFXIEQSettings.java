@@ -22,6 +22,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
+import com.github.kanata3249.ffxi.FFXIDAO;
+import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
@@ -46,12 +48,16 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	
 	BackupManager mBackupManager;
 	Context mContext;
+	
+	AugmentTable mAugmentTable;
 
 	// Constructor
 	public FFXIEQSettings(Context context) {
 		super(context, DB_NAME, null, 1);
 		
 		mContext = context;
+		mAugmentTable = new AugmentTable();
+
 		if (android.os.Build.VERSION.SDK_INT > 7) {
 			mBackupManager = new BackupManager(context);
 		}
@@ -88,6 +94,8 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			
 			db.execSQL(createSql.toString());
 			
+			mAugmentTable.create_table(db);
+
 			db.setTransactionSuccessful();
 		} finally {
 			db.endTransaction();
@@ -334,5 +342,26 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		editor.commit();
 	}
 
+	public Cursor getAugmentCursor(FFXIDAO dao, int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
+		return mAugmentTable.getCursor(dao, getReadableDatabase(), part, race, job, level, columns, orderBy, filter, weaponType);
+	}
+	public String []getAvailableAugmentWeaponTypes(FFXIDAO dao, int part, int race, int job, int level, String filter) {
+		return mAugmentTable.getAvailableWeaponTypes(dao, getReadableDatabase(), part, race, job, level, filter);
+	}
+	
+	public Equipment instantiateEquipment(FFXIDAO dao, long id, long augId) {
+		return mAugmentTable.newInstance(dao, getReadableDatabase(), id, augId);
+	}
+	public long saveAugment(FFXIDAO dao, long id, long augId, String augment) {
+		Equipment eq = dao.instantiateEquipment(id, -1);
+		if (eq == null)
+			return -1;
+		
+		SQLiteDatabase db = getWritableDatabase();
+		return mAugmentTable.saveAugment(db, augId, augment, eq);
+	}
+	public void deleteAugment(FFXIDAO dao, long augId) {
+		mAugmentTable.deleteAugment(getWritableDatabase(), augId);
+	}
 }
 

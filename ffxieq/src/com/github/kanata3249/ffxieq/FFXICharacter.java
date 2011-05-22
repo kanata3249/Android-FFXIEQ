@@ -124,10 +124,10 @@ public class FFXICharacter implements IStatus, Serializable {
 	public Equipment getEquipment(int part) {
 		return mEquipment.getEquipment(part);
 	}
-	public void setEquipment(int part, long id) {
+	public void setEquipment(int part, long id, long augId) {
 		mModified = true;
 		mStatusCacheValid = false;
-		mEquipment.setEquipment(part, id);
+		mEquipment.setEquipment(part, id, augId);
 	}
 	public MeritPoint getMeritPoint() {
 		return mMerits;

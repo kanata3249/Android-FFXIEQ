@@ -44,9 +44,9 @@ public class EquipmentSetView extends ListView {
 		for (int i = 0; i < mEquipments.length; i++) {
 			Equipment eq = charinfo.getEquipment(i);
 			if (eq == null) {
-				mEquipments[i] = new EquipmentInfo(i, -1, "");
+				mEquipments[i] = new EquipmentInfo(i, -1, -1, "");
 			} else {
-				mEquipments[i] = new EquipmentInfo(i, eq.getId(), eq.getName());
+				mEquipments[i] = new EquipmentInfo(i, eq.getId(), eq.getAugId(), eq.getName());
 			}
 		}
 		adapter = new EquipmentSelectorAdapter(getContext(), R.layout.equipmentsetview, mEquipments);
@@ -57,10 +57,11 @@ public class EquipmentSetView extends ListView {
 	
 	private class EquipmentInfo {
 		long mEquipmentID;
+		long mAugmentID;
 		String mName;
 		int mPart;
 
-		public EquipmentInfo(int part, long id, String name) { mPart = part; mEquipmentID = id; mName = name;};
+		public EquipmentInfo(int part, long id, long augId, String name) { mPart = part; mEquipmentID = id; mAugmentID = augId; mName = name;};
 
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
@@ -91,5 +92,8 @@ public class EquipmentSetView extends ListView {
 	
 	public long getItemId(int position) {
 		return mEquipments[position].mEquipmentID;
+	}
+	public long getItemAugId(int position) {
+		return mEquipments[position].mAugmentID;
 	}
 }

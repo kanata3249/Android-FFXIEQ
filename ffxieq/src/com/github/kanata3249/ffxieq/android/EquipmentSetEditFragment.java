@@ -57,7 +57,7 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
             	es.setOnItemClickListener(new OnItemClickListener() {
     				public void onItemClick(AdapterView<?> arg0, View arg1,
     						int arg2, long arg3) {
-    					EquipmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), arg2, ((EquipmentSetView)arg0).getItemId(arg2));
+    					EquipmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), arg2, ((EquipmentSetView)arg0).getItemId(arg2), ((EquipmentSetView)arg0).getItemAugId(arg2));
     				}
             	});
             	es.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -103,19 +103,45 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	FFXICharacter charInfo = getFFXICharacter();
 		if (resultCode == Activity.RESULT_OK) {
+			int part;
+			long id, augid;
 			if (EquipmentSelectorActivity.isComeFrom(data)) {
-				int part = EquipmentSelectorActivity.getPart(data);
-				long id = EquipmentSelectorActivity.getEquipmentId(data);
-				
-				if (part != -1) {
-					charInfo.setEquipment(part, id);
-				}
-		        updateValues();
-
-		        if (mListener != null) {
-		    		mListener.notifyDatasetChanged();
-		    	}
+				part = EquipmentSelectorActivity.getPart(data);
+				id = EquipmentSelectorActivity.getEquipmentId(data);
+				augid = EquipmentSelectorActivity.getAugmentId(data);
+			} else if (AugmentSelectorActivity.isComeFrom(data)) {
+				part = AugmentSelectorActivity.getPart(data);
+				id = AugmentSelectorActivity.getEquipmentId(data);
+				augid = AugmentSelectorActivity.getAugmentId(data);
+			} else if (AugmentEditActivity.isComeFrom(data)) {
+				part = AugmentEditActivity.getPart(data);
+				id = AugmentEditActivity.getEquipmentId(data);
+				augid = AugmentEditActivity.getAugmentId(data);
+			} else {
+				part = -1;
+				id = augid = -1;
 			}
+				
+			if (part != -1) {
+				charInfo.setEquipment(part, id, augid);
+				updateValues();
+
+				if (mListener != null) {
+					mListener.notifyDatasetChanged();
+				}
+			}
+		} else if (resultCode == Activity.RESULT_FIRST_USER) {
+			int part;
+			EquipmentSetView sv = (EquipmentSetView)getView().findViewById(R.id.Equipments);
+			if (sv != null) {
+				if (EquipmentSelectorActivity.isComeFrom(data)) {
+					part = EquipmentSelectorActivity.getPart(data);
+					AugmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), part, sv.getItemId(part), sv.getItemAugId(part));
+				} else if (AugmentSelectorActivity.isComeFrom(data)) {
+					part = AugmentSelectorActivity.getPart(data);
+					EquipmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), part, sv.getItemId(part), sv.getItemAugId(part));
+				}
+			}			
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -124,23 +150,44 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.Remove:
-			getFFXICharacter().setEquipment(mLongClickingItemPosition, -1);
+			getFFXICharacter().setEquipment(mLongClickingItemPosition, -1, -1);
 			updateValues();
 	        if (mListener != null) {
 	    		mListener.notifyDatasetChanged();
 	    	}
-			return super.onContextItemSelected(item);
+			return true;
 		case R.id.RemoveAll:
 			FFXICharacter charInfo = getFFXICharacter();
 			
 			for (int i = 0; i < EquipmentSet.EQUIPMENT_NUM; i++) {
-				charInfo.setEquipment(i, -1);
+				charInfo.setEquipment(i, -1, -1);
 			}
 			updateValues();
 	        if (mListener != null) {
 	    		mListener.notifyDatasetChanged();
 	    	}
-			return super.onContextItemSelected(item);
+			return true;
+		case R.id.EditAugment:
+			{
+				Equipment eq = getFFXICharacter().getEquipment(mLongClickingItemPosition);
+				if (eq != null) {
+					AugmentEditActivity.startActivity(this, 0, getFFXICharacter(), mLongClickingItemPosition, eq.getId(), eq.getAugId());
+				}				
+				return true;
+			}
+		case R.id.AugmentList:
+			{
+				Equipment eq = getFFXICharacter().getEquipment(mLongClickingItemPosition);
+				long current, augid;
+	
+				current = augid = -1;
+				if (eq != null) {
+					current = eq.getId();
+					augid = eq.getAugId();
+				}
+				AugmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), mLongClickingItemPosition, current, augid);
+				return true;
+			}
 		}
 
 		// Web Search
