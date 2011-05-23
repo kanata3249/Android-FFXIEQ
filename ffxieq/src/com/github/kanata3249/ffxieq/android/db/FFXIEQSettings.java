@@ -345,6 +345,9 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public Cursor getAugmentCursor(FFXIDAO dao, int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
 		return mAugmentTable.getCursor(dao, getReadableDatabase(), part, race, job, level, columns, orderBy, filter, weaponType);
 	}
+	public Cursor getAugmentCursor(String[] columns, String orderBy) {
+		return mAugmentTable.getCursor(getReadableDatabase(), columns, orderBy);
+	}
 	public String []getAvailableAugmentWeaponTypes(FFXIDAO dao, int part, int race, int job, int level, String filter) {
 		return mAugmentTable.getAvailableWeaponTypes(dao, getReadableDatabase(), part, race, job, level, filter);
 	}
@@ -358,10 +361,19 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			return -1;
 		
 		SQLiteDatabase db = getWritableDatabase();
-		return mAugmentTable.saveAugment(db, augId, augment, eq);
+		long newId = mAugmentTable.saveAugment(db, augId, augment, eq);
+		dataChanged();
+		return newId;
+	}
+	public long saveAugment(long id, long baseId, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description, String augment) {
+		SQLiteDatabase db = getWritableDatabase();
+		long newId = mAugmentTable.saveAugment(db, id, baseId, name, part, weapon, job, race, level, rare, ex, description, augment);
+		dataChanged();
+		return newId;
 	}
 	public void deleteAugment(FFXIDAO dao, long augId) {
 		mAugmentTable.deleteAugment(getWritableDatabase(), augId);
+		dataChanged();
 	}
 }
 

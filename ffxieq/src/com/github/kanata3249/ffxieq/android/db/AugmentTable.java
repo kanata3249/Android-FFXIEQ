@@ -125,6 +125,18 @@ public class AugmentTable {
 		return cursor;
 	}
 	
+	public Cursor getCursor(SQLiteDatabase db, String[] columns, String orderBy) {
+		Cursor cursor;
+		
+		try {
+			cursor = db.query(TABLE_NAME, columns, null, null, null, null, orderBy);
+		} catch (SQLiteException e) {
+			cursor = null;
+		}
+
+		return cursor;
+	}
+	
 	public String []getAvailableWeaponTypes(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String filter) {
 		Cursor cursor;
 		String partStr, jobStr, alljobStr;
@@ -190,6 +202,55 @@ public class AugmentTable {
 		}
 		try {
 			if (id >= 0) {
+				db.update(TABLE_NAME, values, C_Id + " ='" + id + "'", null);
+			} else {
+				newId = db.insert(TABLE_NAME, null, values);
+			}
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+		}
+		return newId;
+	}
+
+	public long saveAugment(SQLiteDatabase db, long id, long baseId, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description, String augment) {
+		ContentValues values = new ContentValues();;
+		long newId;
+
+		values.put(C_Id, id);
+		values.put(C_BaseId, baseId);
+		values.put(C_Name, name);
+		values.put(C_Part, part);
+		values.put(C_Weapon, weapon);
+		values.put(C_Job, job);
+		values.put(C_Race, race);
+		values.put(C_Level, level);
+		values.put(C_Rare, rare ? 1 : 0);
+		values.put(C_Ex, ex ? 1 : 0);
+		values.put(C_Description, description);
+		values.put(C_Augment, augment);
+
+		db.beginTransaction();
+		newId = id;
+		try {
+			create_table(db);
+		} catch (SQLiteException e) {
+			// Ignore
+		}
+		try {
+			boolean update;
+			
+			update = false;
+			if (id >= 0) {
+				String columns[] = { C_Id };
+				Cursor cursor = db.query(TABLE_NAME, columns, C_Id + " ='" + id + "'", null, null, null, null);
+				if (cursor != null) {
+					if (cursor.getCount() > 0) {
+						update = true;
+					}
+				}
+			}
+			if (update) {
 				db.update(TABLE_NAME, values, C_Id + " ='" + id + "'", null);
 			} else {
 				newId = db.insert(TABLE_NAME, null, values);
