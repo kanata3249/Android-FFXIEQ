@@ -86,4 +86,16 @@ public class AtmaListView extends ListView {
 	public void setFilterByID(long filterid) {
 		mFilterID = filterid;
 	}
+
+	@Override
+	protected void onDetachedFromWindow() {
+		AtmaListViewAdapter adapter;
+
+		adapter = ((AtmaListViewAdapter)getAdapter());
+		if (adapter != null) {
+			adapter.changeCursor(null);
+		}
+
+		super.onDetachedFromWindow();
+	}
 }

@@ -147,5 +147,15 @@ public class AugmentListView extends ListView {
 		}
 	}
 
+	@Override
+	protected void onDetachedFromWindow() {
+		AugmentListViewAdapter adapter;
 
+		adapter = ((AugmentListViewAdapter)getAdapter());
+		if (adapter != null) {
+			adapter.changeCursor(null);
+		}
+
+		super.onDetachedFromWindow();
+	}
 }

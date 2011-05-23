@@ -147,5 +147,15 @@ public class EquipmentListView extends ListView {
 		}
 	}
 
+	@Override
+	protected void onDetachedFromWindow() {
+		EquipmentListViewAdapter adapter;
 
+		adapter = ((EquipmentListViewAdapter)getAdapter());
+		if (adapter != null) {
+			adapter.changeCursor(null);
+		}
+
+		super.onDetachedFromWindow();
+	}
 }
