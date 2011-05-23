@@ -24,20 +24,25 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
 public class AtmaSelector extends FFXIEQBaseActivity {
 	long mCurrent;
 	int mIndex;
 	long mFilterID;
+	long mLongClickingItemId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,20 +88,42 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 				}
 				
 			});
+
+			alv.setOnItemLongClickListener(new OnItemLongClickListener() {
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					mLongClickingItemId = arg3;
+					AtmaSelector.this.openContextMenu(arg0);
+					return true;
+				}
+			});
+			
+			registerForContextMenu(alv);
 		}
 		
 		{
 			Atma cur = getDAO().instantiateAtma(mCurrent);
 			if (cur != null) {
 				TextView tv;
-				
+				View.OnLongClickListener listener = new View.OnLongClickListener() {
+					public boolean onLongClick(View v) {
+						mLongClickingItemId = mCurrent;
+						AtmaSelector.this.openContextMenu(v);
+						return true;
+					}
+				};
+
 				tv = (TextView)findViewById(R.id.Name);
 				if (tv != null) {
 					tv.setText(cur.getName());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 				tv = (TextView)findViewById(R.id.Description);
 				if (tv != null) {
 					tv.setText(cur.getDescription());
+					tv.setOnLongClickListener(listener);
+					registerForContextMenu(tv);
 				}
 			}
 		}
@@ -189,6 +216,63 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		Atma food = getDAO().instantiateAtma(mLongClickingItemId);
+		String name = food.getName();
+		Intent intent;
+		if (food != null) {
+			String[] urls = getResources().getStringArray(R.array.SearchURIs);
+			String url;
+
+			url = null;
+			switch (item.getItemId()) {
+			case R.id.WebSearch0:
+				url = urls[0];
+				break;
+			case R.id.WebSearch1:
+				url = urls[1];
+				break;
+			case R.id.WebSearch2:
+				url = urls[2];
+				break;
+			case R.id.WebSearch3:
+				url = urls[3];
+				break;
+			case R.id.WebSearch4:
+				url = urls[4];
+				break;
+			case R.id.WebSearch5:
+				url = urls[5];
+				break;
+			case R.id.WebSearch6:
+				url = urls[6];
+				break;
+			case R.id.WebSearch7:
+				url = urls[7];
+				break;
+			default:
+				url = null;
+				break;
+			}
+			if (url != null) {
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("\\+")[0])));
+				startActivity(intent);
+				return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.atmaselector_context, menu);
 	}
 
 	@Override
