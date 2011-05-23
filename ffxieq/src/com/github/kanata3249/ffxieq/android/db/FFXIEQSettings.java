@@ -34,6 +34,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.*;
+import android.os.Environment;
 
 public class FFXIEQSettings extends SQLiteOpenHelper {
 	private static final String DB_NAME = "ffxisettings";
@@ -69,6 +70,9 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		}
 	}
 
+	public String getFullPath() {
+		return Environment.getDataDirectory() + "/data/" + mContext.getPackageName() + "/databases/" + DB_NAME;
+	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {

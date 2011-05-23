@@ -19,6 +19,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.backup.BackupAgent;
@@ -42,12 +45,39 @@ public class FFXIEQBackupAgent extends BackupAgent {
 	}
 
 	@Override
-	public void onBackup(ParcelFileDescriptor arg0, BackupDataOutput out,
-			ParcelFileDescriptor arg2) throws IOException {
+	public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
+			ParcelFileDescriptor newState) throws IOException {
+		File settingfile = new File(mSettings.getFullPath());
+
+		{
+			FileInputStream instream = new FileInputStream(oldState.getFileDescriptor());
+			DataInputStream in = new DataInputStream(instream);
+			long lastsaved;
+		
+			try {
+				lastsaved = in.readLong();
+			} catch (IOException e) {
+				lastsaved = 0;
+			}
+
+			in.close();
+			instream.close();
+
+			if (lastsaved == settingfile.lastModified()) {
+				FileOutputStream outstream = new FileOutputStream(newState.getFileDescriptor());
+				DataOutputStream out = new DataOutputStream(outstream);
+				
+				out.writeLong(settingfile.lastModified());
+				out.close();
+				outstream.close();
+				return;
+			}
+		}
+
 		{ // Characters
 			Cursor cursor;
 			String columns[] = { FFXIEQSettings.C_Id, FFXIEQSettings.C_Name, FFXIEQSettings.C_CharInfo };
-
+			
 			cursor = mSettings.getCharactersCursor(columns, FFXIEQSettings.C_Id);
 			if (cursor != null) {
 				cursor.moveToFirst();
@@ -67,8 +97,8 @@ public class FFXIEQBackupAgent extends BackupAgent {
 					outWriter.close();
 
 					bytes = baos.toByteArray();
-					out.writeEntityHeader(KEY_CHARDATA + "_" + i, bytes.length);
-					out.writeEntityData(bytes, bytes.length);
+					data.writeEntityHeader(KEY_CHARDATA + "_" + i, bytes.length);
+					data.writeEntityData(bytes, bytes.length);
 					
 					cursor.moveToNext();
 				}
@@ -102,8 +132,8 @@ public class FFXIEQBackupAgent extends BackupAgent {
 				outWriter.close();
 				byte bytes[] = baos.toByteArray();
 
-				out.writeEntityHeader(KEY_FILTER, bytes.length);
-				out.writeEntityData(bytes, bytes.length);
+				data.writeEntityHeader(KEY_FILTER, bytes.length);
+				data.writeEntityData(bytes, bytes.length);
 			}
 		}
 
@@ -137,8 +167,8 @@ public class FFXIEQBackupAgent extends BackupAgent {
 					outWriter.close();
 
 					bytes = baos.toByteArray();
-					out.writeEntityHeader(KEY_AUGMENT + "_" + i, bytes.length);
-					out.writeEntityData(bytes, bytes.length);
+					data.writeEntityHeader(KEY_AUGMENT + "_" + i, bytes.length);
+					data.writeEntityData(bytes, bytes.length);
 					
 					cursor.moveToNext();
 				}
@@ -146,11 +176,20 @@ public class FFXIEQBackupAgent extends BackupAgent {
 				cursor.close();
 			}
 		}
+		
+		{
+			FileOutputStream outstream = new FileOutputStream(newState.getFileDescriptor());
+			DataOutputStream out = new DataOutputStream(outstream);
+			
+			out.writeLong(settingfile.lastModified());
+			out.close();
+			outstream.close();
+		}
 	}
 
 	@Override
 	public void onRestore(BackupDataInput in, int arg1,
-			ParcelFileDescriptor arg2) throws IOException {
+			ParcelFileDescriptor newState) throws IOException {
 		ByteArrayInputStream bais;
 		DataInputStream inReader;
 
@@ -218,6 +257,13 @@ public class FFXIEQBackupAgent extends BackupAgent {
 			}
 		} catch (IOException e) {
 			
+		}
+
+		{
+			FileOutputStream outstream = new FileOutputStream(newState.getFileDescriptor());
+			DataOutputStream out = new DataOutputStream(outstream);
+			
+			out.writeLong(0);
 		}
 	}
 
