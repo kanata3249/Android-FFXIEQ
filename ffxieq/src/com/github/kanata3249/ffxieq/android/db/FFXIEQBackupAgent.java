@@ -80,13 +80,15 @@ public class FFXIEQBackupAgent extends BackupAgent {
 			
 			cursor = mSettings.getCharactersCursor(columns, FFXIEQSettings.C_Id);
 			if (cursor != null) {
+				byte bytes[];
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				DataOutputStream outWriter = new DataOutputStream(baos);
+
 				cursor.moveToFirst();
+				outWriter.writeInt(cursor.getCount());
 				for (int i = 0; i < cursor.getCount(); i++) {
 					String name;
-					byte bytes[];
 					byte charInfo[];
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					DataOutputStream outWriter = new DataOutputStream(baos);
 					
 					name = cursor.getString(cursor.getColumnIndex(FFXIEQSettings.C_Name));
 					charInfo = cursor.getBlob(cursor.getColumnIndex(FFXIEQSettings.C_CharInfo));
@@ -94,16 +96,16 @@ public class FFXIEQBackupAgent extends BackupAgent {
 					outWriter.writeUTF(name);
 					outWriter.writeInt(charInfo.length);
 					outWriter.write(charInfo);
-					outWriter.close();
 
-					bytes = baos.toByteArray();
-					data.writeEntityHeader(KEY_CHARDATA + "_" + i, bytes.length);
-					data.writeEntityData(bytes, bytes.length);
-					
 					cursor.moveToNext();
 				}
-				
 				cursor.close();
+
+				outWriter.close();
+				bytes = baos.toByteArray();
+
+				data.writeEntityHeader(KEY_CHARDATA, bytes.length);
+				data.writeEntityData(bytes, bytes.length);
 			}
 		}
 		
@@ -145,12 +147,13 @@ public class FFXIEQBackupAgent extends BackupAgent {
 
 			cursor = mSettings.getAugmentCursor(columns, FFXIEQSettings.C_Id);
 			if (cursor != null) {
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				DataOutputStream outWriter = new DataOutputStream(baos);
+				byte bytes[];
+
 				cursor.moveToFirst();
+				outWriter.writeInt(cursor.getCount());
 				for (int i = 0; i < cursor.getCount(); i++) {
-					byte bytes[];
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					DataOutputStream outWriter = new DataOutputStream(baos);
-					
 					outWriter.writeLong(cursor.getLong(cursor.getColumnIndex(AugmentTable.C_Id)));
 					outWriter.writeLong(cursor.getLong(cursor.getColumnIndex(AugmentTable.C_BaseId)));
 					outWriter.writeUTF(cursor.getString(cursor.getColumnIndex(AugmentTable.C_Name)));
@@ -164,16 +167,15 @@ public class FFXIEQBackupAgent extends BackupAgent {
 					outWriter.writeUTF(cursor.getString(cursor.getColumnIndex(AugmentTable.C_Description)));
 					outWriter.writeUTF(cursor.getString(cursor.getColumnIndex(AugmentTable.C_Augment)));
 
-					outWriter.close();
-
-					bytes = baos.toByteArray();
-					data.writeEntityHeader(KEY_AUGMENT + "_" + i, bytes.length);
-					data.writeEntityData(bytes, bytes.length);
-					
 					cursor.moveToNext();
 				}
-				
 				cursor.close();
+
+				outWriter.close();
+				bytes = baos.toByteArray();
+				
+				data.writeEntityHeader(KEY_AUGMENT, bytes.length);
+				data.writeEntityData(bytes, bytes.length);
 			}
 		}
 		
@@ -198,21 +200,23 @@ public class FFXIEQBackupAgent extends BackupAgent {
 				String key = in.getKey();
 				int size = in.getDataSize();
 	
-				if (key.startsWith(KEY_CHARDATA)) {
+				if (key.equals(KEY_CHARDATA)) {
 					byte[] buffer = new byte[size];
-					
+				
 					in.readEntityData(buffer, 0, size);
 	
 					bais = new ByteArrayInputStream(buffer);
 					inReader = new DataInputStream(bais);
 					
-					String name = inReader.readUTF();
-					int charInfoSize = inReader.readInt();
-					byte charInfo[] = new byte[charInfoSize];
-					inReader.read(charInfo, 0, charInfoSize);
+					int numCharacter = inReader.readInt();
+					for (int i = 0; i < numCharacter; i++) {
+						String name = inReader.readUTF();
+						int charInfoSize = inReader.readInt();
+						byte charInfo[] = new byte[charInfoSize];
+						inReader.read(charInfo, 0, charInfoSize);
+						mSettings.saveCharInfo(-1, name, charInfo);
+					}
 					inReader.close();
-	
-					mSettings.saveCharInfo(-1, name, charInfo);
 				} else if (key.equals(KEY_FILTER)) {
 					byte[] buffer = new byte[size];
 	
@@ -228,7 +232,7 @@ public class FFXIEQBackupAgent extends BackupAgent {
 						mSettings.addFilter(filter);
 					}
 					inReader.close();
-				} else if (key.startsWith(KEY_AUGMENT)) {
+				} else if (key.equals(KEY_AUGMENT)) {
 					byte[] buffer = new byte[size];
 					
 					in.readEntityData(buffer, 0, size);
@@ -236,21 +240,24 @@ public class FFXIEQBackupAgent extends BackupAgent {
 					bais = new ByteArrayInputStream(buffer);
 					inReader = new DataInputStream(bais);
 					
-					long id = inReader.readLong();
-					long baseId = inReader.readLong();
-					String name = inReader.readUTF();
-					String part = inReader.readUTF();
-					String weapon = inReader.readUTF();
-					String job = inReader.readUTF();
-					String race = inReader.readUTF();
-					int level = inReader.readInt();
-					int rare = inReader.readInt();
-					int ex = inReader.readInt();
-					String description = inReader.readUTF();
-					String augment = inReader.readUTF();
+					int numCharacter = inReader.readInt();
+					for (int i = 0; i < numCharacter; i++) {
+						long id = inReader.readLong();
+						long baseId = inReader.readLong();
+						String name = inReader.readUTF();
+						String part = inReader.readUTF();
+						String weapon = inReader.readUTF();
+						String job = inReader.readUTF();
+						String race = inReader.readUTF();
+						int level = inReader.readInt();
+						int rare = inReader.readInt();
+						int ex = inReader.readInt();
+						String description = inReader.readUTF();
+						String augment = inReader.readUTF();
+		
+						mSettings.saveAugment(id, baseId, name, part, weapon, job, race, level, rare == 1, ex == 1, description, augment);
+					}
 					inReader.close();
-	
-					mSettings.saveAugment(id, baseId, name, part, weapon, job, race, level, rare == 1, ex == 1, description, augment);
 				} else {
 					in.skipEntityData();
 				}
