@@ -94,4 +94,16 @@ public class CharacterSelectorView extends Spinner {
 		id = getSelectedItemId();
 		return mSettings.getCharacterName(id);
 	}
+
+	@Override
+	protected void onDetachedFromWindow() {
+		CharacterSelectorAdapter adapter;
+
+		adapter = ((CharacterSelectorAdapter)getAdapter());
+		if (adapter != null) {
+			adapter.changeCursor(null);
+		}
+
+		super.onDetachedFromWindow();
+	}
 }
