@@ -151,7 +151,11 @@ public class AugmentSelectorActivity extends FFXIEQBaseActivity {
 				}
 				tv = (TextView)findViewById(R.id.Augment);
 				if (tv != null) {
-					tv.setText(cur.getAugment());
+					if (cur.getAugment().length() == 0) {
+						tv.setHeight(0);
+					} else {
+						tv.setText(cur.getAugment());
+					}
 					tv.setOnLongClickListener(listener);
 					registerForContextMenu(tv);
 				}
