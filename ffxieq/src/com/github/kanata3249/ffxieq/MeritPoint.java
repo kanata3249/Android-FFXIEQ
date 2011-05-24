@@ -133,8 +133,10 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 			break;
 		case CriticalRate:
 		case CriticalRateDefence:	        	
-		case SpellInterruptionRate:
 			v.setAdditionalPercent(StatusValue.makePercentValue(Math.min(meritcap, merit), 0));
+			break;
+		case SpellInterruptionRate:
+			v.setAdditionalPercent(StatusValue.makePercentValue(Math.min(meritcap, merit) * 2, 0));
 			break;
 		}
 
