@@ -175,6 +175,19 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 				}				
 				return true;
 			}
+		case R.id.EquipmentList:
+			{
+				Equipment eq = getFFXICharacter().getEquipment(mLongClickingItemPosition);
+				long current, augid;
+	
+				current = augid = -1;
+				if (eq != null) {
+					current = eq.getId();
+					augid = eq.getAugId();
+				}
+				EquipmentSelectorActivity.startActivity(EquipmentSetEditFragment.this, 0, getFFXICharacter(), mLongClickingItemPosition, current, augid);
+				return true;
+			}
 		case R.id.AugmentList:
 			{
 				Equipment eq = getFFXICharacter().getEquipment(mLongClickingItemPosition);
@@ -244,6 +257,40 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 
 		MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.equipmentset_context, menu);
+		
+		Equipment eq = getFFXICharacter().getEquipment(mLongClickingItemPosition);
+		MenuItem item;
+		
+		item = menu.findItem(R.id.EditAugment);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.Remove);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch0);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch1);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch2);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch3);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch4);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch5);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch6);
+		if (item != null)
+			item.setEnabled(eq != null);
+		item = menu.findItem(R.id.WebSearch7);
+		if (item != null)
+			item.setEnabled(eq != null);
 	}
 
 	public void updateValues() {
