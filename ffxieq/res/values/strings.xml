@@ -281,6 +281,7 @@
 	<string name="showCredit">このアプリについて...</string>
 	<string name="AtmaNotSelected">アートマ未選択</string>
 	<string name="FoodNotSelected">食事なし</string>
+	<string name="EquipmentNotSelected">装備なし</string>
 	<string name="EditAugment">オーグメント編集</string>
 	<string name="SelectFromAugmentList">オーグメント一覧</string>
 	<string name="SelectFromEquipmentList">装備一覧</string>

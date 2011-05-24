@@ -121,6 +121,9 @@ public class AugmentSelectorActivity extends FFXIEQBaseActivity {
 		
 		{
 			Equipment cur = getDAO().instantiateEquipment(mCurrent, mAugID);
+			if (cur == null) {
+				cur = new Equipment(-1, getString(R.string.EquipmentNotSelected), "", "", "", "", 0, false, false, "");
+			}
 			if (cur != null) {
 				TextView tv;
 				View.OnLongClickListener listener = new View.OnLongClickListener() {
@@ -161,7 +164,13 @@ public class AugmentSelectorActivity extends FFXIEQBaseActivity {
 				}
 				tv = (TextView)findViewById(R.id.Level);
 				if (tv != null) {
-					tv.setText(((Integer)cur.getLevel()).toString());
+					if (tv != null) {
+						int lvl = cur.getLevel();
+						if (lvl > 0)
+							tv.setText(((Integer)lvl).toString());
+						else
+							tv.setText("");
+					}
 					tv.setOnLongClickListener(listener);
 					registerForContextMenu(tv);
 				}

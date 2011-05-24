@@ -103,6 +103,9 @@ public class AtmaSelector extends FFXIEQBaseActivity {
 		
 		{
 			Atma cur = getDAO().instantiateAtma(mCurrent);
+			if (cur == null) {
+				cur = new Atma(-1, getString(R.string.AtmaNotSelected), "");
+			}
 			if (cur != null) {
 				TextView tv;
 				View.OnLongClickListener listener = new View.OnLongClickListener() {

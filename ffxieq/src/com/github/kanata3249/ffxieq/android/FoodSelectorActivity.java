@@ -104,6 +104,9 @@ public class FoodSelectorActivity extends FFXIEQBaseActivity {
 		
 		{
 			Food cur = getDAO().instantiateFood(mCurrent);
+			if (cur == null) {
+				cur = new Food(-1, getString(R.string.FoodNotSelected), "");
+			}
 			if (cur != null) {
 				TextView tv;
 				View.OnLongClickListener listener = new View.OnLongClickListener() {
