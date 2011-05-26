@@ -105,7 +105,7 @@ public class AugmentTable {
 		alljobStr = dao.getString(FFXIString.JOB_DB_ALL);
 		filterexp = "";
 		if (filter.length() > 0) {
-			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
+			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%' OR " + C_Augment + " LIKE '%" + filter + "%')";
 		}
 		weaponexp = "";
 		if (weaponType.length() > 0) {
@@ -149,7 +149,7 @@ public class AugmentTable {
 		alljobStr = dao.getString(FFXIString.JOB_DB_ALL);
 		filterexp = "";
 		if (filter.length() > 0) {
-			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
+			filterexp = " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%' OR " + C_Augment + " LIKE '%" + filter + "%')";
 		}
 		
 		result = null;
