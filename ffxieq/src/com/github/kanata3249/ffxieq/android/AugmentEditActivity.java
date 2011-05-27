@@ -21,6 +21,9 @@ import com.github.kanata3249.ffxieq.R;
 import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -125,16 +128,14 @@ public class AugmentEditActivity extends FFXIEQBaseActivity {
 				public void onClick(View v) {
 					long newId = saveAugment();
 					
-					if (newId >= 0) {
-						Intent result = new Intent();
+					Intent result = new Intent();
 						
-						result.putExtra("From", "AugmentEditActivity");
-						result.putExtra("Part", mPart);
-						result.putExtra("Id", mBaseID);
-						result.putExtra("AugId", newId);
-						setResult(RESULT_OK, result);
-						finish();
-					}
+					result.putExtra("From", "AugmentEditActivity");
+					result.putExtra("Part", mPart);
+					result.putExtra("BaseId", mBaseID);
+					result.putExtra("AugId", newId);
+					setResult(RESULT_OK, result);
+					finish();
 				}
 			});
 		}
@@ -201,13 +202,65 @@ public class AugmentEditActivity extends FFXIEQBaseActivity {
 			String augment;
 			
 			augment = et.getText().toString();
-			if (augment.length() > 0) {
-
-				result = ((FFXIDatabase)getDAO()).saveAugment(mAugID, augment, mBaseID);
-				if (result >= 0)
-					mAugID = result;
+			if (augment.length() == 0) {
+				return mAugID;
 			}
+			result = ((FFXIDatabase)getDAO()).saveAugment(mAugID, augment, mBaseID);
+			if (result >= 0)
+				mAugID = result;
 		}
 		return result;
+	}
+
+	@Override
+	public void onBackPressed() {
+		EditText et;
+		Equipment eq;
+		
+		eq = getDAO().instantiateEquipment(mBaseID, mAugID);
+		et = (EditText)findViewById(R.id.AugmentDescription);
+		if (eq != null && et != null) {
+			String augment;
+			
+			augment = et.getText().toString();
+			if (!eq.getAugment().equals(augment)) {
+				showDialog(R.string.QueryDiscardChanges);
+				return;
+			}
+		}
+
+		super.onBackPressed();
+	}
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog;
+		AlertDialog.Builder builder;
+
+		switch (id) {
+		case R.string.QueryDiscardChanges:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.QueryDiscardChanges));
+	    	builder.setTitle(getString(R.string.QueryDiscardChangesTitle));
+	    	builder.setPositiveButton(R.string.DiscardOK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.QueryDiscardChanges);
+
+					Intent result = new Intent();
+					
+					result.putExtra("From", "AugmentEditActivity");
+					setResult(RESULT_CANCELED, result);
+					finish();
+				}
+			});
+	    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.QueryDiscardChanges);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		}
+		return super.onCreateDialog(id);
 	}
 }

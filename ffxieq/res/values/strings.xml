@@ -146,7 +146,7 @@
     <string name="Cancel">キャンセル</string>
     <string name="QueryDeleteCharacterTitle">キャラクタ削除</string>
     <string name="QueryDiscardChangesTitle">編集破棄</string>
-    <string name="QueryDiscardChanges">本当に破棄しますか？</string>
+    <string name="QueryDiscardChanges">変更されています。本当に破棄しますか？</string>
     <string name="DiscardOK">破棄</string>
     <string name="QueryLoadCharacterTitle">キャラクタ読込</string>
     <string name="QueryLoadCharacter">変更されています。読み込みますか？</string>
