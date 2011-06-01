@@ -32,6 +32,7 @@ import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.Food;
 import com.github.kanata3249.ffxieq.JobTrait;
+import com.github.kanata3249.ffxieq.Magic;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -69,6 +70,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	JobTraitTable mJobTraitTable;
 	MeritPointTable mMeritPointTable;
 	FoodTable mFoodTable;
+	MagicTable mMagicTable;
 	StringTable mStringTable;
 	
 	boolean mUseExternalDB;
@@ -93,6 +95,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mJobTraitTable = new JobTraitTable();
 		mMeritPointTable = new MeritPointTable();
 		mFoodTable = new FoodTable();
+		mMagicTable = new MagicTable();
 		mStringTable = new StringTable();
 		
 		if (useExternal)
@@ -338,6 +341,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Combination searchCombination(String names[]) {
 		return mEquipmentTable.searchCombinationAndNewInstance(this, getReadableDatabase(), names);
 	}
+	public Magic instantiateMagic(long id) {
+		return mMagicTable.newInstance(this, getReadableDatabase(), id);
+	}
 
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
 		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy, filter, weaponType);
@@ -377,5 +383,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public String []getAvailableFoodTypes(String filter) {
 		return mFoodTable.getAvailableFoodTypes(this, getReadableDatabase(), filter);
+	}
+	public Cursor getMagicCursor(long subid, String[] columns, String orderBy, String weaponType) {
+		return mMagicTable.getCursor(this, getReadableDatabase(), subid, columns, orderBy, weaponType);
 	}
 }

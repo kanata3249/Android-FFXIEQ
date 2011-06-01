@@ -19,42 +19,47 @@ import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.R;
 import com.github.kanata3249.ffxieq.android.db.EquipmentTable;
 import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
-import com.github.kanata3249.ffxieq.android.db.FoodTable;
+import com.github.kanata3249.ffxieq.android.db.MagicTable;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
-public class FoodListView extends ListView {
+public class MagicListView extends ListView {
 	FFXIDatabase mDao;
+	long mSubId;
 	String mOrderBy;
 	String mFilter;
 	long mFilterID;
 	String mFilterByType;
 
-	final String [] columns = { FoodTable.C_Id, FoodTable.C_Name, FoodTable.C_Description };
-	final int []views = { 0, R.id.Name, R.id.Description };
+	final String [] columns = { MagicTable.C_Id, MagicTable.C_Name, MagicTable.C_Description, MagicTable.C_Memo, MagicTable.C_SubName };
+	final int []views = { 0, R.id.Name, R.id.Description, R.id.Memo };
 
-	public FoodListView(Context context, AttributeSet attrs) {
+	public MagicListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mSubId = -1;
 		mFilter = "";
 		mFilterID = -1;
-		mOrderBy = FoodTable.C_Name + " ASC";
+		mOrderBy = MagicTable.C_Name + " ASC";
 		mFilterByType = "";
 	}
 
-	public boolean setParam(FFXIDAO dao) {
-		FoodListViewAdapter adapter;
+	public boolean setParam(FFXIDAO dao, long subId) {
+		MagicListViewAdapter adapter;
 		Cursor cursor;
 
 		mDao = (FFXIDatabase)dao;
+		mSubId = subId;
 		if (mFilterID != -1) {
 			mFilter = ((FFXIEQBaseActivity)getContext()).getSettings().getFilter(mFilterID);
 		}
-		cursor = mDao.getFoodsCursor(columns, mOrderBy, mFilter, mFilterByType);
-		adapter = new FoodListViewAdapter(getContext(), R.layout.foodlistview, cursor, columns, views);
+		cursor = mDao.getMagicCursor(subId, columns, mOrderBy, mFilterByType);
+		adapter = new MagicListViewAdapter(getContext(), R.layout.magiclistview, cursor, columns, views);
 		setAdapter(adapter);
 		
 		return true;
@@ -88,10 +93,6 @@ public class FoodListView extends ListView {
 		}
 	}
 
-	public String []getAvailableFoodTypes() {
-		return mDao.getAvailableFoodTypes(mFilter);
-	}
-	
 	public void setFilterByType(String filterByType) {
 		
 		if (filterByType.equals(mFilterByType)) {
@@ -103,29 +104,52 @@ public class FoodListView extends ListView {
 	}
 
 	private void updateCursor() {
-		FoodListViewAdapter adapter;
+		MagicListViewAdapter adapter;
 
-		adapter = (FoodListViewAdapter)getAdapter();
+		adapter = (MagicListViewAdapter)getAdapter();
 		if (adapter != null) {
-			Cursor cursor = mDao.getFoodsCursor(columns, mOrderBy, mFilter, mFilterByType);
+			Cursor cursor = mDao.getMagicCursor(mSubId, columns, mOrderBy, mFilterByType);
 			adapter.changeCursor(cursor);
 		}
 	}
 
-	private class FoodListViewAdapter extends SimpleCursorAdapter {
+	private class MagicListViewAdapter extends SimpleCursorAdapter {
 
-		public FoodListViewAdapter(Context context,
+		public MagicListViewAdapter(Context context,
 				int textViewResourceId, Cursor c, String[] from, int[] to) {
 			super(context, textViewResourceId, c, from, to);
+
+			setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+					int id = view.getId();
+					switch (id) {
+					case R.id.Name:
+						{
+							String name, subName;
+							
+							name = cursor.getString(columnIndex);
+							subName = cursor.getString(cursor.getColumnIndex(MagicTable.C_SubName));
+							if (subName != null) {
+								((TextView)view).setText(name + subName);
+							} else {
+								((TextView)view).setText(name);
+							}
+							return true;
+						}
+					}
+	
+					return false;
+				}
+				
+			});
 		}
 	}
 
-
 	@Override
 	public void onDetachedFromWindow() {
-		FoodListViewAdapter adapter;
+		MagicListViewAdapter adapter;
 
-		adapter = ((FoodListViewAdapter)getAdapter());
+		adapter = ((MagicListViewAdapter)getAdapter());
 		if (adapter != null) {
 			adapter.changeCursor(null);
 		}

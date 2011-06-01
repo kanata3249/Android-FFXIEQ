@@ -98,6 +98,12 @@ public class FFXIEQActivity extends TabActivity {
 			spec.setContent(intent);
 			tabHost.addTab(spec);
 			
+			intent = new Intent().setClass(this, MagicSetEditActivity.class);
+			spec = tabHost.newTabSpec("magic");
+			spec.setIndicator("Magic", res.getDrawable(android.R.drawable.ic_menu_edit));
+			spec.setContent(intent);
+			tabHost.addTab(spec);
+
 			intent = new Intent().setClass(this, CharacterStatusActivity.class);
 			spec = tabHost.newTabSpec("status");
 			spec.setIndicator("Status", res.getDrawable(android.R.drawable.ic_menu_view));
@@ -121,6 +127,11 @@ public class FFXIEQActivity extends TabActivity {
 						BasicEditActivity activity;
 
 						activity = (BasicEditActivity)getCurrentActivity();
+						activity.notifyDatasetChanged();
+					} else if (tabId.equals("magic")) {
+						MagicSetEditActivity activity;
+
+						activity = (MagicSetEditActivity)getCurrentActivity();
 						activity.notifyDatasetChanged();
 					} else if (tabId.equals("status")) {
 						CharacterStatusActivity activity;

@@ -23,6 +23,8 @@
         <activity android:name=".android.FoodSelectorActivity"></activity>
         <activity android:name=".android.AugmentEditActivity"></activity>
         <activity android:name=".android.AugmentSelectorActivity"></activity>
+        <activity android:name=".android.MagicSelectorActivity"></activity>
+        <activity android:name=".android.MagicSetEditActivity"></activity>
         
         
 

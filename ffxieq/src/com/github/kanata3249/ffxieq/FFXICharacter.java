@@ -31,6 +31,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	boolean mInAbyssea;
 	AtmaSet mAtmaset;
 	Food mFood;
+	MagicSet mMagicSet;
 
 	transient boolean mModified;
 	transient boolean mStatusCacheValid;
@@ -44,6 +45,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		mEquipment = new EquipmentSet();
 		mMerits = new MeritPoint();
 		mAtmaset = new AtmaSet();
+		mMagicSet = new MagicSet();
 		mInAbyssea = false;
 		mModified = false;
 		mStatusCacheValid = false;
@@ -66,6 +68,10 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (mFood != null) {
 			total.add(mFood.getStatus(level, type));
 		}
+		if (mMagicSet != null) {
+			total.add(mMagicSet.getStatus(level, type));
+		}
+
 		if (mInAbyssea) {
 			total.add(mAtmaset.getStatus(level, type));
 		}
@@ -186,6 +192,36 @@ public class FFXICharacter implements IStatus, Serializable {
 		mModified = true;
 		mStatusCacheValid = false;
 		mFood = food;
+	}
+	public int getNumMagic() {
+		if (mMagicSet == null)
+			mMagicSet = new MagicSet();
+		return mMagicSet.getNumMagic();
+	}
+	public Magic getMagic(int index) {
+		if (mMagicSet == null)
+			mMagicSet = new MagicSet();
+		return mMagicSet.getMagic(index);
+	}
+	public void setMagic(long id, long subid) {
+		Magic magic;
+		
+		if (mMagicSet == null)
+			mMagicSet = new MagicSet();
+		for (int i = 0; i < mMagicSet.getNumMagic(); i++) {
+			magic = mMagicSet.getMagic(i);
+			if (magic.getSubId() == subid) {
+				mMagicSet.setMagic(i, id);
+				mModified = true;
+				mStatusCacheValid = false;
+				return;
+			}
+		}
+
+		mMagicSet.addMagic(id);
+		mModified = true;
+		mStatusCacheValid = false;
+		return;
 	}
 	public boolean isModified() {
 		return mModified;
@@ -754,6 +790,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		if (mFood != null) {
 			unknownTokens.mergeList(mFood.getUnknownTokens());
+		}
+		if (mMagicSet != null) {
+			unknownTokens.mergeList(mMagicSet.getUnknownTokens());
 		}
 		return unknownTokens;
 	}

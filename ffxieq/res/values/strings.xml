@@ -287,4 +287,5 @@
 	<string name="SelectFromEquipmentList">装備一覧</string>
 	<string name="DeleteAugment">削除...</string>
 	<string name="QueryDeleteAugment">本当に削除しますか？</string>
+	<string name="MagicNotSelected">未選択</string>
 </resources>
