@@ -45,6 +45,12 @@ public class EquipmentSetEditActivity extends FFXIEQBaseActivity {
 	    }
 
 		{
+			MagicSetEditFragment fragment = (MagicSetEditFragment)fm.findFragmentById(R.id.MagicEdit);
+	        if (fragment != null)
+	        	fragment.setOnDatasetChangedListener(listener);
+	    }
+
+		{
 			CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
 	        if (fragment != null)
 	        	fragment.setOnDatasetChangedListener(listener);
@@ -66,6 +72,12 @@ public class EquipmentSetEditActivity extends FFXIEQBaseActivity {
 	        	fragment.updateValues();
 	    }
 
+		{
+			MagicSetEditFragment fragment = (MagicSetEditFragment)fm.findFragmentById(R.id.MagicEdit);
+	        if (fragment != null)
+	        	fragment.updateValues();
+		}
+		
 		{
 			CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
 	        if (fragment != null)

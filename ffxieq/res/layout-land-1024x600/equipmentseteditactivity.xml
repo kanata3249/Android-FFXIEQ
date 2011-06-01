@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/linearLayout1" xmlns:android="http://schemas.android.com/apk/res/android" android:shrinkColumns="1">
+<TableLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/linearLayout1" xmlns:android="http://schemas.android.com/apk/res/android" android:shrinkColumns="1,2">
 	<TableRow>
 		<fragment class="com.github.kanata3249.ffxieq.android.BasicEditFragment" android:id="@+id/BasicEdit" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		<fragment class="com.github.kanata3249.ffxieq.android.EquipmentSetEditFragment" android:id="@+id/CharacterEdit" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
+		<fragment class="com.github.kanata3249.ffxieq.android.MagicSetEditFragment" android:id="@+id/MagicEdit" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
 		<fragment class="com.github.kanata3249.ffxieq.android.CharacterStatusFragment" android:id="@+id/CharacterStatus" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
 	</TableRow>
 </TableLayout>
