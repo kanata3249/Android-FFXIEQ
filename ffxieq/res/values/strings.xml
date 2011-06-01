@@ -205,6 +205,8 @@
     <string name="DamageCutPhysical">物理カット</string>
     <string name="DamageCutMagic">魔法カット</string>
     <string name="DamageCutBreath">ブレスカット</string>
+    <string name="TP">得TP</string>
+    <string name="TPRange">遠隔得TP</string>
     <string name="HP">HP</string>
     <string name="MP">MP</string>
     <string name="STR">STR</string>

@@ -108,5 +108,8 @@ public enum StatusType {
 	Counter,				//
 	SpellInterruptionRate,	//
 
+	TP,
+	TPRange,
+
 	MODIFIER_NUM
 }

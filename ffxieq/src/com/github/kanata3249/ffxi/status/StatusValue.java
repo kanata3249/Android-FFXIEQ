@@ -52,7 +52,7 @@ public class StatusValue implements Serializable {
 	public int getTotal() {
 		int v, p;
 		v = value + additional;
-		v += v * additionalPercent / 10000;
+		v = v * (10000 + additionalPercent) / 10000;
 		p = v * additionalPercentWithCap / 10000;
 		if (cap > 0)
 			p = Math.min(p, cap);

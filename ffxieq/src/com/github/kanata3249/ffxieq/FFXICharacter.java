@@ -302,6 +302,12 @@ public class FFXICharacter implements IStatus, Serializable {
 			case DelaySub:
 				mCachedValues[type.ordinal()] = getDelaySub();
 				break;
+			case TP:
+				mCachedValues[type.ordinal()] = getTP();
+				break;
+			case TPRange:
+				mCachedValues[type.ordinal()] = getTPRange();
+				break;
 			case Accuracy:
 				mCachedValues[type.ordinal()] = getAccuracy();
 				break;
@@ -423,6 +429,10 @@ public class FFXICharacter implements IStatus, Serializable {
 			return getDamageCutMagic();
 		case DamageCutBreath:
 			return getDamageCutBreath();
+		case TP:
+			return getTP();
+		case TPRange:
+			return getTPRange();
 		}
 		return null;
 	}
@@ -499,7 +509,9 @@ public class FFXICharacter implements IStatus, Serializable {
 					{
 						// Dual Wield
 						StatusValue base = getStatus(mLevel, StatusType.Delay);
+						StatusValue sub = getStatus(mLevel, StatusType.DelaySub);
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
+						base.setValue((base.getValue() + sub.getValue()) / 2);
 						base.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
 						
 						return base;
@@ -540,8 +552,10 @@ public class FFXICharacter implements IStatus, Serializable {
 				case SKILL_CLUB:
 					{
 						// Dual Wield
-						StatusValue base = getStatus(mLevel, StatusType.DelaySub);
+						StatusValue base = getStatus(mLevel, StatusType.Delay);
+						StatusValue sub = getStatus(mLevel, StatusType.DelaySub);
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
+						base.setValue((base.getValue() + sub.getValue()) / 2);
 						base.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
 
 						return base;
@@ -550,6 +564,77 @@ public class FFXICharacter implements IStatus, Serializable {
 			}
 		}
 		return new StatusValue(0, 0, 0);
+	}
+
+	private StatusValue calcTPByDelay(int delay) {
+		int tp, storeTP;
+
+		if (delay == 0) {
+			tp = 0;
+		} else if (delay <= 180) {
+			tp = 500 + (delay - 180) * 150 / 180;
+		} else if (delay <= 450) {
+			tp = 500 + (delay - 180) * 650 / 270;
+		} else if (delay <= 480) {
+			tp = 1150 + (delay - 450) * 150 / 30;
+		} else if (delay <= 530) {
+			tp = 1300 + (delay - 480) * 150 / 50;
+		} else {
+			tp = 1450 + (delay - 530) * 350 / 470;
+		}
+		tp -= tp % 10;
+		
+		storeTP = getStatus(mLevel, StatusType.StoreTP).getTotal();
+		if (storeTP != 0) {
+			tp = tp * (100 + storeTP) / 100;
+			tp -= tp % 10;
+		}
+		
+		return new StatusValue(0, 0, StatusValue.makePercentValue(tp / 100, tp % 100 - tp % 10));
+	}
+
+	public StatusValue getTP() {
+		StatusType type, subtype;
+		Equipment eq;
+
+		type = subtype = null;
+		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
+		if (eq != null) {
+			type = eq.getWeaponType();
+		}
+		eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
+		if (eq != null) {
+			subtype = eq.getWeaponType();
+		}
+		if (type == null) {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
+		switch (type) {
+		case SKILL_HANDTOHAND:
+			return calcTPByDelay(getDelay().getTotal() / 2);
+		case SKILL_DAGGER:
+		case SKILL_SWORD:
+		case SKILL_AXE:
+		case SKILL_KATANA:
+		case SKILL_CLUB:
+			if (subtype != null) {
+				switch (subtype) {
+				case SKILL_DAGGER:
+				case SKILL_SWORD:
+				case SKILL_AXE:
+				case SKILL_KATANA:
+				case SKILL_CLUB:
+					return calcTPByDelay(getDelay().getTotal());
+				}
+			}
+			// fall thru
+		default:
+			return calcTPByDelay(getDelay().getTotal());
+		}
+	}
+
+	public StatusValue getTPRange() {
+		return calcTPByDelay(getStatus(mLevel, StatusType.DelayRange).getTotal());
 	}
 
 	int calcAccuracyByWeaponType(StatusType type) {

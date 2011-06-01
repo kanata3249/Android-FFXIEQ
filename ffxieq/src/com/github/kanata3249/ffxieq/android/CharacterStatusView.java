@@ -210,6 +210,14 @@ public class CharacterStatusView extends ScrollView {
     	if (tv != null) {
     		tv.setText(getDelayRange(mDisplayParam));
     	}
+    	tv = (TextView)findViewById(R.id.TP);
+    	if (tv != null) {
+    		tv.setText(getTP(mDisplayParam));
+    	}
+    	tv = (TextView)findViewById(R.id.TPRange);
+    	if (tv != null) {
+    		tv.setText(getTPRange(mDisplayParam));
+    	}
     	tv = (TextView)findViewById(R.id.Defence);
     	if (tv != null) {
     		tv.setText(getDefence(mDisplayParam));
@@ -272,7 +280,10 @@ public class CharacterStatusView extends ScrollView {
 	private String getStatusString(StatusType type, int separate) {
 		StatusValue v = getStatus(type);
 		int value;
+		boolean hide_percent = false;
 		
+		if (type == StatusType.TP || type == StatusType.StoreTP)
+			hide_percent = true;
 		if (mCharInfoToCompare != null) {
 			StatusValue v1, v2;
 			
@@ -283,7 +294,8 @@ public class CharacterStatusView extends ScrollView {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(v.getValue());
-				sb.append('%');
+				if (!hide_percent)
+					sb.append('%');
 				value = v.getAdditionalPercent();
 				if (value != 0) {
 					if (value > 0) {
@@ -300,7 +312,8 @@ public class CharacterStatusView extends ScrollView {
 						if (value % 10 == 0)
 							sb.deleteCharAt(sb.length() - 1);
 					}
-					sb.append('%');
+					if (!hide_percent)
+						sb.append('%');
 				}
 				return sb.toString();
 			}
@@ -320,7 +333,8 @@ public class CharacterStatusView extends ScrollView {
 				if (value % 10 == 0)
 					sb.deleteCharAt(sb.length() - 1);
 			}
-			sb.append('%');
+			if (!hide_percent)
+				sb.append('%');
 			return sb.toString();
 		} else if (separate == GETSTATUS_STRING_SEPARATE) {
 			StringBuilder sb = new StringBuilder();
@@ -351,7 +365,8 @@ public class CharacterStatusView extends ScrollView {
 					if (value % 10 == 0)
 						sb.deleteCharAt(sb.length() - 1);
 				}
-				sb.append('%');
+				if (!hide_percent)
+					sb.append('%');
 			}
 			value = v.getAdditionalPercentWithCap();
 			if (value != 0) {
@@ -370,7 +385,9 @@ public class CharacterStatusView extends ScrollView {
 					if (value % 10 == 0)
 						sb.deleteCharAt(sb.length() - 1);
 				}
-				sb.append("%(");
+				if (!hide_percent)
+					sb.append('%');
+				sb.append("(");
 				sb.append(v.getCap());
 				sb.append(')');
 			}
@@ -437,6 +454,12 @@ public class CharacterStatusView extends ScrollView {
 	}
 	public String getDelayRange(int separate) {
 		return getStatusString(StatusType.DelayRange, separate);
+	}
+	public String getTP(int separate) {
+		return getStatusString(StatusType.TP, separate);
+	}
+	public String getTPRange(int separate) {
+		return getStatusString(StatusType.TPRange, separate);
 	}
 	public String getAccuracy(int separate) {
 		return getStatusString(StatusType.Accuracy, separate);
