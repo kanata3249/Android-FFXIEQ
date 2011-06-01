@@ -298,7 +298,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 				cursor.moveToNext();
 			}
 			for ( ; i < cursor.getCount(); i++) {
-				db.delete(TABLE_NAME_FILTERS, C_Id + " = '" + cursor.getLong(cursor.getColumnIndex(C_Id)), null);
+				db.delete(TABLE_NAME_FILTERS, C_Id + " = '" + cursor.getLong(cursor.getColumnIndex(C_Id)) + "'", null);
 				cursor.moveToNext();
 			}
 		}
