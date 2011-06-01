@@ -287,6 +287,7 @@ public class CharacterStatusView extends ScrollView {
 		if (mCharInfoToCompare != null) {
 			StatusValue v1, v2;
 			
+			separate = GETSTATUS_STRING_SEPARATE;
 			v1 = mCharInfo.getStatus(type);
 			v2 = mCharInfoToCompare.getStatus(type);
 			if (v1.getValue() == 0 && v1.getAdditional() == 0 && v2.getValue() == 0 && v1.getAdditional() == 0
