@@ -74,7 +74,7 @@ public class StatusValue implements Serializable {
 
 		if (this.value == 0 && this.additional == 0 && value.value == 0 && value.additional == 0
 				&& (this.additionalPercent != 0 || value.additionalPercent != 0)) {
-			this.value = this.additionalPercent / 100;
+			this.value = this.additionalPercent;
 			this.additional = 0;
 			this.additionalPercent = value.additionalPercent - this.additionalPercent;
 			this.additionalPercentWithCap = 0;

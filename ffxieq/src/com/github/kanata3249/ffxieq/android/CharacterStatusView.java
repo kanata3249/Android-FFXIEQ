@@ -283,7 +283,7 @@ public class CharacterStatusView extends ScrollView {
 		int value;
 		boolean hide_percent = false;
 		
-		if (type == StatusType.TP || type == StatusType.StoreTP)
+		if (type == StatusType.TP || type == StatusType.TPRange)
 			hide_percent = true;
 		if (mCharInfoToCompare != null) {
 			StatusValue v1, v2;
@@ -295,7 +295,14 @@ public class CharacterStatusView extends ScrollView {
 				&& (v1.getAdditionalPercent() != 0 || v2.getAdditionalPercent() != 0)) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append(v.getValue());
+				value = v.getValue();
+				sb.append(value / 100);
+				if (value % 100 != 0) {
+					sb.append('.');
+					sb.append(value % 100);
+					if (value % 10 == 0)
+						sb.deleteCharAt(sb.length() - 1);
+				}
 				if (!hide_percent)
 					sb.append('%');
 				value = v.getAdditionalPercent();
