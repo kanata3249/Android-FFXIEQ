@@ -35,6 +35,7 @@ public class CharacterStatusView extends ScrollView {
 	FFXICharacter mCharInfoToCompare;
 	static public final int GETSTATUS_STRING_TOTAL = 0;
 	static public final int GETSTATUS_STRING_SEPARATE = 1;
+	static final Object [] sObjLock = new Object[0];
 
 	public CharacterStatusView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -578,9 +579,11 @@ public class CharacterStatusView extends ScrollView {
 		AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
-				mCharInfo.cacheStatusValues();
-				if (mCharInfoToCompare != null)
-					mCharInfoToCompare.cacheStatusValues();
+				synchronized (sObjLock) {
+					mCharInfo.cacheStatusValues();
+					if (mCharInfoToCompare != null)
+						mCharInfoToCompare.cacheStatusValues();
+				}
 				return null;
 			}
 
