@@ -21,6 +21,7 @@ import com.github.kanata3249.ffxieq.MeritPoint;
 import com.github.kanata3249.ffxieq.R;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -89,48 +90,54 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 	}
 	
 	@Override
-	public void onBackPressed() {
-		saveValues();
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN){
+			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+				saveValues();
+				
+				{
+					MeritPoint merits = new MeritPoint();
+					MeritPoint oldmerits = getFFXICharacter().getMeritPoint();
+					StatusType[] types = StatusType.values();
+					ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
+					String []enmity_entries;
+					boolean modified;
 		
-		{
-			MeritPoint merits = new MeritPoint();
-			MeritPoint oldmerits = getFFXICharacter().getMeritPoint();
-			StatusType[] types = StatusType.values();
-			ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-			String []enmity_entries;
-			boolean modified;
-
-			modified = false;
-			enmity_entries = getResources().getStringArray(R.array.Merits_Enmity_Entries);
-			int i;
-			for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
-				if (oldmerits.getMeritPoint(types[i]) != values[i].getIntValue() && types[i] != StatusType.Enmity)
-					modified = true;
-				merits.setMeritPoint(types[i], values[i].getIntValue());
-			}
-			if (oldmerits.getMeritPoint(StatusType.Enmity)!= values[StatusType.Enmity.ordinal()].getIntValue() - enmity_entries.length / 2)
-				modified = true;
-			merits.setMeritPoint(StatusType.Enmity, values[StatusType.Enmity.ordinal()].getIntValue() - enmity_entries.length / 2);
-			for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
-				for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
-					for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
-						if (oldmerits.getJobSpecificMeritPoint(job, category, index) != values[i].getIntValue())
+					modified = false;
+					enmity_entries = getResources().getStringArray(R.array.Merits_Enmity_Entries);
+					int i;
+					for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
+						if (oldmerits.getMeritPoint(types[i]) != values[i].getIntValue() && types[i] != StatusType.Enmity)
 							modified = true;
-						merits.setJobSpecificMeritPoint(job, category, index, values[i++].getIntValue());
+						merits.setMeritPoint(types[i], values[i].getIntValue());
 					}
+					if (oldmerits.getMeritPoint(StatusType.Enmity)!= values[StatusType.Enmity.ordinal()].getIntValue() - enmity_entries.length / 2)
+						modified = true;
+					merits.setMeritPoint(StatusType.Enmity, values[StatusType.Enmity.ordinal()].getIntValue() - enmity_entries.length / 2);
+					for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
+						for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
+							for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
+								if (oldmerits.getJobSpecificMeritPoint(job, category, index) != values[i].getIntValue())
+									modified = true;
+								merits.setJobSpecificMeritPoint(job, category, index, values[i++].getIntValue());
+							}
+						}
+					}
+					
+					if (modified)
+						getFFXICharacter().setMeritPoint(merits);
 				}
+				
+				Intent result = new Intent();
+				
+				result.putExtra("From", "MeritPointEdit");
+				setResult(RESULT_OK, result);
+				
+				finish();
+				return true;
 			}
-			
-			if (modified)
-				getFFXICharacter().setMeritPoint(merits);
 		}
-		
-		Intent result = new Intent();
-		
-		result.putExtra("From", "MeritPointEdit");
-		setResult(RESULT_OK, result);
-		
-		finish();
+		return super.dispatchKeyEvent(event);
 	}
 	
 	static public boolean startActivity(FFXIEQActivity from, int request) {

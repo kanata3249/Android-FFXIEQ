@@ -48,7 +48,7 @@ public class FilterSelectorDialog extends Dialog {
 		
 		setContentView(R.layout.filterselectordialog);
 		setTitle(getContext().getString(R.string.EditFilterTitle));
-		
+		mApply = false;
 		{
 			Button btn = (Button)findViewById(R.id.ApplyFilter);
 			if (btn != null) {
@@ -111,12 +111,6 @@ public class FilterSelectorDialog extends Dialog {
 		}
 		
 		super.onStart();
-	}
-
-	@Override
-	public void onBackPressed() {
-		mApply = false;
-		super.onBackPressed();
 	}
 
 	private class FilterListAdapter extends SimpleCursorAdapter {

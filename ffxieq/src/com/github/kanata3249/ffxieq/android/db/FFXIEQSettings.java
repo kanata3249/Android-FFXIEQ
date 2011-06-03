@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.Equipment;
@@ -47,7 +49,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public static final String C_LastUsed = "LastUsed";
 	private static final int MAX_FILTERS = 16;
 	
-	BackupManager mBackupManager;
+	Object mBackupManager;
 	Context mContext;
 	
 	AugmentTable mAugmentTable;
@@ -60,13 +62,26 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		mAugmentTable = new AugmentTable();
 
 		if (android.os.Build.VERSION.SDK_INT > 7) {
-			mBackupManager = new BackupManager(context);
+			Class [] params = { Context.class };
+			Object [] args = { context };
+			try {
+				mBackupManager = Class.forName("android.app.backup.BackupManager").getConstructor(params).newInstance(args);
+			} catch (Exception ex) {
+			}
 		}
 	}
 
 	private void dataChanged() {
 		if (mBackupManager != null) {
-			mBackupManager.dataChanged();
+			try {
+				Method method = mBackupManager.getClass().getMethod("dataChanged", (Class[])null);
+				method.invoke(mBackupManager, (Object[])null);
+			} catch (IllegalArgumentException e) {
+			} catch (SecurityException e) {
+			} catch (IllegalAccessException e) {
+			} catch (InvocationTargetException e) {
+			} catch (NoSuchMethodException e) {
+			}
 		}
 	}
 

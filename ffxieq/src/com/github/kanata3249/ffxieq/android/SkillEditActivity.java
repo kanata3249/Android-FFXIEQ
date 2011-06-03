@@ -21,6 +21,7 @@ import com.github.kanata3249.ffxieq.R;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -77,34 +78,40 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 	}
 
 	@Override
-	public void onBackPressed() {
-		saveValues();
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_UP){
+			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+				saveValues();
+				
+				{
+					JobAndRace jobandrace = new JobAndRace();
+					JobAndRace oldjobandrace = getFFXICharacter().getJobAndRace();
+					StatusType[] types = StatusType.values();
+					ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
+					boolean modified;
 		
-		{
-			JobAndRace jobandrace = new JobAndRace();
-			JobAndRace oldjobandrace = getFFXICharacter().getJobAndRace();
-			StatusType[] types = StatusType.values();
-			ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-			boolean modified;
-
-			
-			modified = false;
-			for (int i = 0; i < values.length - 1; i++) {
-				if (oldjobandrace.getSkill(types[i]) != values[i].getIntValue())
-					modified = true;
-				jobandrace.setSkill(types[i], values[i].getIntValue());
+					
+					modified = false;
+					for (int i = 0; i < values.length - 1; i++) {
+						if (oldjobandrace.getSkill(types[i]) != values[i].getIntValue())
+							modified = true;
+						jobandrace.setSkill(types[i], values[i].getIntValue());
+					}
+					
+					if (modified)
+						getFFXICharacter().setJobAndRace(jobandrace);
+				}
+				
+				Intent result = new Intent();
+				
+				result.putExtra("From", "SkillEdit");
+				setResult(RESULT_OK, result);
+				
+				finish();
+				return true;
 			}
-			
-			if (modified)
-				getFFXICharacter().setJobAndRace(jobandrace);
 		}
-		
-		Intent result = new Intent();
-		
-		result.putExtra("From", "SkillEdit");
-		setResult(RESULT_OK, result);
-		
-		finish();
+		return super.dispatchKeyEvent(event);
 	}
 	
 	static public boolean startActivity(FFXIEQActivity from, int request) {

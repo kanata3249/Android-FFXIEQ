@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -213,24 +214,29 @@ public class AugmentEditActivity extends FFXIEQBaseActivity {
 	}
 
 	@Override
-	public void onBackPressed() {
-		EditText et;
-		Equipment eq;
-		
-		eq = getDAO().instantiateEquipment(mBaseID, mAugID);
-		et = (EditText)findViewById(R.id.AugmentDescription);
-		if (eq != null && et != null) {
-			String augment;
-			
-			augment = et.getText().toString();
-			if (!eq.getAugment().equals(augment)) {
-				showDialog(R.string.QueryDiscardChanges);
-				return;
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN){
+			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+				EditText et;
+				Equipment eq;
+				
+				eq = getDAO().instantiateEquipment(mBaseID, mAugID);
+				et = (EditText)findViewById(R.id.AugmentDescription);
+				if (eq != null && et != null) {
+					String augment;
+					
+					augment = et.getText().toString();
+					if (!eq.getAugment().equals(augment)) {
+						showDialog(R.string.QueryDiscardChanges);
+						return true;
+					}
+				}
 			}
 		}
-
-		super.onBackPressed();
+		
+		return super.dispatchKeyEvent(event);
 	}
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		Dialog dialog;
