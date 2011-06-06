@@ -70,7 +70,15 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 
 		StatusValue v;
 		int merit = getMeritPoint(type);
-		int meritcap = level.getLevel() / 10;
+		int clevel = level.getLevel();
+		int meritcap;
+		if (clevel >= 75)
+			meritcap = 999;
+		else if (clevel >= 55) {
+			meritcap = 5 + (clevel - 55) / 5;
+		} else {
+			meritcap = clevel / 10;
+		}
 		v = mJobTraits.getStatus(level, type);
 		
 		switch (type) {
