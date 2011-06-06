@@ -75,7 +75,7 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 		if (clevel >= 75)
 			meritcap = 999;
 		else if (clevel >= 55) {
-			meritcap = 5 + (clevel - 55) / 5;
+			meritcap = 5 + (clevel - 50) / 5;
 		} else {
 			meritcap = clevel / 10;
 		}
