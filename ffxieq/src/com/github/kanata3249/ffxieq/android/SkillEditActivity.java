@@ -79,7 +79,7 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		if (event.getAction() == KeyEvent.ACTION_UP){
+		if (event.getAction() == KeyEvent.ACTION_DOWN){
 			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
 				saveValues();
 				
