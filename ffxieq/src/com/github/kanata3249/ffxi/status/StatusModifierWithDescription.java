@@ -113,11 +113,17 @@ public class StatusModifierWithDescription extends StatusModifier {
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
 		for (int i = 0; i < tokens.length; i++) {
-			String token, parameter;
+			String token, tmp[], parameter;
 			DescriptionTokenHandler handler;
 			
-			token = (tokens[i].split("[\\+\\-0-9]"))[0];
-			parameter = tokens[i].substring(token.length());
+			tmp = tokens[i].split("[\\+\\-0-9]");
+			if (tmp != null && tmp.length > 0) {
+				token = tmp[0];
+				parameter = tokens[i].substring(token.length());
+			} else {
+				token = tokens[i];
+				parameter = "";
+			}
 
 			handler = fTokenHandler.get(token);
 			if (handler != null) {
