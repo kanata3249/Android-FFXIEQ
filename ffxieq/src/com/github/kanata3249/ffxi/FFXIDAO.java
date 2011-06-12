@@ -33,6 +33,7 @@ public interface FFXIDAO {
 	public String getString(int id);		// ids are defined in FFXIString class
 	
 	public Equipment instantiateEquipment(long id, long augId);
+	public Equipment findEquipment(String name, int level, String part, String weapon);
 	public Atma instantiateAtma(long id);
 	public JobTrait[] getJobTraits(int job, int level);
 	public Combination instantiateCombination(long combiID, int numMatches);

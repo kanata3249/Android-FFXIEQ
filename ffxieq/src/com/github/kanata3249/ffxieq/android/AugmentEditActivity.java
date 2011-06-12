@@ -62,64 +62,23 @@ public class AugmentEditActivity extends FFXIEQBaseActivity {
 	protected void onStart() {
 		super.onStart();
 		
-		{
-			Equipment cur = getDAO().instantiateEquipment(mBaseID, mAugID);
-			if (cur != null) {
-				TextView tv;
-				
-				mBaseID = cur.getId();
-				cur.parseDescription();
-				cur.removeAugmentCommentFromUnknownToken();
-				tv = (TextView)findViewById(R.id.Name);
-				if (tv != null) {
-					tv.setText(cur.getName());
-				}
-				tv = (TextView)findViewById(R.id.Job);
-				if (tv != null) {
-					tv.setText(cur.getJob());
-				}
-				tv = (TextView)findViewById(R.id.Description);
-				if (tv != null) {
-					tv.setText(cur.getDescription());
-				}
-				tv = (TextView)findViewById(R.id.Level);
-				if (tv != null) {
-					tv.setText(((Integer)cur.getLevel()).toString());
-				}
-				tv = (TextView)findViewById(R.id.Race);
-				if (tv != null) {
-					tv.setText(cur.getRace());
-				}
-				tv = (TextView)findViewById(R.id.Ex);
-				if (tv != null) {
-					if (cur.isEx())
-						tv.setVisibility(View.VISIBLE);
-					else
-						tv.setVisibility(View.INVISIBLE);
-				}
-				tv = (TextView)findViewById(R.id.Rare);
-				if (tv != null) {
-					if (cur.isRare())
-						tv.setVisibility(View.VISIBLE);
-					else
-						tv.setVisibility(View.INVISIBLE);
-				}
-				
-				EditText et = (EditText)findViewById(R.id.AugmentDescription);
-				if (et != null) {
-					if (mAugID >= 0)
-						et.setText(cur.getAugment());
-					else {
-						String tmpl = cur.getAugmentComment();
-						if (tmpl != null) {
-						} else {
-							tmpl = "";
-						}
-						et.setText(tmpl);
-					}
+		if (mAugID >= 0) {	// Check base equipment
+			Equipment aug = getDAO().instantiateEquipment(mBaseID, mAugID);
+			Equipment base = getDAO().instantiateEquipment(aug.getId(), -1);
+			
+			if (!aug.getName().equals(base.getName())) {
+				base = getDAO().findEquipment(aug.getName(), aug.getLevel(), aug.getPart(), aug.getWeapon());
+				if (base == null) {
+					showDialog(R.string.BaseEquipmentNotFound);
+				} else {
+					((FFXIDatabase)getDAO()).saveAugment(aug.getAugId(), aug.getAugment(), base.getId());
 				}
 			}
+			
+			
 		}
+		
+		updateViews();
 
 		{
 			Button btn;
@@ -266,7 +225,117 @@ public class AugmentEditActivity extends FFXIEQBaseActivity {
 			});
 			dialog = builder.create();
 			return dialog;
+		case R.string.BaseEquipmentNotFound:
+				builder = new AlertDialog.Builder(this);
+				builder.setCancelable(true);
+		    	builder.setMessage(getString(R.string.BaseEquipmentNotFound));
+		    	builder.setTitle(getString(R.string.app_name));
+		    	builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dismissDialog(R.string.BaseEquipmentNotFound);
+
+						EquipmentSelectorActivity.startActivity(AugmentEditActivity.this, 0, getFFXICharacter(), mPart, -1, -1);
+					}
+				});
+		    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dismissDialog(R.string.BaseEquipmentNotFound);
+
+						Intent result = new Intent();
+
+						result.putExtra("From", "AugmentEditActivity");
+						setResult(RESULT_CANCELED, result);
+						finish();
+					}
+				});
+				dialog = builder.create();
+				return dialog;
 		}
 		return super.onCreateDialog(id);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+			int part;
+			long id;
+			if (EquipmentSelectorActivity.isComeFrom(data)) {
+				part = EquipmentSelectorActivity.getPart(data);
+				id = EquipmentSelectorActivity.getEquipmentId(data);
+			} else {
+				part = -1;
+				id = -1;
+			}
+				
+			if (part == mPart) {
+				Equipment eq = getDAO().instantiateEquipment(-1, mAugID);
+				if (eq != null) {
+					((FFXIDatabase)getDAO()).saveAugment(mAugID, eq.getAugment(), id);
+				}
+				updateViews();
+			}
+		} else {
+			showDialog(R.string.BaseEquipmentNotFound);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	public void updateViews() {
+		Equipment cur = getDAO().instantiateEquipment(mBaseID, mAugID);
+		if (cur != null) {
+			TextView tv;
+			
+			mBaseID = cur.getId();
+			cur.parseDescription();
+			cur.removeAugmentCommentFromUnknownToken();
+			tv = (TextView)findViewById(R.id.Name);
+			if (tv != null) {
+				tv.setText(cur.getName());
+			}
+			tv = (TextView)findViewById(R.id.Job);
+			if (tv != null) {
+				tv.setText(cur.getJob());
+			}
+			tv = (TextView)findViewById(R.id.Description);
+			if (tv != null) {
+				tv.setText(cur.getDescription());
+			}
+			tv = (TextView)findViewById(R.id.Level);
+			if (tv != null) {
+				tv.setText(((Integer)cur.getLevel()).toString());
+			}
+			tv = (TextView)findViewById(R.id.Race);
+			if (tv != null) {
+				tv.setText(cur.getRace());
+			}
+			tv = (TextView)findViewById(R.id.Ex);
+			if (tv != null) {
+				if (cur.isEx())
+					tv.setVisibility(View.VISIBLE);
+				else
+					tv.setVisibility(View.INVISIBLE);
+			}
+			tv = (TextView)findViewById(R.id.Rare);
+			if (tv != null) {
+				if (cur.isRare())
+					tv.setVisibility(View.VISIBLE);
+				else
+					tv.setVisibility(View.INVISIBLE);
+			}
+			
+			EditText et = (EditText)findViewById(R.id.AugmentDescription);
+			if (et != null) {
+				if (mAugID >= 0)
+					et.setText(cur.getAugment());
+				else {
+					String tmpl = cur.getAugmentComment();
+					if (tmpl != null) {
+					} else {
+						tmpl = "";
+					}
+					et.setText(tmpl);
+				}
+			}
+		}
 	}
 }

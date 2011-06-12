@@ -290,4 +290,6 @@
 	<string name="DeleteAugment">削除...</string>
 	<string name="QueryDeleteAugment">本当に削除しますか？</string>
 	<string name="MagicNotSelected">未選択</string>
+	<string name="BaseEquipmentNotFound">データベースにベース装備がありませんでした。再選択してください。</string>
+	<string name="EquipmentNotFound">データベースに選択済み装備がありませんでした。再選択してください。</string>
 </resources>

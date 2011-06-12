@@ -109,6 +109,35 @@ public class EquipmentTable {
 		cursor.close();
 	}
 
+	public Equipment findEquipment(FFXIDAO dao, SQLiteDatabase db, String name, int level, String part, String weapon) {
+		Cursor cursor;
+		String columns[] = { C_Id };
+		long newId;
+		
+		try {
+			cursor = db.query(TABLE_NAME, columns,
+					C_Name + " LIKE '%" + name + "%' AND " +
+					C_Part + " LIKE '%" + part + "%' AND " +
+					C_Level + " = '" + level + "' AND " +
+					C_Weapon + " LIKE '%" + weapon + "%'",
+					null, null, null, null);
+		} catch (SQLiteException e) {
+			cursor = null;
+		}
+		
+		newId = -1;
+		if (cursor != null) {
+			if (cursor.getCount() == 1) {
+				cursor.moveToFirst();
+				newId = cursor.getLong(cursor.getColumnIndex(C_Id));
+			}
+			cursor.close(); 
+		}
+		if (newId != -1)
+			return newInstance(dao, db, newId, -1);
+		return null;
+	}
+	
 	public Cursor getCursor(FFXIDAO dao, SQLiteDatabase db, int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
 		Cursor cursor;
 		String partStr, jobStr, alljobStr;

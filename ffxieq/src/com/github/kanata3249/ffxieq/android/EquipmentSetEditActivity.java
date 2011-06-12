@@ -15,6 +15,10 @@
 */
 package com.github.kanata3249.ffxieq.android;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -103,4 +107,41 @@ public class EquipmentSetEditActivity extends FFXIEQBaseActivity {
         if (fragment != null)
         	fragment.setDisplayParam(param);
 	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog;
+		AlertDialog.Builder builder;
+
+		switch (id) {
+		case R.string.EquipmentNotFound:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.EquipmentNotFound));
+	    	builder.setTitle(getString(R.string.app_name));
+	    	builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.EquipmentNotFound);
+
+					FragmentManager fm = getSupportFragmentManager();
+					EquipmentSetEditFragment fragment = (EquipmentSetEditFragment)fm.findFragmentById(R.id.CharacterEdit);
+					if (fragment != null)
+						fragment.startReselect();
+				}
+			});
+	    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.EquipmentNotFound);
+					FragmentManager fm = getSupportFragmentManager();
+					EquipmentSetEditFragment fragment = (EquipmentSetEditFragment)fm.findFragmentById(R.id.CharacterEdit);
+					if (fragment != null)
+						fragment.cancelReselect();
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		}
+		return super.onCreateDialog(id);
+	}
+
 }

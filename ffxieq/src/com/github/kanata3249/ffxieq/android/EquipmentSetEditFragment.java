@@ -39,6 +39,7 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 	private View mView;
 	private boolean mUpdating;
 	int mLongClickingItemPosition;
+	private long mPartsToBeReselect[];
 
     @Override
     public void onStart() {
@@ -124,8 +125,16 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 				
 			if (part != -1) {
 				charInfo.setEquipment(part, id, augid);
+				charInfo.reloadAugmentsIfChangesThere();
 				updateValues();
 
+				if (mListener != null) {
+					mListener.notifyDatasetChanged();
+				}
+			}
+		} else if (resultCode == Activity.RESULT_CANCELED) {
+			if (charInfo.reloadAugmentsIfChangesThere()) {
+				updateValues();
 				if (mListener != null) {
 					mListener.notifyDatasetChanged();
 				}
@@ -308,5 +317,36 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
     	}
     	
     	mUpdating = false;
+
+    	mPartsToBeReselect = charInfo.reloadForUpdatingDatabase();
+    	if (mPartsToBeReselect[EquipmentSet.EQUIPMENT_NUM] == 1) {
+			if (mListener != null) {
+				mListener.notifyDatasetChanged();
+			}
+    	}
+        for (int i = 0; i < EquipmentSet.EQUIPMENT_NUM; i++) {
+        	if (mPartsToBeReselect[i] >= 0) {
+        		getActivity().showDialog(R.string.EquipmentNotFound);
+        		break;
+        	}
+        }
     }
+	
+	public void startReselect() {
+		if (mPartsToBeReselect != null) {
+			for (int i = 0; i < EquipmentSet.EQUIPMENT_NUM; i++) {
+				if (mPartsToBeReselect[i] >= 0) {
+					mPartsToBeReselect[i] = -1;
+					
+					EquipmentSelectorActivity.startActivity(this, 0, getFFXICharacter(), i, -1, -1);
+					break;
+				}
+			}
+			
+		}
+	}
+	
+	public void cancelReselect() {
+		mPartsToBeReselect = null;
+	}
 }

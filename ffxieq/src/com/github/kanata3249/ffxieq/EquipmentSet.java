@@ -170,6 +170,72 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		return updated;
 	}
 	
+	public long[] reloadEquipmentsForUpdatingDatabase() {
+		boolean updated = false;
+		long result[] = new long[mEquipments.length + 1];
+		for (int i = 0; i < mEquipments.length; i++) {
+			if (mEquipments[i] != null) {
+				Equipment eq = Dao.instantiateEquipment(mEquipments[i].getId(), mEquipments[i].getAugId());
+				if (!eq.getName().equals(mEquipments[i].getName())) {
+					// find
+					eq = Dao.findEquipment(mEquipments[i].getName(), mEquipments[i].getLevel(), mEquipments[i].getPart(), mEquipments[i].getWeapon());
+					if (eq != null) {
+						mEquipments[i] = eq;
+						updated = true;
+						result[i] = -1;
+					} else {
+						result[i] = mEquipments[i].getId();
+					}
+				} else {
+					result[i] = -1;
+				}
+			} else {
+				result[i] = -1;
+			}
+		}
+		if (updated) {
+			parseDescriptions();			
+			if (mCombinations != null) {
+				for (int i = 0; i < mCombinations.size(); i++) {
+					Combination combi;
+					
+					combi = mCombinations.get(i);
+					combi.parseDescription();
+				}
+			}
+		}
+		result[EQUIPMENT_NUM] = updated ? 1 : 0;
+		return result;
+	}
+
+	public boolean reloadAugmentsIfChangesThere() {
+		boolean updated = false;
+
+		for (int i = 0; i < mEquipments.length; i++) {
+			if (mEquipments[i] != null) {
+				if (mEquipments[i].getAugId() >= 0) {
+					Equipment eq = Dao.instantiateEquipment(mEquipments[i].getId(), mEquipments[i].getAugId());
+					if (mEquipments[i].getId() != eq.getId()) {
+						updated = true;
+						mEquipments[i] = eq;
+					}
+				}
+			}
+		}
+		if (updated) {
+			parseDescriptions();			
+			if (mCombinations != null) {
+				for (int i = 0; i < mCombinations.size(); i++) {
+					Combination combi;
+					
+					combi = mCombinations.get(i);
+					combi.parseDescription();
+				}
+			}
+		}
+		return updated;
+	}
+
 	public SortedStringList getUnknownTokens() {
 		SortedStringList unknownTokens = new SortedStringList();
 		for (int i = 0; i < mEquipments.length; i++) {

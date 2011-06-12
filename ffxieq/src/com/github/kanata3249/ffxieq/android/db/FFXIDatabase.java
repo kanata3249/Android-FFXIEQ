@@ -329,6 +329,15 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		
 		return instance;
 	}
+	public Equipment findEquipment(String name, int level, String part, String weapon) {
+		Equipment instance;
+
+		instance = mEquipmentTable.findEquipment(this, getReadableDatabase(), name, level, part, weapon);
+		if (instance != null)
+			mEquipmentTable.setCombinationID(getReadableDatabase(), instance);
+		
+		return instance;
+	}
 	public Atma instantiateAtma(long id) {
 		return mAtmaTable.newInstance(this, getReadableDatabase(), id);
 	}
