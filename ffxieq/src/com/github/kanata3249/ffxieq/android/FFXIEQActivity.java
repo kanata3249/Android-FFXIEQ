@@ -312,7 +312,7 @@ public class FFXIEQActivity extends TabActivity {
 		FFXIEQSettings settings = getSettings();
 		boolean useExternalDB;
 		MenuItem useExternalDBItem, installDBItem;
-		boolean writable;
+		boolean writable, readable;
 
 		useExternalDB = settings.useExternalDB();
 		useExternalDBItem = menu.findItem(R.id.useExternalDB);
@@ -320,11 +320,15 @@ public class FFXIEQActivity extends TabActivity {
 	
 		// check SD card...
 		String status = Environment.getExternalStorageState();
+
+		writable = false;
+		readable = false;
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 			// valid status for write
 			writable = true;
-		} else {
-			writable = false;
+			readable = true;
+		} else if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+			readable = true;
 		}
 
 		useExternalDBItem.setChecked(useExternalDB);
@@ -347,6 +351,13 @@ public class FFXIEQActivity extends TabActivity {
 				item.setTitle(getString(R.string.ShowStatusSeparate));
 			}
 		}
+		
+		item = menu.findItem(R.id.BackupToSD);
+		if (item != null)
+			item.setEnabled(writable);
+		item = menu.findItem(R.id.RestoreFromSD);
+		if (item != null)
+			item.setEnabled(readable);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -447,6 +458,14 @@ public class FFXIEQActivity extends TabActivity {
 	
 				return true;
 			}
+		case R.id.BackupToSD:
+			showDialog(R.string.QueryBackupToSD);
+			return true;
+
+		case R.id.RestoreFromSD:
+			showDialog(R.string.QueryRestoreFromSD);
+			return true;
+			
 		case R.id.ToggleShowStatusSeparate:
 			if (mDisplayParam == CharacterStatusView.GETSTATUS_STRING_SEPARATE) {
 				mDisplayParam = CharacterStatusView.GETSTATUS_STRING_TOTAL;
@@ -628,6 +647,116 @@ public class FFXIEQActivity extends TabActivity {
 	    	});
 			dialog = builder.create();
 			return dialog;
+			
+		case R.string.BackupToSDSucceeded:
+		case R.string.BackupToSDFailed:
+		case R.string.RestoreFromSDSucceeded:
+		case R.string.RestoreFromSDFailed:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(id));
+	    	builder.setTitle(getString(R.string.app_name));
+	    	builder.setPositiveButton(R.string.OK, null);
+			dialog = builder.create();
+			return dialog;
+		case R.string.QueryBackupToSD:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.QueryBackupToSD));
+	    	builder.setTitle(getString(R.string.app_name));
+	    	builder.setPositiveButton(R.string.Yes, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					final FFXIEQSettings settings = getSettings();
+		
+					dismissDialog(R.string.QueryBackupToSD);
+
+					final ProgressDialog dlg = new ProgressDialog(FFXIEQActivity.this);
+					dlg.show();
+					AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
+						@Override
+						protected Boolean doInBackground(Void... params) {
+							boolean result;
+		
+							try {
+								settings.copyDatabaseToSD();
+								result = true;
+							} catch (IOException e) {
+								result = false;
+							}
+							return result;
+						}
+		
+						@Override
+						protected void onPostExecute(Boolean result) {
+							if (result) {
+								showDialog(R.string.BackupToSDSucceeded);
+							} else {
+								showDialog(R.string.BackupToSDFailed);
+							}
+							dlg.dismiss();
+						}
+					};
+					task.execute();
+				}
+	    	});
+	    	builder.setNegativeButton(R.string.Cancel, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.QueryBackupToSD);
+				}
+	    	});
+			dialog = builder.create();
+			return dialog;
+		case R.string.QueryRestoreFromSD:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.QueryRestoreFromSD));
+	    	builder.setTitle(getString(R.string.app_name));
+	    	builder.setPositiveButton(R.string.Yes, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					final FFXIEQSettings settings = getSettings();
+		
+					dismissDialog(R.string.QueryRestoreFromSD);
+
+					final ProgressDialog dlg = new ProgressDialog(FFXIEQActivity.this);
+					dlg.show();
+					AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
+						@Override
+						protected Boolean doInBackground(Void... params) {
+							boolean result;
+		
+							try {
+								settings.copyDatabaseFromSD();
+								result = true;
+							} catch (IOException e) {
+								result = false;
+							}
+							return result;
+						}
+		
+						@Override
+						protected void onPostExecute(Boolean result) {
+							if (result) {
+								showDialog(R.string.RestoreFromSDSucceeded);
+								loadFFXICharacter(getSettings().getFirstCharacterId());
+								updateValues();
+								updateSubViewValues();
+							} else {
+								showDialog(R.string.RestoreFromSDFailed);
+							}
+							dlg.dismiss();
+						}
+					};
+					task.execute();
+				}
+	    	});
+	    	builder.setNegativeButton(R.string.Cancel, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.QueryRestoreFromSD);
+				}
+	    	});
+			dialog = builder.create();
+			return dialog;
+			
 		case R.id.showCredit:
 			dialog = new WebViewDialog(this);
 			((WebViewDialog)dialog).loadURL("file:///android_asset/about/about.html");

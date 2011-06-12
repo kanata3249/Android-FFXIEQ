@@ -17,12 +17,16 @@ package com.github.kanata3249.ffxieq.android.db;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.channels.FileChannel;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.Equipment;
@@ -30,7 +34,6 @@ import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.R;
 
 import android.app.Activity;
-import android.app.backup.BackupManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -48,6 +51,8 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public static final String C_Filter = "Filter";
 	public static final String C_LastUsed = "LastUsed";
 	private static final int MAX_FILTERS = 16;
+	public static String DB_PATH;
+	public static String SD_PATH;
 	
 	Object mBackupManager;
 	Context mContext;
@@ -60,6 +65,9 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		
 		mContext = context;
 		mAugmentTable = new AugmentTable();
+
+		DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
+		SD_PATH = Environment.getExternalStorageDirectory() + "/" + context.getPackageName() + "/"; 
 
 		if (android.os.Build.VERSION.SDK_INT > 7) {
 			Class [] params = { Context.class };
@@ -393,6 +401,30 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public void deleteAugment(FFXIDAO dao, long augId) {
 		mAugmentTable.deleteAugment(getWritableDatabase(), augId);
 		dataChanged();
+	}
+
+	public void copyDatabaseFromSD() throws IOException {
+		File outDir = new File(DB_PATH);
+
+		outDir.mkdir();
+		FileChannel channelSource = new FileInputStream(SD_PATH + DB_NAME).getChannel();
+		FileChannel channelTarget = new FileOutputStream(DB_PATH + DB_NAME).getChannel();
+		channelSource.transferTo(0, channelSource.size(), channelTarget);
+
+		channelSource.close();
+		channelTarget.close();
+	}
+
+	public void copyDatabaseToSD() throws IOException {
+		File outDir = new File(SD_PATH);
+
+		outDir.mkdir();
+		FileChannel channelSource = new FileInputStream(DB_PATH + DB_NAME).getChannel();
+		FileChannel channelTarget = new FileOutputStream(SD_PATH + DB_NAME).getChannel();
+		channelSource.transferTo(0, channelSource.size(), channelTarget);
+
+		channelSource.close();
+		channelTarget.close();
 	}
 }
 

@@ -159,6 +159,7 @@
     <string name="InstallDBSucceeded">DB更新しました。</string>
     <string name="InstallDBFailed">DB更新に失敗しました。</string>
     <string name="OK">OK</string>
+    <string name="Yes">はい</string>
     <string name="EditFilterTitle">フィルタ文字列</string>
     <string-array name="AbyssiteOfFurtheranceEntries">
         <item>0</item>
@@ -292,4 +293,12 @@
 	<string name="MagicNotSelected">未選択</string>
 	<string name="BaseEquipmentNotFound">データベースにベース装備がありませんでした。再選択してください。</string>
 	<string name="EquipmentNotFound">データベースに選択済み装備がありませんでした。再選択してください。</string>
+	<string name="BackupToSD">SDにバックアップ</string>
+    <string name="BackupToSDSucceeded">バックアップしました。</string>
+    <string name="BackupToSDFailed">バックアップに失敗しました。</string>
+    <string name="QueryBackupToSD">SDにある既存のバックアップは上書きされます。続行しますか？</string>
+	<string name="RestoreFromSD">SDからリストア</string>
+    <string name="RestoreFromSDSucceeded">設定をリストアしました。</string>
+    <string name="RestoreFromSDFailed">設定リストアに失敗しました。</string>
+    <string name="QueryRestoreFromSD">リストアすると現在のキャラクタデータやオーグメント・フィルタはすべて破棄され、バックアップデータで上書きされます。続行しますか？</string>
 </resources>
