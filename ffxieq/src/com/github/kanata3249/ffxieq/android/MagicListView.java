@@ -130,7 +130,11 @@ public class MagicListView extends ListView {
 							name = cursor.getString(columnIndex);
 							subName = cursor.getString(cursor.getColumnIndex(MagicTable.C_SubName));
 							if (subName != null) {
-								((TextView)view).setText(name + subName);
+								if (subName.startsWith("#")) {
+									((TextView)view).setText(subName.substring(1));
+								} else {
+									((TextView)view).setText(name + subName);
+								}
 							} else {
 								((TextView)view).setText(name);
 							}

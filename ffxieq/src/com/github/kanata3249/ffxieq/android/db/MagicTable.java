@@ -54,8 +54,12 @@ public class MagicTable {
 		cursor.moveToFirst();
 		String name = cursor.getString(cursor.getColumnIndex(C_Name));
 		String subname =  cursor.getString(cursor.getColumnIndex(C_SubName));
-		if (subname != null)
+		if (subname != null) {
 			name = name + subname;
+			if (subname.length() > 0 && subname.startsWith("#")) {
+				name = subname.substring(1);
+			}
+		}
 		newInstance = new Magic(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getLong(cursor.getColumnIndex(C_SubId)),
 									name,
 									cursor.getString(cursor.getColumnIndex(C_Description)), cursor.getString(cursor.getColumnIndex(C_Memo)));
