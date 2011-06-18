@@ -35,6 +35,8 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		setContentView(R.layout.meritpointedit);
 
 		ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
+		if (values == null)
+			return;
 		bindControlAndValue(R.id.HP, values[StatusType.HP.ordinal()]);
 		bindControlAndValue(R.id.MP, values[StatusType.MP.ordinal()]);
 		bindControlAndValue(R.id.STR, values[StatusType.STR.ordinal()]);
@@ -141,7 +143,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 	}
 	
 	static public boolean startActivity(FFXIEQActivity from, int request) {
-		{  // Create temporary copy of merit point values
+		try {  // Create temporary copy of merit point values
 			ControlBindableInteger values[];
 			MeritPoint merits;
 	
@@ -159,19 +161,22 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
 				for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
 					for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
-						values[i++] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
+						values[i] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
 					}
 				}
 			}
 			from.setTemporaryValues(values);
-		}
 
-		{
-			Intent intent = new Intent(from, MeritPointEditActivity.class);
-		
-			from.startActivityForResult(intent, request);
+			{
+				Intent intent = new Intent(from, MeritPointEditActivity.class);
+			
+				from.startActivityForResult(intent, request);
+			}
+			
+			return true;
+		} catch (OutOfMemoryError e) {
+			return false;
 		}
-		return true;
 	}
 
 	static public boolean isComeFrom(Intent data) {

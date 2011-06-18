@@ -34,7 +34,9 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 		setContentView(R.layout.skilleditor);
 		
 		ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-		
+		if (values == null)
+			return;
+
 		bindControlAndValue(R.id.HANDTOHAND, values[StatusType.SKILL_HANDTOHAND.ordinal()]);
 		bindControlAndValue(R.id.DAGGER, values[StatusType.SKILL_DAGGER.ordinal()]);
 		bindControlAndValue(R.id.SWORD, values[StatusType.SKILL_SWORD.ordinal()]);
@@ -115,7 +117,7 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 	}
 	
 	static public boolean startActivity(FFXIEQActivity from, int request) {
-		{ // Create temporary copy of skill values
+		try { // Create temporary copy of skill values
 			ControlBindableInteger values[];
 	
 			JobAndRace jobandrace = from.getFFXICharacter().getJobAndRace();
@@ -125,14 +127,15 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 				values[i] = new ControlBindableInteger(jobandrace.getSkill(types[i]));
 			}
 			from.setTemporaryValues(values);
+			{
+				Intent intent = new Intent(from, SkillEditActivity.class);
+				
+				from.startActivityForResult(intent, request);
+			}
+			return true;
+		} catch (OutOfMemoryError e) {
+			return false;
 		}
-
-		{
-			Intent intent = new Intent(from, SkillEditActivity.class);
-			
-			from.startActivityForResult(intent, request);
-		}
-		return true;
 	}
 
 	static public boolean isComeFrom(Intent data) {
