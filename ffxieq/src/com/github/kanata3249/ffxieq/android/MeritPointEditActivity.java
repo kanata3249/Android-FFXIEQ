@@ -161,7 +161,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
 				for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
 					for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
-						values[i] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
+						values[i++] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
 					}
 				}
 			}
