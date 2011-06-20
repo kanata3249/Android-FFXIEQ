@@ -338,7 +338,9 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 							int ii = 0;
 							for (int i = 0; i < maxCombi; i++) {
 								if ((n & (1 << i)) != 0) {
-									names[ii++] = mEquipments[parts[i]].getName();
+									if (used[parts[i]] == false) {
+										names[ii++] = mEquipments[parts[i]].getName();
+									}
 								}
 							}
 							// instantiate
