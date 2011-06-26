@@ -309,11 +309,12 @@ public class CharacterStatusView extends ScrollView {
 				if (value != 0) {
 					if (value > 0) {
 						sb.append('+');
+					} else {
+						sb.append('-');
+						value = -value;
 					}
 					sb.append(value / 100);
 					if ((value % 100) != 0) {
-						if (value < 0)
-							value = -value;
 						sb.append('.');
 						if (value % 100 < 10)
 							sb.append('0');
