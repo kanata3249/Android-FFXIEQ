@@ -247,49 +247,7 @@ public class FFXICharacter implements IStatus, Serializable {
 			StatusType type = types[i];
 
 			switch (type) {
-			case HP:
-			case MP:
-			case STR:
-			case DEX:
-			case VIT:
-			case AGI:
-			case INT:
-			case MND:
-			case CHR:
-			case DSub:
-			case DRange:
-			case DelayRange:
-			case Haste:
-			case Slow:
-			case AttackMagic:
-			case AccuracyMagic:
-			case DefenceMagic:
-			case Regist_Fire:
-			case Regist_Ice:
-			case Regist_Wind:
-			case Regist_Earth:
-			case Regist_Lightning:
-			case Regist_Water:
-			case Regist_Light:
-			case Regist_Dark:
-			case CriticalRate:
-			case CriticalDamage:
-			case CriticalRateDefence:
-			case CriticalDamageDefence:
-			case SubtleBlow:
-			case StoreTP:
-			case Enmity:
-			case MagicEvasion:
-			case HealingHP:
-			case HealingMP:
-			case DualWield:
-			case MartialArts:
-			case DoubleAttack:
-			case TrippleAttack:
-			case QuadAttack:
-			case DamageCut:
-			case Counter:
-			case SpellInterruptionRate:
+			default:
 				mCachedValues[type.ordinal()] = getStatus(mLevel, type);
 				break;
 
@@ -343,8 +301,6 @@ public class FFXICharacter implements IStatus, Serializable {
 				break;
 			case MODIFIER_NUM:
 				break;
-			default:
-				mCachedValues[type.ordinal()] = new StatusValue(0, 0, 0);
 			}
 		}
 		mStatusCacheValid = true;
@@ -356,49 +312,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		
 		switch (type) {
-		case HP:
-		case MP:
-		case STR:
-		case DEX:
-		case VIT:
-		case AGI:
-		case INT:
-		case MND:
-		case CHR:
-		case DSub:
-		case DRange:
-		case DelayRange:
-		case Haste:
-		case Slow:
-		case AttackMagic:
-		case AccuracyMagic:
-		case DefenceMagic:
-		case Regist_Fire:
-		case Regist_Ice:
-		case Regist_Wind:
-		case Regist_Earth:
-		case Regist_Lightning:
-		case Regist_Water:
-		case Regist_Light:
-		case Regist_Dark:
-		case CriticalRate:
-		case CriticalDamage:
-		case CriticalRateDefence:
-		case CriticalDamageDefence:
-		case SubtleBlow:
-		case StoreTP:
-		case Enmity:
-		case MagicEvasion:
-		case HealingHP:
-		case HealingMP:
-		case DualWield:
-		case MartialArts:
-		case DoubleAttack:
-		case TrippleAttack:
-		case QuadAttack:
-		case DamageCut:
-		case Counter:
-		case SpellInterruptionRate:
+		default:
 			return getStatus(mLevel, type);
 
 		case D:
@@ -434,7 +348,6 @@ public class FFXICharacter implements IStatus, Serializable {
 		case TPRange:
 			return getTPRange();
 		}
-		return null;
 	}
 
 	public StatusValue getD() {

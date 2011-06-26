@@ -87,15 +87,15 @@ public enum StatusType {
 	Regist_Dark,
 	CriticalRate,
 	CriticalDamage,
-	CriticalRateDefence,	//
-	CriticalDamageDefence,	//
+	CriticalRateDefence,
+	CriticalDamageDefence,
 	SubtleBlow,
 	StoreTP,
 	Evasion,
 	Enmity,
-	MagicEvasion,			//
-	HealingHP,				//
-	HealingMP,				//
+	MagicEvasion,
+	HealingHP,
+	HealingMP,
 	DualWield,
 	MartialArts,
 	DoubleAttack,
@@ -105,11 +105,17 @@ public enum StatusType {
 	DamageCutPhysical,
 	DamageCutMagic,
 	DamageCutBreath,
-	Counter,				//
-	SpellInterruptionRate,	//
+	Counter,
+	SpellInterruptionRate,
 
 	TP,
 	TPRange,
+	
+	CurePotency,
+	SongSpellCastingTime,
+	SongRecastDelay,
+	ConserveTP,
+	ConserveMP,
 
 	MODIFIER_NUM
 }

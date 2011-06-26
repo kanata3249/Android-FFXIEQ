@@ -111,6 +111,15 @@ public class FFXIString {
 	public static final int TOKEN_DAMAGECUT_PHYSICAL = 1059;
 	public static final int TOKEN_DAMAGECUT_MAGIC = 1060;
 	public static final int TOKEN_DAMAGECUT_BREATH = 1061;
+	
+	public static final int TOKEN_HEALING_HP = 1062;
+	public static final int TOKEN_HEALING_MP = 1063;
+	public static final int TOKEN_CONSERVE_TP = 1064;
+	public static final int TOKEN_CONSERVE_MP = 1065;
+	public static final int TOKEN_SONG_RECAST_DELAY = 1066;
+	public static final int TOKEN_SONG_SPELL_CASTING_TIME = 1067;
+	public static final int TOKEN_CURE_POTENCY = 1068;
+	public static final int TOKEN_CURE_POTENCY2 = 1069;
 
 	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
 	public static final int TOKEN_SKILL_DAGGER = 1101;

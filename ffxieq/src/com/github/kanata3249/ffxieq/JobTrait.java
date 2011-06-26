@@ -40,8 +40,10 @@ public class JobTrait extends StatusModifierWithDescription implements Serializa
 		StatusValue v;
 		
 		v = super.handleCommonToken(base, parameter);
-		v.setValue(v.getAdditional()); // JobTrait should not be treat as Additional...
-		v.setAdditional(0);
+		if (v != null) {
+			v.setValue(v.getAdditional()); // JobTrait should not be treat as Additional...
+			v.setAdditional(0);
+		}
 		
 		return v;
 	}

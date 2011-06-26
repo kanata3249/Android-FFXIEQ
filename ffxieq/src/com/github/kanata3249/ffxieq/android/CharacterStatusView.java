@@ -36,6 +36,7 @@ public class CharacterStatusView extends ScrollView {
 	static public final int GETSTATUS_STRING_TOTAL = 0;
 	static public final int GETSTATUS_STRING_SEPARATE = 1;
 	static final Object [] sObjLock = new Object[0];
+	boolean mUnusedStatusValues[];
 
 	public CharacterStatusView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -68,6 +69,11 @@ public class CharacterStatusView extends ScrollView {
 
 		if (cacheStatusAsync()) {
 			return;
+		}
+		
+		mUnusedStatusValues = new boolean[StatusType.MODIFIER_NUM.ordinal()];
+		for (int i = 0; i < mUnusedStatusValues.length; i++) {
+			mUnusedStatusValues[i] = true;
 		}
 
 		tv = (TextView)findViewById(R.id.HP);
@@ -409,6 +415,9 @@ public class CharacterStatusView extends ScrollView {
 	}
 	
 	private StatusValue getStatus(StatusType type) {
+		if (mUnusedStatusValues != null) {
+			mUnusedStatusValues[type.ordinal()] = false;
+		}
 		if (mCharInfoToCompare != null) {
 			StatusValue base = new StatusValue(0, 0, 0);
 			
@@ -568,11 +577,18 @@ public class CharacterStatusView extends ScrollView {
 		return getStatusString(StatusType.Regist_Dark, separate);
 	}
 	public String getUnknownTokens() {
-		SortedStringList tokens;
+		SortedStringList tokens, tokensToCompare, unusedTokens;
+		boolean unusedStatusValues[];
 
+		unusedStatusValues = mUnusedStatusValues;
+		mUnusedStatusValues = null;
 		tokens = mCharInfo.getUnknownTokens();
+		unusedTokens = getUnusedStatusValues(unusedStatusValues);
+		tokens.mergeList(unusedTokens);
 		if (mCharInfoToCompare != null) {
-			return tokens.diffList(mCharInfoToCompare.getUnknownTokens());
+			tokensToCompare = mCharInfoToCompare.getUnknownTokens();
+			tokensToCompare.mergeList(unusedTokens);
+			return tokens.diffList(tokensToCompare);
 		}
 		return tokens.toString();
 	}
@@ -605,5 +621,43 @@ public class CharacterStatusView extends ScrollView {
 		task.execute();
 		
 		return true;
+	}
+	
+	SortedStringList getUnusedStatusValues(boolean unusedStatusValues[]) {
+		StatusType unused[] = StatusType.values();
+		SortedStringList result;
+		
+		result = new SortedStringList();
+		for (int i = 0; i < unused.length - 1; i++) {  /* skip last MODIFIER_NUM */
+			if (unusedStatusValues[unused[i].ordinal()]) {
+				String name = isStatusTypeToDisplay(unused[i]);
+				if (name != null) {
+					result.addString(name + " " + getStatusString(unused[i], mDisplayParam));
+				}
+			}
+		}
+		return result;
+	}
+	
+	String isStatusTypeToDisplay(StatusType type) {
+		StatusValue v = getStatus(type);
+		if (v.getValue() == 0 && v.getAdditional() == 0 && v.getAdditionalPercent() == 0 && v.getAdditionalPercentWithCap() == 0)
+			return null;
+		switch (type) {
+		case CriticalRateDefence:
+		case CriticalDamageDefence:
+		case MagicEvasion:
+		case HealingHP:
+		case HealingMP:
+		case Counter:
+		case SpellInterruptionRate:
+		case CurePotency:
+		case SongSpellCastingTime:
+		case SongRecastDelay:
+		case ConserveTP:
+		case ConserveMP:
+			return type.name();
+		}
+		return null;
 	}
 }
