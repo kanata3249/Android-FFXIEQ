@@ -218,9 +218,11 @@ public class FFXICharacter implements IStatus, Serializable {
 			}
 		}
 
-		mMagicSet.addMagic(id);
-		mModified = true;
-		mStatusCacheValid = false;
+		if (id >= 0) {
+			mMagicSet.addMagic(id);
+			mModified = true;
+			mStatusCacheValid = false;
+		}
 		return;
 	}
 	public boolean isModified() {
