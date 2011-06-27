@@ -15,6 +15,8 @@
 */
 package com.github.kanata3249.ffxieq.android;
 
+import com.github.kanata3249.ffxi.FFXIDAO;
+import com.github.kanata3249.ffxi.FFXIString;
 import com.github.kanata3249.ffxi.status.SortedStringList;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxi.status.StatusValue;
@@ -37,6 +39,7 @@ public class CharacterStatusView extends ScrollView {
 	static public final int GETSTATUS_STRING_SEPARATE = 1;
 	static final Object [] sObjLock = new Object[0];
 	boolean mUnusedStatusValues[];
+	FFXIDAO mDao;
 
 	public CharacterStatusView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -50,6 +53,7 @@ public class CharacterStatusView extends ScrollView {
 	public boolean bindFFXICharacter(FFXICharacter charinfo, FFXICharacter toCompare) {
 		mCharInfo = charinfo;
 		mCharInfoToCompare = toCompare;
+		mDao = FFXICharacter.getDao();
 		notifyDatasetChanged();
 
 		return true;
@@ -645,18 +649,31 @@ public class CharacterStatusView extends ScrollView {
 			return null;
 		switch (type) {
 		case CriticalRateDefence:
+			return mDao.getString(FFXIString.TOKEN_CRITICAL_RATE_DEFENCE);
 		case CriticalDamageDefence:
-		case MagicEvasion:
-		case HealingHP:
-		case HealingMP:
-		case Counter:
+			return mDao.getString(FFXIString.TOKEN_CRITICAL_DAMAGE_DEFENCE);
 		case SpellInterruptionRate:
+			return mDao.getString(FFXIString.TOKEN_SPELL_INTERRUPTION_RATE);
+		case MagicEvasion:
+			return mDao.getString(FFXIString.TOKEN_MAGIC_EVASION);
+		case Counter:
+			return mDao.getString(FFXIString.TOKEN_COUNTER);
+		case CriticalDamageRange:
+			return mDao.getString(FFXIString.TOKEN_CRITICAL_DAMAGE_RANGE);
+		case HealingHP:
+			return mDao.getString(FFXIString.TOKEN_HEALING_HP);
+		case HealingMP:
+			return mDao.getString(FFXIString.TOKEN_HEALING_MP);
 		case CurePotency:
+			return mDao.getString(FFXIString.TOKEN_CURE_POTENCY);
 		case SongSpellCastingTime:
+			return mDao.getString(FFXIString.TOKEN_SONG_SPELL_CASTING_TIME);
 		case SongRecastDelay:
+			return mDao.getString(FFXIString.TOKEN_SONG_RECAST_DELAY);
 		case ConserveTP:
+			return mDao.getString(FFXIString.TOKEN_CONSERVE_TP);
 		case ConserveMP:
-			return type.name();
+			return mDao.getString(FFXIString.TOKEN_CONSERVE_MP);
 		}
 		return null;
 	}

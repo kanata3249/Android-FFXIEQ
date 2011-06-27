@@ -246,6 +246,11 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_CONSERVE_TP, StatusType.ConserveTP);
 		setupCommonTokenHandler(FFXIString.TOKEN_HEALING_MP, StatusType.HealingMP);
 		setupCommonTokenHandler(FFXIString.TOKEN_HEALING_HP, StatusType.HealingHP);
+		setupCommonTokenHandler(FFXIString.TOKEN_COUNTER, StatusType.Counter);
+		setupCommonTokenHandler(FFXIString.TOKEN_MAGIC_EVASION, StatusType.MagicEvasion);
+		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_DAMAGE_RANGE, StatusType.CriticalDamageRange);
+		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_DAMAGE_DEFENCE, StatusType.CriticalDamageDefence);
+		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_RATE_DEFENCE, StatusType.CriticalRateDefence);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);

@@ -120,6 +120,12 @@ public class FFXIString {
 	public static final int TOKEN_SONG_SPELL_CASTING_TIME = 1067;
 	public static final int TOKEN_CURE_POTENCY = 1068;
 	public static final int TOKEN_CURE_POTENCY2 = 1069;
+	public static final int TOKEN_COUNTER = 1070;
+	public static final int TOKEN_CRITICAL_DAMAGE_RANGE = 1071;
+	public static final int TOKEN_MAGIC_EVASION = 1072;
+	public static final int TOKEN_CRITICAL_RATE_DEFENCE = 1073;
+	public static final int TOKEN_CRITICAL_DAMAGE_DEFENCE = 1074;
+	public static final int TOKEN_SPELL_INTERRUPTION_RATE = 1075;
 
 	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
 	public static final int TOKEN_SKILL_DAGGER = 1101;

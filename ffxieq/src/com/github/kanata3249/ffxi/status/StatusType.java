@@ -116,6 +116,7 @@ public enum StatusType {
 	SongRecastDelay,
 	ConserveTP,
 	ConserveMP,
+	CriticalDamageRange,
 
 	MODIFIER_NUM
 }
