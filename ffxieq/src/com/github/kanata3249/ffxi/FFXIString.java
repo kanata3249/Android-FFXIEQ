@@ -19,6 +19,7 @@ public class FFXIString {
 	public static final int ItemDescriptionTokenSeparator = 1;
 	public static final int ItemDescriptionConvertCharsFrom = 2;
 	public static final int ItemDescriptionConvertCharsTo = 3;
+	public static final int ItemDescriptionToken_IgnoreSuffix = 4;
 
 	public static final int RACE_DB_HUM = 2000;
 	public static final int RACE_DB_ELV = 2001;

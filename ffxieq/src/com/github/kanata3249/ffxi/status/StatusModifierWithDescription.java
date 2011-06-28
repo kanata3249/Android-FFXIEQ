@@ -29,6 +29,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 	private transient Hashtable<String, DescriptionTokenHandler> fTokenHandler;
 	static transient String mConvertCharactersFrom;
 	static transient String mConvertCharactersTo;
+	private transient String mIgnoreSuffix;
 	
 	abstract class DescriptionTokenHandler {
 		abstract boolean handleToken(String token, String parameter);
@@ -184,6 +185,9 @@ public class StatusModifierWithDescription extends StatusModifier {
 	protected StatusValue handleCommonToken(StatusValue base, String parameter) {
 		StatusValue newValue;
 
+		if (parameter.endsWith(mIgnoreSuffix)) {
+			parameter = parameter.substring(0, mIgnoreSuffix.length());
+		}
 		newValue = StatusValue.valueOf(parameter);
 		if (newValue != null) {
 			newValue.add(base);
@@ -196,6 +200,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		if (fTokenHandler != null) {
 			return;
 		}
+		mIgnoreSuffix = Dao.getString(FFXIString.ItemDescriptionToken_IgnoreSuffix);
 		fTokenHandler = new Hashtable<String, DescriptionTokenHandler>();
 		setupCommonTokenHandler(FFXIString.TOKEN_STR, StatusType.STR);
 		setupCommonTokenHandler(FFXIString.TOKEN_VIT, StatusType.VIT);
@@ -251,6 +256,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_DAMAGE_RANGE, StatusType.CriticalDamageRange);
 		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_DAMAGE_DEFENCE, StatusType.CriticalDamageDefence);
 		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_RATE_DEFENCE, StatusType.CriticalRateDefence);
+		setupCommonTokenHandler(FFXIString.TOKEN_SPELL_INTERRUPTION_RATE, StatusType.SpellInterruptionRate);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);
