@@ -186,7 +186,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		StatusValue newValue;
 
 		if (parameter.endsWith(mIgnoreSuffix)) {
-			parameter = parameter.substring(0, mIgnoreSuffix.length());
+			parameter = parameter.substring(0, parameter.length() - mIgnoreSuffix.length());
 		}
 		newValue = StatusValue.valueOf(parameter);
 		if (newValue != null) {
