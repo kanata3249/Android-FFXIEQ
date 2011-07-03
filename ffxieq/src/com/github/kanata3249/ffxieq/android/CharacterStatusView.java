@@ -653,7 +653,7 @@ public class CharacterStatusView extends ScrollView {
 		case CriticalDamageDefence:
 			return mDao.getString(FFXIString.TOKEN_CRITICAL_DAMAGE_DEFENCE);
 		case SpellInterruptionRate:
-			return mDao.getString(FFXIString.TOKEN_SPELL_INTERRUPTION_RATE);
+			return getResources().getString(R.string.SpellInterruptionRate);
 		case MagicEvasion:
 			return mDao.getString(FFXIString.TOKEN_MAGIC_EVASION);
 		case Counter:

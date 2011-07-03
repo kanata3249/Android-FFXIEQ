@@ -66,7 +66,18 @@ public class JobTraitSet extends StatusModifier implements IStatus, Serializable
 		return total;
 	}
 
-	public String getUnknownTokens() {
-		return "";
+	public SortedStringList getUnknownTokens() {
+		SortedStringList unknownTokens = new SortedStringList();
+		for (int i = 0; i < mJobTraits.length; i++) {
+			if (mJobTraits[i] != null) {
+				unknownTokens.mergeList(mJobTraits[i].getUnknownTokens());
+			}
+		}
+		for (int i = 0; i < mSubJobTraits.length; i++) {
+			if (mSubJobTraits[i] != null) {
+				unknownTokens.mergeList(mSubJobTraits[i].getUnknownTokens());
+			}
+		}
+		return unknownTokens;
 	}
 }

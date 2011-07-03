@@ -301,4 +301,5 @@
     <string name="RestoreFromSDSucceeded">設定をリストアしました。</string>
     <string name="RestoreFromSDFailed">設定リストアに失敗しました。</string>
     <string name="QueryRestoreFromSD">リストアすると現在のキャラクタデータやオーグメント・フィルタはすべて破棄され、バックアップデータで上書きされます。続行しますか？</string>
+    <string name="SpellInterruptionRate">詠唱中断率ダウン</string>
 </resources>

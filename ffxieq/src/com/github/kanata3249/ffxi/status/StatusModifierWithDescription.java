@@ -117,6 +117,8 @@ public class StatusModifierWithDescription extends StatusModifier {
 			String token, tmp[], parameter;
 			DescriptionTokenHandler handler;
 			
+			if (tokens[i].length() == 0)
+				continue;
 			tmp = tokens[i].split("[\\+\\-0-9]");
 			if (tmp != null && tmp.length > 0) {
 				token = tmp[0];

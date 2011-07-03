@@ -165,4 +165,10 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 		loadDefaultValues();  // quick hack for StatusType length change...
 		mSkills[type.ordinal()] = value;
 	}
+	
+	public SortedStringList getUnknownTokens() {
+		if (mJobTraits != null)
+			return mJobTraits.getUnknownTokens();
+		return null;
+	}
 }

@@ -625,7 +625,11 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
+				if (type == StatusType.SKILL_SHIELD) {
+					mod = new StatusValue(0, 0, 0);
+				} else {
+					mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
+				}
 			}
 			return mod;
 		} else {
@@ -686,7 +690,11 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
+				if (type == StatusType.SKILL_SHIELD) {
+					mod = new StatusValue(0, 0, 0);
+				} else {
+					mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
+				}
 			}
 			return mod;
 		} else {
@@ -785,6 +793,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	public SortedStringList getUnknownTokens() {
 		SortedStringList unknownTokens = new SortedStringList();
 		unknownTokens.mergeList(mEquipment.getUnknownTokens());
+		unknownTokens.mergeList(mJobAndRace.getUnknownTokens());
 		if (mInAbyssea) {
 			unknownTokens.mergeList(mAtmaset.getUnknownTokens());
 		}
