@@ -121,8 +121,14 @@ public class StatusModifierWithDescription extends StatusModifier {
 				continue;
 			tmp = tokens[i].split("[\\+\\-0-9]");
 			if (tmp != null && tmp.length > 0) {
-				token = tmp[0];
-				parameter = tokens[i].substring(token.length());
+				if (tmp[0].length() == 0) {
+					// start with digits..
+					token = tmp[tmp.length - 1];
+					parameter = tokens[i].substring(0, tokens[i].length() - token.length());
+				} else {
+					token = tmp[0];
+					parameter = tokens[i].substring(token.length());
+				}
 			} else {
 				token = tokens[i];
 				parameter = "";
@@ -259,6 +265,9 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_DAMAGE_DEFENCE, StatusType.CriticalDamageDefence);
 		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_RATE_DEFENCE, StatusType.CriticalRateDefence);
 		setupCommonTokenHandler(FFXIString.TOKEN_SPELL_INTERRUPTION_RATE, StatusType.SpellInterruptionRate);
+
+		setupCommonTokenHandler(FFXIString.TOKEN_CONVERT_HP_TO_MP, StatusType.Convert_HP_TO_MP);
+		setupCommonTokenHandler(FFXIString.TOKEN_CONVERT_MP_TO_HP, StatusType.Convert_MP_TO_HP);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);

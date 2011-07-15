@@ -301,6 +301,14 @@ public class FFXICharacter implements IStatus, Serializable {
 			case DamageCutBreath:
 				mCachedValues[type.ordinal()] = getDamageCutBreath();
 				break;
+				
+			case HP:
+				mCachedValues[type.ordinal()] = getHP();
+				break;
+			case MP:
+				mCachedValues[type.ordinal()] = getMP();
+				break;
+				
 			case MODIFIER_NUM:
 				break;
 			}
@@ -349,6 +357,11 @@ public class FFXICharacter implements IStatus, Serializable {
 			return getTP();
 		case TPRange:
 			return getTPRange();
+			
+		case HP:
+			return getHP();
+		case MP:
+			return getMP();
 		}
 	}
 
@@ -788,6 +801,49 @@ public class FFXICharacter implements IStatus, Serializable {
 		value = getStatus(mLevel, StatusType.DamageCut);
 		value.add(getStatus(mLevel, StatusType.DamageCutBreath));
 		return value;
+	}
+	
+	public StatusValue getHP() {
+		StatusValue HP, MP, convToHP, convToMP;
+		int conv;
+		
+		HP = getStatus(mLevel, StatusType.HP);
+		MP = getStatus(mLevel, StatusType.MP);
+		convToMP = getStatus(mLevel, StatusType.Convert_HP_TO_MP);
+		convToHP = getStatus(mLevel, StatusType.Convert_MP_TO_HP);
+		conv = convToHP.getTotal() - convToMP.getTotal();
+		if (conv < 0) {
+			conv = Math.min(HP.getTotal(), -conv);
+			HP.setAdditional(HP.getAdditional() - conv);
+			MP.setAdditional(MP.getAdditional() + conv);
+		} else {
+			conv = Math.min(MP.getTotal(), conv);
+			HP.setAdditional(HP.getAdditional() + conv);
+			MP.setAdditional(MP.getAdditional() - conv);
+		}
+		
+		return HP;
+	}
+	public StatusValue getMP() {
+		StatusValue HP, MP, convToHP, convToMP;
+		int conv;
+		
+		HP = getStatus(mLevel, StatusType.HP);
+		MP = getStatus(mLevel, StatusType.MP);
+		convToMP = getStatus(mLevel, StatusType.Convert_HP_TO_MP);
+		convToHP = getStatus(mLevel, StatusType.Convert_MP_TO_HP);
+		conv = convToHP.getTotal() - convToMP.getTotal();
+		if (conv < 0) {
+			conv = Math.min(HP.getTotal(), -conv);
+			HP.setAdditional(HP.getAdditional() - conv);
+			MP.setAdditional(MP.getAdditional() + conv);
+		} else {
+			conv = Math.min(MP.getTotal(), conv);
+			HP.setAdditional(HP.getAdditional() + conv);
+			MP.setAdditional(MP.getAdditional() - conv);
+		}
+		
+		return MP;
 	}
 
 	public SortedStringList getUnknownTokens() {

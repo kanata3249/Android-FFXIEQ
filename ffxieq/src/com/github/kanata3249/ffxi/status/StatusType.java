@@ -117,6 +117,9 @@ public enum StatusType {
 	ConserveTP,
 	ConserveMP,
 	CriticalDamageRange,
+	
+	Convert_HP_TO_MP,
+	Convert_MP_TO_HP,
 
 	MODIFIER_NUM
 }

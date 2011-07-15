@@ -169,6 +169,9 @@ public class FFXIString {
 	public static final int TOKEN_REGIST_WATER = 1136;
 	public static final int TOKEN_REGIST_LIGHT = 1137;
 	public static final int TOKEN_REGIST_DARK = 1138;
+	
+	public static final int TOKEN_CONVERT_HP_TO_MP = 1139;
+	public static final int TOKEN_CONVERT_MP_TO_HP = 1140;
 
 	public static final int TOKEN_Latent_Effect = 1200;
 	public static final int TOKEN_Assult = 1201;
