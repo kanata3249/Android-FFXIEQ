@@ -127,7 +127,7 @@ public class BasicEditFragment extends FFXIEQFragment {
 						KeyEvent event) {
 					if (v.getId() == R.id.JobLevel){
 						FFXICharacter charInfo = getFFXICharacter();
-						if (charInfo.getSubJobLevel() == charInfo.getJobLevel() / 2) {
+						if (charInfo.getSubJobLevel() >= charInfo.getJobLevel() / 2) {
 					    	EditText edit = (EditText)mView.findViewById(R.id.JobLevel);
 					    	if (edit != null) {
 						    	int value;
@@ -137,7 +137,8 @@ public class BasicEditFragment extends FFXIEQFragment {
 					    		} catch (NumberFormatException e) {
 					    			value = 0;
 					    		}
-					    		value = value / 2;
+					    		if (value > 1)
+					    			value = value / 2;
 					    		edit = (EditText)mView.findViewById(R.id.SubJobLevel);
 					    		if (edit != null) {
 					    			edit.setText(((Integer)value).toString());
@@ -350,7 +351,7 @@ public class BasicEditFragment extends FFXIEQFragment {
     		} catch (NumberFormatException e) {
     			v = 0;
     		}
-    		v = Math.min(v, charInfo.getJobLevel() / 2);
+    		v = Math.min(v, Math.max(1, charInfo.getJobLevel() / 2));
     		charInfo.setSubJobLevel(v);
     	}
     	spin = (Spinner)mView.findViewById(R.id.AbyssiteOfFurtherance);
