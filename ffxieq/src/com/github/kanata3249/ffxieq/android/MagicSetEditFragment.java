@@ -18,17 +18,25 @@ package com.github.kanata3249.ffxieq.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+
 import com.github.kanata3249.ffxieq.FFXICharacter;
+import com.github.kanata3249.ffxieq.Magic;
 import com.github.kanata3249.ffxieq.R;
 
 public class MagicSetEditFragment extends FFXIEQFragment {
 	private View mView;
 	private boolean mUpdating;
+	int mLongClickingItemPosition;
     
     @Override
     public void onStart() {
@@ -50,6 +58,17 @@ public class MagicSetEditFragment extends FFXIEQFragment {
     					MagicSelectorActivity.startActivity(MagicSetEditFragment.this, 0, getFFXICharacter(), arg2, ((MagicSetView)arg0).getItemId(arg2), ((MagicSetView)arg0).getItemSubId(arg2));
     				}
             	});
+            	ms.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+					public boolean onItemLongClick(AdapterView<?> arg0,
+							View arg1, int arg2, long arg3) {
+						mLongClickingItemPosition = arg2;
+						getActivity().openContextMenu(arg0);
+						return true;
+					}
+            		
+            	});
+    			registerForContextMenu(ms);
         	}
         }
     }
@@ -123,4 +142,62 @@ public class MagicSetEditFragment extends FFXIEQFragment {
 
     	mUpdating = false;
     }
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		FFXICharacter charInfo = getFFXICharacter();
+
+		switch (item.getItemId()) {
+		case R.id.Remove:
+			charInfo.setMagic(-1, charInfo.getMagic(mLongClickingItemPosition).getSubId());
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.RemoveAll:
+			while (charInfo.getNumMagic() > 0) {
+				charInfo.setMagic(-1, charInfo.getMagic(0).getSubId());
+			}
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.List:
+			{
+				long cur, subid;
+	        	MagicSetView ms;
+	        	
+	        	ms = (MagicSetView)getView().findViewById(R.id.Magics);
+				cur = ms.getItemId(mLongClickingItemPosition);
+				subid = ms.getItemSubId(mLongClickingItemPosition);
+				MagicSelectorActivity.startActivity(MagicSetEditFragment.this, 0, getFFXICharacter(), mLongClickingItemPosition, cur, subid);
+				return true;
+			}
+		}
+
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		MenuInflater inflater = getActivity().getMenuInflater();
+		inflater.inflate(R.menu.magicset_context, menu);
+		Magic mg;
+		
+		if (getFFXICharacter().getNumMagic() > mLongClickingItemPosition)
+			mg = getFFXICharacter().getMagic(mLongClickingItemPosition);
+		else
+			mg = null;
+		MenuItem item;
+		
+		item = menu.findItem(R.id.Remove);
+		if (item != null)
+			item.setEnabled(mg != null);
+	}
+
 }
