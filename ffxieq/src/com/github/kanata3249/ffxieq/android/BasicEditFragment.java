@@ -40,7 +40,6 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.github.kanata3249.ffxieq.Atma;
 import com.github.kanata3249.ffxieq.AtmaSet;
-import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.Food;
 import com.github.kanata3249.ffxieq.R;
