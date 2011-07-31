@@ -28,8 +28,8 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	public static final int HEAD = 2;
 	public static final int BODY = 3;
 	public static final int HANDS = 4;
-	public static final int FEET = 5;
-	public static final int LEGS = 6;
+	public static final int LEGS = 5;
+	public static final int FEET = 6;
 	public static final int BACK = 7;
 	public static final int NECK = 8;
 	public static final int WAIST = 9;
@@ -70,10 +70,10 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 			total.add(mEquipments[BODY].getStatus(level, type));
 		if (mEquipments[HANDS] != null)
 			total.add(mEquipments[HANDS].getStatus(level, type));
-		if (mEquipments[FEET] != null)
-			total.add(mEquipments[FEET].getStatus(level, type));
 		if (mEquipments[LEGS] != null)
 			total.add(mEquipments[LEGS].getStatus(level, type));
+		if (mEquipments[FEET] != null)
+			total.add(mEquipments[FEET].getStatus(level, type));
 		if (mEquipments[BACK] != null)
 			total.add(mEquipments[BACK].getStatus(level, type));
 		if (mEquipments[NECK] != null)

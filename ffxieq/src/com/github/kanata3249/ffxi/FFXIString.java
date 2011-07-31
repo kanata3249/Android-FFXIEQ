@@ -55,8 +55,8 @@ public class FFXIString {
 	public static final int PART_DB_HEAD = 2202;
 	public static final int PART_DB_BODY = 2203;
 	public static final int PART_DB_HANDS = 2204;
-	public static final int PART_DB_FEET = 2205;
-	public static final int PART_DB_LEGS = 2206;
+	public static final int PART_DB_LEGS = 2205;
+	public static final int PART_DB_FEET = 2206;
 	public static final int PART_DB_BACK = 2207;
 	public static final int PART_DB_NECK = 2208;
 	public static final int PART_DB_WAIST = 2209;
