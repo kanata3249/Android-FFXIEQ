@@ -17,11 +17,16 @@ package com.github.kanata3249.ffxieq.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -29,15 +34,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.github.kanata3249.ffxieq.Atma;
+import com.github.kanata3249.ffxieq.AtmaSet;
+import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.FFXICharacter;
+import com.github.kanata3249.ffxieq.Food;
 import com.github.kanata3249.ffxieq.R;
 
 public class BasicEditFragment extends FFXIEQFragment {
 	private View mView;
 	private boolean mUpdating;
+	int mLongClickingItemPosition;
+	View mLongClickingView;
     
     @Override
     public void onStart() {
@@ -171,6 +183,18 @@ public class BasicEditFragment extends FFXIEQFragment {
     					AtmaSelector.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), arg2, ((AtmaSetView)arg0).getItemId(arg2));
     				}
             	});
+            	as.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+					public boolean onItemLongClick(AdapterView<?> arg0,
+							View arg1, int arg2, long arg3) {
+						mLongClickingView = arg0;
+						mLongClickingItemPosition = arg2;
+						getActivity().openContextMenu(arg0);
+						return true;
+					}
+            		
+            	});
+    			registerForContextMenu(as);
         	}
         }
         {
@@ -185,6 +209,18 @@ public class BasicEditFragment extends FFXIEQFragment {
     					FoodSelectorActivity.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), ((FoodSetView)arg0).getItemId(arg2));
     				}
             	});
+            	fs.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+					public boolean onItemLongClick(AdapterView<?> arg0,
+							View arg1, int arg2, long arg3) {
+						mLongClickingView = arg0;
+						mLongClickingItemPosition = arg2;
+						getActivity().openContextMenu(arg0);
+						return true;
+					}
+            		
+            	});
+    			registerForContextMenu(fs);
         	}
         }
         
@@ -433,4 +469,210 @@ public class BasicEditFragment extends FFXIEQFragment {
 
     	mUpdating = false;
     }
+
+    @Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (mLongClickingView == getView().findViewById(R.id.Atmas)) {
+			return onAtmaSetContextItemSelected(item);
+		} else {
+			return onFoodSetContextItemSelected(item);
+		}
+	}
+
+	public boolean onFoodSetContextItemSelected(MenuItem item) {
+		FFXICharacter charInfo = getFFXICharacter();
+
+		switch (item.getItemId()) {
+		case R.id.Remove:
+			charInfo.setFood(-1, null);
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.List:
+			{
+	        	FoodSetView fs;
+	        	
+	        	fs = (FoodSetView)getView().findViewById(R.id.Foods);
+				FoodSelectorActivity.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), fs.getItemId(mLongClickingItemPosition));
+				return true;
+			}
+		}
+
+		// Web Search
+		Food food = getFFXICharacter().getFood(0);
+		Intent intent;
+		if (food != null) {
+			String[] urls = getResources().getStringArray(R.array.SearchURIs);
+			String name = food.getName();
+			String url;
+
+			url = null;
+			switch (item.getItemId()) {
+			case R.id.WebSearch0:
+				url = urls[0];
+				break;
+			case R.id.WebSearch1:
+				url = urls[1];
+				break;
+			case R.id.WebSearch2:
+				url = urls[2];
+				break;
+			case R.id.WebSearch3:
+				url = urls[3];
+				break;
+			case R.id.WebSearch4:
+				url = urls[4];
+				break;
+			case R.id.WebSearch5:
+				url = urls[5];
+				break;
+			case R.id.WebSearch6:
+				url = urls[6];
+				break;
+			case R.id.WebSearch7:
+				url = urls[7];
+				break;
+			default:
+				url = null;
+				break;
+			}
+			if (url != null) {
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("\\+")[0])));
+				startActivity(intent);
+				return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+	
+	public boolean onAtmaSetContextItemSelected(MenuItem item) {
+		FFXICharacter charInfo = getFFXICharacter();
+
+		switch (item.getItemId()) {
+		case R.id.Remove:
+			charInfo.setAtma(mLongClickingItemPosition, -1);
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.RemoveAll:
+			for (int i = 0; i < AtmaSet.ATMA_MAX; i++) {
+				charInfo.setAtma(i, -1);
+			}
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.List:
+			{
+	        	AtmaSetView as;
+	        	
+	        	as = (AtmaSetView)getView().findViewById(R.id.Atmas);
+				AtmaSelector.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), mLongClickingItemPosition, as.getItemId(mLongClickingItemPosition));
+				return true;
+			}
+		}
+
+		// Web Search
+		Atma atma = getFFXICharacter().getAtma(mLongClickingItemPosition);
+		Intent intent;
+		if (atma != null) {
+			String[] urls = getResources().getStringArray(R.array.SearchURIs);
+			String name = atma.getName();
+			String url;
+
+			url = null;
+			switch (item.getItemId()) {
+			case R.id.WebSearch0:
+				url = urls[0];
+				break;
+			case R.id.WebSearch1:
+				url = urls[1];
+				break;
+			case R.id.WebSearch2:
+				url = urls[2];
+				break;
+			case R.id.WebSearch3:
+				url = urls[3];
+				break;
+			case R.id.WebSearch4:
+				url = urls[4];
+				break;
+			case R.id.WebSearch5:
+				url = urls[5];
+				break;
+			case R.id.WebSearch6:
+				url = urls[6];
+				break;
+			case R.id.WebSearch7:
+				url = urls[7];
+				break;
+			default:
+				url = null;
+				break;
+			}
+			if (url != null) {
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("\\+")[0])));
+				startActivity(intent);
+				return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		MenuInflater inflater = getActivity().getMenuInflater();
+		inflater.inflate(R.menu.basicedit_context, menu);
+
+		Object obj;
+		MenuItem item;
+		if (mLongClickingView == v.findViewById(R.id.Atmas)) {
+			Atma atma = getFFXICharacter().getAtma(mLongClickingItemPosition);
+
+			obj = atma;
+			item = menu.findItem(R.id.Remove);
+			if (item != null)
+				item.setEnabled(atma != null);
+		} else {
+			Food food = getFFXICharacter().getFood(0);
+
+			obj = food;
+			item = menu.findItem(R.id.Remove);
+			if (item != null)
+				item.setEnabled(food != null);
+			menu.removeItem(R.id.RemoveAll);
+		}
+		item = menu.findItem(R.id.WebSearch0);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch1);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch2);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch3);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch4);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch5);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch6);
+		if (item != null)
+			item.setEnabled(obj != null);
+		item = menu.findItem(R.id.WebSearch7);
+		if (item != null)
+			item.setEnabled(obj != null);
+	}
 }
