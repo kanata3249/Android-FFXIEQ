@@ -246,6 +246,7 @@ public class EquipmentTable {
 			where.append(names[i]);
 			where.append("%'");
 		}
+		where.append(" AND " + C_Combi_NumMatches + " ='" + names.length + "'"); 
 
 		try {
 			cursor = db.query(TABLE_NAME_COMBINATION, columns,
