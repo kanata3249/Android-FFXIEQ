@@ -120,6 +120,8 @@ public enum StatusType {
 	
 	Convert_HP_TO_MP,
 	Convert_MP_TO_HP,
+	
+	KickAttack,
 
 	MODIFIER_NUM
 }
