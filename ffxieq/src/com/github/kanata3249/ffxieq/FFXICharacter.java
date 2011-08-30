@@ -637,12 +637,10 @@ public class FFXICharacter implements IStatus, Serializable {
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
-			if (type != null) {
-				if (type == StatusType.SKILL_SHIELD) {
-					mod = new StatusValue(0, 0, 0);
-				} else {
-					mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
-				}
+			if (type != null && type != StatusType.SKILL_SHIELD) {
+				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
+			} else {
+				mod = new StatusValue(0, 0, 0);
 			}
 			return mod;
 		} else {
@@ -702,12 +700,10 @@ public class FFXICharacter implements IStatus, Serializable {
 		Equipment eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
 		if (eq != null) {
 			type = eq.getWeaponType();
-			if (type != null) {
-				if (type == StatusType.SKILL_SHIELD) {
-					mod = new StatusValue(0, 0, 0);
-				} else {
-					mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
-				}
+			if (type != null && type != StatusType.SKILL_SHIELD) {
+				mod.setValue(calcAttackByWeaponType(type) + mod.getValue());
+			} else {
+				mod = new StatusValue(0, 0, 0);
 			}
 			return mod;
 		} else {
