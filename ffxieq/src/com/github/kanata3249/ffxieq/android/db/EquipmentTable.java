@@ -116,7 +116,7 @@ public class EquipmentTable {
 		
 		try {
 			cursor = db.query(TABLE_NAME, columns,
-					C_Name + " LIKE '%" + name + "%' AND " +
+					C_Name + " = '" + name + "' AND " +
 					C_Part + " LIKE '%" + part + "%' AND " +
 					C_Level + " = '" + level + "' AND " +
 					C_Weapon + " LIKE '%" + weapon + "%'",
