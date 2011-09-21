@@ -40,7 +40,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	static FFXIDAO Dao;
 	
 	public FFXICharacter() {
-		mLevel = new JobLevelAndRace(JobLevelAndRace.Hum, JobLevelAndRace.WAR, JobLevelAndRace.MNK, 90, 45);
+		mLevel = new JobLevelAndRace(JobLevelAndRace.Hum, JobLevelAndRace.WAR, JobLevelAndRace.MNK, 95, 47);
 		mJobAndRace = new JobAndRace();
 		mEquipment = new EquipmentSet();
 		mMerits = new MeritPoint();
