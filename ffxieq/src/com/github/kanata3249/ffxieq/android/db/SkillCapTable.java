@@ -38,8 +38,8 @@ public class SkillCapTable {
 		value = 0;
 		try {
 			cursor = db.query(TABLE_NAME, columns,
-								C_Rank + " = '" + jobrank + "' AND " + C_Level + " = '" + joblevel + "'",
-								null, null, null, null, null);
+								C_Rank + " = '" + jobrank + "' AND " + C_Level + " <= '" + joblevel + "'",
+								null, null, null, C_Level + " DESC", null);
 		} catch (SQLiteException e) {
 			return 0;
 		}
@@ -53,8 +53,8 @@ public class SkillCapTable {
 		if (subjoblevel > 0 && !subjobrank.equals("-")) {
 			try {
 				cursor = db.query(TABLE_NAME, columns,
-						C_Rank + " = '" + subjobrank + "' AND " + C_Level + " = '" + subjoblevel + "'",
-						null, null, null, null, null);
+						C_Rank + " = '" + subjobrank + "' AND " + C_Level + " <= '" + subjoblevel + "'",
+						null, null, null, C_Level + " DESC", null);
 			} catch (SQLiteException e) {
 				return 0;
 			}

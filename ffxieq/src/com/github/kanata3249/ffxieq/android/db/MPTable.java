@@ -43,8 +43,8 @@ public class MPTable {
 		if (!jobrank.equals("-")) {
 			try {
 				cursor = db.query(true, TABLE_NAME, columns,
-									C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + jobrank + "' AND " + C_JobLevel + " = '" + joblevel + "'",
-									null, null, null, null, null);
+									C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + jobrank + "' AND " + C_JobLevel + " <= '" + joblevel + "'",
+									null, null, null, C_JobLevel + " DESC", null);
 			} catch (SQLiteException e) {
 				return 0;
 			}
@@ -60,8 +60,8 @@ public class MPTable {
 			if (!subjobrank.equals("-") && subjoblevel > 0) {
 				try {
 					cursor = db.query(true, TABLE_NAME_SUB, columns2,
-							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
-							null, null, null, null, null);
+							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " <= '" + subjoblevel + "'",
+							null, null, null, C_JobLevel + " DESC", null);
 				} catch (SQLiteException e) {
 					return 0;
 				}
@@ -79,8 +79,8 @@ public class MPTable {
 			if (!subjobrank.equals("-")&& subjoblevel > 0) {
 				try {
 					cursor = db.query(true, TABLE_NAME_SUB, columns2,
-							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " = '" + subjoblevel + "'",
-							null, null, null, null, null);
+							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " <= '" + subjoblevel + "'",
+							null, null, null, C_JobLevel + " DESC", null);
 				} catch (SQLiteException e) {
 					return 0;
 				}
