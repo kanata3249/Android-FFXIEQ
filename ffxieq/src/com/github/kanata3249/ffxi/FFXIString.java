@@ -174,14 +174,6 @@ public class FFXIString {
 	public static final int TOKEN_CONVERT_HP_TO_MP = 1139;
 	public static final int TOKEN_CONVERT_MP_TO_HP = 1140;
 
-	public static final int TOKEN_Latent_Effect = 1200;
-	public static final int TOKEN_Assult = 1201;
-	public static final int TOKEN_Besieged = 1202;
-	public static final int TOKEN_Campaign = 1203;
-	public static final int TOKEN_Dynamis = 1204;
-	public static final int TOKEN_SetBonus = 1205;
-	public static final int TOKEN_Aftermath = 1206;
-	public static final int TOKEN_Pet = 1207;
-
 	public static final int TOKEN_AugmentComment = 1300;
+	public static final int TOKEN_SetBonus = 1301;
 }
