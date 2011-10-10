@@ -32,10 +32,9 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.skilleditor);
-		
+
+		prepairControls((FFXIEQApplication)getApplication());
 		ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-		if (values == null)
-			return;
 
 		bindControlAndValue(R.id.HANDTOHAND, values[StatusType.SKILL_HANDTOHAND.ordinal()]);
 		bindControlAndValue(R.id.DAGGER, values[StatusType.SKILL_DAGGER.ordinal()]);
@@ -83,6 +82,7 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN){
 			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+				prepairControls((FFXIEQApplication)getApplication());
 				saveValues();
 				
 				{
@@ -117,25 +117,14 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 	}
 	
 	static public boolean startActivity(FFXIEQActivity from, int request) {
-		try { // Create temporary copy of skill values
-			ControlBindableInteger values[];
-	
-			JobAndRace jobandrace = from.getFFXICharacter().getJobAndRace();
-			values = new ControlBindableInteger[StatusType.MODIFIER_NUM.ordinal()];
-			StatusType[] types = StatusType.values();
-			for (int i = 0; i < values.length; i++) {
-				values[i] = new ControlBindableInteger(jobandrace.getSkill(types[i]));
-			}
-			from.setTemporaryValues(values);
-			{
-				Intent intent = new Intent(from, SkillEditActivity.class);
+		from.setTemporaryValues(null);
+		if (prepairControls((FFXIEQApplication)from.getApplication())) {
+			Intent intent = new Intent(from, SkillEditActivity.class);
 				
-				from.startActivityForResult(intent, request);
-			}
+			from.startActivityForResult(intent, request);
 			return true;
-		} catch (OutOfMemoryError e) {
-			return false;
 		}
+		return false;
 	}
 
 	static public boolean isComeFrom(Intent data) {
@@ -170,5 +159,23 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 			return true;
 		}
 		return false;
+	}
+	
+	static public boolean prepairControls(FFXIEQApplication app) {
+		ControlBindableInteger values[] = (ControlBindableInteger[])app.getTemporaryValues();
+		if (values == null) {
+			try { // Create temporary copy of skill values
+				JobAndRace jobandrace = app.getFFXICharacter().getJobAndRace();
+				values = new ControlBindableInteger[StatusType.MODIFIER_NUM.ordinal()];
+				StatusType[] types = StatusType.values();
+				for (int i = 0; i < values.length; i++) {
+					values[i] = new ControlBindableInteger(jobandrace.getSkill(types[i]));
+				}
+				app.setTemporaryValues(values);
+			} catch (OutOfMemoryError e) {
+				throw e;
+			}
+		}
+		return true;
 	}
 }

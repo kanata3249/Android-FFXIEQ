@@ -34,9 +34,9 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 
 		setContentView(R.layout.meritpointedit);
 
+		prepairControls((FFXIEQApplication)getApplication());
 		ControlBindableInteger values[] = (ControlBindableInteger[])getTemporaryValues();
-		if (values == null)
-			return;
+
 		bindControlAndValue(R.id.HP, values[StatusType.HP.ordinal()]);
 		bindControlAndValue(R.id.MP, values[StatusType.MP.ordinal()]);
 		bindControlAndValue(R.id.STR, values[StatusType.STR.ordinal()]);
@@ -95,6 +95,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN){
 			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+				prepairControls((FFXIEQApplication)getApplication());
 				saveValues();
 				
 				{
@@ -143,40 +144,14 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 	}
 	
 	static public boolean startActivity(FFXIEQActivity from, int request) {
-		try {  // Create temporary copy of merit point values
-			ControlBindableInteger values[];
-			MeritPoint merits;
-	
-			merits = from.getFFXICharacter().getMeritPoint();
-			values = new ControlBindableInteger[StatusType.MODIFIER_NUM.ordinal() + JobLevelAndRace.JOB_MAX * MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY * MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT];
-			StatusType[] types = StatusType.values();
-			String []enmity_entries;
-
-			enmity_entries = from.getResources().getStringArray(R.array.Merits_Enmity_Entries);
-			int i;
-			for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
-				values[i] = new ControlBindableInteger(merits.getMeritPoint(types[i]));
-			}
-			values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + enmity_entries.length / 2);
-			for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
-				for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
-					for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
-						values[i++] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
-					}
-				}
-			}
-			from.setTemporaryValues(values);
-
-			{
-				Intent intent = new Intent(from, MeritPointEditActivity.class);
+		from.setTemporaryValues(null);
+		if (prepairControls((FFXIEQApplication)from.getApplication())) {
+			Intent intent = new Intent(from, MeritPointEditActivity.class);
 			
-				from.startActivityForResult(intent, request);
-			}
-			
+			from.startActivityForResult(intent, request);
 			return true;
-		} catch (OutOfMemoryError e) {
-			return false;
 		}
+		return false;
 	}
 
 	static public boolean isComeFrom(Intent data) {
@@ -341,5 +316,37 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		}
 		
 		JobSpecificMeritPointEditActivity.startActivity(this, job);
+	}
+	
+	static public boolean prepairControls(FFXIEQApplication app) {
+		if (app.getTemporaryValues() == null) {
+			try {  // Create temporary copy of merit point values
+				ControlBindableInteger values[];
+				MeritPoint merits;
+		
+				merits = app.getFFXICharacter().getMeritPoint();
+				values = new ControlBindableInteger[StatusType.MODIFIER_NUM.ordinal() + JobLevelAndRace.JOB_MAX * MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY * MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT];
+				StatusType[] types = StatusType.values();
+				String []enmity_entries;
+	
+				enmity_entries = app.getResources().getStringArray(R.array.Merits_Enmity_Entries);
+				int i;
+				for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
+					values[i] = new ControlBindableInteger(merits.getMeritPoint(types[i]));
+				}
+				values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + enmity_entries.length / 2);
+				for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
+					for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
+						for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
+							values[i++] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
+						}
+					}
+				}
+				app.setTemporaryValues(values);
+			} catch (OutOfMemoryError e) {
+				throw e;
+			}
+		}
+		return true;
 	}
 }
