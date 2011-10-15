@@ -343,15 +343,7 @@ public class FFXIEQActivity extends TabActivity {
 			useExternalDBItem.setEnabled(false);
 		}
 		
-		MenuItem item = menu.findItem(R.id.ToggleShowStatusSeparate);
-		if (item != null) {
-			if (mDisplayParam == CharacterStatusView.GETSTATUS_STRING_SEPARATE) {
-				item.setTitle(getString(R.string.ShowStatusTotal));
-			} else {
-				item.setTitle(getString(R.string.ShowStatusSeparate));
-			}
-		}
-		
+		MenuItem item;
 		item = menu.findItem(R.id.BackupToSD);
 		if (item != null)
 			item.setEnabled(writable);
@@ -466,20 +458,6 @@ public class FFXIEQActivity extends TabActivity {
 			showDialog(R.string.QueryRestoreFromSD);
 			return true;
 			
-		case R.id.ToggleShowStatusSeparate:
-			if (mDisplayParam == CharacterStatusView.GETSTATUS_STRING_SEPARATE) {
-				mDisplayParam = CharacterStatusView.GETSTATUS_STRING_TOTAL;
-			} else {
-				mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE;
-			}
-			Activity activity = getCurrentActivity();
-			if (activity instanceof EquipmentSetEditActivity) {
-				((EquipmentSetEditActivity)activity).setDisplayParam(mDisplayParam);
-			} else if (activity instanceof CharacterStatusActivity) {
-				((CharacterStatusActivity)activity).setDisplayParam(mDisplayParam);
-			}
-			return true;
-
 		case R.id.showCredit:
 			showDialog(R.id.showCredit);
 			return true;

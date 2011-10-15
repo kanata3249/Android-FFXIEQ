@@ -115,7 +115,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 			return StatusType.SKILL_GREATSWORD;
 		if (Dao.getString(FFXIString.TOKEN_SKILL_AXE).startsWith(mWeapon))
 			return StatusType.SKILL_AXE;
-		if (Dao.getString(FFXIString.TOKEN_SKILL_GREATEAXE).startsWith(mWeapon))
+		if (Dao.getString(FFXIString.TOKEN_SKILL_GREATAXE).startsWith(mWeapon))
 			return StatusType.SKILL_GREATAXE;
 		if (Dao.getString(FFXIString.TOKEN_SKILL_SCYTH).startsWith(mWeapon))
 			return StatusType.SKILL_SCYTH;

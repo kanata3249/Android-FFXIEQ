@@ -33,6 +33,7 @@ import android.app.Activity;
 
 public class CharacterStatusView extends ScrollView {
 	int mDisplayParam;
+	boolean mShowSkill;
 	FFXICharacter mCharInfo;
 	FFXICharacter mCharInfoToCompare;
 	static public final int GETSTATUS_STRING_TOTAL = 0;
@@ -45,6 +46,7 @@ public class CharacterStatusView extends ScrollView {
 		super(context, attrs);
 		
 		mDisplayParam = GETSTATUS_STRING_SEPARATE;
+		mShowSkill = false;
 		mCharInfo = null;
 		View children = ((Activity)context).getLayoutInflater().inflate(R.layout.statusview, null);
 		this.addView(children);
@@ -62,6 +64,15 @@ public class CharacterStatusView extends ScrollView {
 	public void setDisplayParam(int param) {
 		if (mDisplayParam != param) {
 			mDisplayParam = param;
+			if (mCharInfo != null) {
+				notifyDatasetChanged();
+			}
+		}
+	}
+
+	public void showSkillValue(boolean showSkill) {
+		if (mShowSkill != showSkill) {
+			mShowSkill = showSkill;
 			if (mCharInfo != null) {
 				notifyDatasetChanged();
 			}
@@ -284,7 +295,7 @@ public class CharacterStatusView extends ScrollView {
     	}
     	tv = (TextView)findViewById(R.id.UnknownTokens);
     	if (tv != null) {
-    		tv.setText(getUnknownTokens());
+    		tv.setText(getUnknownTokens() + "\n" + getSkillValues());
     	}
 	}
 
@@ -596,6 +607,21 @@ public class CharacterStatusView extends ScrollView {
 		}
 		return tokens.toString();
 	}
+	public String getSkillValues() {
+		StatusType skills[] = StatusType.values();
+		String result = "";
+		
+		if (!mShowSkill) {
+			return result;
+		}
+		for (int i = 0; i < skills.length - 1; i++) {  /* skip last MODIFIER_NUM */
+			String name = getSkillName(skills[i]);
+			if (name != null) {
+				result += getSkillName(skills[i]) + " " + getStatusString(skills[i], mDisplayParam) + "\n";
+			}
+		}
+		return result;
+	}
 	
 	public boolean cacheStatusAsync() {
 		if (mCharInfo.isCacheValid() && (mCharInfoToCompare == null || mCharInfoToCompare.isCacheValid()))
@@ -679,4 +705,77 @@ public class CharacterStatusView extends ScrollView {
 		}
 		return null;
 	}
+
+	String getSkillName(StatusType type) {
+		StatusValue v = getStatus(type);
+		if (v.getTotal() == 0)
+			return null;
+		switch (type) {
+		case SKILL_HANDTOHAND:
+			return mDao.getString(FFXIString.TOKEN_SKILL_HANDTOHAND);
+		case SKILL_DAGGER:
+			return mDao.getString(FFXIString.TOKEN_SKILL_DAGGER);
+		case SKILL_SWORD:
+			return mDao.getString(FFXIString.TOKEN_SKILL_SWORD);
+		case SKILL_GREATSWORD:
+			return mDao.getString(FFXIString.TOKEN_SKILL_GREATSWORD);
+		case SKILL_AXE:
+			return mDao.getString(FFXIString.TOKEN_SKILL_AXE);
+		case SKILL_GREATAXE:
+			return mDao.getString(FFXIString.TOKEN_SKILL_GREATAXE);
+		case SKILL_SCYTH:
+			return mDao.getString(FFXIString.TOKEN_SKILL_SCYTH);
+		case SKILL_POLEARM:
+			return mDao.getString(FFXIString.TOKEN_SKILL_POLEARM);
+		case SKILL_KATANA:
+			return mDao.getString(FFXIString.TOKEN_SKILL_KATANA);
+		case SKILL_GREATKATANA:
+			return mDao.getString(FFXIString.TOKEN_SKILL_GREATKATANA);
+		case SKILL_CLUB:
+			return mDao.getString(FFXIString.TOKEN_SKILL_CLUB);
+		case SKILL_STAFF:
+			return mDao.getString(FFXIString.TOKEN_SKILL_STAFF);
+		case SKILL_ARCHERY:
+			return mDao.getString(FFXIString.TOKEN_SKILL_ARCHERY);
+		case SKILL_MARKSMANSHIP:
+			return mDao.getString(FFXIString.TOKEN_SKILL_MARKSMANSHIP);
+		case SKILL_THROWING:
+			return mDao.getString(FFXIString.TOKEN_SKILL_THROWING);
+		case SKILL_GUARDING:
+			return mDao.getString(FFXIString.TOKEN_SKILL_GUARDING);
+		case SKILL_EVASION:
+			return mDao.getString(FFXIString.TOKEN_SKILL_EVASION);
+		case SKILL_SHIELD:
+			return mDao.getString(FFXIString.TOKEN_SKILL_SHIELD);
+		case SKILL_PARRYING:
+			return mDao.getString(FFXIString.TOKEN_SKILL_PARRYING);
+
+		case SKILL_DIVINE_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_DIVINE_MAGIC);
+		case SKILL_HEALING_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_HEALING_MAGIC);
+		case SKILL_ENCHANCING_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_ENCHANCING_MAGIC);
+		case SKILL_ENFEEBLING_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_ENFEEBLING_MAGIC);
+		case SKILL_ELEMENTAL_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_ELEMENTAL_MAGIC);
+		case SKILL_DARK_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_DARK_MAGIC);
+		case SKILL_SINGING:
+			return mDao.getString(FFXIString.TOKEN_SKILL_SINGING);
+		case SKILL_STRING_INSTRUMENT:
+			return mDao.getString(FFXIString.TOKEN_SKILL_STRING_INSTRUMENT);
+		case SKILL_WIND_INSTRUMENT:
+			return mDao.getString(FFXIString.TOKEN_SKILL_WIND_INSTRUMENT);
+		case SKILL_NINJUTSU:
+			return mDao.getString(FFXIString.TOKEN_SKILL_NINJUTSU);
+		case SKILL_SUMMONING:
+			return mDao.getString(FFXIString.TOKEN_SKILL_SUMMONING);
+		case SKILL_BLUE_MAGIC:
+			return mDao.getString(FFXIString.TOKEN_SKILL_BLUE_MAGIC);
+		}
+		return null;
+	}
+
 }

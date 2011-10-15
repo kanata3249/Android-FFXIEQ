@@ -304,4 +304,6 @@
     <string name="SpellInterruptionRate">詠唱中断率ダウン</string>
 	<string name="SelectFromMagicList">一覧から選択</string>
 	<string name="SelectFromList">一覧から選択</string>
+	<string name="ShowSkill">スキル値表示</string>
+	<string name="HideSkill">スキル値非表示</string>
 </resources>

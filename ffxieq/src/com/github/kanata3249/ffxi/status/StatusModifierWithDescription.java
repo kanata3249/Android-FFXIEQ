@@ -261,7 +261,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_SWORD, StatusType.SKILL_SWORD);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_GREATSWORD, StatusType.SKILL_GREATSWORD);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_AXE, StatusType.SKILL_AXE);
-		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_GREATEAXE, StatusType.SKILL_GREATAXE);
+		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_GREATAXE, StatusType.SKILL_GREATAXE);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_SCYTH, StatusType.SKILL_SCYTH);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_POLEARM, StatusType.SKILL_POLEARM);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_KATANA, StatusType.SKILL_KATANA);

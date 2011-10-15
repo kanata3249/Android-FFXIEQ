@@ -134,7 +134,7 @@ public class FFXIString {
 	public static final int TOKEN_SKILL_SWORD = 1102;
 	public static final int TOKEN_SKILL_GREATSWORD = 1103;
 	public static final int TOKEN_SKILL_AXE = 1104;
-	public static final int TOKEN_SKILL_GREATEAXE = 1105;
+	public static final int TOKEN_SKILL_GREATAXE = 1105;
 	public static final int TOKEN_SKILL_SCYTH = 1106;
 	public static final int TOKEN_SKILL_POLEARM = 1107;
 	public static final int TOKEN_SKILL_KATANA = 1108;

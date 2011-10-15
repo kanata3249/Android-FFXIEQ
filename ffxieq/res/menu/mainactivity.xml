@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-  	<item android:id="@+id/ToggleShowStatusSeparate" android:title="@string/ShowStatusSeparate"></item> 
     <item android:id="@+id/NewCharacter" android:title="@string/NewCharacter" android:icon="@android:drawable/ic_menu_add"></item>
     <item android:title="@string/Discard" android:icon="@android:drawable/ic_menu_revert" android:id="@+id/DiscardChanges"></item>
     <item android:icon="@android:drawable/ic_menu_edit" android:id="@+id/EditMerits" android:title="@string/Merits"></item><item android:icon="@android:drawable/ic_menu_edit" android:id="@+id/EditSkill" android:title="@string/Skill"></item>
