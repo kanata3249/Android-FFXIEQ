@@ -34,4 +34,12 @@ public class BasicEditActivity extends FFXIEQBaseActivity {
         
         fragment.updateValues();
 	}
+	
+	@Override
+	protected void saveValues() {
+		FragmentManager fm = getSupportFragmentManager();
+        BasicEditFragment fragment = (BasicEditFragment)fm.findFragmentById(R.id.BasicEdit);
+        
+        fragment.saveValues();
+	}
 }

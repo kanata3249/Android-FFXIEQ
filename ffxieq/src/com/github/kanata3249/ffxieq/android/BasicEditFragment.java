@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
@@ -131,9 +132,38 @@ public class BasicEditFragment extends FFXIEQFragment {
 
         {
 	        EditText et;
-	        OnEditorActionListener listener;
-        
-	        listener = new OnEditorActionListener() {
+	        OnEditorActionListener editorActionListener;
+	        OnFocusChangeListener focusChangeListener;
+
+	        focusChangeListener = new OnFocusChangeListener() {
+				public void onFocusChange(View v, boolean hasFocus) {
+					if (hasFocus == false) {
+						if (v.getId() == R.id.JobLevel){
+							FFXICharacter charInfo = getFFXICharacter();
+							if (charInfo.getSubJobLevel() >= charInfo.getJobLevel() / 2) {
+						    	EditText edit = (EditText)mView.findViewById(R.id.JobLevel);
+						    	if (edit != null) {
+							    	int value;
+						    		String str = edit.getText().toString();
+						    		try {
+						    			value = Integer.valueOf(str);
+						    		} catch (NumberFormatException e) {
+						    			value = 0;
+						    		}
+						    		if (value > 1)
+						    			value = value / 2;
+						    		edit = (EditText)mView.findViewById(R.id.SubJobLevel);
+						    		if (edit != null) {
+						    			edit.setText(((Integer)value).toString());
+						    		}
+						    	}
+							}
+						}
+						saveAndUpdateValues();						
+					}
+				}
+	        };
+	        editorActionListener = new OnEditorActionListener() {
 				public boolean onEditorAction(TextView v, int actionId,
 						KeyEvent event) {
 					if (v.getId() == R.id.JobLevel){
@@ -163,11 +193,13 @@ public class BasicEditFragment extends FFXIEQFragment {
 	        };
 	        et = (EditText)v.findViewById(R.id.JobLevel);
 	        if (et != null) {
-	        	et.setOnEditorActionListener(listener);
+	        	et.setOnEditorActionListener(editorActionListener);
+	        	et.setOnFocusChangeListener(focusChangeListener);
 	        }
 	        et = (EditText)v.findViewById(R.id.SubJobLevel);
 	        if (et != null) {
-	        	et.setOnEditorActionListener(listener);
+	        	et.setOnEditorActionListener(editorActionListener);
+	        	et.setOnFocusChangeListener(focusChangeListener);
 	        }
         }
         {
@@ -673,5 +705,30 @@ public class BasicEditFragment extends FFXIEQFragment {
 		item = menu.findItem(R.id.WebSearch7);
 		if (item != null)
 			item.setEnabled(obj != null);
+	}
+	
+	public void saveValues() {
+		if (getActivity().getCurrentFocus().getId() == R.id.JobLevel){
+			FFXICharacter charInfo = getFFXICharacter();
+			if (charInfo.getSubJobLevel() >= charInfo.getJobLevel() / 2) {
+		    	EditText edit = (EditText)mView.findViewById(R.id.JobLevel);
+		    	if (edit != null) {
+			    	int value;
+		    		String str = edit.getText().toString();
+		    		try {
+		    			value = Integer.valueOf(str);
+		    		} catch (NumberFormatException e) {
+		    			value = 0;
+		    		}
+		    		if (value > 1)
+		    			value = value / 2;
+		    		edit = (EditText)mView.findViewById(R.id.SubJobLevel);
+		    		if (edit != null) {
+		    			edit.setText(((Integer)value).toString());
+		    		}
+		    	}
+			}
+		}
+		saveAndUpdateValues();						
 	}
 }

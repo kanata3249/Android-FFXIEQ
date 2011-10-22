@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.kanata3249.ffxieq.android.FFXIEQTabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -26,4 +26,4 @@
             android:layout_width="fill_parent"
             android:layout_below="@+id/tableLayout" android:layout_height="wrap_content"/>　
     </LinearLayout>
-</TabHost>
+</com.github.kanata3249.ffxieq.android.FFXIEQTabHost>

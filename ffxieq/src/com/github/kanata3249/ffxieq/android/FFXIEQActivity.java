@@ -160,6 +160,7 @@ public class FFXIEQActivity extends TabActivity {
         	if (btn != null) {
         		btn.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
+						((FFXIEQBaseActivity)getCurrentActivity()).saveValues();
 						showDialog(R.layout.querysavecharacter);
 					}
         		});
