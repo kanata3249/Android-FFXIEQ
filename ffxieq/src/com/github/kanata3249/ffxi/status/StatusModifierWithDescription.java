@@ -202,6 +202,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_ATTACK_RANGE, StatusType.AttackRange);
 		setupCommonTokenHandler(FFXIString.TOKEN_DEF, StatusType.Defence);
 		setupCommonTokenHandler(FFXIString.TOKEN_HASTE, StatusType.Haste);
+		setupCommonTokenHandler(FFXIString.TOKEN_HASTE_ABILITY, StatusType.HasteAbility);
 		setupCommonTokenHandler(FFXIString.TOKEN_SLOW, StatusType.Slow);
 		setupCommonTokenHandler(FFXIString.TOKEN_SUBTLE_BLOW, StatusType.SubtleBlow);
 		setupCommonTokenHandler(FFXIString.TOKEN_STORE_TP, StatusType.StoreTP);

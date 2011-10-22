@@ -309,6 +309,10 @@ public class FFXICharacter implements IStatus, Serializable {
 				mCachedValues[type.ordinal()] = getMP();
 				break;
 				
+			case Haste:
+				mCachedValues[type.ordinal()] = getHaste();
+				break;
+				
 			case MODIFIER_NUM:
 				break;
 			}
@@ -362,6 +366,9 @@ public class FFXICharacter implements IStatus, Serializable {
 			return getHP();
 		case MP:
 			return getMP();
+
+		case Haste:
+			return getHaste();
 		}
 	}
 
@@ -840,6 +847,32 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		
 		return MP;
+	}
+	
+	public StatusValue getHaste() {
+		StatusValue haste, ehaste, mhaste, ahaste;
+
+		haste = getStatus(mLevel, StatusType.Haste);
+		ehaste  = mEquipment.getStatus(mLevel, StatusType.Haste);
+		if (mInAbyssea) {
+			ehaste.add(mAtmaset.getStatus(mLevel, StatusType.Haste));
+		}
+		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
+		if (ehaste.getAdditionalPercent() > 2600) {
+			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
+		}
+		/* Magicset haste cap 43.75% */
+		mhaste  = mMagicSet.getStatus(mLevel, StatusType.Haste);
+		if (mhaste.getAdditionalPercent() > 4375)
+			haste.setAdditionalPercent(haste.getAdditionalPercent() - (mhaste.getAdditionalPercent() - 4375));
+		
+		/* Ability haste cap 25% */
+		ahaste = mMagicSet.getStatus(mLevel, StatusType.HasteAbility);
+		if (ahaste.getAdditionalPercent() > 2500)
+			ahaste.setAdditionalPercent(2500);
+
+		haste.add(ahaste);
+		return haste;
 	}
 
 	public SortedStringList getUnknownTokens() {
