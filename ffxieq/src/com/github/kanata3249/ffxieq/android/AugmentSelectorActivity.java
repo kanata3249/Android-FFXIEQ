@@ -423,9 +423,9 @@ public class AugmentSelectorActivity extends FFXIEQBaseActivity {
 		}
 
 		Equipment eq = getDAO().instantiateEquipment(-1, mLongClickingItemId);
-		String name = eq.getName();
 		Intent intent;
 		if (eq != null) {
+			String name = eq.getName();
 			String[] urls = getResources().getStringArray(R.array.SearchURIs);
 			String url;
 
