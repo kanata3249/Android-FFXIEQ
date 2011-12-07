@@ -31,6 +31,7 @@ import java.nio.channels.FileChannel;
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.FFXICharacter;
+import com.github.kanata3249.ffxieq.MeritPoint;
 import com.github.kanata3249.ffxieq.R;
 
 import android.app.Activity;
@@ -47,6 +48,8 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public static final String C_Id = "_id";
 	public static final String C_Name = "Name";
 	public static final String C_CharInfo = "CharInfo";
+	public static final String TABLE_NAME_MERITPOINTINFO = "MeritPoints";
+	public static final String C_MeritPointInfo = "MeritoPointInfo";
 	private static final String TABLE_NAME_FILTERS = "Filters";
 	public static final String C_Filter = "Filter";
 	public static final String C_LastUsed = "LastUsed";
@@ -61,7 +64,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 	// Constructor
 	public FFXIEQSettings(Context context) {
-		super(context, DB_NAME, null, 1);
+		super(context, DB_NAME, null, 2);
 		
 		mContext = context;
 		mAugmentTable = new AugmentTable();
@@ -112,6 +115,13 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			
 			db.execSQL(createSql.toString());
 
+			createSql.append("create table " + TABLE_NAME_MERITPOINTINFO + " (");
+			createSql.append(C_Id + " integer primary key autoincrement not null,");
+			createSql.append(C_MeritPointInfo + " blob");
+			createSql.append(")");
+			
+			db.execSQL(createSql.toString());
+
 			createSql.setLength(0);
 			createSql.append("create table " + TABLE_NAME_FILTERS + " (");
 			createSql.append(C_Id + " integer primary key autoincrement not null,");
@@ -131,6 +141,101 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		boolean create_meritpoint_table;
+		
+		create_meritpoint_table = false;
+		switch (oldVersion) {
+		case 1:
+			create_meritpoint_table = true;
+			break;
+		case 2:
+			break;
+		}
+		
+		if (create_meritpoint_table) {
+			try {
+				StringBuilder createSql = new StringBuilder();
+				
+				createSql.append("create table " + TABLE_NAME_MERITPOINTINFO + " (");
+				createSql.append(C_Id + " integer primary key autoincrement not null,");
+				createSql.append(C_MeritPointInfo + " blob");
+				createSql.append(")");
+				
+				db.execSQL(createSql.toString());
+			} finally {
+			}
+			
+			try {
+				String []columns = { C_Id, C_CharInfo, C_Name };
+				Cursor cursor = db.query(TABLE_NAME_CHARINFO, columns, null, null, null, null, null, null);
+				
+				cursor.moveToFirst();
+				for (int i = 0; i < cursor.getCount(); i++) {
+					byte [] chardata;
+					FFXICharacter charInfo;
+					ContentValues values;
+					MeritPoint merits;
+					long id;
+
+					id = cursor.getLong(0);
+					chardata = cursor.getBlob(1);
+					charInfo = null;
+					merits = null;
+					try {
+						ByteArrayInputStream bais = new ByteArrayInputStream(chardata);
+						ObjectInputStream ois = new ObjectInputStream(bais);
+						charInfo = (FFXICharacter)ois.readObject();
+						
+						charInfo.setMeritPointId(id);
+						merits = charInfo.getMeritPoint();
+						
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+						oos.writeObject(charInfo);
+						oos.close();
+						chardata = baos.toByteArray();
+						baos.close();
+					} catch (StreamCorruptedException e) {
+					} catch (ClassNotFoundException e) {
+					} catch (IOException e) {
+					}
+					
+					if (charInfo == null) {
+						cursor.moveToNext();
+						continue;
+					}
+
+					values = new ContentValues();
+					values.put(C_Name, cursor.getString(2));
+					values.put(C_CharInfo, chardata);
+
+					int n = db.update(TABLE_NAME_CHARINFO, values, C_Id + "= '" + id + "'", null);
+
+					try {
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						ObjectOutputStream oos = new ObjectOutputStream(baos);
+						byte [] meritpointdata;
+
+						oos.writeObject(merits);
+						oos.close();
+						meritpointdata = baos.toByteArray();
+						baos.close();
+						
+						values = new ContentValues();
+						values.put(C_Id, id);
+						values.put(C_MeritPointInfo, meritpointdata);
+					} catch (StreamCorruptedException e) {
+					} catch (IOException e) {
+					}
+
+					db.insert(TABLE_NAME_MERITPOINTINFO, null, values);
+
+					cursor.moveToNext();
+				}
+			} finally {
+			}
+		}
 	}
 	
 	public long getFirstCharacterId() {
@@ -159,6 +264,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	public FFXICharacter loadCharInfo(long id) {
 		Cursor cursor;
 		String []columns = { C_CharInfo };
+		String []columns2 = { C_MeritPointInfo };
 		SQLiteDatabase db;
 		byte [] chardata;
 		FFXICharacter charInfo;
@@ -184,6 +290,27 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		} catch (ClassNotFoundException e) {
 		} catch (IOException e) {
 		}
+		
+		if (charInfo != null && charInfo.getMeritPointId() != 0) {
+			MeritPoint meritpoint;
+			cursor = db.query(TABLE_NAME_MERITPOINTINFO, columns2, C_Id + " = '" + charInfo.getMeritPointId() + "'", null, null, null, null, null);
+			if (cursor.getCount() == 1) {
+				cursor.moveToFirst();
+				try {
+					byte [] meritdata = cursor.getBlob(0);
+					ByteArrayInputStream bais = new ByteArrayInputStream(meritdata);
+					ObjectInputStream ois = new ObjectInputStream(bais);
+					meritpoint = (MeritPoint)ois.readObject();
+					
+					charInfo.setMeritPoint(meritpoint);
+					charInfo.setNotModified();
+				} catch (StreamCorruptedException e) {
+				} catch (ClassNotFoundException e) {
+				} catch (IOException e) {
+				}
+			}
+			cursor.close();
+		}
 		return charInfo;
 	}
 	public long saveCharInfo(long id, String name, FFXICharacter charInfo) {
@@ -203,25 +330,73 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			return -1;
 		}
 
-		return saveCharInfo(id, name, chardata);
+		return saveCharInfo(id, name, chardata, charInfo.getMeritPointId());
 	}
-	public long saveCharInfo(long id, String name, byte chardata[]) {
+	public long saveCharInfo(long id, String name, byte chardata[], long meritpointId) {
 		SQLiteDatabase db;
-		ContentValues values = new ContentValues();;
 		long newId;
-		
+		MeritPoint meritpoint = null;
+		FFXICharacter charInfo = null;
+		byte [] meritpointdata;
+
+		try {
+			ByteArrayInputStream bais = new ByteArrayInputStream(chardata);
+			ObjectInputStream ois = new ObjectInputStream(bais);
+			charInfo = (FFXICharacter)ois.readObject();
+		} catch (StreamCorruptedException e) {
+		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
+		}
+		meritpoint = charInfo.getMeritPoint();
+		try {
+			ObjectOutputStream oos;
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();;
+
+			oos = new ObjectOutputStream(baos);
+			oos.writeObject(meritpoint);
+			oos.close();
+			meritpointdata = baos.toByteArray();
+			baos.close();
+		} catch (IOException e) {
+			return -1;
+		}
+
 		db = getWritableDatabase();
 
-		values.put(C_Name, name);
-		values.put(C_CharInfo, chardata);
 		db.beginTransaction();
 		newId = id;
 		try {
+			ContentValues values;
+			
+			values = new ContentValues();;
+			values.put(C_Name, name);
+			values.put(C_CharInfo, chardata);
 			if (id >= 0) {
 				db.update(TABLE_NAME_CHARINFO, values, C_Id + " ='" + id + "'", null);
 			} else {
 				newId = db.insert(TABLE_NAME_CHARINFO, null, values);
 			}
+
+			if (meritpointId <= 0)
+				meritpointId = newId;
+			values = new ContentValues();
+			values.put(C_Id, meritpointId);
+			values.put(C_MeritPointInfo, meritpointdata);
+			
+			{
+				Cursor cursor;
+				String [] columns = { C_Id };
+			
+				cursor = db.query(TABLE_NAME_MERITPOINTINFO, columns, C_Id + " = '" + meritpointId + "'", null, null, null, null, null);
+				if (cursor.getCount() > 0) {
+					db.update(TABLE_NAME_MERITPOINTINFO, values, C_Id + " ='" + meritpointId + "'", null);
+				} else {
+					db.insert(TABLE_NAME_MERITPOINTINFO, null, values);
+				}
+				
+				cursor.close();
+			}
+
 			db.setTransactionSuccessful();
 		} finally {
 			db.endTransaction();
@@ -236,7 +411,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		db = getWritableDatabase();
 		db.delete(TABLE_NAME_CHARINFO, C_Id + " = '" + id + "'", null);
 		dataChanged();
-
+// TODO delete parentless meritpoint if there.
 		return;
 	}
 

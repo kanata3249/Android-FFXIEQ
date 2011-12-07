@@ -214,7 +214,7 @@ public class FFXIEQBackupAgent extends BackupAgent {
 						int charInfoSize = inReader.readInt();
 						byte charInfo[] = new byte[charInfoSize];
 						inReader.read(charInfo, 0, charInfoSize);
-						mSettings.saveCharInfo(-1, name, charInfo);
+						mSettings.saveCharInfo(-1, name, charInfo, -1);
 					}
 					inReader.close();
 				} else if (key.equals(KEY_FILTER)) {

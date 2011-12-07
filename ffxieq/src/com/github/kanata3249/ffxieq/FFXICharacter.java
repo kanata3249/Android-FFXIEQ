@@ -33,6 +33,8 @@ public class FFXICharacter implements IStatus, Serializable {
 	Food mFood;
 	MagicSet mMagicSet;
 
+	long mMeritPointId;
+
 	transient boolean mModified;
 	transient boolean mStatusCacheValid;
 	transient private StatusValue mCachedValues[];
@@ -907,5 +909,15 @@ public class FFXICharacter implements IStatus, Serializable {
 	
 	public boolean reloadAugmentsIfChangesThere() {
 		return mEquipment.reloadAugmentsIfChangesThere();
+	}
+
+	public long getMeritPointId() {
+		return mMeritPointId;
+	}
+
+	public void setMeritPointId(long meritPointId) {
+		if (meritPointId != mMeritPointId)
+			mModified = true;
+		this.mMeritPointId = meritPointId;
 	}
 }
