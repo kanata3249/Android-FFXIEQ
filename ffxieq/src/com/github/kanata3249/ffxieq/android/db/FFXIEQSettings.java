@@ -210,7 +210,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 					values.put(C_Name, cursor.getString(2));
 					values.put(C_CharInfo, chardata);
 
-					int n = db.update(TABLE_NAME_CHARINFO, values, C_Id + "= '" + id + "'", null);
+					db.update(TABLE_NAME_CHARINFO, values, C_Id + "= '" + id + "'", null);
 
 					try {
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -580,6 +580,16 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 	public void copyDatabaseFromSD() throws IOException {
 		File outDir = new File(DB_PATH);
+
+		try {
+			SQLiteDatabase db;
+
+			db = getReadableDatabase();
+			if (db != null)
+				db.close();
+		} catch (SQLiteException e) {
+			// ignore this
+		}
 
 		outDir.mkdir();
 		FileChannel channelSource = new FileInputStream(SD_PATH + DB_NAME).getChannel();
