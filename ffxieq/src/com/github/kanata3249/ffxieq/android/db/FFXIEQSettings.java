@@ -47,6 +47,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	private static final String TABLE_NAME_CHARINFO = "Characters";
 	public static final String C_Id = "_id";
 	public static final String C_Name = "Name";
+	public static final String C_MeritPointId = "MeritPointID";
 	public static final String C_CharInfo = "CharInfo";
 	public static final String TABLE_NAME_MERITPOINTINFO = "MeritPoints";
 	public static final String C_MeritPointInfo = "MeritoPointInfo";
@@ -110,6 +111,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			createSql.append("create table " + TABLE_NAME_CHARINFO + " (");
 			createSql.append(C_Id + " integer primary key autoincrement not null,");
 			createSql.append(C_Name + " text not null,");
+			createSql.append(C_MeritPointId + " integer,");
 			createSql.append(C_CharInfo + " blob");
 			createSql.append(")");
 			
@@ -162,6 +164,13 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 				createSql.append(")");
 				
 				db.execSQL(createSql.toString());
+				
+				createSql.setLength(0);
+				createSql.append("alter table " + TABLE_NAME_CHARINFO);
+				createSql.append(" add " + C_MeritPointId + " integer");
+				
+				db.execSQL(createSql.toString());
+
 			} finally {
 			}
 			
@@ -209,6 +218,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 					values = new ContentValues();
 					values.put(C_Name, cursor.getString(2));
 					values.put(C_CharInfo, chardata);
+					values.put(C_MeritPointId, id);
 
 					db.update(TABLE_NAME_CHARINFO, values, C_Id + "= '" + id + "'", null);
 
@@ -371,14 +381,18 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			values = new ContentValues();;
 			values.put(C_Name, name);
 			values.put(C_CharInfo, chardata);
+			values.put(C_MeritPointId, meritpointId);
 			if (id >= 0) {
 				db.update(TABLE_NAME_CHARINFO, values, C_Id + " ='" + id + "'", null);
 			} else {
 				newId = db.insert(TABLE_NAME_CHARINFO, null, values);
 			}
 
-			if (meritpointId <= 0)
+			if (meritpointId <= 0) {
 				meritpointId = newId;
+				values.put(C_MeritPointId, meritpointId);
+				db.update(TABLE_NAME_CHARINFO, values, C_Id + " ='" + id + "'", null);
+			}
 			values = new ContentValues();
 			values.put(C_Id, meritpointId);
 			values.put(C_MeritPointInfo, meritpointdata);
@@ -396,6 +410,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 				
 				cursor.close();
 			}
+			deleteMeritPointTheyAreNotReferenced(db);
 
 			db.setTransactionSuccessful();
 		} finally {
@@ -405,13 +420,31 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		return newId;
 	}
 	
-	public void deleteCharInfo(long id) {
+	public void deleteCharInfo(long Id, long meritpointId) {
 		SQLiteDatabase db;
 
 		db = getWritableDatabase();
-		db.delete(TABLE_NAME_CHARINFO, C_Id + " = '" + id + "'", null);
-		dataChanged();
-// TODO delete parentless meritpoint if there.
+		db.beginTransaction();
+		try {
+			db.delete(TABLE_NAME_CHARINFO, C_Id + " = '" + Id + "'", null);
+			deleteMeritPointTheyAreNotReferenced(db);
+		} catch (SQLiteException e) {
+		} finally {
+			db.endTransaction();
+			dataChanged();
+		}
+
+		return;
+	}
+
+	public void deleteMeritPointTheyAreNotReferenced(SQLiteDatabase db) {
+		StringBuilder createSql = new StringBuilder();
+
+		createSql.append("delete from " + TABLE_NAME_MERITPOINTINFO + " where " + C_Id + " not in (");
+		createSql.append("select " + C_MeritPointId + " from " + TABLE_NAME_CHARINFO + ")");
+		
+		db.execSQL(createSql.toString());
+		
 		return;
 	}
 
@@ -610,6 +643,25 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 		channelSource.close();
 		channelTarget.close();
+	}
+
+	public long getMeritPointMasterId(long meritPointId) {
+		SQLiteDatabase db;
+		String columns[] = { C_Id };
+		Cursor cursor;
+		long id;
+		
+		id = 0;
+		db = getReadableDatabase();
+		cursor = db.query(TABLE_NAME_CHARINFO, columns, C_MeritPointId + " = '" + meritPointId + "'", null, null, null, C_Id);
+		if (cursor != null) {
+			if (cursor.getCount() > 0) {
+				cursor.moveToFirst();
+				id = cursor.getLong(0);
+			}
+			cursor.close();
+		}
+		return id;
 	}
 }
 

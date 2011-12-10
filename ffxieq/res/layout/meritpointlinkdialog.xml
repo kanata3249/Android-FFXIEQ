@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <com.github.kanata3249.ffxieq.android.CharacterSelectorView android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/CharacterSelector" android:textColor="@android:color/primary_text_light" android:prompt="@string/CharacterSelectorDropDownTitle"></com.github.kanata3249.ffxieq.android.CharacterSelectorView>
+    <Button android:text="@string/Cancel" android:id="@+id/Cancel" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/CharacterSelector" android:layout_alignParentRight="true"></Button>
+    <Button android:text="@string/Unlink" android:id="@+id/Unlink" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/CharacterSelector" android:layout_toLeftOf="@+id/Cancel"></Button>
+    <Button android:text="@string/LinkOK" android:id="@+id/LinkOK" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/CharacterSelector" android:layout_alignParentLeft="true"></Button>
+</RelativeLayout>

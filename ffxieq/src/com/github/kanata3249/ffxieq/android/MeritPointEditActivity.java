@@ -17,16 +17,25 @@ package com.github.kanata3249.ffxieq.android;
 
 import com.github.kanata3249.ffxi.status.JobLevelAndRace;
 import com.github.kanata3249.ffxi.status.StatusType;
+import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.MeritPoint;
 import com.github.kanata3249.ffxieq.R;
+
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MeritPointEditActivity extends FFXIEQBaseActivity {
+	long mCharacterIDToLink;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -192,35 +201,125 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 	}
 
 	@Override
+	protected Dialog onCreateDialog(final int id) {
+		Dialog dialog;
+		Builder builder;
+		switch (id) {
+		case R.layout.meritpointlinkdialog:
+	    	dialog = new Dialog(this);
+			dialog.setContentView(R.layout.meritpointlinkdialog);
+			dialog.setTitle(getString(R.string.LinkMeritPoint));
+
+			return dialog;
+		case R.string.QueryLinkMeritPoint:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.QueryLinkMeritPoint));
+	    	builder.setTitle(getString(R.string.LinkMeritPoint));
+	    	builder.setPositiveButton(R.string.LinkOK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					long id;
+					FFXICharacter refChar, charInfo;
+					
+					id = mCharacterIDToLink;
+					charInfo = getFFXICharacter();
+					refChar = getSettings().loadCharInfo(id);
+					charInfo.setMeritPointId(refChar.getMeritPointId());
+					charInfo.setMeritPoint(refChar.getMeritPoint());
+					reloadMeritpoint();
+					dismissDialog(R.string.QueryLinkMeritPoint);
+					dismissDialog(R.layout.meritpointlinkdialog);
+					showDialog(R.string.LinkMeritPointSuccess);
+				}
+			});
+	    	builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.QueryLinkMeritPoint);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		case R.string.LinkMeritPointSuccess:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.LinkMeritPointSuccess));
+	    	builder.setTitle(getString(R.string.LinkMeritPoint));
+	    	builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.LinkMeritPointSuccess);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		case R.string.UnlinkMeritPointSuccess:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(true);
+	    	builder.setMessage(getString(R.string.UnlinkMeritPointSuccess));
+	    	builder.setTitle(getString(R.string.LinkMeritPoint));
+	    	builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.UnlinkMeritPointSuccess);
+				}
+			});
+			dialog = builder.create();
+			return dialog;
+		}
+		return super.onCreateDialog(id);
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+    	Button btn;
+
+		switch (id) {
+		case R.layout.meritpointlinkdialog:
+	    	final CharacterSelectorView cs = (CharacterSelectorView)dialog.findViewById(R.id.CharacterSelector);
+	    	if (cs != null) {
+		        cs.setParam(getSettings(), getDAO(), getSettings().getMeritPointMasterId(getFFXICharacter().getMeritPointId()));
+	    	}
+			btn = (Button)dialog.findViewById(R.id.Cancel);
+			if (btn != null) {
+				btn.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						dismissDialog(R.layout.meritpointlinkdialog);
+					}
+				});
+			}
+			btn = (Button)dialog.findViewById(R.id.Unlink);
+			if (btn != null) {
+				btn.setEnabled(getCharacterID() != getFFXICharacter().getMeritPointId());
+				btn.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						getFFXICharacter().setMeritPointId(getCharacterID());
+						dismissDialog(R.layout.meritpointlinkdialog);
+						showDialog(R.string.UnlinkMeritPointSuccess);
+					}
+				});
+			}
+			btn = (Button)dialog.findViewById(R.id.LinkOK);
+			if (btn != null) {
+				btn.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						mCharacterIDToLink = cs.getSelectedItemId();
+						showDialog(R.string.QueryLinkMeritPoint);
+					}
+				});
+			}
+			return;
+		}
+		super.onPrepareDialog(id, dialog);
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.Revert:
-			{  // Reload from character data.
-				ControlBindableInteger values[];
-				MeritPoint merits;
-		
-				merits = getFFXICharacter().getMeritPoint();
-				values = (ControlBindableInteger[])getTemporaryValues();
-				StatusType[] types = StatusType.values();
-				String []enmity_entries;
-	
-				enmity_entries = getResources().getStringArray(R.array.Merits_Enmity_Entries);
-				int i;
-				for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
-					values[i] = new ControlBindableInteger(merits.getMeritPoint(types[i]));
-				}
-				values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + enmity_entries.length / 2);
-				for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
-					for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
-						for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
-							values[i++] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
-						}
-					}
-				}
-				updateValues();
-			}
+			// Reload from character data.
+			reloadMeritpoint();
 			return true;
-			
+		case R.id.LinkMeritPoint:
+			showDialog(R.layout.meritpointlinkdialog);
+			return true;
 		case R.id.JobSpecificMeritPointEdit01:
 		case R.id.JobSpecificMeritPointEdit02:
 		case R.id.JobSpecificMeritPointEdit03:
@@ -348,5 +447,31 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			}
 		}
 		return true;
+	}
+	
+	private void reloadMeritpoint() {
+		// Reload from character data.
+		ControlBindableInteger values[];
+		MeritPoint merits;
+
+		merits = getFFXICharacter().getMeritPoint();
+		values = (ControlBindableInteger[])getTemporaryValues();
+		StatusType[] types = StatusType.values();
+		String []enmity_entries;
+
+		enmity_entries = getResources().getStringArray(R.array.Merits_Enmity_Entries);
+		int i;
+		for (i = 0; i < StatusType.MODIFIER_NUM.ordinal(); i++) {
+			values[i] = new ControlBindableInteger(merits.getMeritPoint(types[i]));
+		}
+		values[StatusType.Enmity.ordinal()].setIntValue(merits.getMeritPoint(StatusType.Enmity) + enmity_entries.length / 2);
+		for (int job = 0; job < JobLevelAndRace.JOB_MAX; job++) {
+			for (int category = 0; category < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY; category++) {
+				for (int index = 0; index < MeritPoint.MAX_JOB_SPECIFIC_MERIT_POINT; index++) {
+					values[i++] = new ControlBindableInteger(merits.getJobSpecificMeritPoint(job, category, index));
+				}
+			}
+		}
+		updateValues();
 	}
 }

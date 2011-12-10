@@ -787,7 +787,7 @@ public class FFXIEQActivity extends TabActivity {
 			btn = (Button)dialog.findViewById(R.id.DeleteOK);
 			btn.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					getSettings().deleteCharInfo(getCharacterID());
+					getSettings().deleteCharInfo(getCharacterID(), getFFXICharacter().getMeritPointId());
 					dismissDialog(R.layout.querydeletecharacter);
 					loadFFXICharacter(getSettings().getFirstCharacterId());
 					updateValues();

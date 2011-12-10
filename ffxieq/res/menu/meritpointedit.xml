@@ -2,6 +2,7 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/Revert" android:id="@+id/Revert"></item>
+    <item android:title="@string/LinkMeritPoint" android:id="@+id/LinkMeritPoint"></item>
     <item android:title="@string/JobSpecificMeritPointEdit" android:id="@+id/JobSpecificMeritPoint">
         <menu>
             <item android:id="@+id/JobSpecificMeritPointEdit01"></item>

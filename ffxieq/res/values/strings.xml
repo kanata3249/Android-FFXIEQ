@@ -313,4 +313,11 @@
 	<string name="SelectFromList">一覧から選択</string>
 	<string name="ShowSkill">スキル値表示</string>
 	<string name="HideSkill">スキル値非表示</string>
+	<string name="LinkMeritPoint">別キャラとリンク</string>
+	<string name="LinkOK">リンク</string>
+	<string name="Unlink">リンク解除</string>
+	<string name="QueryLinkMeritPoint">指定キャラクタのメリットポイントデータで上書きされます。よろしいですか？</string>
+	<string name="QueryLinkMeritPointTitle">メリットポイントデータをリンク</string>
+	<string name="LinkMeritPointSuccess">メリットポイントデータをリンクしました</string>
+	<string name="UnlinkMeritPointSuccess">メリットポイントデータをリンク解除しました</string>
 </resources>
