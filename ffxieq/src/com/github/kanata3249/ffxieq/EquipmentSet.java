@@ -253,14 +253,21 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	
 	private void parseDescriptions() {
 		boolean updated;
+		int notequiped;
 
 		updated = false;
+		notequiped = 0;
 		for (int i = 0; i < mEquipments.length; i++) {
 			if (mEquipments[i] != null) {
 				updated = mEquipments[i].parseDescription() || updated;
 				mEquipments[i].removeCombinationToken();
 				mEquipments[i].removeAugmentCommentFromUnknownToken();
+			} else {
+				notequiped++;
 			}
+		}
+		if (notequiped == mEquipments.length) {
+			mCombinations = null;
 		}
 		if (updated) {
 			// check combination
