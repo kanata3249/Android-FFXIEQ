@@ -117,6 +117,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			
 			db.execSQL(createSql.toString());
 
+			createSql.setLength(0);
 			createSql.append("create table " + TABLE_NAME_MERITPOINTINFO + " (");
 			createSql.append(C_Id + " integer primary key autoincrement not null,");
 			createSql.append(C_MeritPointInfo + " blob");
