@@ -429,6 +429,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		try {
 			db.delete(TABLE_NAME_CHARINFO, C_Id + " = '" + Id + "'", null);
 			deleteMeritPointTheyAreNotReferenced(db);
+			db.setTransactionSuccessful();
 		} catch (SQLiteException e) {
 		} finally {
 			db.endTransaction();
