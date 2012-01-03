@@ -244,9 +244,9 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_CRITICAL_RATE_DEFENCE, StatusType.CriticalRateDefence);
 		setupCommonTokenHandler(FFXIString.TOKEN_SPELL_INTERRUPTION_RATE, StatusType.SpellInterruptionRate);
 		setupCommonTokenHandler(FFXIString.TOKEN_KICK_ATTACK, StatusType.KickAttack);
-
 		setupCommonTokenHandler(FFXIString.TOKEN_CONVERT_HP_TO_MP, StatusType.Convert_HP_TO_MP);
 		setupCommonTokenHandler(FFXIString.TOKEN_CONVERT_MP_TO_HP, StatusType.Convert_MP_TO_HP);
+		setupCommonTokenHandler(FFXIString.TOKEN_FASTCAST, StatusType.FastCast);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);

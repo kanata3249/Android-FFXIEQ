@@ -107,23 +107,19 @@ public enum StatusType {
 	DamageCutBreath,
 	Counter,
 	SpellInterruptionRate,
-
 	TP,
 	TPRange,
-	
 	CurePotency,
 	SongSpellCastingTime,
 	SongRecastDelay,
 	ConserveTP,
 	ConserveMP,
 	CriticalDamageRange,
-	
 	Convert_HP_TO_MP,
 	Convert_MP_TO_HP,
-	
 	KickAttack,
-	
 	HasteAbility,
+	FastCast,
 
 	MODIFIER_NUM
 }

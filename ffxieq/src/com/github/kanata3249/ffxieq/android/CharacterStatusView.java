@@ -702,6 +702,8 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_CONSERVE_MP);
 		case KickAttack:
 			return mDao.getString(FFXIString.TOKEN_KICK_ATTACK);
+		case FastCast:
+			return mDao.getString(FFXIString.TOKEN_FASTCAST);
 		}
 		return null;
 	}

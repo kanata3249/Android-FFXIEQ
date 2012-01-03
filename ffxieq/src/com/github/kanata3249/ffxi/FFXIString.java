@@ -130,6 +130,7 @@ public class FFXIString {
 	public static final int TOKEN_CRITICAL_DAMAGE_DEFENCE = 1074;
 	public static final int TOKEN_SPELL_INTERRUPTION_RATE = 1075;
 	public static final int TOKEN_KICK_ATTACK = 1076;
+	public static final int TOKEN_FASTCAST = 1077;
 
 	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
 	public static final int TOKEN_SKILL_DAGGER = 1101;
