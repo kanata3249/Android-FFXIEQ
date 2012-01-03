@@ -43,11 +43,13 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	
 	private Equipment[] mEquipments;
 	private transient ArrayList<Combination> mCombinations;
-	
+	private transient boolean mNotModified;
+
 	public EquipmentSet () {
 		super();
 		
 		mEquipments = new Equipment[EQUIPMENT_NUM];
+		mNotModified = false;
 	}
 
 	// IStatus
@@ -146,6 +148,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 	
 	public void setEquipment(int part, long id, long augId) {
 		mEquipments[part] = Dao.instantiateEquipment(id, augId);
+		mNotModified = false;
 	}
 	
 	public boolean reloadEquipments() {
@@ -154,6 +157,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 			if (mEquipments[i] != null) {
 				mEquipments[i] = Dao.instantiateEquipment(mEquipments[i].getId(), mEquipments[i].getAugId());
 				updated = true;
+				mNotModified = false;
 			}
 		}
 		if (updated) {
@@ -194,6 +198,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 			}
 		}
 		if (updated) {
+			mNotModified = false;
 			parseDescriptions();			
 			if (mCombinations != null) {
 				for (int i = 0; i < mCombinations.size(); i++) {
@@ -255,6 +260,9 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 		boolean updated;
 		int notequiped;
 
+		if (mNotModified)
+			return;
+		mNotModified = false;
 		updated = false;
 		notequiped = 0;
 		for (int i = 0; i < mEquipments.length; i++) {
