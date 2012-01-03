@@ -320,7 +320,7 @@ public class CharacterStatusView extends ScrollView {
 				sb.append(value / 100);
 				if (value % 100 != 0) {
 					sb.append('.');
-					sb.append(value % 100);
+					sb.append(Math.abs(value) % 100);
 					if (value % 10 == 0)
 						sb.deleteCharAt(sb.length() - 1);
 				}
