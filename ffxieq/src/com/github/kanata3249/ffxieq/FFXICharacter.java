@@ -858,6 +858,8 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (ehaste.getAdditionalPercent() > 2600) {
 			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
 		}
+		if (mMagicSet == null)
+			mMagicSet = new MagicSet();
 		/* Magicset haste cap 43.75% */
 		mhaste  = mMagicSet.getStatus(mLevel, StatusType.Haste);
 		if (mhaste.getAdditionalPercent() > 4375)
