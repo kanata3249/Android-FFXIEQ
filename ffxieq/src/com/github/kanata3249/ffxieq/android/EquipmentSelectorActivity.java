@@ -457,7 +457,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 				break;
 			}
 			if (url != null) {
-				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("\\+")[0])));
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("[\\+Åi]")[0])));
 				startActivity(intent);
 				return true;
 			}
