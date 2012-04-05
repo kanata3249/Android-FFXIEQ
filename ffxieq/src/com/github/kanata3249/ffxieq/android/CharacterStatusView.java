@@ -704,6 +704,16 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_KICK_ATTACK);
 		case FastCast:
 			return mDao.getString(FFXIString.TOKEN_FASTCAST);
+		case BloodBoon:
+			return mDao.getString(FFXIString.TOKEN_BLOODBOON);
+		case AutoRefresh:
+			return mDao.getString(FFXIString.TOKEN_AUTOREFRESH);
+		case AutoRegen:
+			return mDao.getString(FFXIString.TOKEN_AUTOREGEN);
+		case AvatarPerpetuationCost:
+			return mDao.getString(FFXIString.TOKEN_AVATAR_PERPETUATION_COST);
+		case BloodPactAbilityDelay:
+			return mDao.getString(FFXIString.TOKEN_BLOODPACT_ABILITY_DELAY);
 		}
 		return null;
 	}

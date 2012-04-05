@@ -120,6 +120,11 @@ public enum StatusType {
 	KickAttack,
 	HasteAbility,
 	FastCast,
+	BloodBoon,
+	AutoRefresh,
+	AutoRegen,
+	AvatarPerpetuationCost,
+	BloodPactAbilityDelay,
 
 	MODIFIER_NUM
 }

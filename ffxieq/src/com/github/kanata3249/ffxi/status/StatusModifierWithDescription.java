@@ -247,6 +247,11 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_CONVERT_HP_TO_MP, StatusType.Convert_HP_TO_MP);
 		setupCommonTokenHandler(FFXIString.TOKEN_CONVERT_MP_TO_HP, StatusType.Convert_MP_TO_HP);
 		setupCommonTokenHandler(FFXIString.TOKEN_FASTCAST, StatusType.FastCast);
+		setupCommonTokenHandler(FFXIString.TOKEN_BLOODBOON, StatusType.BloodBoon);
+		setupCommonTokenHandler(FFXIString.TOKEN_AUTOREFRESH, StatusType.AutoRefresh);
+		setupCommonTokenHandler(FFXIString.TOKEN_AUTOREGEN, StatusType.AutoRegen);
+		setupCommonTokenHandler(FFXIString.TOKEN_AVATAR_PERPETUATION_COST, StatusType.AvatarPerpetuationCost);
+		setupCommonTokenHandler(FFXIString.TOKEN_BLOODPACT_ABILITY_DELAY, StatusType.BloodPactAbilityDelay);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);
