@@ -125,6 +125,7 @@ public enum StatusType {
 	AutoRegen,
 	AvatarPerpetuationCost,
 	BloodPactAbilityDelay,
+	SaveTP,
 
 	MODIFIER_NUM
 }

@@ -137,6 +137,7 @@ public class FFXIString {
 	public static final int TOKEN_AUTOREGEN = 1080;
 	public static final int TOKEN_AVATAR_PERPETUATION_COST = 1081;
 	public static final int TOKEN_BLOODPACT_ABILITY_DELAY = 1082;
+	public static final int TOKEN_SAVE_TP = 1083;
 
 	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
 	public static final int TOKEN_SKILL_DAGGER = 1101;

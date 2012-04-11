@@ -714,6 +714,8 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_AVATAR_PERPETUATION_COST);
 		case BloodPactAbilityDelay:
 			return mDao.getString(FFXIString.TOKEN_BLOODPACT_ABILITY_DELAY);
+		case SaveTP:
+			return mDao.getString(FFXIString.TOKEN_SAVE_TP);
 		}
 		return null;
 	}
