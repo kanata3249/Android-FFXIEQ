@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	AtmaSet mAtmaset;
 	Food mFood;
 	MagicSet mMagicSet;
+	VWAtmaSet mVWAtmaset;
 
 	long mMeritPointId;
 
@@ -49,6 +50,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		mAtmaset = new AtmaSet();
 		mMagicSet = new MagicSet();
 		mInAbyssea = false;
+		mVWAtmaset = new VWAtmaSet();
 		mModified = false;
 		mStatusCacheValid = false;
 	}
@@ -76,6 +78,9 @@ public class FFXICharacter implements IStatus, Serializable {
 
 		if (mInAbyssea) {
 			total.add(mAtmaset.getStatus(level, type));
+		}
+		if (mVWAtmaset != null) {
+			total.add(mVWAtmaset.getStatus(level, type));
 		}
 		
 		return total;
@@ -226,6 +231,18 @@ public class FFXICharacter implements IStatus, Serializable {
 			mStatusCacheValid = false;
 		}
 		return;
+	}
+	public Atma getVWAtma(int index) {
+		if (mVWAtmaset == null)
+			mVWAtmaset = new VWAtmaSet();
+		return mVWAtmaset.getAtma(index);
+	}
+	public void setVWAtma(int index, long id) {
+		mModified = true;
+		mStatusCacheValid = false;
+		if (mVWAtmaset == null)
+			mVWAtmaset = new VWAtmaSet();
+		mVWAtmaset.setAtma(index, id);
 	}
 	public boolean isModified() {
 		return mModified;
@@ -854,6 +871,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (mInAbyssea) {
 			ehaste.add(mAtmaset.getStatus(mLevel, StatusType.Haste));
 		}
+		if (mVWAtmaset != null) {
+			ehaste.add(mVWAtmaset.getStatus(mLevel, StatusType.Haste));
+		}
 		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
 		if (ehaste.getAdditionalPercent() > 2600) {
 			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
@@ -886,6 +906,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		if (mMagicSet != null) {
 			unknownTokens.mergeList(mMagicSet.getUnknownTokens());
+		}
+		if (mVWAtmaset != null) {
+			unknownTokens.mergeList(mVWAtmaset.getUnknownTokens());
 		}
 		return unknownTokens;
 	}

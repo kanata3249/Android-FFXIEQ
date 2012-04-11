@@ -290,6 +290,7 @@
 	<string name="ShowStatusTotal">合計値表示</string>
 	<string name="showCredit">このアプリについて...</string>
 	<string name="AtmaNotSelected">アートマ未選択</string>
+	<string name="VWAtmaNotSelected">アートマ霊子未選択</string>
 	<string name="FoodNotSelected">食事なし</string>
 	<string name="EquipmentNotSelected">装備なし</string>
 	<string name="EditAugment">オーグメント編集</string>

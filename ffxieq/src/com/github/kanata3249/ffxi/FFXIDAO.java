@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -45,4 +45,5 @@ public interface FFXIDAO {
 	public JobTrait instantiateMeritPointJobTrait(long id, int level);
 	
 	public Food instantiateFood(long id);
+	public Atma instantiateVWAtma(long id);
 }

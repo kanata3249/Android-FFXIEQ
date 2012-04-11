@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ import com.github.kanata3249.ffxieq.AtmaSet;
 import com.github.kanata3249.ffxieq.FFXICharacter;
 import com.github.kanata3249.ffxieq.Food;
 import com.github.kanata3249.ffxieq.R;
+import com.github.kanata3249.ffxieq.VWAtmaSet;
 
 public class BasicEditFragment extends FFXIEQFragment {
 	private View mView;
@@ -254,6 +255,32 @@ public class BasicEditFragment extends FFXIEQFragment {
     			registerForContextMenu(fs);
         	}
         }
+        {
+        	VWAtmaSetView as;
+        	
+        	as = (VWAtmaSetView)v.findViewById(R.id.VWAtmas);
+        	if (as != null) {
+        		as.bindFFXICharacter(charInfo);
+            	as.setOnItemClickListener(new OnItemClickListener() {
+    				public void onItemClick(AdapterView<?> arg0, View arg1,
+    						int arg2, long arg3) {
+    					VWAtmaSelectorActivity.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), arg2, ((VWAtmaSetView)arg0).getItemId(arg2));
+    				}
+            	});
+            	as.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+					public boolean onItemLongClick(AdapterView<?> arg0,
+							View arg1, int arg2, long arg3) {
+						mLongClickingView = arg0;
+						mLongClickingItemPosition = arg2;
+						getActivity().openContextMenu(arg0);
+						return true;
+					}
+            		
+            	});
+    			registerForContextMenu(as);
+        	}
+        }
         
         {
         	CheckBox cb;
@@ -328,6 +355,14 @@ public class BasicEditFragment extends FFXIEQFragment {
             	fs.setOnItemClickListener(null);
         	}
         }
+        {
+        	VWAtmaSetView as;
+        	
+        	as = (VWAtmaSetView)v.findViewById(R.id.VWAtmas);
+        	if (as != null) {
+            	as.setOnItemClickListener(null);
+        	}
+        }
         
         {
         	CheckBox cb;
@@ -365,6 +400,14 @@ public class BasicEditFragment extends FFXIEQFragment {
 			} else if (FoodSelectorActivity.isComeFrom(data)) {
 				long id = FoodSelectorActivity.getFoodId(data);
 				charInfo.setFood(0, getDAO().instantiateFood(id));
+		        saveAndUpdateValues();
+			} else if (VWAtmaSelectorActivity.isComeFrom(data)) {
+				int index = VWAtmaSelectorActivity.getIndex(data);
+				long id = VWAtmaSelectorActivity.getAtmaId(data);
+				
+				if (index != -1) {
+					charInfo.setVWAtma(index, id);
+				}
 		        saveAndUpdateValues();
 			}
 		}
@@ -498,6 +541,12 @@ public class BasicEditFragment extends FFXIEQFragment {
     		fs.bindFFXICharacter(charInfo);
     	}
 
+    	VWAtmaSetView vwas;
+    	
+    	vwas = (VWAtmaSetView)mView.findViewById(R.id.VWAtmas);
+    	if (vwas != null) {
+    		vwas.bindFFXICharacter(charInfo);
+    	}
     	mUpdating = false;
     }
 
@@ -505,6 +554,8 @@ public class BasicEditFragment extends FFXIEQFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		if (mLongClickingView == getView().findViewById(R.id.Atmas)) {
 			return onAtmaSetContextItemSelected(item);
+		} else if (mLongClickingView == getView().findViewById(R.id.VWAtmas)) {
+			return onVWAtmaSetContextItemSelected(item);
 		} else {
 			return onFoodSetContextItemSelected(item);
 		}
@@ -655,6 +706,83 @@ public class BasicEditFragment extends FFXIEQFragment {
 		return super.onContextItemSelected(item);
 	}
 
+	public boolean onVWAtmaSetContextItemSelected(MenuItem item) {
+		FFXICharacter charInfo = getFFXICharacter();
+
+		switch (item.getItemId()) {
+		case R.id.Remove:
+			charInfo.setVWAtma(mLongClickingItemPosition, -1);
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.RemoveAll:
+			for (int i = 0; i < VWAtmaSet.ATMA_MAX; i++) {
+				charInfo.setVWAtma(i, -1);
+			}
+			updateValues();
+	        if (mListener != null) {
+	    		mListener.notifyDatasetChanged();
+	    	}
+			return true;
+		case R.id.List:
+			{
+	        	VWAtmaSetView as;
+	        	
+	        	as = (VWAtmaSetView)getView().findViewById(R.id.VWAtmas);
+				VWAtmaSelectorActivity.startActivity(BasicEditFragment.this, 0, getFFXICharacter(), mLongClickingItemPosition, as.getItemId(mLongClickingItemPosition));
+				return true;
+			}
+		}
+
+		// Web Search
+		Atma atma = getFFXICharacter().getVWAtma(mLongClickingItemPosition);
+		Intent intent;
+		if (atma != null) {
+			String[] urls = getResources().getStringArray(R.array.SearchURIs);
+			String name = atma.getName();
+			String url;
+
+			url = null;
+			switch (item.getItemId()) {
+			case R.id.WebSearch0:
+				url = urls[0];
+				break;
+			case R.id.WebSearch1:
+				url = urls[1];
+				break;
+			case R.id.WebSearch2:
+				url = urls[2];
+				break;
+			case R.id.WebSearch3:
+				url = urls[3];
+				break;
+			case R.id.WebSearch4:
+				url = urls[4];
+				break;
+			case R.id.WebSearch5:
+				url = urls[5];
+				break;
+			case R.id.WebSearch6:
+				url = urls[6];
+				break;
+			case R.id.WebSearch7:
+				url = urls[7];
+				break;
+			default:
+				url = null;
+				break;
+			}
+			if (url != null) {
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("[\\+i(]")[0])));
+				startActivity(intent);
+				return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -667,6 +795,13 @@ public class BasicEditFragment extends FFXIEQFragment {
 		MenuItem item;
 		if (mLongClickingView == v.findViewById(R.id.Atmas)) {
 			Atma atma = getFFXICharacter().getAtma(mLongClickingItemPosition);
+
+			obj = atma;
+			item = menu.findItem(R.id.Remove);
+			if (item != null)
+				item.setEnabled(atma != null);
+		} else if (mLongClickingView == v.findViewById(R.id.VWAtmas)) {
+			Atma atma = getFFXICharacter().getVWAtma(mLongClickingItemPosition);
 
 			obj = atma;
 			item = menu.findItem(R.id.Remove);

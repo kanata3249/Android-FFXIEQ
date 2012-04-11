@@ -20,4 +20,5 @@
 	</TableLayout>
     <com.github.kanata3249.ffxieq.android.AtmaSetView android:id="@+id/Atmas" android:layout_height="wrap_content" android:layout_below="@+id/InAbyssea" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.AtmaSetView>
     <com.github.kanata3249.ffxieq.android.FoodSetView android:id="@+id/Foods" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.FoodSetView>
+    <com.github.kanata3249.ffxieq.android.VWAtmaSetView android:id="@+id/VWAtmas" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.VWAtmaSetView>
 </LinearLayout>

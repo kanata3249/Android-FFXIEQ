@@ -25,7 +25,8 @@
         <activity android:name=".android.AugmentSelectorActivity"></activity>
         <activity android:name=".android.MagicSelectorActivity"></activity>
         <activity android:name=".android.MagicSetEditActivity"></activity>
-        
+        <activity android:name=".android.VWAtmaSelectorActivity"></activity>
+        <activity android:name=".android.VWAtmaLevelSelectorActivity"></activity>
         
 
     </application>

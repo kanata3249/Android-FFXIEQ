@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -71,6 +71,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	MeritPointTable mMeritPointTable;
 	FoodTable mFoodTable;
 	MagicTable mMagicTable;
+	VWAtmaTable mVWAtmaTable;
 	StringTable mStringTable;
 	
 	boolean mUseExternalDB;
@@ -96,6 +97,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mMeritPointTable = new MeritPointTable();
 		mFoodTable = new FoodTable();
 		mMagicTable = new MagicTable();
+		mVWAtmaTable = new VWAtmaTable();
 		mStringTable = new StringTable();
 		
 		if (useExternal)
@@ -353,6 +355,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Magic instantiateMagic(long id) {
 		return mMagicTable.newInstance(this, getReadableDatabase(), id);
 	}
+	public Atma instantiateVWAtma(long id) {
+		return mVWAtmaTable.newInstance(this, getReadableDatabase(), id);
+	}
 
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
 		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy, filter, weaponType);
@@ -395,5 +400,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public Cursor getMagicCursor(long subid, String[] columns, String orderBy, String weaponType) {
 		return mMagicTable.getCursor(this, getReadableDatabase(), subid, columns, orderBy, weaponType);
+	}
+	public Cursor getVWAtmaCursor(long mSubID, String[] columns, String orderBy, String filter) {
+		return mVWAtmaTable.getCursor(this, getReadableDatabase(), mSubID, columns, orderBy, filter);
 	}
 }

@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,12 +22,18 @@ public class Atma extends StatusModifierWithDescription implements Serializable 
 	private static final long serialVersionUID = 1L;
 
 	private long mId;
+	private long mSubId;
 	private String mName;
 	
 	public Atma(long id, String name, String description) {
+		this(id, -1, name, description);
+	}
+
+	public Atma(long id, long subId, String name, String description) {
 		super();
 		
 		mId = id;
+		mSubId = subId;
 		mName = name;
 		mDescription = canonicalizeDescription(description);
 		
@@ -40,6 +46,14 @@ public class Atma extends StatusModifierWithDescription implements Serializable 
 
 	public void setId(long mId) {
 		this.mId = mId;
+	}
+
+	public long getSubId() {
+		return mSubId;
+	}
+
+	public void setSubId(long mSubId) {
+		this.mSubId = mSubId;
 	}
 
 	public String getName() {
