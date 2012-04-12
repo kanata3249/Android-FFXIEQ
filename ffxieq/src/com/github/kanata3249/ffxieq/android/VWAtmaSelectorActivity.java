@@ -289,7 +289,7 @@ public class VWAtmaSelectorActivity extends FFXIEQBaseActivity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.atmaselector_context, menu);
+		inflater.inflate(R.menu.vwatmaselector_context, menu);
 	}
 
 	@Override

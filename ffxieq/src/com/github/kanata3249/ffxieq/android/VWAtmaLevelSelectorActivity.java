@@ -24,12 +24,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -230,6 +233,63 @@ public class VWAtmaLevelSelectorActivity extends FFXIEQBaseActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		Atma atma = getDAO().instantiateVWAtma(mLongClickingItemId);
+		String name = atma.getName();
+		Intent intent;
+		if (atma != null) {
+			String[] urls = getResources().getStringArray(R.array.SearchURIs);
+			String url;
+
+			url = null;
+			switch (item.getItemId()) {
+			case R.id.WebSearch0:
+				url = urls[0];
+				break;
+			case R.id.WebSearch1:
+				url = urls[1];
+				break;
+			case R.id.WebSearch2:
+				url = urls[2];
+				break;
+			case R.id.WebSearch3:
+				url = urls[3];
+				break;
+			case R.id.WebSearch4:
+				url = urls[4];
+				break;
+			case R.id.WebSearch5:
+				url = urls[5];
+				break;
+			case R.id.WebSearch6:
+				url = urls[6];
+				break;
+			case R.id.WebSearch7:
+				url = urls[7];
+				break;
+			default:
+				url = null;
+				break;
+			}
+			if (url != null) {
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Uri.encode(name.split("[\\+Åi(]")[0])));
+				startActivity(intent);
+				return true;
+			}
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.vwatmaselector_context, menu);
 	}
 
 	@Override

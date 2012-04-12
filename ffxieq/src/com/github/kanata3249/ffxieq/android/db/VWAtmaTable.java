@@ -66,7 +66,7 @@ public class VWAtmaTable {
 			filterexp = "(" + C_Level + " = " + 15 + ")";
 		}
 		if (filter.length() > 0) {
-			filterexp = "AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
+			filterexp += " AND (" + C_Name + " LIKE '%" + filter + "%' OR " + C_Description + " LIKE '%" + filter + "%')";
 		}
 
 		try {
