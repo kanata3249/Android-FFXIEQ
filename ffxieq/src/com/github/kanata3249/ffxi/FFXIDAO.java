@@ -29,6 +29,7 @@ public interface FFXIDAO {
 	public int getMP(int race, int job, int joblevel, int subjob, int subjoblevel);
 	public int getStatus(StatusType type, int race, int job, int joblevel, int subjob, int subjoblevel);
 	public int getSkillCap(StatusType type, int job, int joblevel, int subjob, int subjoblevel);
+	public int getSkillCap(StatusType type, String rank, int joblevel);
 
 	public String getString(int id);		// ids are defined in FFXIString class
 	

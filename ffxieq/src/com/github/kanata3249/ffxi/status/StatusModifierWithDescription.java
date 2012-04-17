@@ -253,6 +253,8 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_AVATAR_PERPETUATION_COST, StatusType.AvatarPerpetuationCost);
 		setupCommonTokenHandler(FFXIString.TOKEN_BLOODPACT_ABILITY_DELAY, StatusType.BloodPactAbilityDelay);
 		setupCommonTokenHandler(FFXIString.TOKEN_SAVE_TP, StatusType.SaveTP);
+		setupCommonTokenHandler(FFXIString.TOKEN_LIGHT_ARTS, StatusType.LightArts);
+		setupCommonTokenHandler(FFXIString.TOKEN_DARK_ARTS, StatusType.DarkArts);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);

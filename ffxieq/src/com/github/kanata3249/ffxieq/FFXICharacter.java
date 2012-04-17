@@ -332,6 +332,15 @@ public class FFXICharacter implements IStatus, Serializable {
 				mCachedValues[type.ordinal()] = getHaste();
 				break;
 				
+			case SKILL_DIVINE_MAGIC:
+			case SKILL_HEALING_MAGIC:
+			case SKILL_ENCHANCING_MAGIC:
+			case SKILL_ENFEEBLING_MAGIC:
+			case SKILL_ELEMENTAL_MAGIC:
+			case SKILL_DARK_MAGIC:
+				mCachedValues[type.ordinal()] = getMagicSkill(type);
+				break;
+
 			case MODIFIER_NUM:
 				break;
 			}
@@ -388,6 +397,14 @@ public class FFXICharacter implements IStatus, Serializable {
 
 		case Haste:
 			return getHaste();
+
+		case SKILL_DIVINE_MAGIC:
+		case SKILL_HEALING_MAGIC:
+		case SKILL_ENCHANCING_MAGIC:
+		case SKILL_ENFEEBLING_MAGIC:
+		case SKILL_ELEMENTAL_MAGIC:
+		case SKILL_DARK_MAGIC:
+			return getMagicSkill(type);
 		}
 	}
 
@@ -892,6 +909,62 @@ public class FFXICharacter implements IStatus, Serializable {
 
 		haste.add(ahaste);
 		return haste;
+	}
+
+	public StatusValue getMagicSkill(StatusType type) {
+		StatusValue skill, bskill, arts, larts, darts;
+		int fskill, cskill, lskill;
+
+		skill = getStatus(mLevel, type);
+		larts = getStatus(mLevel, StatusType.LightArts);
+		darts = getStatus(mLevel, StatusType.DarkArts);
+
+		arts = null;
+		switch (type) {
+		case SKILL_DIVINE_MAGIC:
+		case SKILL_HEALING_MAGIC:
+		case SKILL_ENCHANCING_MAGIC:
+			if (larts.getTotal() > 0) {
+				arts = larts;
+			}
+			break;
+
+		case SKILL_ENFEEBLING_MAGIC:
+			if (larts.getTotal() > 0) {
+				arts = larts;
+			} else if (darts.getTotal() > 0) {
+				arts = darts;
+			}
+			break;
+		case SKILL_ELEMENTAL_MAGIC:
+		case SKILL_DARK_MAGIC:
+			if (darts.getTotal() > 0) {
+				arts = darts;
+			}
+			break;
+		}
+		
+		if (arts != null) {
+			bskill = mJobAndRace.getStatus(mLevel, type);
+			fskill = Dao.getSkillCap(type, "D", mLevel.getLevel());
+			lskill = Dao.getSkillCap(type, "E", mLevel.getLevel());
+			if (arts.getAdditionalPercent() > 1) {
+				cskill = Dao.getSkillCap(type, "A", mLevel.getLevel());
+			} else {
+				cskill = Dao.getSkillCap(type, "B+", mLevel.getLevel());
+			}
+			if (bskill.getValue() < lskill) {
+				skill.setValue(lskill + (cskill - fskill));
+			} else if (bskill.getValue() < fskill) {
+				skill.setValue(skill.getValue() + (cskill - fskill));
+			} else if (bskill.getValue() < cskill) {
+				skill.setValue(skill.getValue() - bskill.getValue() + cskill);
+			} else {
+				// nop
+			}
+		}
+
+		return skill;
 	}
 
 	public SortedStringList getUnknownTokens() {

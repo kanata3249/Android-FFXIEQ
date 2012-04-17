@@ -315,6 +315,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public int getSkillCap(StatusType type, int job, int joblevel, int subjob, int subjoblevel) {
 		return mSkillCapTable.getSkillCap(getReadableDatabase(), jobToRank(job, type), joblevel, jobToRank(subjob, type), subjoblevel);
 	}
+	public int getSkillCap(StatusType type, String rank, int joblevel) {
+		return mSkillCapTable.getSkillCap(getReadableDatabase(), rank, joblevel, "-", 0);
+	}
 
 	public String getString(int id) {
 		return mStringTable.getString(getReadableDatabase(), (long)id);

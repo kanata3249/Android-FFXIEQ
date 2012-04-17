@@ -126,6 +126,8 @@ public enum StatusType {
 	AvatarPerpetuationCost,
 	BloodPactAbilityDelay,
 	SaveTP,
+	LightArts,
+	DarkArts,
 
 	MODIFIER_NUM
 }
