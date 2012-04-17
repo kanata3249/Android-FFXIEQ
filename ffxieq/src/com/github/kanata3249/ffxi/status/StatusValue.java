@@ -69,6 +69,15 @@ public class StatusValue implements Serializable {
 			this.cap = value.cap;
 		}
 	};
+	public void sub(StatusValue value) {
+		this.value -= value.value;
+		this.additional -= value.additional;
+		this.additionalPercent -= value.additionalPercent;
+		if (this.cap == 0) {
+			this.additionalPercentWithCap = value.additionalPercentWithCap;
+			this.cap = value.cap;
+		}
+	}
 	public void diff(StatusValue value) {
 		int v1, v2;
 

@@ -128,6 +128,7 @@ public enum StatusType {
 	SaveTP,
 	LightArts,
 	DarkArts,
+	HasteByEquipment,
 
 	MODIFIER_NUM
 }

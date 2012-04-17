@@ -152,13 +152,13 @@ public class CharacterStatusView extends ScrollView {
     	if (tv != null) {
     		tv.setText(getAttackRange(mDisplayParam));
     	}
+    	tv = (TextView)findViewById(R.id.HasteByEquipment);
+    	if (tv != null) {
+    		tv.setText(getHasteByEquipment(mDisplayParam));
+    	}
     	tv = (TextView)findViewById(R.id.Haste);
     	if (tv != null) {
     		tv.setText(getHaste(mDisplayParam));
-    	}
-    	tv = (TextView)findViewById(R.id.Slow);
-    	if (tv != null) {
-    		tv.setText(getSlow(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.SubtleBlow);
     	if (tv != null) {
@@ -516,8 +516,8 @@ public class CharacterStatusView extends ScrollView {
 	public String getHaste(int separate) {
 		return getStatusString(StatusType.Haste, separate);
 	}
-	public String getSlow(int separate) {
-		return getStatusString(StatusType.Slow, separate);
+	public String getHasteByEquipment(int separate) {
+		return getStatusString(StatusType.HasteByEquipment, separate);
 	}
 	public String getSubtleBlow(int separate) {
 		return getStatusString(StatusType.SubtleBlow, separate);

@@ -136,8 +136,8 @@
     <string name="Attack">攻撃力</string>
     <string name="RangeAccuracy">飛命</string>
     <string name="RangeAttack">飛攻</string>
-    <string name="Heste">ヘイスト</string>
-    <string name="Slow">スロウ</string>
+    <string name="HasteByEquipment">ヘイスト(装備)</string>
+    <string name="Haste">ヘイスト</string>
     <string name="SubtleBlow">モクシャ</string>
     <string name="StoreTP">ストアTP</string>
     <string name="Evasion">回避</string>

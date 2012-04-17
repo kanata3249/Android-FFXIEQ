@@ -331,6 +331,9 @@ public class FFXICharacter implements IStatus, Serializable {
 			case Haste:
 				mCachedValues[type.ordinal()] = getHaste();
 				break;
+			case HasteByEquipment:
+				mCachedValues[type.ordinal()] = getHasteByEquipment();
+				break;
 				
 			case SKILL_DIVINE_MAGIC:
 			case SKILL_HEALING_MAGIC:
@@ -397,6 +400,8 @@ public class FFXICharacter implements IStatus, Serializable {
 
 		case Haste:
 			return getHaste();
+		case HasteByEquipment:
+			return getHasteByEquipment();
 
 		case SKILL_DIVINE_MAGIC:
 		case SKILL_HEALING_MAGIC:
@@ -884,12 +889,15 @@ public class FFXICharacter implements IStatus, Serializable {
 		StatusValue haste, ehaste, mhaste, ahaste;
 
 		haste = getStatus(mLevel, StatusType.Haste);
+		haste.sub(getStatus(mLevel, StatusType.Slow));
 		ehaste  = mEquipment.getStatus(mLevel, StatusType.Haste);
 		if (mInAbyssea) {
 			ehaste.add(mAtmaset.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mAtmaset.getStatus(mLevel, StatusType.Slow));
 		}
 		if (mVWAtmaset != null) {
 			ehaste.add(mVWAtmaset.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mVWAtmaset.getStatus(mLevel, StatusType.Slow));
 		}
 		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
 		if (ehaste.getAdditionalPercent() > 2600) {
@@ -899,6 +907,8 @@ public class FFXICharacter implements IStatus, Serializable {
 			mMagicSet = new MagicSet();
 		/* Magicset haste cap 43.75% */
 		mhaste  = mMagicSet.getStatus(mLevel, StatusType.Haste);
+		mhaste.sub(mMagicSet.getStatus(mLevel, StatusType.Slow));
+
 		if (mhaste.getAdditionalPercent() > 4375)
 			haste.setAdditionalPercent(haste.getAdditionalPercent() - (mhaste.getAdditionalPercent() - 4375));
 		
@@ -908,6 +918,25 @@ public class FFXICharacter implements IStatus, Serializable {
 			ahaste.setAdditionalPercent(2500);
 
 		haste.add(ahaste);
+		return haste;
+	}
+
+	public StatusValue getHasteByEquipment() {
+		StatusValue haste, ehaste;
+
+		haste = ehaste  = mEquipment.getStatus(mLevel, StatusType.Haste);
+		if (mInAbyssea) {
+			ehaste.add(mAtmaset.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mAtmaset.getStatus(mLevel, StatusType.Slow));
+		}
+		if (mVWAtmaset != null) {
+			ehaste.add(mVWAtmaset.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mVWAtmaset.getStatus(mLevel, StatusType.Slow));
+		}
+		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
+		if (ehaste.getAdditionalPercent() > 2600) {
+			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
+		}
 		return haste;
 	}
 
