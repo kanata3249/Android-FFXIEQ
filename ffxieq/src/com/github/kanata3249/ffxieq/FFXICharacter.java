@@ -1029,6 +1029,15 @@ public class FFXICharacter implements IStatus, Serializable {
 		return result;
 	}
 	
+	public boolean reloadMagicsForUpdatingDatabase() {
+		boolean ret = mMagicSet.reloadMagicsForUpdatingDatabase();
+		
+		if (ret)
+			mModified = true;
+		
+		return ret;
+	}
+
 	public boolean reloadAugmentsIfChangesThere() {
 		return mEquipment.reloadAugmentsIfChangesThere();
 	}

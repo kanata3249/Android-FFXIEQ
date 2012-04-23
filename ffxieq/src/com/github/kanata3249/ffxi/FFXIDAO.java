@@ -40,6 +40,7 @@ public interface FFXIDAO {
 	public Combination instantiateCombination(long combiID, int numMatches);
 	public Combination searchCombination(String names[]);
 	public Magic instantiateMagic(long id);
+	public Magic findMagic(String name);
 	
 	public String[] getJobSpecificMeritPointItems(int job, int category);
 	public long[] getJobSpecificMeritPointItemIds(int job, int category);

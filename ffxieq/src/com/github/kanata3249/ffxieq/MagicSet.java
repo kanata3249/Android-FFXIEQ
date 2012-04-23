@@ -89,4 +89,25 @@ public class MagicSet extends StatusModifier implements IStatus, Serializable {
 		}
 		return updated;
 	}
+
+	public boolean reloadMagicsForUpdatingDatabase() {
+		boolean updated = false;
+		for (int i = 0; i < mMagics.size(); i++) {
+			if (mMagics.get(i) != null) {
+				Magic magic = Dao.instantiateMagic(mMagics.get(i).getId());
+				if (magic == null || !magic.getName().equals(mMagics.get(i).getName())) {
+					// find
+					magic = Dao.findMagic(mMagics.get(i).getName());
+					if (magic != null) {
+						mMagics.set(i, magic);
+						updated = true;
+					} else {
+						setMagic(i, -1);
+						updated = true;
+					}
+				}
+			}
+		}
+		return updated;
+	}
 }

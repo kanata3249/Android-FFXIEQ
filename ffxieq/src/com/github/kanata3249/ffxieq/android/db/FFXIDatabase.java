@@ -358,6 +358,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Magic instantiateMagic(long id) {
 		return mMagicTable.newInstance(this, getReadableDatabase(), id);
 	}
+	public Magic findMagic(String name) {
+		return mMagicTable.findMagic(this, getReadableDatabase(), name);
+	}
 	public Atma instantiateVWAtma(long id) {
 		return mVWAtmaTable.newInstance(this, getReadableDatabase(), id);
 	}

@@ -45,7 +45,9 @@ public class MagicSetEditFragment extends FFXIEQFragment {
    		FFXICharacter charInfo = getFFXICharacter();
    		View v = getView();
 
-        // setup controls
+    	charInfo.reloadMagicsForUpdatingDatabase();
+
+    	// setup controls
         {
         	MagicSetView ms;
         	
@@ -133,13 +135,15 @@ public class MagicSetEditFragment extends FFXIEQFragment {
         	return;
         mUpdating = true;
 
+    	charInfo.reloadMagicsForUpdatingDatabase();
+
     	MagicSetView ms;
     	
     	ms = (MagicSetView)mView.findViewById(R.id.Magics);
     	if (ms != null) {
     		ms.bindFFXICharacter(charInfo);
     	}
-
+    	
     	mUpdating = false;
     }
 
