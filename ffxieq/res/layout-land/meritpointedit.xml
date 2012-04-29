@@ -4,125 +4,125 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <TableLayout android:id="@+id/tableLayout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:shrinkColumns="*">
-        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/HP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow1">
+            <TextView android:id="@+id/textView1" android:text="@string/HP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/HP" android:entries="@array/Merits_HPMP_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/MP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView2" android:text="@string/MP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/MP" android:entries="@array/Merits_HPMP_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/STR" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView3" android:text="@string/STR" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/STR" android:entries="@array/Merits_Status_Entries"></Spinner>
         </TableRow>
-        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow" android:onClick="onSave">
-            <TextView android:id="@+id/textView" android:text="@string/DEX" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow2" android:onClick="onSave">
+            <TextView android:id="@+id/textView4" android:text="@string/DEX" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/DEX" android:entries="@array/Merits_Status_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/VIT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView5" android:text="@string/VIT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/VIT" android:entries="@array/Merits_Status_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/AGI" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView6" android:text="@string/AGI" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/AGI" android:entries="@array/Merits_Status_Entries"></Spinner>
         </TableRow>
-        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/INT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow3">
+            <TextView android:id="@+id/textView7" android:text="@string/INT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/INT" android:entries="@array/Merits_Status_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/MND" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView8" android:text="@string/MND" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/MND" android:entries="@array/Merits_Status_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/CHR" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView9" android:text="@string/CHR" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CHR" android:entries="@array/Merits_Status_Entries"></Spinner>
         </TableRow>
-		<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/HANDTOHAND" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+		<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow4">
+            <TextView android:id="@+id/textView10" android:text="@string/HANDTOHAND" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/HANDTOHAND" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/DAGGER" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView11" android:text="@string/DAGGER" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/DAGGER" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/SWORD" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView12" android:text="@string/SWORD" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/SWORD" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/GREATSWORD" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow5">
+            <TextView android:id="@+id/textView13" android:text="@string/GREATSWORD" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/GREATSWORD" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/AXE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView14" android:text="@string/AXE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/AXE" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/GREATAXE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView15" android:text="@string/GREATAXE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/GREATAXE" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/SCYTH" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow6">
+            <TextView android:id="@+id/textView16" android:text="@string/SCYTH" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/SCYTH" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/POLEARM" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView17" android:text="@string/POLEARM" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/POLEARM" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/KATANA" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView18" android:text="@string/KATANA" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/KATANA" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/GREATKATANA" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow7">
+            <TextView android:id="@+id/textView19" android:text="@string/GREATKATANA" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/GREATKATANA" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/CLUB" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView20" android:text="@string/CLUB" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CLUB" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/STAFF" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView21" android:text="@string/STAFF" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/STAFF" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/ARCHERY" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow8">
+            <TextView android:id="@+id/textView22" android:text="@string/ARCHERY" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ARCHERY" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/MARKSMANSHIP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView23" android:text="@string/MARKSMANSHIP" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/MARKSMANSHIP" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/THROWING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView24" android:text="@string/THROWING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/THROWING" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/GUARDING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow9">
+            <TextView android:id="@+id/textView25" android:text="@string/GUARDING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/GUARDING" android:entries="@array/Merits_Skill2_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/EVASION" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView26" android:text="@string/EVASION" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/EVASION" android:entries="@array/Merits_Skill2_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/SHIELD" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView27" android:text="@string/SHIELD" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/SHIELD" android:entries="@array/Merits_Skill2_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/PARRYING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow10">
+            <TextView android:id="@+id/textView28" android:text="@string/PARRYING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/PARRYING" android:entries="@array/Merits_Skill2_Entries"></Spinner>
         </TableRow>
 
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/DIVINEMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow11">
+            <TextView android:id="@+id/textView29" android:text="@string/DIVINEMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/DIVINEMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/HEALINGMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView30" android:text="@string/HEALINGMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/HEALINGMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/ENCHANCINGMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView31" android:text="@string/ENCHANCINGMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ENCHANCINGMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/ENFEEBLINGMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow12">
+            <TextView android:id="@+id/textView32" android:text="@string/ENFEEBLINGMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:entries="@array/Merits_Skill_Entries" android:id="@+id/ENFEEBLINGMAGIC"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/ELEMENTALMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView33" android:text="@string/ELEMENTALMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ELEMENTALMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/DARKMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView34" android:text="@string/DARKMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/DARKMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/SINGING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow13">
+            <TextView android:id="@+id/textView35" android:text="@string/SINGING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/SINGING" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/STRINGINSTRUMENT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView36" android:text="@string/STRINGINSTRUMENT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/STRINGINSTRUMENT" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/WINDINSTRUMENT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView37" android:text="@string/WINDINSTRUMENT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/WINDINSTRUMENT" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/NINJUTSU" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow14">
+            <TextView android:id="@+id/textView38" android:text="@string/NINJUTSU" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/NINJUTSU" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/SUMMONING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView39" android:text="@string/SUMMONING" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/SUMMONING" android:entries="@array/Merits_Skill_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/BLUEMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView40" android:text="@string/BLUEMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/BLUEMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/ENMITY" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow15">
+            <TextView android:id="@+id/textView41" android:text="@string/ENMITY" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ENMITY" android:entries="@array/Merits_Enmity_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/CRITICAL" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView42" android:text="@string/CRITICAL" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CRITICAL" android:entries="@array/Merits_Other_Entries"></Spinner>
-            <TextView android:id="@+id/textView" android:text="@string/CRITICALDEFENCE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <TextView android:id="@+id/textView43" android:text="@string/CRITICALDEFENCE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CRITICALDEFENCE" android:entries="@array/Merits_Other_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
-            <TextView android:id="@+id/textView" android:text="@string/SPELLINTERRUPTION" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow16">
+            <TextView android:id="@+id/textView44" android:text="@string/SPELLINTERRUPTION" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/SPELLINTERRUPTION" android:entries="@array/Merits_Other_Entries"></Spinner>
         </TableRow>
     </TableLayout>

@@ -3,85 +3,85 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentTop="true" android:layout_above="@+id/button1">
-	    <TableLayout android:id="@+id/tableLayout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:shrinkColumns="0,2">
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentTop="true">
+    	    <TableLayout android:id="@+id/tableLayout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:shrinkColumns="0,2">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow1">
 	            <TextView android:id="@+id/Category1Title1" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value1" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow2">
 	            <TextView android:id="@+id/Category1Title2" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value2" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow3">
 	            <TextView android:id="@+id/Category1Title3" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value3" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow4">
 	            <TextView android:id="@+id/Category1Title4" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value4" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow5">
 	            <TextView android:id="@+id/Category1Title5" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value5" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow6">
 	            <TextView android:id="@+id/Category1Title6" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value6" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow7">
 	            <TextView android:id="@+id/Category1Title7" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value7" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow8">
 	            <TextView android:id="@+id/Category1Title8" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value8" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow9">
 	            <TextView android:id="@+id/Category1Title9" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value9" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow10">
 	            <TextView android:id="@+id/Category1Title10" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category1Value10" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow11">
 		        <TextView android:id="@+id/Category2Title1" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value1" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow12">
 	            <TextView android:id="@+id/Category2Title2" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value2" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow13">
 	            <TextView android:id="@+id/Category2Title3" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value3" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow14">
 	            <TextView android:id="@+id/Category2Title4" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value4" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow15">
 	            <TextView android:id="@+id/Category2Title5" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value5" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow16">
 	            <TextView android:id="@+id/Category2Title6" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value6" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow17">
 	            <TextView android:id="@+id/Category2Title7" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value7" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow18">
 	            <TextView android:id="@+id/Category2Title8" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value8" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow19">
 	            <TextView android:id="@+id/Category2Title9" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value9" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
-	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow">
+	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow20">
 	            <TextView android:id="@+id/Category2Title10" android:text="" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
 	            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Category2Value10" android:entries="@array/Merits_JobSpecific_Entries"></Spinner>
 	        </TableRow>
