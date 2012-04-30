@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:id="@+id/tableLayout1" android:layout_width="wrap_content">
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_height="fill_parent" android:id="@+id/tableLayout2" android:layout_width="wrap_content">
+	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
+	        <Spinner android:entries="@array/Jobs" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Job"></Spinner>
+	        <EditText android:layout_height="wrap_content" android:text="" android:id="@+id/JobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
+	        <Spinner android:entries="@array/Races" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Race"></Spinner>
+	    </TableRow>
+	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow2" android:layout_width="wrap_content">
+	        <Spinner android:entries="@array/Jobs" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/SubJob"></Spinner>
+	        <EditText android:layout_height="wrap_content" android:text="" android:id="@+id/SubJobLevel" android:layout_width="wrap_content" android:inputType="numberDecimal"></EditText>
+	    </TableRow>
+	    <RelativeLayout android:id="@+id/relativeLayout1" android:layout_height="wrap_content" android:layout_width="fill_parent">
+	        <CheckBox android:id="@+id/InAbyssea" android:text="@string/InAbyssea" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+	        <Spinner android:layout_toRightOf="@+id/InAbyssea" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/AbyssiteOfFurtherance" android:entries="@array/AbyssiteOfFurtheranceEntries" android:prompt="@string/AbyssiteOfFurtherancePrompt"></Spinner>
+	        <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toRightOf="@+id/AbyssiteOfFurtherance" android:id="@+id/AbyssiteOfMerit" android:entries="@array/AbyssiteOfMeritEntries" android:prompt="@string/AbyssiteOfMeritPrompt"></Spinner>
+	    </RelativeLayout>
+	</TableLayout>
+	<LinearLayout
+		android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="vertical">
+	    <com.github.kanata3249.ffxieq.android.AtmaSetView android:id="@+id/Atmas" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.AtmaSetView>
+	    <com.github.kanata3249.ffxieq.android.FoodSetView android:id="@+id/Foods" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.FoodSetView>
+    	<com.github.kanata3249.ffxieq.android.VWAtmaSetView android:id="@+id/VWAtmas" android:layout_height="wrap_content" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.VWAtmaSetView>
+	</LinearLayout>
+</LinearLayout>
