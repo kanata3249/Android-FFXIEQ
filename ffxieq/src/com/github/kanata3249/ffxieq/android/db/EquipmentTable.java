@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public class EquipmentTable {
 	
 	public static final String C_Combi_ID = "_id";
 	public static final String C_Combi_CombinationID = "CombinationID";
-	public static final String C_Combi_Equipments = "Equipments";
+	public static final String C_Combi_Equipments = "Equipment";
 	public static final String C_Combi_NumMatches = "NumMatch";
 	public static final String C_Combi_Description = "Description";
 

@@ -4,7 +4,7 @@
     <item android:id="@+id/NewCharacter" android:title="@string/NewCharacter" android:icon="@android:drawable/ic_menu_add"></item>
     <item android:title="@string/Discard" android:icon="@android:drawable/ic_menu_revert" android:id="@+id/DiscardChanges"></item>
     <item android:icon="@android:drawable/ic_menu_edit" android:id="@+id/EditMerits" android:title="@string/Merits"></item><item android:icon="@android:drawable/ic_menu_edit" android:id="@+id/EditSkill" android:title="@string/Skill"></item>
-    <group android:id="@+id/group2" android:menuCategory="secondary">
+    <item android:id="@+id/EditBlueMagic" android:title="@string/EditBlueMagic"></item><group android:id="@+id/group2" android:menuCategory="secondary">
 	    <item android:id="@+id/Delete" android:icon="@android:drawable/ic_menu_delete" android:title="@string/Delete"></item>
 	    <item android:id="@+id/BackupToSD" android:title="@string/BackupToSD"></item>
 	    <item android:id="@+id/RestoreFromSD" android:title="@string/RestoreFromSD"></item>
@@ -12,4 +12,5 @@
     	<item android:title="@string/useExternalDB" android:checkable="true" android:id="@+id/useExternalDB"></item>
     	<item android:title="@string/showCredit" android:id="@+id/showCredit"></item>
     </group>
+    
 </menu>

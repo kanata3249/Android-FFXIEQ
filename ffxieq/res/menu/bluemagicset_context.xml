@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/Set" android:title="@string/SetBlueMagic"></item><item android:title="@string/Remove" android:id="@+id/Remove"></item>
+	<item android:title="@string/RemoveAll" android:id="@+id/RemoveAll"></item>
+	
+</menu>

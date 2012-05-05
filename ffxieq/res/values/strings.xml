@@ -321,4 +321,6 @@
 	<string name="QueryLinkMeritPointTitle">メリットポイントデータをリンク</string>
 	<string name="LinkMeritPointSuccess">メリットポイントデータをリンクしました</string>
 	<string name="UnlinkMeritPointSuccess">メリットポイントデータをリンク解除しました</string>
+	<string name="EditBlueMagic">青魔法セット</string>
+	<string name="SetBlueMagic">セット</string>
 </resources>

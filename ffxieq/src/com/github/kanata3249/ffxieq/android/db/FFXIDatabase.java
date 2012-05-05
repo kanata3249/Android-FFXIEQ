@@ -28,6 +28,7 @@ import java.util.zip.ZipInputStream;
 import com.github.kanata3249.ffxi.*;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
+import com.github.kanata3249.ffxieq.BlueMagic;
 import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.Food;
@@ -72,6 +73,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	FoodTable mFoodTable;
 	MagicTable mMagicTable;
 	VWAtmaTable mVWAtmaTable;
+	BlueMagicTable mBlueMagicTable;
 	StringTable mStringTable;
 	
 	boolean mUseExternalDB;
@@ -98,6 +100,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mFoodTable = new FoodTable();
 		mMagicTable = new MagicTable();
 		mVWAtmaTable = new VWAtmaTable();
+		mBlueMagicTable = new BlueMagicTable();
 		mStringTable = new StringTable();
 		
 		if (useExternal)
@@ -364,7 +367,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Atma instantiateVWAtma(long id) {
 		return mVWAtmaTable.newInstance(this, getReadableDatabase(), id);
 	}
-
+	public BlueMagic instantiateBlueMagic(long id) {
+		return mBlueMagicTable.newInstance(this, getReadableDatabase(), id);
+	}
 	public Cursor getEquipmentCursor(int part, int race, int job, int level, String[] columns, String orderBy, String filter, String weaponType) {
 		return mEquipmentTable.getCursor(this, getReadableDatabase(), part, race, job, level, columns, orderBy, filter, weaponType);
 	}
@@ -407,7 +412,10 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public Cursor getMagicCursor(long subid, String[] columns, String orderBy, String weaponType) {
 		return mMagicTable.getCursor(this, getReadableDatabase(), subid, columns, orderBy, weaponType);
 	}
-	public Cursor getVWAtmaCursor(long mSubID, String[] columns, String orderBy, String filter) {
-		return mVWAtmaTable.getCursor(this, getReadableDatabase(), mSubID, columns, orderBy, filter);
+	public Cursor getVWAtmaCursor(long subID, String[] columns, String orderBy, String filter) {
+		return mVWAtmaTable.getCursor(this, getReadableDatabase(), subID, columns, orderBy, filter);
+	}
+	public Cursor getBlueMagicCursor(String[] columns, String orderBy) {
+		return mBlueMagicTable.getCursor(this, getReadableDatabase(), columns, orderBy);
 	}
 }

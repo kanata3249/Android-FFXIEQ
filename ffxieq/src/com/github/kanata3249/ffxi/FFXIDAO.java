@@ -17,6 +17,7 @@ package com.github.kanata3249.ffxi;
 
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
+import com.github.kanata3249.ffxieq.BlueMagic;
 import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.Food;
@@ -41,6 +42,7 @@ public interface FFXIDAO {
 	public Combination searchCombination(String names[]);
 	public Magic instantiateMagic(long id);
 	public Magic findMagic(String name);
+	public BlueMagic instantiateBlueMagic(long id);
 	
 	public String[] getJobSpecificMeritPointItems(int job, int category);
 	public long[] getJobSpecificMeritPointItemIds(int job, int category);

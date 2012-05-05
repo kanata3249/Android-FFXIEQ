@@ -33,6 +33,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	Food mFood;
 	MagicSet mMagicSet;
 	VWAtmaSet mVWAtmaset;
+	BlueMagicSet mBlueMagicSet;
 
 	long mMeritPointId;
 
@@ -51,6 +52,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		mMagicSet = new MagicSet();
 		mInAbyssea = false;
 		mVWAtmaset = new VWAtmaSet();
+		mBlueMagicSet = new BlueMagicSet();
 		mModified = false;
 		mStatusCacheValid = false;
 	}
@@ -81,6 +83,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		if (mVWAtmaset != null) {
 			total.add(mVWAtmaset.getStatus(level, type));
+		}
+		if (mBlueMagicSet != null) {
+			total.add(mBlueMagicSet.getStatus(level, type));
 		}
 		
 		return total;
@@ -243,6 +248,34 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (mVWAtmaset == null)
 			mVWAtmaset = new VWAtmaSet();
 		mVWAtmaset.setAtma(index, id);
+	}
+	public int getNumBlueMagic() {
+		if (mBlueMagicSet == null)
+			mBlueMagicSet = new BlueMagicSet();
+		return mBlueMagicSet.getNumMagic();
+	}
+	public BlueMagic getBlueMagic(int index) {
+		if (mBlueMagicSet == null)
+			mBlueMagicSet = new BlueMagicSet();
+		return mBlueMagicSet.getMagic(index);
+	}
+	public void setBlueMagic(long id, boolean enable) {
+		if (mBlueMagicSet == null)
+			mBlueMagicSet = new BlueMagicSet();
+
+		if (enable) {
+			mBlueMagicSet.addMagic(id);
+		} else {
+			mBlueMagicSet.removeMagic(id);
+		}
+		mModified = true;
+		mStatusCacheValid = false;
+		return;
+	}
+	public boolean isBlueMagicSet(long itemId) {
+		if (mBlueMagicSet == null)
+			mBlueMagicSet = new BlueMagicSet();
+		return mBlueMagicSet.isSet(itemId);
 	}
 	public boolean isModified() {
 		return mModified;

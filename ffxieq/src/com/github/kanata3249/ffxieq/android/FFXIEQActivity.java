@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -362,6 +362,9 @@ public class FFXIEQActivity extends TabActivity {
 			return true;
 		case R.id.EditSkill:
 			SkillEditActivity.startActivity(this, 0);
+			return true;
+		case R.id.EditBlueMagic:
+			BlueMagicSetEditActivity.startActivity(this, 0);
 			return true;
 
 		case R.id.Delete:
