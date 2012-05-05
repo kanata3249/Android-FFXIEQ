@@ -18,6 +18,7 @@ package com.github.kanata3249.ffxieq.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -145,5 +146,21 @@ public class BlueMagicSetEditActivity extends FFXIEQBaseActivity {
 		if (item != null)
 			item.setEnabled(!set);
 	}
-
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN){
+			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+				saveValues();
+				
+				Intent result = new Intent();
+					
+				result.putExtra("From", "BlueMagicSetEditActivity");
+				setResult(RESULT_OK, result);
+					
+				finish();
+				return true;
+			}
+		}
+		return super.dispatchKeyEvent(event);
+	}
 }
