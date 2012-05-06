@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -64,11 +64,11 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 	}
 
 	// IStatus
-	public StatusValue getStatus(JobLevelAndRace level, StatusType type) {
+	public StatusValue getStatus(JobLevelAndRace level, BlueMagicSet blueMagicSet, StatusType type) {
 		StatusValue value;
 		if (mJobTraits == null)
 			mJobTraits = new JobTraitSet();
-		mJobTraits.setLevel(level);
+		mJobTraits.setLevel(level, blueMagicSet);
 		value = mJobTraits.getStatus(level, type);
 
 		switch (type) {

@@ -68,7 +68,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	// IStatus
 	public StatusValue getStatus(JobLevelAndRace level, StatusType type) {
 		StatusValue total = new StatusValue(0, 0);
-		total.add(mJobAndRace.getStatus(level, type));
+		total.add(mJobAndRace.getStatus(level, mBlueMagicSet, type));
 		total.add(mMerits.getStatus(level, type));
 		total.add(mEquipment.getStatus(level, type));
 		if (mFood != null) {

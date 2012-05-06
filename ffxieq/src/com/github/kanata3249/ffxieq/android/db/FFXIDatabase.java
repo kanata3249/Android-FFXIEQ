@@ -29,6 +29,7 @@ import com.github.kanata3249.ffxi.*;
 import com.github.kanata3249.ffxi.status.StatusType;
 import com.github.kanata3249.ffxieq.Atma;
 import com.github.kanata3249.ffxieq.BlueMagic;
+import com.github.kanata3249.ffxieq.BlueMagicJobTrait;
 import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 import com.github.kanata3249.ffxieq.Food;
@@ -417,5 +418,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	public Cursor getBlueMagicCursor(String[] columns, String orderBy) {
 		return mBlueMagicTable.getCursor(this, getReadableDatabase(), columns, orderBy);
+	}
+	public BlueMagicJobTrait[] getBlueMagicJobTraits() {
+		return mBlueMagicTable.getJobTraits(this, getReadableDatabase());
 	}
 }

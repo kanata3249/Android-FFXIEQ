@@ -24,14 +24,16 @@ public class BlueMagic extends StatusModifierWithDescription implements Serializ
 	private long mId;
 	private long mLevel;
 	private long mBP;
+	private long mSP;
 	private String mName;
 	
-	public BlueMagic(long id, long level, long bp, String name, String description) {
+	public BlueMagic(long id, long level, long bp, long sp, String name, String description) {
 		super();
 		
 		mId = id;
 		mLevel = level;
 		mBP = bp;
+		mSP = sp;
 		mName = name;
 		mDescription = canonicalizeDescription(description);
 		
@@ -52,6 +54,14 @@ public class BlueMagic extends StatusModifierWithDescription implements Serializ
 
 	public void setBP(long bp) {
 		this.mBP = bp;
+	}
+
+	public long getSP() {
+		return mSP;
+	}
+
+	public void setSP(long sp) {
+		this.mSP = sp;
 	}
 
 	public String getName() {

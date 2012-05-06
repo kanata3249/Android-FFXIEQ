@@ -17,6 +17,7 @@ package com.github.kanata3249.ffxieq.android.db;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.BlueMagic;
+import com.github.kanata3249.ffxieq.BlueMagicJobTrait;
 import android.database.Cursor;
 import android.database.sqlite.*;
 
@@ -31,13 +32,19 @@ public class BlueMagicTable {
 	public static final String C_Description = "Description";
 	public static final String C_SetBonusPoint = "SetBonusPoint";
 	
+	static final String TABLE_NAME_COMBINATION = "BlueMagicCombination";
+	//
+	public static final String C_Point = "Point";
+	public static final String C_SetID = "SetID";
+	public static final String C_Magics = "Magics";
+
 	public BlueMagicTable() { };
 
 	// DA methods
 	public BlueMagic newInstance(FFXIDAO dao, SQLiteDatabase db, long id) {
 		Cursor cursor;
 		BlueMagic newInstance;
-		String []columns = { C_Id, C_Name, C_Description, C_Level, C_BP };
+		String []columns = { C_Id, C_Name, C_Description, C_Level, C_BP, C_SetBonusPoint };
 
 		try {
 			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
@@ -53,6 +60,7 @@ public class BlueMagicTable {
 		newInstance = new BlueMagic(cursor.getLong(cursor.getColumnIndex(C_Id)),
 									cursor.getLong(cursor.getColumnIndex(C_Level)),
 									cursor.getLong(cursor.getColumnIndex(C_BP)),
+									cursor.getLong(cursor.getColumnIndex(C_SetBonusPoint)),
 									cursor.getString(cursor.getColumnIndex(C_Name)),
 									cursor.getString(cursor.getColumnIndex(C_Description)));
 		cursor.close();
@@ -71,5 +79,34 @@ public class BlueMagicTable {
 
 		return cursor;
 	}
+
+	public BlueMagicJobTrait[] getJobTraits(FFXIDAO dao, SQLiteDatabase db) {
+		Cursor cursor;
+		String []columns = { C_Id, C_SetID, C_Point, C_Description, C_Magics };
+		BlueMagicJobTrait [] result;
+		
+		try {
+			cursor = db.query(TABLE_NAME_COMBINATION, columns, null, null, null, null, C_SetID + " ASC, " + C_Point + " DESC", null);
+		} catch (SQLiteException e) {
+			return new BlueMagicJobTrait[0];
+		}
+		if (cursor.getCount() < 1) {
+			// no match
+			cursor.close();
+			return new BlueMagicJobTrait[0];
+		}
+		cursor.moveToFirst();
+		result = new BlueMagicJobTrait[cursor.getCount()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = new BlueMagicJobTrait(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getLong(cursor.getColumnIndex(C_SetID)),
+											  cursor.getLong(cursor.getColumnIndex(C_Point)), cursor.getString(cursor.getColumnIndex(C_Description)),
+											  cursor.getString(cursor.getColumnIndex(C_Magics)));
+			cursor.moveToNext();
+		}
+		cursor.close();
+
+		return result;
+	}
+
 }
 

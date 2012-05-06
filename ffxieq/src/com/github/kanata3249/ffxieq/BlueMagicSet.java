@@ -24,8 +24,9 @@ public class BlueMagicSet extends StatusModifier implements IStatus, Serializabl
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<BlueMagic> mMagics;
+	transient private boolean mNotNeedParseSetJobTraits;
 
-	public BlueMagicSet() { mMagics = new ArrayList<BlueMagic>(); }; 
+	public BlueMagicSet() { mMagics = new ArrayList<BlueMagic>(); mNotNeedParseSetJobTraits = true; }; 
 
 
 	// IStatus
@@ -53,6 +54,7 @@ public class BlueMagicSet extends StatusModifier implements IStatus, Serializabl
 
 	public void addMagic(long id) {
 		mMagics.add(Dao.instantiateBlueMagic(id));
+		mNotNeedParseSetJobTraits = false;
 	}
 
 	public void removeMagic(long id) {
@@ -62,6 +64,7 @@ public class BlueMagicSet extends StatusModifier implements IStatus, Serializabl
 			magic = mMagics.get(i);
 			if (magic.getId() == id) {
 				mMagics.remove(i);
+				mNotNeedParseSetJobTraits = false;
 				break;
 			}
 		}
@@ -106,5 +109,71 @@ public class BlueMagicSet extends StatusModifier implements IStatus, Serializabl
 			}
 		}
 		return false;
+	}
+
+
+	public boolean needParseSetJobTraits() {
+		return !mNotNeedParseSetJobTraits;
+	}
+
+
+	public JobTrait[] getJobTraits() {
+		BlueMagicJobTrait[] result = null;
+		BlueMagicJobTrait[] tmp;
+		int[] points;
+		int matches;
+	
+		tmp = Dao.getBlueMagicJobTraits();
+		points = new int[tmp.length];
+
+		for (int i = 0; i < points.length; i++)
+			points[i] = 0;
+		for (int i = 0; i < mMagics.size(); i++) {
+			BlueMagic m;
+			
+			m = mMagics.get(i);
+			for (int ii = 0; ii < points.length; ii++) {
+				if (tmp[ii].getMagics().contains(m.getName())) {
+					points[ii] += m.getSP();
+				}
+			}
+		}
+		
+		matches = 0;
+		for (int ii = 0; ii < points.length; ii++) {
+			if (tmp[ii].getPoint() <= points[ii]) {
+				long skipid;
+
+				matches++;
+				skipid = tmp[ii].getSubId();
+				for (/* nop */; ii < points.length; ii++) {
+					if (tmp[ii].getSubId() != skipid) {
+						ii--;
+						break;
+					}
+				}
+			}
+		}
+
+		result = new BlueMagicJobTrait[matches];
+		matches = 0;
+		for (int ii = 0; ii < points.length; ii++) {
+			if (tmp[ii].getPoint() <= points[ii]) {
+				long skipid;
+
+				result[matches++] = tmp[ii];
+				skipid = tmp[ii].getSubId();
+				for ( /* nop */; ii < points.length; ii++) {
+					if (tmp[ii].getSubId() != skipid) {
+						ii--;
+						break;
+					}
+				}
+			}
+		}
+
+	
+		mNotNeedParseSetJobTraits = true;
+		return result;
 	}
 }
