@@ -59,7 +59,7 @@ public class MPTable {
 			cursor.close();
 			if (!subjobrank.equals("-") && subjoblevel > 0) {
 				try {
-					cursor = db.query(true, TABLE_NAME_SUB, columns2,
+					cursor = db.query(true, TABLE_NAME_SUB, columns,
 							C_RaceRank + " = '" + racerank + "' AND " + C_JobRank + " = '" + subjobrank + "' AND " + C_JobLevel + " <= '" + subjoblevel + "'",
 							null, null, null, C_JobLevel + " DESC", null);
 				} catch (SQLiteException e) {
