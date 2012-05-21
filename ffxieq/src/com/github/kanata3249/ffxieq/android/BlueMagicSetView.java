@@ -25,6 +25,7 @@ import com.github.kanata3249.ffxieq.android.db.MagicTable;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class BlueMagicSetView extends ListView {
 	public boolean bindFFXICharacter(FFXICharacter charinfo) {
 		MagicSelectorAdapter adapter;
 		int nMagics, n;
+		Parcelable state = onSaveInstanceState();
 
 		mDao = FFXICharacter.getDao();
 		String[] columns = { BlueMagicTable.C_Id, BlueMagicTable.C_Name, BlueMagicTable.C_BP, BlueMagicTable.C_Element, BlueMagicTable.C_WeaknessA, BlueMagicTable.C_WeaknessVW };
@@ -81,6 +83,7 @@ public class BlueMagicSetView extends ListView {
 		adapter = new MagicSelectorAdapter(getContext(), R.layout.bluemagicsetview, mMagics);
 		setAdapter(adapter);
 		
+		onRestoreInstanceState(state);
 		return true;
 	}
 	
