@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:id="@+id/lineareLayout" android:layout_width="fill_parent" android:orientation="horizontal">
+    <com.github.kanata3249.ffxieq.android.BlueMagicSetView android:layout_width="0dp" android:layout_weight="80" android:id="@+id/Magics" android:scrollbars="vertical" android:layout_height="fill_parent"></com.github.kanata3249.ffxieq.android.BlueMagicSetView>
+    <com.github.kanata3249.ffxieq.android.BlueMagicSelectionStatusView android:layout_width="0dp" android:layout_weight="20" android:id="@+id/StatusView" android:scrollbars="vertical" android:layout_height="fill_parent"></com.github.kanata3249.ffxieq.android.BlueMagicSelectionStatusView>
+</LinearLayout>

@@ -73,6 +73,15 @@ public class BlueMagicSetEditActivity extends FFXIEQBaseActivity {
     			registerForContextMenu(ms);
         	}
         }
+        
+        {
+        	BlueMagicSelectionStatusView bmss;
+        	
+        	bmss = (BlueMagicSelectionStatusView)findViewById(R.id.StatusView);
+        	if (bmss != null) {
+        		bmss.bindFFXICharacter(charInfo);
+        	}
+        }
     }
 
     static public boolean startActivity(FFXIEQActivity from, int request) {
@@ -96,6 +105,12 @@ public class BlueMagicSetEditActivity extends FFXIEQBaseActivity {
     		ms.bindFFXICharacter(charInfo);
     	}
     	
+    	BlueMagicSelectionStatusView bmss;
+    	
+    	bmss = (BlueMagicSelectionStatusView)findViewById(R.id.StatusView);
+    	if (bmss != null) {
+    		bmss.bindFFXICharacter(charInfo);
+    	}
     	mUpdating = false;
     }
 

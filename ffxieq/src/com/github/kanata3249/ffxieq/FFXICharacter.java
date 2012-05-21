@@ -277,6 +277,41 @@ public class FFXICharacter implements IStatus, Serializable {
 			mBlueMagicSet = new BlueMagicSet();
 		return mBlueMagicSet.isSet(itemId);
 	}
+	public int getBP() {
+		int level = 0;
+
+		if (mLevel.getJob() == JobLevelAndRace.BLU) {
+			level = mLevel.getLevel();
+		} else if (mLevel.getSubJob() == JobLevelAndRace.BLU) {
+			level = mLevel.getSubLevel();
+		}
+		if (level > 0) {
+			int bp;
+			
+			bp = 10 + ((level - 1) / 10) * 5;
+			if (level >= 75)
+				bp += mMerits.getJobSpecificMeritPoint(JobLevelAndRace.BLU, 1, 3);
+			return bp;
+		}
+		return 0;
+	}
+	public int getCurrentBP() {
+		if (mBlueMagicSet == null)
+			mBlueMagicSet = new BlueMagicSet();
+		return mBlueMagicSet.getCurrentBP();
+	}
+	public int getBSP() {
+		int bp = getBP();
+
+		if (bp == 0)
+			return 0;
+		return Math.min(20, bp * 4 / 10 + 2);
+	}
+	public int getCurrentBSP() {
+		if (mBlueMagicSet == null)
+			mBlueMagicSet = new BlueMagicSet();
+		return mBlueMagicSet.getCurrentBSP();
+	}
 	public boolean isModified() {
 		return mModified;
 	}

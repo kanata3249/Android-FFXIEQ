@@ -172,8 +172,34 @@ public class BlueMagicSet extends StatusModifier implements IStatus, Serializabl
 			}
 		}
 
-	
 		mNotNeedParseSetJobTraits = true;
 		return result;
+	}
+
+
+	public int getCurrentBP() {
+		int total = 0;
+		for (int i = 0; i < mMagics.size(); i++) {
+			BlueMagic m;
+			
+			m = mMagics.get(i);
+			if (m != null) {
+				total += m.getBP();
+			}
+		}
+		return total;
+	}
+
+	public int getCurrentBSP() {
+		int total = 0;
+		for (int i = 0; i < mMagics.size(); i++) {
+			BlueMagic m;
+			
+			m = mMagics.get(i);
+			if (m != null) {
+				total++;
+			}
+		}
+		return total;
 	}
 }
