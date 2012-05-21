@@ -274,8 +274,11 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 				notequiped++;
 			}
 		}
-		if (notequiped == mEquipments.length) {
-			mCombinations = null;
+		if (notequiped > 0) {
+			if (notequiped == mEquipments.length) 
+				mCombinations = null;
+			else
+				updated = true;
 		}
 		if (updated) {
 			// check combination
