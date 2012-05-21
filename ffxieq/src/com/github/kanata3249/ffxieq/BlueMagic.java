@@ -25,9 +25,12 @@ public class BlueMagic extends StatusModifierWithDescription implements Serializ
 	private long mLevel;
 	private long mBP;
 	private long mSP;
+	private long mWeaknessA;
+	private long mWeaknessVW;
+	private String mElement;
 	private String mName;
 	
-	public BlueMagic(long id, long level, long bp, long sp, String name, String description) {
+	public BlueMagic(long id, long level, long bp, long sp, String name, String element, long weaknessA, long weaknessVW, String description) {
 		super();
 		
 		mId = id;
@@ -36,6 +39,9 @@ public class BlueMagic extends StatusModifierWithDescription implements Serializ
 		mSP = sp;
 		mName = name;
 		mDescription = canonicalizeDescription(description);
+		mElement = element;
+		mWeaknessA = weaknessA;
+		mWeaknessVW = weaknessVW;
 		
 		mNeedParseDescription = true;
 	}
@@ -86,5 +92,15 @@ public class BlueMagic extends StatusModifierWithDescription implements Serializ
 
 	public void setDescription(String description) {
 		this.mDescription = description;
+	}
+
+	public String getElement() {
+		return mElement;
+	}
+	public boolean isWeaknessForAbissea() {
+		return mWeaknessA != 0;
+	}
+	public boolean isWeaknessForVW() {
+		return mWeaknessVW != 0;
 	}
 }

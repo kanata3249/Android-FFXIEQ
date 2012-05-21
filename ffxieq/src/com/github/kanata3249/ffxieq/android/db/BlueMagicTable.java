@@ -31,6 +31,9 @@ public class BlueMagicTable {
 	public static final String C_BP = "BP";
 	public static final String C_Description = "Description";
 	public static final String C_SetBonusPoint = "SetBonusPoint";
+	public static final String C_Element = "Element";
+	public static final String C_WeaknessA = "WeaknessA";
+	public static final String C_WeaknessVW = "WeaknessVW";
 	
 	static final String TABLE_NAME_COMBINATION = "BlueMagicCombination";
 	//
@@ -44,7 +47,7 @@ public class BlueMagicTable {
 	public BlueMagic newInstance(FFXIDAO dao, SQLiteDatabase db, long id) {
 		Cursor cursor;
 		BlueMagic newInstance;
-		String []columns = { C_Id, C_Name, C_Description, C_Level, C_BP, C_SetBonusPoint };
+		String []columns = { C_Id, C_Name, C_Description, C_Level, C_BP, C_SetBonusPoint, C_Element, C_WeaknessA, C_WeaknessVW };
 
 		try {
 			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
@@ -62,6 +65,9 @@ public class BlueMagicTable {
 									cursor.getLong(cursor.getColumnIndex(C_BP)),
 									cursor.getLong(cursor.getColumnIndex(C_SetBonusPoint)),
 									cursor.getString(cursor.getColumnIndex(C_Name)),
+									cursor.getString(cursor.getColumnIndex(C_Element)),
+									cursor.getLong(cursor.getColumnIndex(C_WeaknessA)),
+									cursor.getLong(cursor.getColumnIndex(C_WeaknessVW)),
 									cursor.getString(cursor.getColumnIndex(C_Description)));
 		cursor.close();
 		

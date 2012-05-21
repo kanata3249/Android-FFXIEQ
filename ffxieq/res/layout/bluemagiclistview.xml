@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent" android:layout_width="wrap_content" android:orientation="horizontal" >
+    <TextView android:text="" android:id="@+id/Name" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="80" android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
+   	<TextView android:text="" android:id="@+id/Element" android:layout_height="wrap_content" android:layout_width="0dp" android:gravity="right" android:layout_weight="5" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+    <TextView android:text="" android:id="@+id/Abissea" android:layout_height="wrap_content" android:layout_width="0dp" android:gravity="right" android:layout_weight="5" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+   	<TextView android:text="" android:id="@+id/VW" android:layout_height="wrap_content" android:layout_width="0dp" android:gravity="right" android:layout_weight="5" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+	<TextView android:text="" android:id="@+id/BP" android:layout_height="wrap_content" android:layout_width="0dp" android:gravity="right" android:layout_weight="5" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+</LinearLayout>

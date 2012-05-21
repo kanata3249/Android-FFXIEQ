@@ -26,6 +26,7 @@ import com.github.kanata3249.ffxieq.android.db.MagicTable;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -45,7 +46,7 @@ public class BlueMagicSetView extends ListView {
 		int nMagics, n;
 
 		mDao = FFXICharacter.getDao();
-		String[] columns = { BlueMagicTable.C_Id, BlueMagicTable.C_Name };
+		String[] columns = { BlueMagicTable.C_Id, BlueMagicTable.C_Name, BlueMagicTable.C_BP, BlueMagicTable.C_Element, BlueMagicTable.C_WeaknessA, BlueMagicTable.C_WeaknessVW };
 		Cursor cursor = ((FFXIDatabase)mDao).getBlueMagicCursor(columns, null);
 
 		nMagics = Math.max(cursor != null ? cursor.getCount() : 0, charinfo.getNumBlueMagic());
@@ -66,7 +67,12 @@ public class BlueMagicSetView extends ListView {
 							found = true;
 						}
 					}
-					mMagics[n++] = new MagicInfo(id, found, cursor.getString(cursor.getColumnIndex(BlueMagicTable.C_Name)));
+					mMagics[n++] = new MagicInfo(id, found,
+												cursor.getString(cursor.getColumnIndex(BlueMagicTable.C_Name)),
+												cursor.getLong(cursor.getColumnIndex(BlueMagicTable.C_BP)),
+												cursor.getString(cursor.getColumnIndex(BlueMagicTable.C_Element)),
+												cursor.getLong(cursor.getColumnIndex(BlueMagicTable.C_WeaknessA)) != 0,
+												cursor.getLong(cursor.getColumnIndex(BlueMagicTable.C_WeaknessVW)) != 0);
 					cursor.moveToNext();
 				}
 			}
@@ -81,9 +87,21 @@ public class BlueMagicSetView extends ListView {
 	private class MagicInfo {
 		long mID;
 		String mName;
+		String mElement;
+		long mBP;
+		boolean mWeaknessA;
+		boolean mWeaknessVW;
 		boolean mEnable;
 
-		public MagicInfo(long id, boolean enable, String name) { mID = id; mEnable = enable; mName = name;};
+		public MagicInfo(long id, boolean enable, String name, long bp, String element, boolean weaknessA, boolean weaknessVW) {
+			mID = id;
+			mEnable = enable; 
+			mName = name;
+			mBP = bp;
+			mElement = element;
+			mWeaknessA = weaknessA;
+			mWeaknessVW = weaknessVW;
+		};
 
 		public String toString() {
 			if (mEnable)
@@ -92,19 +110,41 @@ public class BlueMagicSetView extends ListView {
 		}
 	}
 	private class MagicSelectorAdapter extends ArrayAdapter<MagicInfo> {
+		Context mContext;
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = super.getView(position, convertView, parent);
+			View v = convertView;
+			if (v == null) {  
+				v = ((LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.bluemagiclistview, null);  
+			}  
 			
-			if (mMagics[position].mEnable == false)
-				((TextView)v).setHint(mMagics[position].mName);
+			if (mMagics[position].mEnable == false) {
+				((TextView)v.findViewById(R.id.Name)).setText("");
+				((TextView)v.findViewById(R.id.Element)).setText("");
+				((TextView)v.findViewById(R.id.Abissea)).setText("");
+				((TextView)v.findViewById(R.id.VW)).setText("");
+				((TextView)v.findViewById(R.id.BP)).setText("");
+				((TextView)v.findViewById(R.id.Name)).setHint(mMagics[position].mName);
+				((TextView)v.findViewById(R.id.Element)).setHint(mMagics[position].mElement);
+				((TextView)v.findViewById(R.id.Abissea)).setHint(mMagics[position].mWeaknessA ? "A" : "");
+				((TextView)v.findViewById(R.id.VW)).setHint(mMagics[position].mWeaknessVW ? "V" : "");
+				((TextView)v.findViewById(R.id.BP)).setHint(String.format("%d", mMagics[position].mBP));
+			} else {
+				((TextView)v.findViewById(R.id.Name)).setText(mMagics[position].mName);
+				((TextView)v.findViewById(R.id.Element)).setText(mMagics[position].mElement);
+				((TextView)v.findViewById(R.id.Abissea)).setText(mMagics[position].mWeaknessA ? "A" : "");
+				((TextView)v.findViewById(R.id.VW)).setText(mMagics[position].mWeaknessVW ? "V" : "");
+				((TextView)v.findViewById(R.id.BP)).setText(String.format("%d", mMagics[position].mBP));
+			}
+			
 			return v;
 		}
 
 		public MagicSelectorAdapter(Context context,
 				int textViewResourceId, MagicInfo[] objects) {
 			super(context, textViewResourceId, objects);
+			mContext = context;
 		}
 
 
