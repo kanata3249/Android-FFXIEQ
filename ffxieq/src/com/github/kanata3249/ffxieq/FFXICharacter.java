@@ -1042,7 +1042,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		
 		if (arts != null) {
-			bskill = mJobAndRace.getStatus(mLevel, type);
+			bskill = mJobAndRace.getStatus(mLevel, mBlueMagicSet, type);
 			fskill = Dao.getSkillCap(type, "D", mLevel.getLevel());
 			lskill = Dao.getSkillCap(type, "E", mLevel.getLevel());
 			if (arts.getAdditionalPercent() > 1) {
