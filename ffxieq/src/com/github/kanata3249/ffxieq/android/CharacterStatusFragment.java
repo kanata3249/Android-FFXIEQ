@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -38,7 +38,11 @@ public class CharacterStatusFragment extends FFXIEQFragment {
 
         mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE;
         mShowSkill = false;
-        setRetainInstance(true);
+		if (savedInstanceState != null) {
+			mDisplayParam = savedInstanceState.getInt("DisplayParam");
+			mShowSkill = savedInstanceState.getBoolean("ShowSkillValue");
+		}
+		setRetainInstance(true);
     }
     
     @Override
@@ -50,32 +54,30 @@ public class CharacterStatusFragment extends FFXIEQFragment {
     public void updateValues() {
     	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
     	if (sv != null) {
-    		sv.setDisplayParam(mDisplayParam);
+    		sv.setDisplayParam(mDisplayParam, mShowSkill);
     		sv.bindFFXICharacter(getFFXICharacter(), getFFXICharacterToCompare());
     	}
     }
     
-    public void setDisplayParam(int param) {
+    public void setDisplayParam(int param, boolean showSkillValue) {
     	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
     	
-    	if (mDisplayParam == param)
+    	if (mDisplayParam == param && mShowSkill == showSkillValue)
     		return;
     	mDisplayParam = param;
+    	mShowSkill = showSkillValue;
     	if (sv != null) {
-    		sv.setDisplayParam(mDisplayParam);
+    		sv.setDisplayParam(mDisplayParam, mShowSkill);
     	}
     }
 
-    public void showSkillValue(boolean showSkill) {
-    	CharacterStatusView sv = (CharacterStatusView) mView.findViewById(R.id.StatusView);
-    	
-    	if (mShowSkill == showSkill)
-    		return;
-    	mShowSkill = showSkill;
-    	if (sv != null) {
-    		sv.showSkillValue(mShowSkill);
-    	}
-    }
+	public int getDisplayParam() {
+		return mDisplayParam;
+	}
+
+	public boolean getShowSkill() {
+		return mShowSkill;
+	}
 
     @Override
     public void onStart() {
@@ -114,7 +116,15 @@ public class CharacterStatusFragment extends FFXIEQFragment {
 		super.onStop();
 	}
 
-	@Override
+    @Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putInt("DisplayParam", mDisplayParam);
+		outState.putBoolean("ShowSkillValue", mShowSkill);
+
+		super.onSaveInstanceState(outState);
+	}
+
+    @Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -146,17 +156,13 @@ public class CharacterStatusFragment extends FFXIEQFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.ToggleShowSkill:
-			if (mShowSkill) {
-				showSkillValue(false);
-			} else {
-				showSkillValue(true);
-			}
+			setDisplayParam(mDisplayParam, !mShowSkill);
 			return true;
 		case R.id.ToggleShowStatusSeparate:
 			if (mDisplayParam == CharacterStatusView.GETSTATUS_STRING_SEPARATE) {
-				setDisplayParam(CharacterStatusView.GETSTATUS_STRING_TOTAL);
+				setDisplayParam(CharacterStatusView.GETSTATUS_STRING_TOTAL, mShowSkill);
 			} else {
-				setDisplayParam(CharacterStatusView.GETSTATUS_STRING_SEPARATE);
+				setDisplayParam(CharacterStatusView.GETSTATUS_STRING_SEPARATE, mShowSkill);
 			}
 
 			return true;

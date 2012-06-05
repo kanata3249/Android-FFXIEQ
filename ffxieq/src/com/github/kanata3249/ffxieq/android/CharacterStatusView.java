@@ -61,18 +61,10 @@ public class CharacterStatusView extends ScrollView {
 		return true;
 	}
 	
-	public void setDisplayParam(int param) {
-		if (mDisplayParam != param) {
+	public void setDisplayParam(int param, boolean showSkillValue) {
+		if (mDisplayParam != param || mShowSkill != showSkillValue) {
 			mDisplayParam = param;
-			if (mCharInfo != null) {
-				notifyDatasetChanged();
-			}
-		}
-	}
-
-	public void showSkillValue(boolean showSkill) {
-		if (mShowSkill != showSkill) {
-			mShowSkill = showSkill;
+			mShowSkill = showSkillValue;
 			if (mCharInfo != null) {
 				notifyDatasetChanged();
 			}

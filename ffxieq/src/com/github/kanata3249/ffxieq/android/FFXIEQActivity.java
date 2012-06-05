@@ -49,17 +49,10 @@ import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class FFXIEQActivity extends TabActivity {
-	private int mDisplayParam;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mDisplayParam = CharacterStatusView.GETSTATUS_STRING_SEPARATE;
-		if (savedInstanceState != null) {
-			mDisplayParam = savedInstanceState.getInt("DisplayParam");
-		}
-
 		getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.ffxieqactivity);
 
@@ -137,7 +130,7 @@ public class FFXIEQActivity extends TabActivity {
 						CharacterStatusActivity activity;
 
 						activity = (CharacterStatusActivity)getCurrentActivity();
-						activity.setDisplayParam(mDisplayParam);
+		//				activity.setDisplayParam(mDisplayParam, mShowSkillValue);
 						activity.notifyDatasetChanged();
 					}
 				}
@@ -282,14 +275,6 @@ public class FFXIEQActivity extends TabActivity {
 		super.onStop();
 	}
     
-    
-    @Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putInt("DisplayParam", mDisplayParam);
-
-		super.onSaveInstanceState(outState);
-	}
-
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {

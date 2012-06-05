@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -35,10 +35,22 @@ public class CharacterStatusActivity extends FFXIEQBaseActivity {
         fragment.updateValues();
 	}
 	
-	public void setDisplayParam(int param) {
+	public void setDisplayParam(int param, boolean showSkillValue) {
 		FragmentManager fm = getSupportFragmentManager();
 		CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
         
-        fragment.setDisplayParam(param);
+        fragment.setDisplayParam(param, showSkillValue);
+	}
+	public int getDisplayParam() {
+		FragmentManager fm = getSupportFragmentManager();
+		CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
+        
+        return fragment.getDisplayParam();
+	}
+	public boolean getShowSkill() {
+		FragmentManager fm = getSupportFragmentManager();
+		CharacterStatusFragment fragment = (CharacterStatusFragment)fm.findFragmentById(R.id.CharacterStatus);
+        
+        return fragment.getShowSkill();
 	}
 }
