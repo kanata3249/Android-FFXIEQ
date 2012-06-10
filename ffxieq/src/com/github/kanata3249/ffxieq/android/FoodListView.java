@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.github.kanata3249.ffxieq.android.db.FoodTable;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -48,6 +49,7 @@ public class FoodListView extends ListView {
 	public boolean setParam(FFXIDAO dao) {
 		FoodListViewAdapter adapter;
 		Cursor cursor;
+		Parcelable state = onSaveInstanceState();
 
 		mDao = (FFXIDatabase)dao;
 		if (mFilterID != -1) {
@@ -57,6 +59,7 @@ public class FoodListView extends ListView {
 		adapter = new FoodListViewAdapter(getContext(), R.layout.foodlistview, cursor, columns, views);
 		setAdapter(adapter);
 		
+		onRestoreInstanceState(state);
 		return true;
 	}
 	

@@ -22,6 +22,7 @@ import com.github.kanata3249.ffxieq.android.db.VWAtmaTable;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -47,6 +48,7 @@ public class VWAtmaListView extends ListView {
 	public boolean setParam(FFXIDAO dao, long subID) {
 		VWAtmaListViewAdapter adapter;
 		Cursor cursor;
+		Parcelable state = onSaveInstanceState();
 
 		mDao = (FFXIDatabase)dao;
 		mSubID = subID;
@@ -61,6 +63,7 @@ public class VWAtmaListView extends ListView {
 			setAdapter(adapter);
 		}
 		
+		onRestoreInstanceState(state);
 		return true;
 	}
 	

@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2012 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.github.kanata3249.ffxieq.android.db.MagicTable;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
@@ -52,6 +53,7 @@ public class MagicListView extends ListView {
 	public boolean setParam(FFXIDAO dao, long subId) {
 		MagicListViewAdapter adapter;
 		Cursor cursor;
+		Parcelable state = onSaveInstanceState();
 
 		mDao = (FFXIDatabase)dao;
 		mSubId = subId;
@@ -62,6 +64,7 @@ public class MagicListView extends ListView {
 		adapter = new MagicListViewAdapter(getContext(), R.layout.magiclistview, cursor, columns, views);
 		setAdapter(adapter);
 		
+		onRestoreInstanceState(state);
 		return true;
 	}
 	
