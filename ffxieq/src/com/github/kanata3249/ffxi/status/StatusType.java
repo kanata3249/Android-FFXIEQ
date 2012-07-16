@@ -129,6 +129,8 @@ public enum StatusType {
 	LightArts,
 	DarkArts,
 	HasteByEquipment,
+	DelayModifiedByHaste,
+	Recast,
 
 	MODIFIER_NUM
 }

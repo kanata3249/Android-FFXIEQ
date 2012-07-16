@@ -214,11 +214,7 @@ public class CharacterStatusView extends ScrollView {
     	}
     	tv = (TextView)findViewById(R.id.Delay);
     	if (tv != null) {
-    		tv.setText(getDelay(mDisplayParam));
-    	}
-    	tv = (TextView)findViewById(R.id.DelaySub);
-    	if (tv != null) {
-    		tv.setText(getDelaySub(mDisplayParam));
+    		tv.setText(getDelayModifiedByHaste(mDisplayParam));
     	}
     	tv = (TextView)findViewById(R.id.DelayRange);
     	if (tv != null) {
@@ -478,6 +474,9 @@ public class CharacterStatusView extends ScrollView {
 	public String getDelaySub(int separate) {
 		return getStatusString(StatusType.DelaySub, separate);
 	}
+	public String getDelayModifiedByHaste(int separate) {
+		return getStatusString(StatusType.DelayModifiedByHaste, separate);
+	}
 	public String getDelayRange(int separate) {
 		return getStatusString(StatusType.DelayRange, separate);
 	}
@@ -708,6 +707,8 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_BLOODPACT_ABILITY_DELAY);
 		case SaveTP:
 			return mDao.getString(FFXIString.TOKEN_SAVE_TP);
+		case Recast:
+			return getResources().getString(R.string.Recast);
 		}
 		return null;
 	}

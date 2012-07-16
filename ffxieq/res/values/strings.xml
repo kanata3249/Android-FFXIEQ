@@ -323,4 +323,5 @@
 	<string name="UnlinkMeritPointSuccess">メリットポイントデータをリンク解除しました</string>
 	<string name="EditBlueMagic">青魔法セット</string>
 	<string name="SetBlueMagic">セット</string>
+	<string name="Recast">リキャスト</string>
 </resources>

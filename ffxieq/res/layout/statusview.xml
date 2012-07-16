@@ -113,15 +113,13 @@
 		    </TableRow>
 		    <TableRow android:layout_height="wrap_content" android:id="@+id/TableRow19" android:layout_width="wrap_content" android:background="@android:color/darker_gray">
 		        <TextView android:id="@+id/textView45" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/D" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/Delay" android:id="@+id/textView46" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 		        <TextView android:id="@+id/textView47" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/DSub" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
-		        <TextView android:id="@+id/textView48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/DelaySub" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
+		        <TextView android:id="@+id/textView48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Delay" android:gravity="center" android:textColor="@android:color/primary_text_light"></TextView>
 		    </TableRow>
 		    <TableRow android:id="@+id/TableRow20" android:layout_width="wrap_content" android:layout_height="wrap_content">
 		        <TextView android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/D" android:gravity="center"></TextView>
-		        <TextView android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/Delay" android:gravity="center"></TextView>
 		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="" android:id="@+id/DSub" android:gravity="center"></TextView>
-		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="" android:id="@+id/DelaySub" android:gravity="center"></TextView>
+		        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="" android:id="@+id/Delay" android:gravity="center"></TextView>
 		    </TableRow>
 		    <TableRow android:id="@+id/TableRow21" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
 		        <TextView android:id="@+id/textView49" android:text="@string/DRange" android:textColor="@android:color/primary_text_light" android:gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>

@@ -347,7 +347,10 @@ public class FFXICharacter implements IStatus, Serializable {
 				mCachedValues[type.ordinal()] = getDelay();
 				break;
 			case DelaySub:
-				mCachedValues[type.ordinal()] = getDelaySub();
+				mCachedValues[type.ordinal()] = getDelay();
+				break;
+			case DelayModifiedByHaste:
+				mCachedValues[type.ordinal()] = getDelayModifiedByHaste();
 				break;
 			case TP:
 				mCachedValues[type.ordinal()] = getTP();
@@ -402,6 +405,9 @@ public class FFXICharacter implements IStatus, Serializable {
 			case HasteByEquipment:
 				mCachedValues[type.ordinal()] = getHasteByEquipment();
 				break;
+			case Recast:
+				mCachedValues[type.ordinal()] = getRecast();
+				break;
 				
 			case SKILL_DIVINE_MAGIC:
 			case SKILL_HEALING_MAGIC:
@@ -433,7 +439,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		case Delay:
 			return getDelay();
 		case DelaySub:
-			return getDelaySub();
+			return getDelay();
+		case DelayModifiedByHaste:
+			return getDelayModifiedByHaste();
 		case Accuracy:
 			return getAccuracy();
 		case AccuracySub:
@@ -470,6 +478,8 @@ public class FFXICharacter implements IStatus, Serializable {
 			return getHaste();
 		case HasteByEquipment:
 			return getHasteByEquipment();
+		case Recast:
+			return getRecast();
 
 		case SKILL_DIVINE_MAGIC:
 		case SKILL_HEALING_MAGIC:
@@ -529,7 +539,7 @@ public class FFXICharacter implements IStatus, Serializable {
 				StatusValue base = getStatus(mLevel, StatusType.Delay);
 				StatusValue martialarts = getStatus(mLevel, StatusType.MartialArts);
 				
-				base.setValue(Math.max(0, 480 - martialarts.getTotal()));
+				base.setValue(Math.max(0, 480 - martialarts.getTotal()) / 2);
 				return base;
 			}
 
@@ -560,9 +570,11 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		return getStatus(mLevel, StatusType.Delay);
 	}
-	public StatusValue getDelaySub() {
+	public StatusValue getDelayModifiedByHaste() {
 		StatusType type, subtype;
 		Equipment eq;
+		StatusValue v, haste;
+		int cap;
 
 		type = subtype = null;
 		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
@@ -576,7 +588,21 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (type == null) {
 			type = StatusType.SKILL_HANDTOHAND;
 		}
+
+		v = getStatus(mLevel, StatusType.Delay);
+		cap = v.getTotal() * 200 / 1000;
+		haste = getHaste();
 		switch (type) {
+		case SKILL_HANDTOHAND:
+			{	// Martial Arts
+				StatusValue martialarts = getStatus(mLevel, StatusType.MartialArts);
+				
+				v.setValue(Math.max(0, 480 - martialarts.getTotal()) / 2);
+				v.setValue(v.getTotal());
+				v.setAdditional(0);
+				break;
+			}
+
 		case SKILL_DAGGER:
 		case SKILL_SWORD:
 		case SKILL_AXE:
@@ -594,15 +620,19 @@ public class FFXICharacter implements IStatus, Serializable {
 						StatusValue base = getStatus(mLevel, StatusType.Delay);
 						StatusValue sub = getStatus(mLevel, StatusType.DelaySub);
 						StatusValue dualwield = getStatus(mLevel, StatusType.DualWield);
-						base.setValue((base.getValue() + sub.getValue()) / 2);
-						base.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
 
-						return base;
+						cap = (base.getTotal() + sub.getTotal()) / 2 * 200 / 1000;
+						v.setValue((base.getValue() + sub.getValue()) / 2);
+						v.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
+						break;
 					}
 				}
 			}
+			break;
 		}
-		return new StatusValue(0, 0, 0);
+		v.setValue(Math.max(cap, v.getTotal() * (10000 - haste.getAdditionalPercent()) / 10000));
+		v.setAdditionalPercent(0);
+		return v;
 	}
 
 	private StatusValue calcTPByDelay(int delay) {
@@ -633,43 +663,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	}
 
 	public StatusValue getTP() {
-		StatusType type, subtype;
-		Equipment eq;
-
-		type = subtype = null;
-		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
-		if (eq != null) {
-			type = eq.getWeaponType();
-		}
-		eq = mEquipment.getEquipment(EquipmentSet.SUBWEAPON);
-		if (eq != null) {
-			subtype = eq.getWeaponType();
-		}
-		if (type == null) {
-			type = StatusType.SKILL_HANDTOHAND;
-		}
-		switch (type) {
-		case SKILL_HANDTOHAND:
-			return calcTPByDelay(getDelay().getTotal() / 2);
-		case SKILL_DAGGER:
-		case SKILL_SWORD:
-		case SKILL_AXE:
-		case SKILL_KATANA:
-		case SKILL_CLUB:
-			if (subtype != null) {
-				switch (subtype) {
-				case SKILL_DAGGER:
-				case SKILL_SWORD:
-				case SKILL_AXE:
-				case SKILL_KATANA:
-				case SKILL_CLUB:
-					return calcTPByDelay(getDelay().getTotal());
-				}
-			}
-			// fall thru
-		default:
-			return calcTPByDelay(getDelay().getTotal());
-		}
+		return calcTPByDelay(getDelay().getTotal());
 	}
 
 	public StatusValue getTPRange() {
@@ -1006,6 +1000,42 @@ public class FFXICharacter implements IStatus, Serializable {
 			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
 		}
 		return haste;
+	}
+
+	public StatusValue getRecast() {
+		StatusValue haste, ehaste, mhaste, fastcast;
+		StatusValue v;
+
+		haste = getStatus(mLevel, StatusType.Haste);
+		haste.sub(getStatus(mLevel, StatusType.Slow));
+		ehaste  = mEquipment.getStatus(mLevel, StatusType.Haste);
+		if (mInAbyssea) {
+			ehaste.add(mAtmaset.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mAtmaset.getStatus(mLevel, StatusType.Slow));
+		}
+		if (mVWAtmaset != null) {
+			ehaste.add(mVWAtmaset.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mVWAtmaset.getStatus(mLevel, StatusType.Slow));
+		}
+		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
+		if (ehaste.getAdditionalPercent() > 2600) {
+			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
+		}
+		if (mMagicSet == null)
+			mMagicSet = new MagicSet();
+		/* Magicset haste cap 43.75% */
+		mhaste  = mMagicSet.getStatus(mLevel, StatusType.Haste);
+		mhaste.sub(mMagicSet.getStatus(mLevel, StatusType.Slow));
+
+		if (mhaste.getAdditionalPercent() > 4375)
+			haste.setAdditionalPercent(haste.getAdditionalPercent() - (mhaste.getAdditionalPercent() - 4375));
+		
+		fastcast = getStatus(mLevel, StatusType.FastCast);
+		
+		v = new StatusValue(0, 0, 10000 - (haste.getAdditionalPercent() + StatusValue.makePercentValue(fastcast.getTotal() / 2, 0)));
+		v.setAdditionalPercent(Math.max(v.getAdditionalPercent(), StatusValue.makePercentValue(20, 0)));
+
+		return v;
 	}
 
 	public StatusValue getMagicSkill(StatusType type) {
