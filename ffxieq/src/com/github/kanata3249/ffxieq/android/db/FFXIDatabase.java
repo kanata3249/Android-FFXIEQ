@@ -47,6 +47,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	public static final String DB_NAME_ASSET = "ffxieq.zip";
 	public static String DB_PATH;
 	public static String SD_PATH;
+	public static String EXTERNAL_SD_PATH;
 
 	static final Character[][] RaceToStatusRank = {
 		// TODO This table should be read from DB.
@@ -87,6 +88,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 
 		DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
 		SD_PATH = Environment.getExternalStorageDirectory() + "/" + context.getPackageName() + "/"; 
+		EXTERNAL_SD_PATH = Environment.getExternalStorageDirectory() + "/external_sd/" + context.getPackageName() + "/"; 
 
 		mContext = context;
 		mHpTable = new HPTable();
@@ -132,7 +134,13 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			return DB_NAME;
 
 		if (useExternalDB) {
-			path = SD_PATH + DB_NAME;
+			File extdir = new File(EXTERNAL_SD_PATH);
+
+			if (extdir.isDirectory()) {
+				path = EXTERNAL_SD_PATH + DB_NAME;
+			} else {
+				path = SD_PATH + DB_NAME;
+			}
 		} else {
 			path = DB_PATH + DB_NAME;
 		}
@@ -193,9 +201,13 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		ZipEntry zipEntry = zipIn.getNextEntry();
 		
 		if (pathToCopy == null) {
-			if (mUseExternalDB)
-				pathToCopy = SD_PATH;
-			else
+			if (mUseExternalDB) {
+				File extdir = new File(EXTERNAL_SD_PATH);
+				if (extdir.isDirectory())
+					pathToCopy = EXTERNAL_SD_PATH;
+				else
+					pathToCopy = SD_PATH;
+			} else
 				pathToCopy = DB_PATH;
 		}
 		File outDir = new File(pathToCopy);
@@ -235,11 +247,11 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		in.close();
 	}
 
-	void copyDatabaseFromSD() throws IOException {
+	void copyDatabaseFromSD(String sd_path) throws IOException {
 		File outDir = new File(DB_PATH);
 
 		outDir.mkdir();
-		FileChannel channelSource = new FileInputStream(SD_PATH + DB_NAME).getChannel();
+		FileChannel channelSource = new FileInputStream(sd_path + DB_NAME).getChannel();
 		FileChannel channelTarget = new FileOutputStream(DB_PATH + DB_NAME).getChannel();
 		channelSource.transferTo(0, channelSource.size(), channelTarget);
 
@@ -247,17 +259,17 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		channelTarget.close();
 		
 		// Copy last modified
-		File from = new File(SD_PATH + DB_NAME);
+		File from = new File(sd_path + DB_NAME);
 		File to = new File(DB_PATH + DB_NAME);
 		to.setLastModified(from.lastModified());
 	}
 
-	void copyDatabaseToSD() throws IOException {
-		File outDir = new File(SD_PATH);
+	void copyDatabaseToSD(String sd_path) throws IOException {
+		File outDir = new File(sd_path);
 
 		outDir.mkdir();
 		FileChannel channelSource = new FileInputStream(DB_PATH + DB_NAME).getChannel();
-		FileChannel channelTarget = new FileOutputStream(SD_PATH + DB_NAME).getChannel();
+		FileChannel channelTarget = new FileOutputStream(sd_path + DB_NAME).getChannel();
 		channelSource.transferTo(0, channelSource.size(), channelTarget);
 
 		channelSource.close();
@@ -265,7 +277,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		
 		// Copy last modified
 		File from = new File(DB_PATH + DB_NAME);
-		File to = new File(SD_PATH + DB_NAME);
+		File to = new File(sd_path + DB_NAME);
 		to.setLastModified(from.lastModified());
 	}
 	
@@ -275,16 +287,27 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		
 		try {
 			if (useExternalDB) {
-				copyDatabaseToSD();
+				try {
+					copyDatabaseToSD(EXTERNAL_SD_PATH);
+				} catch (IOException e) {
+					copyDatabaseToSD(SD_PATH);
+				}
 				getReadableDatabase().close();
 				mStringTable.invalidateStringCache();
 				File oldDB = new File(DB_PATH + DB_NAME);
 				oldDB.delete();
 			} else {
-				copyDatabaseFromSD();
+				String olddbpath;
+				try {
+					copyDatabaseFromSD(EXTERNAL_SD_PATH);
+					olddbpath = EXTERNAL_SD_PATH + DB_NAME;
+				} catch (IOException e) {
+					copyDatabaseFromSD(SD_PATH);
+					olddbpath = SD_PATH + DB_NAME;
+				}
 				getReadableDatabase().close();
 				mStringTable.invalidateStringCache();
-				File oldDB = new File(SD_PATH + DB_NAME);
+				File oldDB = new File(olddbpath);
 				oldDB.delete();
 			}
 			mUseExternalDB = useExternalDB;

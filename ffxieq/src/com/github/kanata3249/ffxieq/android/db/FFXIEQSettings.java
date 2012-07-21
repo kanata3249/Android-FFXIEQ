@@ -57,6 +57,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	private static final int MAX_FILTERS = 16;
 	public static String DB_PATH;
 	public static String SD_PATH;
+	public static String EXTERNAL_SD_PATH;
 	
 	Object mBackupManager;
 	Context mContext;
@@ -72,6 +73,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 		DB_PATH = Environment.getDataDirectory() + "/data/" + context.getPackageName() + "/databases/";
 		SD_PATH = Environment.getExternalStorageDirectory() + "/" + context.getPackageName() + "/"; 
+		EXTERNAL_SD_PATH = Environment.getExternalStorageDirectory() + "/external_sd/" + context.getPackageName() + "/"; 
 
 		if (android.os.Build.VERSION.SDK_INT > 7) {
 			Class [] params = { Context.class };
@@ -613,7 +615,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		dataChanged();
 	}
 
-	public void copyDatabaseFromSD() throws IOException {
+	public void copyDatabaseFromSD(String sd_path) throws IOException {
 		File outDir = new File(DB_PATH);
 
 		try {
@@ -627,7 +629,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		}
 
 		outDir.mkdir();
-		FileChannel channelSource = new FileInputStream(SD_PATH + DB_NAME).getChannel();
+		FileChannel channelSource = new FileInputStream(sd_path + DB_NAME).getChannel();
 		FileChannel channelTarget = new FileOutputStream(DB_PATH + DB_NAME).getChannel();
 		channelSource.transferTo(0, channelSource.size(), channelTarget);
 
@@ -635,12 +637,12 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		channelTarget.close();
 	}
 
-	public void copyDatabaseToSD() throws IOException {
-		File outDir = new File(SD_PATH);
+	public void copyDatabaseToSD(String sd_path) throws IOException {
+		File outDir = new File(sd_path);
 
 		outDir.mkdir();
 		FileChannel channelSource = new FileInputStream(DB_PATH + DB_NAME).getChannel();
-		FileChannel channelTarget = new FileOutputStream(SD_PATH + DB_NAME).getChannel();
+		FileChannel channelTarget = new FileOutputStream(sd_path + DB_NAME).getChannel();
 		channelSource.transferTo(0, channelSource.size(), channelTarget);
 
 		channelSource.close();

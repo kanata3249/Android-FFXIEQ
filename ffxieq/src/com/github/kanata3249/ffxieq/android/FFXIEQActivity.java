@@ -645,7 +645,11 @@ public class FFXIEQActivity extends TabActivity {
 							boolean result;
 		
 							try {
-								settings.copyDatabaseToSD();
+								try {
+									settings.copyDatabaseToSD(FFXIEQSettings.EXTERNAL_SD_PATH);
+								} catch (IOException e) {
+									settings.copyDatabaseToSD(FFXIEQSettings.SD_PATH);
+								}
 								result = true;
 							} catch (IOException e) {
 								result = false;
@@ -692,7 +696,11 @@ public class FFXIEQActivity extends TabActivity {
 							boolean result;
 		
 							try {
-								settings.copyDatabaseFromSD();
+								try {
+									settings.copyDatabaseFromSD(FFXIEQSettings.EXTERNAL_SD_PATH);
+								} catch (IOException e) {
+									settings.copyDatabaseFromSD(FFXIEQSettings.SD_PATH);
+								}
 								result = true;
 							} catch (IOException e) {
 								result = false;
