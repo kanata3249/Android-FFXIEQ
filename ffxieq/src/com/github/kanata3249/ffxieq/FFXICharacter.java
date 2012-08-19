@@ -1032,7 +1032,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		
 		fastcast = getStatus(mLevel, StatusType.FastCast);
 		
-		v = new StatusValue(0, 0, 10000 - (haste.getAdditionalPercent() + StatusValue.makePercentValue(fastcast.getTotal() / 2, 0)));
+		v = new StatusValue(0, 0, (10000 - StatusValue.makePercentValue(fastcast.getTotal(), 0) / 2) * (10000 - haste.getAdditionalPercent()) / 10000);
 		v.setAdditionalPercent(Math.max(v.getAdditionalPercent(), StatusValue.makePercentValue(20, 0)));
 
 		return v;
