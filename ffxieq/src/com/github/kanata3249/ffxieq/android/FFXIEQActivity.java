@@ -182,6 +182,7 @@ public class FFXIEQActivity extends TabActivity {
 						}
 					}
         		});
+        		cb.setChecked(getCharacterIDToCompare() != -1);
         	}
         }
         
