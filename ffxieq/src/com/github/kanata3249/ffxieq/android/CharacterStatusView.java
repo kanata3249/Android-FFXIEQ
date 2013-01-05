@@ -216,6 +216,10 @@ public class CharacterStatusView extends ScrollView {
     	if (tv != null) {
     		tv.setText(getDelayModifiedByHaste(mDisplayParam));
     	}
+    	tv = (TextView)findViewById(R.id.AttacksPerMinute);
+    	if (tv != null) {
+    		tv.setText(getAttacksPerMinute(mDisplayParam));
+    	}
     	tv = (TextView)findViewById(R.id.DelayRange);
     	if (tv != null) {
     		tv.setText(getDelayRange(mDisplayParam));
@@ -292,7 +296,7 @@ public class CharacterStatusView extends ScrollView {
 		int value;
 		boolean hide_percent = false;
 		
-		if (type == StatusType.TP || type == StatusType.TPRange)
+		if (type == StatusType.TP || type == StatusType.TPRange || type == StatusType.AttacksPerMinute)
 			hide_percent = true;
 		if (mCharInfoToCompare != null) {
 			StatusValue v1, v2;
@@ -308,6 +312,8 @@ public class CharacterStatusView extends ScrollView {
 				sb.append(value / 100);
 				if (value % 100 != 0) {
 					sb.append('.');
+					if (Math.abs(value) % 100 < 10)
+						sb.append('0');
 					sb.append(Math.abs(value) % 100);
 					if (value % 10 == 0)
 						sb.deleteCharAt(sb.length() - 1);
@@ -581,6 +587,9 @@ public class CharacterStatusView extends ScrollView {
 	}
 	public String getRegistDark(int separate) {
 		return getStatusString(StatusType.Regist_Dark, separate);
+	}
+	public String getAttacksPerMinute(int separate) {
+		return getStatusString(StatusType.AttacksPerMinute, separate);
 	}
 	public String getUnknownTokens() {
 		SortedStringList tokens, tokensToCompare, unusedTokens;

@@ -131,6 +131,7 @@ public enum StatusType {
 	HasteByEquipment,
 	DelayModifiedByHaste,
 	Recast,
+	AttacksPerMinute,
 
 	MODIFIER_NUM
 }

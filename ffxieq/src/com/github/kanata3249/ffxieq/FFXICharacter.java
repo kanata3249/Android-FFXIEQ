@@ -408,6 +408,9 @@ public class FFXICharacter implements IStatus, Serializable {
 			case Recast:
 				mCachedValues[type.ordinal()] = getRecast();
 				break;
+			case AttacksPerMinute:
+				mCachedValues[type.ordinal()] = getAttacksPerMinute();
+				break;
 				
 			case SKILL_DIVINE_MAGIC:
 			case SKILL_HEALING_MAGIC:
@@ -480,6 +483,8 @@ public class FFXICharacter implements IStatus, Serializable {
 			return getHasteByEquipment();
 		case Recast:
 			return getRecast();
+		case AttacksPerMinute:
+			return getAttacksPerMinute();
 
 		case SKILL_DIVINE_MAGIC:
 		case SKILL_HEALING_MAGIC:
@@ -570,6 +575,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		return getStatus(mLevel, StatusType.Delay);
 	}
+
 	public StatusValue getDelayModifiedByHaste() {
 		StatusType type, subtype;
 		Equipment eq;
@@ -632,6 +638,21 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		v.setValue(Math.max(cap, v.getTotal() * (10000 - haste.getAdditionalPercent()) / 10000));
 		v.setAdditionalPercent(0);
+		return v;
+	}
+
+	public StatusValue getAttacksPerMinute() {
+		StatusValue delay, v;
+		int attacks, qa, ta, da;
+
+		delay = getDelayModifiedByHaste();
+		attacks = 60 * 60 * 100 / delay.getTotal();
+		qa = attacks * getStatus(mLevel, StatusType.QuadAttack).getAdditionalPercent() / 100 / 100;
+		ta = (attacks - qa) * getStatus(mLevel, StatusType.TrippleAttack).getAdditionalPercent() / 100 / 100;
+		da = (attacks - qa - ta) * getStatus(mLevel, StatusType.DoubleAttack).getAdditionalPercent() / 100 / 100;
+		attacks = (attacks - (qa + ta + da)) + qa * 4 + ta * 3 + da * 2;
+
+		v = new StatusValue(0, 0, attacks);
 		return v;
 	}
 
