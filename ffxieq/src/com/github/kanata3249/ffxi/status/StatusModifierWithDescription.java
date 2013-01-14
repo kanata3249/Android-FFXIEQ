@@ -74,7 +74,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
 		for (int i = tokens.length - 1; i >= 0; i--) {
-			if (tokens[i].contains(":")) {
+			if (tokens[i].contains(":") && !tokens[i].contains(Dao.getString(FFXIString.TOKEN_Affinity))) {
 				String tmp, newtokens[];
 				
 				tmp = tokens[i];
@@ -255,6 +255,14 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_SAVE_TP, StatusType.SaveTP);
 		setupCommonTokenHandler(FFXIString.TOKEN_LIGHT_ARTS, StatusType.LightArts);
 		setupCommonTokenHandler(FFXIString.TOKEN_DARK_ARTS, StatusType.DarkArts);
+		setupCommonTokenHandler(FFXIString.TOKEN_FIRE_AFFINITY_RECAST, StatusType.FireAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_ICE_AFFINITY_RECAST, StatusType.IceAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_WIND_AFFINITY_RECAST, StatusType.WindAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_EARTH_AFFINITY_RECAST, StatusType.EarthAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_LIGHTNING_AFFINITY_RECAST, StatusType.LightningAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_WATER_AFFINITY_RECAST, StatusType.WaterAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_LIGHT_AFFINITY_RECAST, StatusType.LightAffinityRecast);
+		setupCommonTokenHandler(FFXIString.TOKEN_DARK_AFFINITY_RECAST, StatusType.DarkAffinityRecast);
 
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_FIRE, StatusType.Regist_Fire);
 		setupCommonTokenHandler(FFXIString.TOKEN_REGIST_ICE, StatusType.Regist_Ice);

@@ -718,6 +718,22 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_SAVE_TP);
 		case Recast:
 			return getResources().getString(R.string.Recast);
+		case FireAffinityRecast:
+			return getResources().getString(R.string.RecastFire);
+		case IceAffinityRecast:
+			return getResources().getString(R.string.RecastIce);
+		case WindAffinityRecast:
+			return getResources().getString(R.string.RecastWind);
+		case EarthAffinityRecast:
+			return getResources().getString(R.string.RecastEarth);
+		case LightningAffinityRecast:
+			return getResources().getString(R.string.RecastLightning);
+		case WaterAffinityRecast:
+			return getResources().getString(R.string.RecastWater);
+		case LightAffinityRecast:
+			return getResources().getString(R.string.RecastLight);
+		case DarkAffinityRecast:
+			return getResources().getString(R.string.RecastDark);
 		}
 		return null;
 	}

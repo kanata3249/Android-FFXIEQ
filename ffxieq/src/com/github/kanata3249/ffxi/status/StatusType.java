@@ -132,6 +132,15 @@ public enum StatusType {
 	DelayModifiedByHaste,
 	Recast,
 	AttacksPerMinute,
+	
+	FireAffinityRecast,
+	IceAffinityRecast,
+	WindAffinityRecast,
+	EarthAffinityRecast,
+	LightningAffinityRecast,
+	WaterAffinityRecast,
+	LightAffinityRecast,
+	DarkAffinityRecast,
 
 	MODIFIER_NUM
 }

@@ -48,7 +48,9 @@ public class FFXIString {
 	public static final int JOB_DB_PUP = 2117;
 	public static final int JOB_DB_DNC = 2118;
 	public static final int JOB_DB_SCH = 2119;
-	public static final int JOB_DB_ALL = 2120;
+	public static final int JOB_DB_RUN = 2120;
+	public static final int JOB_DB_GEO = 2121;
+	public static final int JOB_DB_ALL = 2122;
 	
 	public static final int PART_DB_MAIN = 2200;
 	public static final int PART_DB_SUB = 2201;
@@ -186,6 +188,16 @@ public class FFXIString {
 	public static final int TOKEN_CONVERT_HP_TO_MP = 1139;
 	public static final int TOKEN_CONVERT_MP_TO_HP = 1140;
 
+	public static final int TOKEN_FIRE_AFFINITY_RECAST = 1141;
+	public static final int TOKEN_ICE_AFFINITY_RECAST = 1142;
+	public static final int TOKEN_WIND_AFFINITY_RECAST = 1143;
+	public static final int TOKEN_EARTH_AFFINITY_RECAST = 1144;
+	public static final int TOKEN_LIGHTNING_AFFINITY_RECAST = 1145;
+	public static final int TOKEN_WATER_AFFINITY_RECAST = 1146;
+	public static final int TOKEN_LIGHT_AFFINITY_RECAST = 1147;
+	public static final int TOKEN_DARK_AFFINITY_RECAST = 1148;
+
 	public static final int TOKEN_AugmentComment = 1300;
 	public static final int TOKEN_SetBonus = 1301;
+	public static final int TOKEN_Affinity = 1302;
 }

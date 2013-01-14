@@ -324,5 +324,13 @@
 	<string name="EditBlueMagic">青魔法セット</string>
 	<string name="SetBlueMagic">セット</string>
 	<string name="Recast">リキャスト</string>
+	<string name="RecastFire">リキャスト(火)</string>
+	<string name="RecastIce">リキャスト(氷)</string>
+	<string name="RecastWind">リキャスト(風)</string>
+	<string name="RecastEarth">リキャスト(土)</string>
+	<string name="RecastLightning">リキャスト(雷)</string>
+	<string name="RecastWater">リキャスト(水)</string>
+	<string name="RecastLight">リキャスト(光)</string>
+	<string name="RecastDark">リキャスト(闇)</string>
 	<string name="AttacksPerMinute">振り/分</string>
 </resources>

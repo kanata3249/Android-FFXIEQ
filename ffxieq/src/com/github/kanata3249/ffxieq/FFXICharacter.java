@@ -406,10 +406,20 @@ public class FFXICharacter implements IStatus, Serializable {
 				mCachedValues[type.ordinal()] = getHasteByEquipment();
 				break;
 			case Recast:
-				mCachedValues[type.ordinal()] = getRecast();
+				mCachedValues[type.ordinal()] = getRecast(null);
 				break;
 			case AttacksPerMinute:
 				mCachedValues[type.ordinal()] = getAttacksPerMinute();
+				break;
+			case FireAffinityRecast:
+			case IceAffinityRecast:
+			case WindAffinityRecast:
+			case EarthAffinityRecast:
+			case LightningAffinityRecast:
+			case WaterAffinityRecast:
+			case LightAffinityRecast:
+			case DarkAffinityRecast:
+				mCachedValues[type.ordinal()] = getAffinityRecast(type);
 				break;
 				
 			case SKILL_DIVINE_MAGIC:
@@ -482,9 +492,18 @@ public class FFXICharacter implements IStatus, Serializable {
 		case HasteByEquipment:
 			return getHasteByEquipment();
 		case Recast:
-			return getRecast();
+			return getRecast(null);
 		case AttacksPerMinute:
 			return getAttacksPerMinute();
+		case FireAffinityRecast:
+		case IceAffinityRecast:
+		case WindAffinityRecast:
+		case EarthAffinityRecast:
+		case LightningAffinityRecast:
+		case WaterAffinityRecast:
+		case LightAffinityRecast:
+		case DarkAffinityRecast:
+			return getAffinityRecast(type);
 
 		case SKILL_DIVINE_MAGIC:
 		case SKILL_HEALING_MAGIC:
@@ -1023,7 +1042,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		return haste;
 	}
 
-	public StatusValue getRecast() {
+	public StatusValue getRecast(StatusValue recast) {
 		StatusValue haste, ehaste, mhaste, fastcast;
 		StatusValue v;
 
@@ -1052,11 +1071,24 @@ public class FFXICharacter implements IStatus, Serializable {
 			haste.setAdditionalPercent(haste.getAdditionalPercent() - (mhaste.getAdditionalPercent() - 4375));
 		
 		fastcast = getStatus(mLevel, StatusType.FastCast);
+		if (recast == null) {
+			recast = new StatusValue(0, 0, 0);
+		}
 		
-		v = new StatusValue(0, 0, (10000 - StatusValue.makePercentValue(fastcast.getTotal(), 0) / 2) * (10000 - haste.getAdditionalPercent()) / 10000);
+		v = new StatusValue(0, 0, (10000 - StatusValue.makePercentValue(fastcast.getTotal(), 0) / 2 + recast.getAdditionalPercent()) * (10000 - haste.getAdditionalPercent()) / 10000);
 		v.setAdditionalPercent(Math.max(v.getAdditionalPercent(), StatusValue.makePercentValue(20, 0)));
 
 		return v;
+	}
+
+	public StatusValue getAffinityRecast(StatusType type) {
+		StatusValue affinity, recast;
+		
+		affinity = getStatus(mLevel, type);
+		if (affinity.getAdditionalPercent() == 0) {
+			return new StatusValue(0, 0, 0);
+		}
+		return getRecast(affinity);
 	}
 
 	public StatusValue getMagicSkill(StatusType type) {
