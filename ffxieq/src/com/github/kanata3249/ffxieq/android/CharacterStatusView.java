@@ -670,9 +670,60 @@ public class CharacterStatusView extends ScrollView {
 	}
 	
 	String isStatusTypeToDisplay(StatusType type) {
-		StatusValue v = getStatus(type);
-		if (v.getValue() == 0 && v.getAdditional() == 0 && v.getAdditionalPercent() == 0 && v.getAdditionalPercentWithCap() == 0)
-			return null;
+		StatusValue v, larts, darts;
+
+		switch (type) {
+		default:
+			v = getStatus(type);
+			if (v.getValue() == 0 && v.getAdditional() == 0 && v.getAdditionalPercent() == 0 && v.getAdditionalPercentWithCap() == 0)
+				return null;
+			break;
+		case Recast:
+			break;
+		case Recast_LightArts:
+		case Recast_DarkArts:
+			larts = getStatus(StatusType.LightArts);
+			darts = getStatus(StatusType.DarkArts);
+			if ((larts.getValue() == 0 && larts.getAdditional() == 0 && larts.getAdditionalPercent() == 0 && larts.getAdditionalPercentWithCap() == 0)
+				&& (darts.getValue() == 0 && darts.getAdditional() == 0 && darts.getAdditionalPercent() == 0 && darts.getAdditionalPercentWithCap() == 0)) {
+				return null;
+			}
+			break;
+
+		case FireAffinityRecast_LightArts:
+		case IceAffinityRecast_LightArts:
+		case WindAffinityRecast_LightArts:
+		case EarthAffinityRecast_LightArts:
+		case LightningAffinityRecast_LightArts:
+		case WaterAffinityRecast_LightArts:
+		case LightAffinityRecast_LightArts:
+		case DarkAffinityRecast_LightArts:
+		case FireAffinityRecast_DarkArts:
+		case IceAffinityRecast_DarkArts:
+		case WindAffinityRecast_DarkArts:
+		case EarthAffinityRecast_DarkArts:
+		case LightningAffinityRecast_DarkArts:
+		case WaterAffinityRecast_DarkArts:
+		case LightAffinityRecast_DarkArts:
+		case DarkAffinityRecast_DarkArts:
+			larts = getStatus(StatusType.LightArts);
+			darts = getStatus(StatusType.DarkArts);
+			if ((larts.getValue() == 0 && larts.getAdditional() == 0 && larts.getAdditionalPercent() == 0 && larts.getAdditionalPercentWithCap() == 0)
+				&& (darts.getValue() == 0 && darts.getAdditional() == 0 && darts.getAdditionalPercent() == 0 && darts.getAdditionalPercentWithCap() == 0)) {
+				return null;
+			}
+			final StatusType basetypes[] =
+				{
+					StatusType.FireAffinityRecast, StatusType.IceAffinityRecast, StatusType.WindAffinityRecast, StatusType.EarthAffinityRecast,
+					StatusType.LightningAffinityRecast, StatusType.WaterAffinityRecast, StatusType.LightAffinityRecast, StatusType.DarkAffinityRecast
+				};
+			int ttype = (type.ordinal() - StatusType.FireAffinityRecast_LightArts.ordinal()) % basetypes.length;
+			v = getStatus(basetypes[ttype]);
+			if (v.getValue() == 0 && v.getAdditional() == 0 && v.getAdditionalPercent() == 0 && v.getAdditionalPercentWithCap() == 0)
+				return null;
+			break;
+		}
+
 		switch (type) {
 		case CriticalRateDefence:
 			return mDao.getString(FFXIString.TOKEN_CRITICAL_RATE_DEFENCE);
@@ -718,6 +769,10 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_SAVE_TP);
 		case Recast:
 			return getResources().getString(R.string.Recast);
+		case Recast_LightArts:
+			return getResources().getString(R.string.Recast_LightArts);
+		case Recast_DarkArts:
+			return getResources().getString(R.string.Recast_DarkArts);
 		case FireAffinityRecast:
 			return getResources().getString(R.string.RecastFire);
 		case IceAffinityRecast:
@@ -734,6 +789,38 @@ public class CharacterStatusView extends ScrollView {
 			return getResources().getString(R.string.RecastLight);
 		case DarkAffinityRecast:
 			return getResources().getString(R.string.RecastDark);
+		case FireAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastFire_LightArts);
+		case IceAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastIce_LightArts);
+		case WindAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastWind_LightArts);
+		case EarthAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastEarth_LightArts);
+		case LightningAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastLightning_LightArts);
+		case WaterAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastWater_LightArts);
+		case LightAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastLight_LightArts);
+		case DarkAffinityRecast_LightArts:
+			return getResources().getString(R.string.RecastDark_LightArts);
+		case FireAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastFire_DarkArts);
+		case IceAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastIce_DarkArts);
+		case WindAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastWind_DarkArts);
+		case EarthAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastEarth_DarkArts);
+		case LightningAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastLightning_DarkArts);
+		case WaterAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastWater_DarkArts);
+		case LightAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastLight_DarkArts);
+		case DarkAffinityRecast_DarkArts:
+			return getResources().getString(R.string.RecastDark_DarkArts);
 		}
 		return null;
 	}

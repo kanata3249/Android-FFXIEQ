@@ -332,108 +332,10 @@ public class FFXICharacter implements IStatus, Serializable {
 		
 		StatusType types[] = StatusType.values();
 
-		for (int i = 0; i < types.length; i++) {
+		for (int i = 0; i < types.length - 1; i++) {
 			StatusType type = types[i];
 
-			switch (type) {
-			default:
-				mCachedValues[type.ordinal()] = getStatus(mLevel, type);
-				break;
-
-			case D:
-				mCachedValues[type.ordinal()] = getD();
-				break;
-			case Delay:
-				mCachedValues[type.ordinal()] = getDelay();
-				break;
-			case DelaySub:
-				mCachedValues[type.ordinal()] = getDelay();
-				break;
-			case DelayModifiedByHaste:
-				mCachedValues[type.ordinal()] = getDelayModifiedByHaste();
-				break;
-			case TP:
-				mCachedValues[type.ordinal()] = getTP();
-				break;
-			case TPRange:
-				mCachedValues[type.ordinal()] = getTPRange();
-				break;
-			case Accuracy:
-				mCachedValues[type.ordinal()] = getAccuracy();
-				break;
-			case AccuracySub:
-				mCachedValues[type.ordinal()] = getAccuracySub();
-				break;
-			case Attack:
-				mCachedValues[type.ordinal()] = getAttack();
-				break;
-			case AttackSub:
-				mCachedValues[type.ordinal()] = getAttackSub();
-				break;
-			case AccuracyRange:
-				mCachedValues[type.ordinal()] = getAccuracyRange();
-				break;
-			case AttackRange:
-				mCachedValues[type.ordinal()] = getAttackRange();
-				break;
-			case Evasion:
-				mCachedValues[type.ordinal()] = getEvasion();
-				break;
-			case Defence:
-				mCachedValues[type.ordinal()] = getDefence();
-				break;
-			case DamageCutPhysical:
-				mCachedValues[type.ordinal()] = getDamageCutPhysical();
-				break;
-			case DamageCutMagic:
-				mCachedValues[type.ordinal()] = getDamageCutMagic();
-				break;
-			case DamageCutBreath:
-				mCachedValues[type.ordinal()] = getDamageCutBreath();
-				break;
-				
-			case HP:
-				mCachedValues[type.ordinal()] = getHP();
-				break;
-			case MP:
-				mCachedValues[type.ordinal()] = getMP();
-				break;
-				
-			case Haste:
-				mCachedValues[type.ordinal()] = getHaste();
-				break;
-			case HasteByEquipment:
-				mCachedValues[type.ordinal()] = getHasteByEquipment();
-				break;
-			case Recast:
-				mCachedValues[type.ordinal()] = getRecast(null);
-				break;
-			case AttacksPerMinute:
-				mCachedValues[type.ordinal()] = getAttacksPerMinute();
-				break;
-			case FireAffinityRecast:
-			case IceAffinityRecast:
-			case WindAffinityRecast:
-			case EarthAffinityRecast:
-			case LightningAffinityRecast:
-			case WaterAffinityRecast:
-			case LightAffinityRecast:
-			case DarkAffinityRecast:
-				mCachedValues[type.ordinal()] = getAffinityRecast(type);
-				break;
-				
-			case SKILL_DIVINE_MAGIC:
-			case SKILL_HEALING_MAGIC:
-			case SKILL_ENCHANCING_MAGIC:
-			case SKILL_ENFEEBLING_MAGIC:
-			case SKILL_ELEMENTAL_MAGIC:
-			case SKILL_DARK_MAGIC:
-				mCachedValues[type.ordinal()] = getMagicSkill(type);
-				break;
-
-			case MODIFIER_NUM:
-				break;
-			}
+			mCachedValues[type.ordinal()] = getStatus(type);
 		}
 		mStatusCacheValid = true;
 	}
@@ -491,10 +393,15 @@ public class FFXICharacter implements IStatus, Serializable {
 			return getHaste();
 		case HasteByEquipment:
 			return getHasteByEquipment();
-		case Recast:
-			return getRecast(null);
 		case AttacksPerMinute:
 			return getAttacksPerMinute();
+
+		case Recast:
+			return getRecast(null, null, null);
+		case Recast_LightArts:
+			return getRecast(null, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case Recast_DarkArts:
+			return getRecast(null, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
 		case FireAffinityRecast:
 		case IceAffinityRecast:
 		case WindAffinityRecast:
@@ -503,7 +410,39 @@ public class FFXICharacter implements IStatus, Serializable {
 		case WaterAffinityRecast:
 		case LightAffinityRecast:
 		case DarkAffinityRecast:
-			return getAffinityRecast(type);
+			return getAffinityRecast(type, null, null);
+		case FireAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.FireAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case IceAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.IceAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case WindAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.WindAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case EarthAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.EarthAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case LightningAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.LightningAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case WaterAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.WaterAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case LightAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.LightAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case DarkAffinityRecast_LightArts:
+			return getAffinityRecast(StatusType.DarkAffinityRecast, getStatus(mLevel, StatusType.LightArts), getStatus(mLevel, StatusType.DarkArts));
+		case FireAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.FireAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case IceAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.IceAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case WindAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.WindAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case EarthAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.EarthAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case LightningAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.LightningAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case WaterAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.WaterAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case LightAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.LightAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
+		case DarkAffinityRecast_DarkArts:
+			return getAffinityRecast(StatusType.DarkAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
 
 		case SKILL_DIVINE_MAGIC:
 		case SKILL_HEALING_MAGIC:
@@ -1042,10 +981,15 @@ public class FFXICharacter implements IStatus, Serializable {
 		return haste;
 	}
 
-	public StatusValue getRecast(StatusValue recast) {
+	public StatusValue getRecast(StatusValue recast, StatusValue sarts, StatusValue warts) {
 		StatusValue haste, ehaste, mhaste, fastcast;
 		StatusValue v;
+		int p;
 
+		if (sarts != null || warts != null) {
+			if ((sarts == null || sarts.getTotal() == 0) && (warts == null || warts.getTotal() == 0)) 
+				return new StatusValue(0, 0, 0);
+		}
 		haste = getStatus(mLevel, StatusType.Haste);
 		haste.sub(getStatus(mLevel, StatusType.Slow));
 		ehaste  = mEquipment.getStatus(mLevel, StatusType.Haste);
@@ -1075,20 +1019,26 @@ public class FFXICharacter implements IStatus, Serializable {
 			recast = new StatusValue(0, 0, 0);
 		}
 		
-		v = new StatusValue(0, 0, (10000 - StatusValue.makePercentValue(fastcast.getTotal(), 0) / 2 + recast.getAdditionalPercent()) * (10000 - haste.getAdditionalPercent()) / 10000);
+		p = (10000 - StatusValue.makePercentValue(fastcast.getTotal(), 0) / 2 + recast.getAdditionalPercent());
+		p = p * (10000 - haste.getAdditionalPercent()) / 10000;
+		if (sarts != null && sarts.getTotal() > 0)
+			p = p * (10000 - 1000) / 10000;
+		if (warts != null && warts.getTotal() > 0)
+			p = p * (10000 + 2000) / 10000;
+		v = new StatusValue(0, 0, p);
 		v.setAdditionalPercent(Math.max(v.getAdditionalPercent(), StatusValue.makePercentValue(20, 0)));
 
 		return v;
 	}
 
-	public StatusValue getAffinityRecast(StatusType type) {
-		StatusValue affinity, recast;
+	public StatusValue getAffinityRecast(StatusType type, StatusValue sarts, StatusValue warts) {
+		StatusValue affinity;
 		
 		affinity = getStatus(mLevel, type);
 		if (affinity.getAdditionalPercent() == 0) {
 			return new StatusValue(0, 0, 0);
 		}
-		return getRecast(affinity);
+		return getRecast(affinity, sarts, warts);
 	}
 
 	public StatusValue getMagicSkill(StatusType type) {

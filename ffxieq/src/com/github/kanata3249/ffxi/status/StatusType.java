@@ -142,5 +142,26 @@ public enum StatusType {
 	LightAffinityRecast,
 	DarkAffinityRecast,
 
+	Recast_LightArts,
+	Recast_DarkArts,
+
+	FireAffinityRecast_LightArts,
+	IceAffinityRecast_LightArts,
+	WindAffinityRecast_LightArts,
+	EarthAffinityRecast_LightArts,
+	LightningAffinityRecast_LightArts,
+	WaterAffinityRecast_LightArts,
+	LightAffinityRecast_LightArts,
+	DarkAffinityRecast_LightArts,
+
+	FireAffinityRecast_DarkArts,
+	IceAffinityRecast_DarkArts,
+	WindAffinityRecast_DarkArts,
+	EarthAffinityRecast_DarkArts,
+	LightningAffinityRecast_DarkArts,
+	WaterAffinityRecast_DarkArts,
+	LightAffinityRecast_DarkArts,
+	DarkAffinityRecast_DarkArts,
+
 	MODIFIER_NUM
 }

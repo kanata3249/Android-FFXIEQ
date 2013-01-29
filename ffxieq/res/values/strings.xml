@@ -129,9 +129,9 @@
         <item>5</item>
     </string-array>
     <string name="NewCharacterName">NewCharacter 1.</string>
-    <string name="Save">保存...</string>
+    <string name="Save">保存…</string>
     <string name="InAbyssea">アビセア</string>
-    <string name="Merits">メリポ...</string>
+    <string name="Merits">メリポ…</string>
     <string name="Accuracy">命中</string>
     <string name="Attack">攻撃力</string>
     <string name="RangeAccuracy">飛命</string>
@@ -265,11 +265,11 @@
 	<string name="NoAndDismiss">終了</string>
 	<string name="UseExternalDBSucceeded">設定変更しました。</string>
 	<string name="UseExternalDBFailed">設定変更できませんでした。</string>
-	<string name="Filter">フィルタ...</string>
+	<string name="Filter">フィルタ…</string>
 	<string name="ResetFilter">フィルタ解除</string>
 	<string name="ApplyFilter">適用</string>
-	<string name="Skill">スキル...</string>
-	<string name="Delete">削除...</string>
+	<string name="Skill">スキル…</string>
+	<string name="Delete">削除…</string>
 	<string name="FF11DictionaryJP">FF11用語辞典で検索</string>
 	<string name="GoogleSearch">Googleで検索</string>
    	<string-array name="SearchURIs">
@@ -288,7 +288,7 @@
 	<string name="ResetFilterByType">全て</string>
 	<string name="ShowStatusSeparate">補正別表示</string>
 	<string name="ShowStatusTotal">合計値表示</string>
-	<string name="showCredit">このアプリについて...</string>
+	<string name="showCredit">このアプリについて…</string>
 	<string name="AtmaNotSelected">アートマ未選択</string>
 	<string name="VWAtmaNotSelected">アートマ霊子未選択</string>
 	<string name="FoodNotSelected">食事なし</string>
@@ -296,7 +296,7 @@
 	<string name="EditAugment">オーグメント編集</string>
 	<string name="SelectFromAugmentList">オーグメント一覧</string>
 	<string name="SelectFromEquipmentList">装備一覧</string>
-	<string name="DeleteAugment">削除...</string>
+	<string name="DeleteAugment">削除…</string>
 	<string name="QueryDeleteAugment">本当に削除しますか？</string>
 	<string name="MagicNotSelected">未選択</string>
 	<string name="BaseEquipmentNotFound">データベースにベース装備がありませんでした。再選択してください。</string>
@@ -324,6 +324,8 @@
 	<string name="EditBlueMagic">青魔法セット</string>
 	<string name="SetBlueMagic">セット</string>
 	<string name="Recast">リキャスト</string>
+	<string name="Recast_LightArts">リキャスト(白魔法)</string>
+	<string name="Recast_DarkArts">リキャスト(黒魔法)</string>
 	<string name="RecastFire">リキャスト(火)</string>
 	<string name="RecastIce">リキャスト(氷)</string>
 	<string name="RecastWind">リキャスト(風)</string>
@@ -332,5 +334,21 @@
 	<string name="RecastWater">リキャスト(水)</string>
 	<string name="RecastLight">リキャスト(光)</string>
 	<string name="RecastDark">リキャスト(闇)</string>
+	<string name="RecastFire_LightArts">リキャスト(火 白魔法)</string>
+	<string name="RecastIce_LightArts">リキャスト(氷 白魔法)</string>
+	<string name="RecastWind_LightArts">リキャスト(風 白魔法)</string>
+	<string name="RecastEarth_LightArts">リキャスト(土 白魔法)</string>
+	<string name="RecastLightning_LightArts">リキャスト(雷 白魔法)</string>
+	<string name="RecastWater_LightArts">リキャスト(水 白魔法)</string>
+	<string name="RecastLight_LightArts">リキャスト(光 白魔法)</string>
+	<string name="RecastDark_LightArts">リキャスト(闇 白魔法)</string>
+	<string name="RecastFire_DarkArts">リキャスト(火 黒魔法)</string>
+	<string name="RecastIce_DarkArts">リキャスト(氷 黒魔法)</string>
+	<string name="RecastWind_DarkArts">リキャスト(風 黒魔法)</string>
+	<string name="RecastEarth_DarkArts">リキャスト(土 黒魔法)</string>
+	<string name="RecastLightning_DarkArts">リキャスト(雷 黒魔法)</string>
+	<string name="RecastWater_DarkArts">リキャスト(水 黒魔法)</string>
+	<string name="RecastLight_DarkArts">リキャスト(光 黒魔法)</string>
+	<string name="RecastDark_DarkArts">リキャスト(闇 黒魔法)</string>
 	<string name="AttacksPerMinute">振り/分</string>
 </resources>
