@@ -110,5 +110,11 @@
             <EditText android:text="" android:id="@+id/SUMMONING" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
             <EditText android:text="" android:id="@+id/BLUEMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
         </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@android:color/darker_gray">
+	        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView" android:textColor="@android:color/primary_text_light" android:gravity="center" android:text="@string/GEOMANCERMAGIC"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <EditText android:text="" android:id="@+id/GEOMANCERMAGIC" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"></EditText>
+        </TableRow>
     </TableLayout>
 </ScrollView>

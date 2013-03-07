@@ -127,13 +127,17 @@
             <TextView android:id="@+id/textView40" android:text="@string/BLUEMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/BLUEMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow22">
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow22">
+            <TextView android:id="@+id/textView41" android:text="@string/GEOMANCERMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/GEOMANCERMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
+        </TableRow>
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow23">
             <TextView android:id="@+id/textView42" android:text="@string/ENMITY" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ENMITY" android:entries="@array/Merits_Enmity_Entries"></Spinner>
             <TextView android:id="@+id/textView43" android:text="@string/CRITICAL" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CRITICAL" android:entries="@array/Merits_Other_Entries"></Spinner>
         </TableRow>
-    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow23">
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow24">
             <TextView android:id="@+id/textView44" android:text="@string/CRITICALDEFENCE" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/CRITICALDEFENCE" android:entries="@array/Merits_Other_Entries"></Spinner>
             <TextView android:id="@+id/textView45" android:text="@string/SPELLINTERRUPTION" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>

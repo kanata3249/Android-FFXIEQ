@@ -68,6 +68,7 @@ public class SkillEditActivity extends FFXIEQBaseActivity {
 		bindControlAndValue(R.id.NINJUTSU, values[StatusType.SKILL_NINJUTSU.ordinal()]);
 		bindControlAndValue(R.id.SUMMONING, values[StatusType.SKILL_SUMMONING.ordinal()]);
 		bindControlAndValue(R.id.BLUEMAGIC, values[StatusType.SKILL_BLUE_MAGIC.ordinal()]);
+		bindControlAndValue(R.id.GEOMANCERMAGIC, values[StatusType.SKILL_GEOMANCER_MAGIC.ordinal()]);
 
 		updateValues();
 	}

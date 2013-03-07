@@ -86,6 +86,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		bindControlAndValue(R.id.NINJUTSU, values[StatusType.SKILL_NINJUTSU.ordinal()]);
 		bindControlAndValue(R.id.SUMMONING, values[StatusType.SKILL_SUMMONING.ordinal()]);
 		bindControlAndValue(R.id.BLUEMAGIC, values[StatusType.SKILL_BLUE_MAGIC.ordinal()]);
+		bindControlAndValue(R.id.GEOMANCERMAGIC, values[StatusType.SKILL_GEOMANCER_MAGIC.ordinal()]);
 		bindControlAndValue(R.id.ENMITY, values[StatusType.Enmity.ordinal()]);
 		bindControlAndValue(R.id.CRITICAL, values[StatusType.CriticalRate.ordinal()]);
 		bindControlAndValue(R.id.CRITICALDEFENCE, values[StatusType.CriticalRateDefence.ordinal()]);
@@ -196,6 +197,8 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		submenu.findItem(R.id.JobSpecificMeritPointEdit18).setTitle(jobtitles[17]);
 		submenu.findItem(R.id.JobSpecificMeritPointEdit19).setTitle(jobtitles[18]);
 		submenu.findItem(R.id.JobSpecificMeritPointEdit20).setTitle(jobtitles[19]);
+		submenu.findItem(R.id.JobSpecificMeritPointEdit21).setTitle(jobtitles[20]);
+		submenu.findItem(R.id.JobSpecificMeritPointEdit22).setTitle(jobtitles[21]);
 		
 		return true;
 	}
@@ -340,6 +343,8 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		case R.id.JobSpecificMeritPointEdit18:
 		case R.id.JobSpecificMeritPointEdit19:
 		case R.id.JobSpecificMeritPointEdit20:
+		case R.id.JobSpecificMeritPointEdit21:
+		case R.id.JobSpecificMeritPointEdit22:
 			startJobSpecificMeritPointEdit(item.getItemId());
 			return true;
 		}
@@ -409,6 +414,12 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 			break;
 		case R.id.JobSpecificMeritPointEdit20:
 			job = JobLevelAndRace.SCH;
+			break;
+		case R.id.JobSpecificMeritPointEdit21:
+			job = JobLevelAndRace.RUN;
+			break;
+		case R.id.JobSpecificMeritPointEdit22:
+			job = JobLevelAndRace.GEO;
 			break;
 		default:
 			return;

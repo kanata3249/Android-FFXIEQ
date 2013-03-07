@@ -75,6 +75,7 @@ public class JobRankTable {
 				StatusType.SKILL_NINJUTSU.name(),
 				StatusType.SKILL_SUMMONING.name(),
 				StatusType.SKILL_BLUE_MAGIC.name(),
+				StatusType.SKILL_GEOMANCER_MAGIC.name(),
 		};
 
 		try {

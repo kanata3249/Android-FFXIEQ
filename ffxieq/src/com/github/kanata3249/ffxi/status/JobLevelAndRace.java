@@ -46,7 +46,9 @@ public class JobLevelAndRace implements Serializable {
 	public static final int PUP = 17;
 	public static final int DNC = 18;
 	public static final int SCH = 19;
-	public static final int JOB_MAX = 20;
+	public static final int RUN = 20;
+	public static final int GEO = 21;
+	public static final int JOB_MAX = 22;
 
 	int mJob;
 	int mSubJob;

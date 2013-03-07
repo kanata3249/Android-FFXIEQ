@@ -119,6 +119,7 @@ public class JobAndRace extends StatusModifier implements Serializable  {
 		case SKILL_NINJUTSU:
 		case SKILL_SUMMONING:
 		case SKILL_BLUE_MAGIC:
+		case SKILL_GEOMANCER_MAGIC:
 			value.add(calcSkill(level, type));
 			return value;
 		default:

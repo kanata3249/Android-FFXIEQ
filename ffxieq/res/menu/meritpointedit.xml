@@ -25,6 +25,8 @@
             <item android:id="@+id/JobSpecificMeritPointEdit18"></item>
             <item android:id="@+id/JobSpecificMeritPointEdit19"></item>
             <item android:id="@+id/JobSpecificMeritPointEdit20"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit21"></item>
+            <item android:id="@+id/JobSpecificMeritPointEdit22"></item>
         </menu>
     </item>
 </menu>

@@ -58,6 +58,7 @@ public enum StatusType {
 	SKILL_NINJUTSU,
 	SKILL_SUMMONING,
 	SKILL_BLUE_MAGIC,
+	SKILL_GEOMANCER_MAGIC,
 	
 	D,
 	Delay,
@@ -162,6 +163,6 @@ public enum StatusType {
 	WaterAffinityRecast_DarkArts,
 	LightAffinityRecast_DarkArts,
 	DarkAffinityRecast_DarkArts,
-
+	
 	MODIFIER_NUM
 }

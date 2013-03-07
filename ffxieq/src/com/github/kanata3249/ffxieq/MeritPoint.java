@@ -43,8 +43,22 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 			mMeritPoints = new int[StatusType.MODIFIER_NUM.ordinal()];
 		} else if (mMeritPoints.length != StatusType.MODIFIER_NUM.ordinal()) {
 			int merits[] = new int[StatusType.MODIFIER_NUM.ordinal()]; 
-			for (int i = 0; i < Math.min(merits.length, mMeritPoints.length); i++) {
-				merits[i] = mMeritPoints[i];
+			
+			if (StatusType.MODIFIER_NUM.ordinal() >= 140 && mMeritPoints.length < 140) {
+				/* SKILL GEOMANCER MAGIC was inserted. */ 
+				int i;
+				for (i = 0; i < StatusType.SKILL_GEOMANCER_MAGIC.ordinal(); i++) {
+					merits[i] = mMeritPoints[i];
+				}
+				merits[i++] = 0;
+				for (/* nop */; i < Math.min(merits.length, mMeritPoints.length) + 1; i++) {
+					merits[i] = mMeritPoints[i - 1];
+				}
+			
+			} else {
+				for (int i = 0; i < Math.min(merits.length, mMeritPoints.length); i++) {
+					merits[i] = mMeritPoints[i];
+				}
 			}
 			mMeritPoints = merits;
 		}
@@ -56,6 +70,19 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 					mJobSpecificMeritPoints[i][ii] = new int[MAX_JOB_SPECIFIC_MERIT_POINT];
 				}
 			}
+		} else if (mJobSpecificMeritPoints.length != JobLevelAndRace.JOB_MAX) {
+			int jobmerits[][][] = new int[JobLevelAndRace.JOB_MAX][][];
+			int i;
+			for (i = 0; i < Math.min(jobmerits.length, mJobSpecificMeritPoints.length); i++) {
+				jobmerits[i] = mJobSpecificMeritPoints[i];
+			}
+			for (/* nop */; i < jobmerits.length; i++) {
+				jobmerits[i] = new int[MAX_JOB_SPECIFIC_MERIT_POINT_CATEGORY][];
+				for (int ii = 0; ii < jobmerits[i].length; ii++) {
+					jobmerits[i][ii] = new int[MAX_JOB_SPECIFIC_MERIT_POINT];
+				}
+			}
+			mJobSpecificMeritPoints = jobmerits;
 		}
 	}
 
@@ -123,6 +150,7 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 		case SKILL_NINJUTSU:
 		case SKILL_SUMMONING:
 		case SKILL_BLUE_MAGIC:
+		case SKILL_GEOMANCER_MAGIC:
 			v.setValue(Math.min(meritcap, merit) * 2);
 			break;
 		case SKILL_GUARDING:
