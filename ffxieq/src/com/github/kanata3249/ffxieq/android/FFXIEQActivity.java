@@ -812,10 +812,12 @@ public class FFXIEQActivity extends TabActivity {
     	if (cs != null) {
 	        cs.setParam(getSettings(), getDAO(), getCharacterIDToCompare());
     	}
+    	setTitle(((FFXIEQApplication)getApplication()).getCaption());
     }
 
     protected void updateSubViewValues() {
         ((FFXIEQBaseActivity)getCurrentActivity()).notifyDatasetChanged();
+    	setTitle(((FFXIEQApplication)getApplication()).getCaption());
     }
 
     public String getName() {

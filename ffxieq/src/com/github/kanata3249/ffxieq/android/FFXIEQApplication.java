@@ -20,6 +20,7 @@ import java.io.File;
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxi.status.StatusModifier;
 import com.github.kanata3249.ffxieq.FFXICharacter;
+import com.github.kanata3249.ffxieq.R;
 import com.github.kanata3249.ffxieq.android.db.FFXIDatabase;
 import com.github.kanata3249.ffxieq.android.db.FFXIEQSettings;
 
@@ -127,5 +128,41 @@ public class FFXIEQApplication extends Application {
 			name = FFXIDatabase.getDBPath(getFFXIEQSettings().useExternalDB());
 		}
 		return super.openOrCreateDatabase(name, mode, factory);
+	}
+	
+	public String getJobAndLevelString(FFXICharacter charInfo) {
+		String jobstr, levelstr;
+		String jobnames[] = getResources().getStringArray(R.array.Jobs);
+		int job, joblevel;
+		int subjob, subjoblevel;
+		
+		job = charInfo.getJob();
+		joblevel = charInfo.getJobLevel();
+		subjob = charInfo.getSubJob();
+		subjoblevel = charInfo.getSubJobLevel();
+		
+		jobstr = jobnames[job];
+		levelstr = Integer.valueOf(joblevel).toString();
+		if (subjoblevel != 0) {
+			jobstr += "/" + jobnames[subjob];
+			levelstr += "/" + subjoblevel;
+		}
+		
+		return jobstr + levelstr;
+	}
+	public CharSequence getCaption() {
+		String main, sub;
+		
+		if (mFFXICharacter != null) {
+			main = getJobAndLevelString(mFFXICharacter);
+			if (mFFXICharacterToCompare != null) {
+				sub = getJobAndLevelString(mFFXICharacterToCompare);
+				return main + " vs " + sub;
+			} else {
+				return main;
+			}
+			
+		}
+		return "ffxieq";
 	}
 }
