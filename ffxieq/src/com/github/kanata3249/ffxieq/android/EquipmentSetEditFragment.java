@@ -127,17 +127,12 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 				charInfo.setEquipment(part, id, augid);
 				charInfo.reloadAugmentsIfChangesThere();
 				updateValues();
-
-				if (mListener != null) {
-					mListener.notifyDatasetChanged();
-				}
+				datasetChanged();
 			}
 		} else if (resultCode == Activity.RESULT_CANCELED) {
 			if (charInfo.reloadAugmentsIfChangesThere()) {
 				updateValues();
-				if (mListener != null) {
-					mListener.notifyDatasetChanged();
-				}
+				datasetChanged();
 			}
 		} else if (resultCode == Activity.RESULT_FIRST_USER) {
 			int part;
@@ -161,9 +156,7 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 		case R.id.Remove:
 			getFFXICharacter().setEquipment(mLongClickingItemPosition, -1, -1);
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.RemoveAll:
 			FFXICharacter charInfo = getFFXICharacter();
@@ -172,9 +165,7 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 				charInfo.setEquipment(i, -1, -1);
 			}
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.EditAugment:
 			{
@@ -320,9 +311,7 @@ public class EquipmentSetEditFragment extends FFXIEQFragment {
 
     	mPartsToBeReselect = charInfo.reloadForUpdatingDatabase();
     	if (mPartsToBeReselect[EquipmentSet.EQUIPMENT_NUM] == 1) {
-			if (mListener != null) {
-				mListener.notifyDatasetChanged();
-			}
+		datasetChanged();
     	}
         for (int i = 0; i < EquipmentSet.EQUIPMENT_NUM; i++) {
         	if (mPartsToBeReselect[i] >= 0) {

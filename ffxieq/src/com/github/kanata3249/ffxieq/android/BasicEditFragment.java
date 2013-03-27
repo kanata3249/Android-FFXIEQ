@@ -476,10 +476,7 @@ public class BasicEditFragment extends FFXIEQFragment {
     	}
 
     	updateValues();
-
-    	if (mListener != null) {
-    		mListener.notifyDatasetChanged();
-    	}
+    	datasetChanged();
     }
 
     public void updateValues() {
@@ -568,9 +565,7 @@ public class BasicEditFragment extends FFXIEQFragment {
 		case R.id.Remove:
 			charInfo.setFood(-1, null);
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.List:
 			{
@@ -636,18 +631,14 @@ public class BasicEditFragment extends FFXIEQFragment {
 		case R.id.Remove:
 			charInfo.setAtma(mLongClickingItemPosition, -1);
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.RemoveAll:
 			for (int i = 0; i < AtmaSet.ATMA_MAX; i++) {
 				charInfo.setAtma(i, -1);
 			}
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.List:
 			{
@@ -713,18 +704,14 @@ public class BasicEditFragment extends FFXIEQFragment {
 		case R.id.Remove:
 			charInfo.setVWAtma(mLongClickingItemPosition, -1);
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.RemoveAll:
 			for (int i = 0; i < VWAtmaSet.ATMA_MAX; i++) {
 				charInfo.setVWAtma(i, -1);
 			}
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.List:
 			{

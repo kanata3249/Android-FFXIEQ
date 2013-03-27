@@ -100,4 +100,11 @@ public class FFXIEQFragment extends Fragment {
     public void setOnDatasetChangedListener(OnDatasetChangedListener listener) {
     	mListener = listener;
     }
+
+    protected void datasetChanged() {
+    	if (mListener != null) {
+    		mListener.notifyDatasetChanged();
+    	}
+    	((FFXIEQApplication)getActivity().getApplication()).datasetChanged();
+	}
 }

@@ -122,10 +122,7 @@ public class MagicSetEditFragment extends FFXIEQFragment {
         }
 
     	updateValues();
-
-    	if (mListener != null) {
-    		mListener.notifyDatasetChanged();
-    	}
+    	datasetChanged();
     }
 
     public void updateValues() {
@@ -155,18 +152,14 @@ public class MagicSetEditFragment extends FFXIEQFragment {
 		case R.id.Remove:
 			charInfo.setMagic(-1, charInfo.getMagic(mLongClickingItemPosition).getSubId());
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.RemoveAll:
 			while (charInfo.getNumMagic() > 0) {
 				charInfo.setMagic(-1, charInfo.getMagic(0).getSubId());
 			}
 			updateValues();
-	        if (mListener != null) {
-	    		mListener.notifyDatasetChanged();
-	    	}
+			datasetChanged();
 			return true;
 		case R.id.List:
 			{

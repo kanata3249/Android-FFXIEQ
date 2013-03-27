@@ -66,6 +66,12 @@ public class FFXIEQActivity extends TabActivity {
 				return;
 			}
 		}
+		
+		((FFXIEQApplication)getApplication()).setOnDatasetChangedListener(new FFXIEQApplication.OnDatasetChangedListener() {
+			public void notifyDatasetChanged() {
+		    	setTitle(((FFXIEQApplication)getApplication()).getCaption());
+			}
+		});
 		setupSubViews();
 	}
 	

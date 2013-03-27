@@ -38,6 +38,11 @@ public class FFXIEQApplication extends Application {
 	long mCharacterIDToCompare;
 	FFXICharacter mFFXICharacterToCompare;
 
+	static public abstract class OnDatasetChangedListener {
+    	abstract public void notifyDatasetChanged();
+    }
+	OnDatasetChangedListener mListener;
+
 	public FFXIEQApplication() {
 		mFFXIDatabase = null;
 		mFFXIEQSettings = null;
@@ -148,7 +153,7 @@ public class FFXIEQApplication extends Application {
 			levelstr += "/" + subjoblevel;
 		}
 		
-		return jobstr + levelstr;
+		return jobstr + levelstr + (charInfo.isModified() ? "*" : "");
 	}
 	public CharSequence getCaption() {
 		String main, sub;
@@ -165,4 +170,14 @@ public class FFXIEQApplication extends Application {
 		}
 		return "ffxieq";
 	}
+
+	public void setOnDatasetChangedListener(OnDatasetChangedListener listener) {
+    	mListener = listener;
+    }
+
+	public void datasetChanged() {
+    	if (mListener != null) {
+    		mListener.notifyDatasetChanged();
+    	}
+    }
 }
