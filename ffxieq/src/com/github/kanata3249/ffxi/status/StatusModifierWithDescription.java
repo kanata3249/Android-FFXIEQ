@@ -305,6 +305,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_SUMMONING, StatusType.SKILL_SUMMONING);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_BLUE_MAGIC, StatusType.SKILL_BLUE_MAGIC);
 		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_GEOMANCER_MAGIC, StatusType.SKILL_GEOMANCER_MAGIC);
+		setupCommonTokenHandler(FFXIString.TOKEN_SKILL_HANDBELL, StatusType.SKILL_HANDBELL);
 		
 	}
 	
