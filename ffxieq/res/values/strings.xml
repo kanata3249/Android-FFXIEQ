@@ -254,6 +254,7 @@
 	<string name="SUMMONING">召喚</string>
 	<string name="BLUEMAGIC">青魔法</string>
 	<string name="GEOMANCERMAGIC">風水</string>
+	<string name="HANDBELL">風水鈴</string>
 	<string name="GUARDING">ガード</string>
 	<string name="EVASION">回避</string>
 	<string name="SHIELD">盾</string>

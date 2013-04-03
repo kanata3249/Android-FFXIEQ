@@ -59,6 +59,7 @@ public enum StatusType {
 	SKILL_SUMMONING,
 	SKILL_BLUE_MAGIC,
 	SKILL_GEOMANCER_MAGIC,
+	SKILL_HANDBELL,
 	
 	D,
 	Delay,

@@ -87,6 +87,7 @@ public class MeritPointEditActivity extends FFXIEQBaseActivity {
 		bindControlAndValue(R.id.SUMMONING, values[StatusType.SKILL_SUMMONING.ordinal()]);
 		bindControlAndValue(R.id.BLUEMAGIC, values[StatusType.SKILL_BLUE_MAGIC.ordinal()]);
 		bindControlAndValue(R.id.GEOMANCERMAGIC, values[StatusType.SKILL_GEOMANCER_MAGIC.ordinal()]);
+		bindControlAndValue(R.id.HANDBELL, values[StatusType.SKILL_HANDBELL.ordinal()]);
 		bindControlAndValue(R.id.ENMITY, values[StatusType.Enmity.ordinal()]);
 		bindControlAndValue(R.id.CRITICAL, values[StatusType.CriticalRate.ordinal()]);
 		bindControlAndValue(R.id.CRITICALDEFENCE, values[StatusType.CriticalRateDefence.ordinal()]);

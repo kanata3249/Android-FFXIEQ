@@ -895,6 +895,8 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_SKILL_BLUE_MAGIC);
 		case SKILL_GEOMANCER_MAGIC:
 			return mDao.getString(FFXIString.TOKEN_SKILL_GEOMANCER_MAGIC);
+		case SKILL_HANDBELL:
+			return mDao.getString(FFXIString.TOKEN_SKILL_HANDBELL);
 		}
 		return null;
 	}

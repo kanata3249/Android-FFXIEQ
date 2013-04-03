@@ -176,27 +176,28 @@ public class FFXIString {
 	public static final int TOKEN_SKILL_SUMMONING = 1129;
 	public static final int TOKEN_SKILL_BLUE_MAGIC = 1130;
 	public static final int TOKEN_SKILL_GEOMANCER_MAGIC = 1131;
+	public static final int TOKEN_SKILL_HANDBELL = 1132;
 	
-	public static final int TOKEN_REGIST_FIRE = 1132;
-	public static final int TOKEN_REGIST_ICE = 1133;
-	public static final int TOKEN_REGIST_WIND = 1134;
-	public static final int TOKEN_REGIST_EARTH = 1135;
-	public static final int TOKEN_REGIST_LIGHTNING = 1136;
-	public static final int TOKEN_REGIST_WATER = 1137;
-	public static final int TOKEN_REGIST_LIGHT = 1138;
-	public static final int TOKEN_REGIST_DARK = 1139;
+	public static final int TOKEN_REGIST_FIRE = 1133;
+	public static final int TOKEN_REGIST_ICE = 1134;
+	public static final int TOKEN_REGIST_WIND = 1135;
+	public static final int TOKEN_REGIST_EARTH = 1136;
+	public static final int TOKEN_REGIST_LIGHTNING = 1137;
+	public static final int TOKEN_REGIST_WATER = 1138;
+	public static final int TOKEN_REGIST_LIGHT = 1139;
+	public static final int TOKEN_REGIST_DARK = 1140;
 	
-	public static final int TOKEN_CONVERT_HP_TO_MP = 1140;
-	public static final int TOKEN_CONVERT_MP_TO_HP = 1141;
+	public static final int TOKEN_CONVERT_HP_TO_MP = 1141;
+	public static final int TOKEN_CONVERT_MP_TO_HP = 1142;
 
-	public static final int TOKEN_FIRE_AFFINITY_RECAST = 1142;
-	public static final int TOKEN_ICE_AFFINITY_RECAST = 1143;
-	public static final int TOKEN_WIND_AFFINITY_RECAST = 1144;
-	public static final int TOKEN_EARTH_AFFINITY_RECAST = 1145;
-	public static final int TOKEN_LIGHTNING_AFFINITY_RECAST = 1146;
-	public static final int TOKEN_WATER_AFFINITY_RECAST = 1147;
-	public static final int TOKEN_LIGHT_AFFINITY_RECAST = 1148;
-	public static final int TOKEN_DARK_AFFINITY_RECAST = 1149;
+	public static final int TOKEN_FIRE_AFFINITY_RECAST = 1143;
+	public static final int TOKEN_ICE_AFFINITY_RECAST = 1144;
+	public static final int TOKEN_WIND_AFFINITY_RECAST = 1145;
+	public static final int TOKEN_EARTH_AFFINITY_RECAST = 1146;
+	public static final int TOKEN_LIGHTNING_AFFINITY_RECAST = 1147;
+	public static final int TOKEN_WATER_AFFINITY_RECAST = 1148;
+	public static final int TOKEN_LIGHT_AFFINITY_RECAST = 1149;
+	public static final int TOKEN_DARK_AFFINITY_RECAST = 1150;
 
 	public static final int TOKEN_AugmentComment = 1300;
 	public static final int TOKEN_SetBonus = 1301;

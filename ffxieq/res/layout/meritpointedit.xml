@@ -130,6 +130,8 @@
         <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow22">
             <TextView android:id="@+id/textView41" android:text="@string/GEOMANCERMAGIC" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/GEOMANCERMAGIC" android:entries="@array/Merits_Skill_Entries"></Spinner>
+            <TextView android:id="@+id/textView" android:text="@string/HANDBELL" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/HANDBELL" android:entries="@array/Merits_Skill_Entries"></Spinner>
         </TableRow>
     	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow23">
             <TextView android:id="@+id/textView42" android:text="@string/ENMITY" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
