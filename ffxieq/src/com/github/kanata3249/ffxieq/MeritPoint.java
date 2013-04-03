@@ -44,17 +44,27 @@ public class MeritPoint extends StatusModifier implements Serializable  {
 		} else if (mMeritPoints.length != StatusType.MODIFIER_NUM.ordinal()) {
 			int merits[] = new int[StatusType.MODIFIER_NUM.ordinal()]; 
 			
-			if (StatusType.MODIFIER_NUM.ordinal() >= 140 && mMeritPoints.length < 140) {
+			if (mMeritPoints.length < 140) {
 				/* SKILL GEOMANCER MAGIC was inserted. */ 
 				int i;
 				for (i = 0; i < StatusType.SKILL_GEOMANCER_MAGIC.ordinal(); i++) {
 					merits[i] = mMeritPoints[i];
 				}
-				merits[i++] = 0;
+				merits[i++] = 0;  /* Geomncy Magic */
+				merits[i++] = 0;  /* Handbell */
+				for (/* nop */; i < Math.min(merits.length, mMeritPoints.length) + 1; i++) {
+					merits[i] = mMeritPoints[i - 2];
+				}
+			} else if (mMeritPoints.length == 140) {
+				/* SKILL HANDBELL was inserted. */ 
+				int i;
+				for (i = 0; i < StatusType.SKILL_HANDBELL.ordinal(); i++) {
+					merits[i] = mMeritPoints[i];
+				}
+				merits[i++] = 0;  /* Handbell */
 				for (/* nop */; i < Math.min(merits.length, mMeritPoints.length) + 1; i++) {
 					merits[i] = mMeritPoints[i - 1];
 				}
-			
 			} else {
 				for (int i = 0; i < Math.min(merits.length, mMeritPoints.length); i++) {
 					merits[i] = mMeritPoints[i];
