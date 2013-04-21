@@ -1,3 +1,5 @@
-<resources>
-    <item name="main" type="layout">@layout/equipmentseteditfragment_handset</item>
-</resources>
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:id="@+id/lineareLayout" android:layout_width="wrap_content">
+    <com.github.kanata3249.ffxieq.android.EquipmentSetView android:layout_height="fill_parent" android:id="@+id/Equipments" android:scrollbars="vertical" android:layout_width="fill_parent"></com.github.kanata3249.ffxieq.android.EquipmentSetView>
+</LinearLayout>
