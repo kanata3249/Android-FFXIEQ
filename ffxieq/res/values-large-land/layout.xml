@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item name="basiceditfragment" type="layout">@layout/basiceditfragment_tablet</item>
+	<item name="equipmentseteditactivity" type="layout">@layout/equipmentseteditactivity_tablet</item>
+	<item name="statusview" type="layout">@layout/statusview_tablet</item>
+</resources>
