@@ -61,7 +61,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 		return updated;
 	}
 	
-	private boolean parseDescritonToken(String token) {
+	private boolean parseDescriptionToken(String token) {
 		String tmp[], mod, parameter;
 		DescriptionTokenHandler handler;
 		boolean updated;
@@ -105,29 +105,43 @@ public class StatusModifierWithDescription extends StatusModifier {
 			updated = true;
 		}
 		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
-		for (int i = tokens.length - 1; i >= 0; i--) {
-			if (tokens[i].contains(":") && !tokens[i].contains(Dao.getString(FFXIString.TOKEN_Affinity))) {
-				String tmp, newtokens[];
-				
-				tmp = tokens[i];
-				for (int ii = i + 1; ii < tokens.length; ii++)
-					tmp += " " + tokens[ii];
-				mUnknownTokens.addString(tmp);
-				updated = true;
-				newtokens = new String[i];
-				for (int ii = 0; ii < newtokens.length; ii++) {
-					newtokens[ii] = tokens[ii];
-				}
-				tokens = newtokens;
-			}
-		}
-
 		for (int i = 0; i < tokens.length; i++) {
-			updated = parseDescritonToken(tokens[i]);
-			if (updated) {
-			} else {
-				mUnknownTokens.addString(tokens[i]);
-				updated = true;
+			String rebuilt_token;
+
+			rebuilt_token = "";
+			for (int ii = i; ii < tokens.length; ii++)
+				rebuilt_token += " " + tokens[ii];
+			rebuilt_token = rebuilt_token.substring(1);	// skip first SPC
+			if (rebuilt_token.length() == 0)
+				break;
+			for (int t = tokens.length - i - 1; t >= 0; t--) {
+				if (parseDescriptionToken(rebuilt_token)) {
+					// skip used tokens
+					i += t;
+					updated |= true;
+				} else {
+					if (t == 0) {
+						// all tokens didn't not match
+						if (rebuilt_token.contains(":")) {
+							// skip until next ':'
+							rebuilt_token = tokens[i];
+							for (int ii = i + 1; ii < tokens.length; ii++) {
+								if (tokens[ii].contains(":"))
+									break;
+								i++;
+								rebuilt_token += " " + tokens[ii];
+							}
+							mUnknownTokens.addString(rebuilt_token);
+							updated = true;
+						} else {
+							mUnknownTokens.addString(tokens[i]);
+							updated = true;
+						}
+					} else {
+						// remove last token
+						rebuilt_token = rebuilt_token.substring(0, rebuilt_token.length() - (1 + tokens[t + i].length()));
+					}
+				}
 			}
 		}
 		return updated;
