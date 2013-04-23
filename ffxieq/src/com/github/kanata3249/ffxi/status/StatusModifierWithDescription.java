@@ -61,6 +61,38 @@ public class StatusModifierWithDescription extends StatusModifier {
 		return updated;
 	}
 	
+	private boolean parseDescritonToken(String token) {
+		String tmp[], mod, parameter;
+		DescriptionTokenHandler handler;
+		boolean updated;
+
+		updated = false;
+		if (token.length() == 0)
+			return updated;
+		tmp = token.split("[\\+\\-0-9]");
+		if (tmp != null && tmp.length > 0) {
+			if (tmp[0].length() == 0) {
+				// start with digits..
+				mod = tmp[tmp.length - 1];
+				parameter = token.substring(0, token.length() - mod.length());
+			} else {
+				mod = tmp[0];
+				parameter = token.substring(mod.length());
+			}
+		} else {
+			mod = token;
+			parameter = "";
+		}
+
+		handler = fTokenHandler.get(mod);
+		if (handler != null) {
+			if (handler.handleToken(mod, parameter)) {
+				updated = true;
+			}
+		}
+		return updated;
+	}
+
 	public boolean parseDescriptionSub(String description) {
 		boolean updated = false;
 		String tokens[];
@@ -91,34 +123,8 @@ public class StatusModifierWithDescription extends StatusModifier {
 		}
 
 		for (int i = 0; i < tokens.length; i++) {
-			String token, tmp[], parameter;
-			DescriptionTokenHandler handler;
-			
-			if (tokens[i].length() == 0)
-				continue;
-			tmp = tokens[i].split("[\\+\\-0-9]");
-			if (tmp != null && tmp.length > 0) {
-				if (tmp[0].length() == 0) {
-					// start with digits..
-					token = tmp[tmp.length - 1];
-					parameter = tokens[i].substring(0, tokens[i].length() - token.length());
-				} else {
-					token = tmp[0];
-					parameter = tokens[i].substring(token.length());
-				}
-			} else {
-				token = tokens[i];
-				parameter = "";
-			}
-
-			handler = fTokenHandler.get(token);
-			if (handler != null) {
-				if (handler.handleToken(token, parameter)) {
-					updated = true;
-				} else {
-					mUnknownTokens.addString(tokens[i]);
-					updated = true;
-				}
+			updated = parseDescritonToken(tokens[i]);
+			if (updated) {
 			} else {
 				mUnknownTokens.addString(tokens[i]);
 				updated = true;
