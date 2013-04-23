@@ -15,7 +15,9 @@
 */
 package com.github.kanata3249.ffxi.status;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.github.kanata3249.ffxi.FFXIString;
 
@@ -93,6 +95,59 @@ public class StatusModifierWithDescription extends StatusModifier {
 		return updated;
 	}
 
+	private String [] tokenize(String description) {
+		List<String> tokens = new ArrayList<String>();
+		String cur_token;
+		boolean quoting;
+		int token_len;
+
+		token_len = 0;
+		quoting = false;
+		cur_token = "";
+		for (int i = 0; i < description.length(); i++) {
+			char ch;
+			
+			ch = description.charAt(i);
+			switch (ch) {
+			case '"':
+				quoting = !quoting;
+				/* fall thru */
+			default:
+				if (token_len == 0 && Character.isLowerCase(ch) && tokens.size() != 0) {
+					cur_token = tokens.remove(tokens.size() - 1);
+					cur_token += ' ';
+					token_len = cur_token.length();					
+				}
+				token_len++;
+				cur_token += ch;
+				break;
+			case ' ':
+			case '\n':
+			case '\r':
+			case '\t':
+				if (quoting) {
+					if (cur_token.charAt(token_len - 1) != ' ') {
+						cur_token += " ";
+						token_len++;
+					}
+				} else {
+					if (token_len != 0) {
+						tokens.add(cur_token);
+						cur_token = "";
+						token_len = 0;
+					}
+					
+				}
+				break;
+			}
+		}
+		if (token_len != 0) {
+			tokens.add(cur_token);
+		}
+		
+		return tokens.toArray(new String[tokens.size()]);
+	}
+
 	public boolean parseDescriptionSub(String description) {
 		boolean updated = false;
 		String tokens[];
@@ -104,7 +159,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_AugmentComment) + tokens[1]);
 			updated = true;
 		}
-		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
+		tokens = tokenize(tokens[0]);
 		for (int i = 0; i < tokens.length; i++) {
 			String rebuilt_token;
 
