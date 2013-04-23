@@ -780,6 +780,7 @@ public class FFXIEQActivity extends TabActivity {
 						updateValues();
 					} else {
 						getFFXICharacter().setNotModified();
+						setTitle(((FFXIEQApplication)getApplication()).getCaption());
 					}
 				}
 			});
