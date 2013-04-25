@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/FF11DictionaryJP" android:id="@+id/WebSearch0"></item>
+    <item android:title="@string/GoogleSearch" android:id="@+id/WebSearch1"></item>
+    <item android:visible="false" android:id="@+id/WebSearch2"></item>
+    <item android:visible="false" android:id="@+id/WebSearch3"></item>
+    <item android:visible="false" android:id="@+id/WebSearch4"></item>
+    <item android:visible="false" android:id="@+id/WebSearch5"></item>
+    <item android:visible="false" android:id="@+id/WebSearch6"></item>
+    <item android:visible="false" android:id="@+id/WebSearch7"></item>
+    <item android:title="@string/EditAugment" android:id="@+id/EditAugment"></item>
+</menu>
