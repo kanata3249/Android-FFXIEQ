@@ -2,11 +2,11 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent" android:layout_width="wrap_content">
-    <TextView android:text="Name" android:id="@+id/Name" android:layout_alignParentTop="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
-    <TextView android:layout_width="wrap_content" android:text="Job" android:id="@+id/Job" android:layout_height="wrap_content" android:layout_toRightOf="@+id/Name" android:layout_alignParentRight="true" android:gravity="right" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
-    <TextView android:layout_width="wrap_content" android:text="Description" android:id="@+id/Description" android:layout_height="wrap_content" android:layout_below="@+id/Name" android:textAppearance="?android:attr/textAppearanceSmall" android:lines="2"></TextView>
-    <TextView android:layout_width="wrap_content" android:text="Lv" android:id="@+id/Level" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:gravity="right"></TextView>
-    <TextView android:layout_width="wrap_content" android:text="Race" android:id="@+id/Race" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_toRightOf="@+id/Level" android:paddingLeft="10dip"></TextView>
-    <TextView android:layout_width="wrap_content" android:text="Rare" android:id="@+id/Rare" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_alignParentRight="true"></TextView>
-    <TextView android:layout_width="wrap_content" android:text="Ex" android:id="@+id/Ex" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_toLeftOf="@+id/Rare" android:paddingRight="10dip"></TextView>
+    <TextView android:text="" android:id="@+id/Name" android:layout_alignParentTop="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="" android:id="@+id/Job" android:layout_height="wrap_content" android:layout_toRightOf="@+id/Name" android:layout_alignParentRight="true" android:gravity="right" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="" android:id="@+id/Description" android:layout_height="wrap_content" android:layout_below="@+id/Name" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="" android:id="@+id/Level" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:gravity="right"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="" android:id="@+id/Race" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_toRightOf="@+id/Level" android:paddingLeft="10dip"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="" android:id="@+id/Rare" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_alignParentRight="true"></TextView>
+    <TextView android:layout_width="wrap_content" android:text="" android:id="@+id/Ex" android:layout_height="wrap_content" android:layout_below="@+id/Description" android:layout_toLeftOf="@+id/Rare" android:paddingRight="10dip"></TextView>
 </RelativeLayout>
