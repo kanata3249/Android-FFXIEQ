@@ -16,7 +16,7 @@
 package com.github.kanata3249.ffxi;
 
 public class FFXIString {
-	public static final int ItemDescriptionTokenSeparator = 1;
+	public static final int ItemDescriptionTokenSeparatorX = 1;		// not used
 	public static final int ItemDescriptionConvertCharsFrom = 2;
 	public static final int ItemDescriptionConvertCharsTo = 3;
 	public static final int ItemDescriptionToken_IgnoreSuffix = 4;
@@ -78,13 +78,13 @@ public class FFXIString {
 	public static final int TOKEN_CHR = 1006;
 	public static final int TOKEN_HP = 1007;
 	public static final int TOKEN_MP = 1008;
-	public static final int TOKEN_CONVERT_HPMP = 1009;
-	public static final int TOKEN_CONVERT_MPHP = 1010;
+	public static final int xTOKEN_CONVERT_HPMPX = 1009;		// not used
+	public static final int xTOKEN_CONVERT_MPHPX = 1010;		// not used
 	public static final int TOKEN_DMP = 1011;
 	public static final int TOKEN_DELAY = 1012;
 	public static final int TOKEN_ATTACK = 1013;
 	public static final int TOKEN_ATTACK_RANGE = 1014;
-	public static final int TOKEN_DEF = 1015;
+	public static final int xTOKEN_DEF = 1015;				// not used
 	public static final int TOKEN_HASTE = 1016;
 	public static final int TOKEN_SLOW = 1017;
 	public static final int TOKEN_SUBTLE_BLOW = 1018;
