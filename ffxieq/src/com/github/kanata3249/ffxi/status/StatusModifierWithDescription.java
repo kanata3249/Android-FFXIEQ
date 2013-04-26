@@ -151,9 +151,16 @@ public class StatusModifierWithDescription extends StatusModifier {
 				token_len++;
 				cur_token += ch;
 				break;
-			case ' ':
 			case '\n':
 			case '\r':
+				if (token_len != 0) {
+					tokens.add(cur_token);
+					tokens.add("\n");
+					cur_token = "";
+					token_len = 0;
+				}
+				break;
+			case ' ':
 			case '\t':
 				if (quoting) {
 					if (cur_token.charAt(token_len - 1) != ' ') {
@@ -194,31 +201,41 @@ public class StatusModifierWithDescription extends StatusModifier {
 		tokens = tokenize(tokens[0]);
 		for (int i = 0; i < tokens.length; i++) {
 			String rebuilt_token;
+			int ii;
+
+			if (tokens[i].charAt(0) == '\n')
+				continue;
 
 			rebuilt_token = "";
-			for (int ii = i; ii < tokens.length; ii++)
+			for (ii = i; ii < tokens.length; ii++) {
+				if (tokens[ii].charAt(0) == '\n')
+					break;
 				rebuilt_token += " " + tokens[ii];
-			rebuilt_token = rebuilt_token.substring(1);	// skip first SPC
+			}
+			rebuilt_token = rebuilt_token.trim();	// skip first SPC
 			if (rebuilt_token.length() == 0)
-				break;
-			for (int t = tokens.length - i - 1; t >= 0; t--) {
+				continue;
+			for (int t = ii - i; t > 0; t--) {
 				if (parseDescriptionToken(rebuilt_token)) {
 					// skip used tokens
-					i += t;
+					i += t - 1;
 					updated |= true;
 					if (pending_unknown_token.length() > 0)
 						mUnknownTokens.addString(pending_unknown_token);
 					pending_unknown_token = "";
 					break;
 				} else {
-					if (t == 0) {
+					if (t == 1) {
 						// all tokens didn't not match
 						if (rebuilt_token.contains(":")) {
 							// skip until next ':'
 							rebuilt_token = tokens[i];
-							for (int ii = i + 1; ii < tokens.length; ii++) {
+							for (ii = i + 1; ii < tokens.length; ii++) {
 								int coffset;
 								
+								if (tokens[ii].charAt(0) == '\n') {
+									break;
+								}
 								coffset = tokens[ii].lastIndexOf(":");
 								if (coffset >= 0) {
 									if (coffset < tokens[ii].length() - 1) {
@@ -246,7 +263,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 						updated = true;
 					} else {
 						// remove last token
-						rebuilt_token = rebuilt_token.substring(0, rebuilt_token.length() - (1 + tokens[t + i].length()));
+						rebuilt_token = rebuilt_token.substring(0, rebuilt_token.length() - (1 + tokens[t + i - 1].length()));
 					}
 				}
 			}
@@ -281,7 +298,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 					ch = to.charAt(index);
 				}
 			}
-			if (Character.isWhitespace(ch)) {
+			if (ch == '\r' || ch == '\n') {
+				if (skipwhite)
+					continue;
+				ch = '\n';
+				skipwhite = true;
+			} else if (Character.isWhitespace(ch)) {
 				if (skipwhite)
 					continue;
 				ch = ' ';
