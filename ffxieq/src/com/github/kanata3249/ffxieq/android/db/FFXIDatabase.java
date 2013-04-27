@@ -1,5 +1,5 @@
 /*
-   Copyright 2011-2012 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -81,6 +81,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	boolean mUseExternalDB;
 	String mDBPath;
 	FFXIEQSettings mSettings;
+	String mOriginalDBName;
 
 	// Constructor
 	public FFXIDatabase(Context context, boolean useExternal, FFXIEQSettings settings) {
@@ -113,6 +114,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mUseExternalDB = useExternal;
 
 		mSettings = settings;
+		String [] nameAndExt = DB_NAME.split("\\.");
+		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
 		try {
 			if (checkDatabase(mDBPath)) {
 				copyDatabaseFromAssets(mDBPath);
@@ -182,7 +185,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		
 		result = 0;
 		while (zipEntry != null) {
-			if (zipEntry.getName().equalsIgnoreCase(DB_NAME)) {
+			if (zipEntry.getName().equalsIgnoreCase(mOriginalDBName)) {
 				result = zipEntry.getTime();
 			}
 			zipIn.closeEntry();
@@ -200,6 +203,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		ZipInputStream zipIn = new ZipInputStream(in);
 		ZipEntry zipEntry = zipIn.getNextEntry();
 		
+		String [] nameAndExt = DB_NAME.split("\\.");
+		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
 		if (pathToCopy == null) {
 			if (mUseExternalDB) {
 				File extdir = new File(EXTERNAL_SD_PATH);
@@ -228,8 +233,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			byte[] buffer = new byte[4096];
 			int size;
 
-			if (zipEntry.getName().equalsIgnoreCase(DB_NAME)) {
-				OutputStream out = new FileOutputStream(pathToCopy + zipEntry.getName());
+			if (zipEntry.getName().equalsIgnoreCase(mOriginalDBName)) {
+				OutputStream out = new FileOutputStream(pathToCopy + DB_NAME);
 				while ((size = zipIn.read(buffer, 0, buffer.length)) > -1) {
 					out.write(buffer, 0, size);
 				}

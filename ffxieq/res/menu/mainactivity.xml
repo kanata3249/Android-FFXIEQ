@@ -10,7 +10,9 @@
 	    <item android:id="@+id/RestoreFromSD" android:title="@string/RestoreFromSD"></item>
     	<item android:icon="@android:drawable/ic_menu_manage" android:title="@string/InstallDB" android:id="@+id/InstallDB"></item>
     	<item android:title="@string/useExternalDB" android:checkable="true" android:id="@+id/useExternalDB"></item>
-    	<item android:title="@string/showCredit" android:id="@+id/showCredit"></item>
+    	<item android:id="@+id/useEnglishDB" android:title="@string/useEnglishDB" android:checkable="true"></item><item android:id="@+id/useJapaneseDB" android:title="@string/useJapaneseDB" android:checkable="true"></item><item android:title="@string/showCredit" android:id="@+id/showCredit"></item>
     </group>
+    
+    
     
 </menu>

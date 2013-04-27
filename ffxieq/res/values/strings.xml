@@ -284,6 +284,8 @@
 	<string name="JobSpecificMeritPointEdit">Job specific merits</string>
 	<string name="Revert">Revert changed</string>
 	<string name="useExternalDB">use SD for database storage</string>
+	<string name="useEnglishDB">use English database</string>
+	<string name="useJapaneseDB">use Japanese database</string>
 	<string name="OrderByLevel">Reorder by Level</string>
 	<string name="OrderByName">Reorder by Name</string>
 	<string name="FilterByType">Filter by type</string>

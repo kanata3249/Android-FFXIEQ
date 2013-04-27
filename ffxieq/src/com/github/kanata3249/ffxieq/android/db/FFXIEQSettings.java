@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.io.StreamCorruptedException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
+import java.util.Locale;
 
 import com.github.kanata3249.ffxi.FFXIDAO;
 import com.github.kanata3249.ffxieq.Equipment;
@@ -578,6 +579,27 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		
 		editor = mContext.getSharedPreferences("ffxieq", Activity.MODE_PRIVATE).edit(); 
 		editor.putBoolean("useExternalDB", useExternalDB);
+		editor.commit();
+	}
+	
+	public String getDatabaseLang() {
+		String lang;
+		
+		lang = mContext.getSharedPreferences("ffxieq", Activity.MODE_PRIVATE).getString("databaseLang", "");
+		if (lang.length() == 0) {
+			lang = "en";
+			if (Locale.getDefault().equals(Locale.JAPAN)) {
+				lang = "jp";
+			}
+		}
+		return lang;
+	}
+	
+	public void setDatabaseLang(String lang) {
+		SharedPreferences.Editor editor;
+		
+		editor = mContext.getSharedPreferences("ffxieq", Activity.MODE_PRIVATE).edit(); 
+		editor.putString("databaseLang", lang);
 		editor.commit();
 	}
 
