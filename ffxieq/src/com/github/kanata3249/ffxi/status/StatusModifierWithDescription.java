@@ -112,8 +112,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 			return updated;
 		modAndParam = splitTokenToModAndParameter(token);
 		modlen = modAndParam[0].length();
-		if (modlen > 2 && modAndParam[0].charAt(0) == '"' && modAndParam[0].charAt(modlen - 1) == '"') {
-			modAndParam[0] = modAndParam[0].substring(1, modlen - 1);
+		if (modlen > 0 && modAndParam[0].charAt(0) == '"') {
+			modAndParam[0] = modAndParam[0].substring(1, modlen);
+			modlen--;
+		}
+		if (modlen > 0 && modAndParam[0].charAt(modlen - 1) == '"') {
+			modAndParam[0] = modAndParam[0].substring(0, modlen - 1);
 		}
 
 		handler = fTokenHandler.get(modAndParam[0]);
@@ -159,6 +163,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 					cur_token = "";
 					token_len = 0;
 				}
+				quoting = false;
 				break;
 			case ' ':
 			case '\t':

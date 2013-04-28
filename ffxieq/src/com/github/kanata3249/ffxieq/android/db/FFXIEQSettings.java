@@ -591,6 +591,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			if (Locale.getDefault().equals(Locale.JAPAN)) {
 				lang = "jp";
 			}
+			setDatabaseLang(lang);
 		}
 		return lang;
 	}
