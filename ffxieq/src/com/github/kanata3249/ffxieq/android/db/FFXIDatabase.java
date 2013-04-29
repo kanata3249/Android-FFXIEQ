@@ -79,7 +79,6 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	StringTable mStringTable;
 	
 	boolean mUseExternalDB;
-	String mDBPath;
 	FFXIEQSettings mSettings;
 	String mOriginalDBName;
 
@@ -107,18 +106,14 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mBlueMagicTable = new BlueMagicTable();
 		mStringTable = new StringTable();
 		
-		if (useExternal)
-			mDBPath = SD_PATH;
-		else
-			mDBPath = DB_PATH;
 		mUseExternalDB = useExternal;
 
 		mSettings = settings;
 		String [] nameAndExt = DB_NAME.split("\\.");
 		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
 		try {
-			if (checkDatabase(mDBPath)) {
-				copyDatabaseFromAssets(mDBPath);
+			if (checkDatabase(getDBPath(useExternal))) {
+				copyDatabaseFromAssets(getDBPath(useExternal));
 			}
 		} catch (IOException e) {
 		}
@@ -165,7 +160,10 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 	
 	public boolean checkDatabase(String pathToCheck) throws IOException {
-		File in = new File(pathToCheck + DB_NAME);
+		if (pathToCheck.endsWith("/"))
+			pathToCheck += DB_NAME;
+
+		File in = new File(pathToCheck);
 		long lastmod;
 		
 		if (in.isFile()) {
@@ -206,15 +204,10 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		String [] nameAndExt = DB_NAME.split("\\.");
 		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
 		if (pathToCopy == null) {
-			if (mUseExternalDB) {
-				File extdir = new File(EXTERNAL_SD_PATH);
-				if (extdir.isDirectory())
-					pathToCopy = EXTERNAL_SD_PATH;
-				else
-					pathToCopy = SD_PATH;
-			} else
-				pathToCopy = DB_PATH;
+			pathToCopy = getDBPath(mUseExternalDB);
 		}
+		if (pathToCopy.endsWith("/"))
+			pathToCopy += DB_NAME;
 		File outDir = new File(pathToCopy);
 		
 		try {
@@ -234,14 +227,14 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 			int size;
 
 			if (zipEntry.getName().equalsIgnoreCase(mOriginalDBName)) {
-				OutputStream out = new FileOutputStream(pathToCopy + DB_NAME);
+				OutputStream out = new FileOutputStream(pathToCopy);
 				while ((size = zipIn.read(buffer, 0, buffer.length)) > -1) {
 					out.write(buffer, 0, size);
 				}
 				out.flush();
 				out.close();
 				
-				File to = new File(pathToCopy + zipEntry.getName());
+				File to = new File(pathToCopy);
 				to.setLastModified(zipEntry.getTime());
 			}
 			zipIn.closeEntry();
