@@ -49,6 +49,8 @@ sub builddb
 	$dbh->do("drop table Combination_$lang2");
 	$dbh->do("drop table BlueMagic_$lang2");
 	$dbh->do("drop table BlueMagicCombination_$lang2");
+	$dbh->do("drop table Atma_$lang2");
+	$dbh->do("drop table VWAtma_$lang2");
 
 # rename
 	$dbh->do("alter table JobTrait_$lang rename to JobTrait");
@@ -57,6 +59,8 @@ sub builddb
 	$dbh->do("alter table Combination_$lang rename to Combination");
 	$dbh->do("alter table BlueMagic_$lang rename to BlueMagic");
 	$dbh->do("alter table BlueMagicCombination_$lang rename to BlueMagicCombination");
+	$dbh->do("alter table Atma_$lang rename to Atma");
+	$dbh->do("alter table VWAtma_$lang rename to VWAtma");
 	
 	$dbh->do("update Equipment set DescriptionOrg = NULL");
 	$dbh->do("update Atma set DescriptionOrg = NULL");
