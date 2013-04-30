@@ -357,4 +357,5 @@
 	<string name="RecastLight_DarkArts">リキャスト(光 黒魔法)</string>
 	<string name="RecastDark_DarkArts">リキャスト(闇 黒魔法)</string>
 	<string name="AttacksPerMinute">振り/分</string>
+	<string name="AboutFile">file:///android_asset/about/about_jp.html</string>
 </resources>

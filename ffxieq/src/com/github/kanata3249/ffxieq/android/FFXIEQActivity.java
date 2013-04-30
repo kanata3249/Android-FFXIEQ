@@ -792,7 +792,7 @@ public class FFXIEQActivity extends TabActivity {
 			
 		case R.id.showCredit:
 			dialog = new WebViewDialog(this);
-			((WebViewDialog)dialog).loadURL("file:///android_asset/about/about.html");
+			((WebViewDialog)dialog).loadURL(getResources().getString(R.string.AboutFile));
 			return dialog;
 		}
 		return super.onCreateDialog(id);
