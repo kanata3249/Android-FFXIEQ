@@ -120,7 +120,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 			modAndParam[0] = modAndParam[0].substring(0, modlen - 1);
 		}
 
-		handler = fTokenHandler.get(modAndParam[0]);
+		handler = fTokenHandler.get(modAndParam[0].toLowerCase());
 		if (handler != null) {
 			if (handler.handleToken(modAndParam[0], modAndParam[1])) {
 				updated = true;
@@ -132,11 +132,9 @@ public class StatusModifierWithDescription extends StatusModifier {
 	private String [] tokenize(String description) {
 		List<String> tokens = new ArrayList<String>();
 		String cur_token;
-		boolean quoting;
 		int token_len;
 
 		token_len = 0;
-		quoting = false;
 		cur_token = "";
 		for (int i = 0; i < description.length(); i++) {
 			char ch;
@@ -144,8 +142,6 @@ public class StatusModifierWithDescription extends StatusModifier {
 			ch = description.charAt(i);
 			switch (ch) {
 			case '"':
-				quoting = !quoting;
-				/* fall thru */
 			default:
 				if (token_len == 0 && Character.isLowerCase(ch) && tokens.size() != 0) {
 					cur_token = tokens.remove(tokens.size() - 1);
@@ -163,22 +159,13 @@ public class StatusModifierWithDescription extends StatusModifier {
 					cur_token = "";
 					token_len = 0;
 				}
-				quoting = false;
 				break;
 			case ' ':
 			case '\t':
-				if (quoting) {
-					if (cur_token.charAt(token_len - 1) != ' ') {
-						cur_token += " ";
-						token_len++;
-					}
-				} else {
-					if (token_len != 0) {
-						tokens.add(cur_token);
-						cur_token = "";
-						token_len = 0;
-					}
-					
+				if (token_len != 0) {
+					tokens.add(cur_token);
+					cur_token = "";
+					token_len = 0;
 				}
 				break;
 			}
@@ -464,7 +451,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 	}
 	
 	public void setupCommonTokenHandler(int token, final StatusType type) {
-		fTokenHandler.put(Dao.getString(token), new DescriptionTokenHandler() {
+		fTokenHandler.put(Dao.getString(token).toLowerCase(), new DescriptionTokenHandler() {
 			boolean handleToken(String token, String parameter) {
 				StatusValue v = handleCommonToken(getStatus(type), parameter);
 				if (v != null) {
