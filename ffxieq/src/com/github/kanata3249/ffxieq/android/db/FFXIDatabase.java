@@ -222,6 +222,8 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		}
 
 		outDir.mkdir();
+		File dbfile = new File(pathToCopy);
+		dbfile.delete();
 		while (zipEntry != null) {
 			byte[] buffer = new byte[4096];
 			int size;
