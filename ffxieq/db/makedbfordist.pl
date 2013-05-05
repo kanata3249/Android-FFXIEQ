@@ -42,6 +42,8 @@ sub builddb
 	$dbh->do("drop table Magian_$lang2");
 	$dbh->do("drop table original_$lang");
 	$dbh->do("drop table original_$lang2");
+	$dbh->do("drop table items_$lang");
+	$dbh->do("drop table items_$lang2");
 
 	$dbh->do("drop table Equipment_$lang2");
 	$dbh->do("drop table JobTrait_$lang2");
@@ -52,6 +54,7 @@ sub builddb
 	$dbh->do("drop table Atma_$lang2");
 	$dbh->do("drop table VWAtma_$lang2");
 	$dbh->do("drop table MeritPoint_$lang2");
+	$dbh->do("drop table Food_$lang2");
 
 # rename
 	$dbh->do("alter table JobTrait_$lang rename to JobTrait");
@@ -63,6 +66,7 @@ sub builddb
 	$dbh->do("alter table Atma_$lang rename to Atma");
 	$dbh->do("alter table VWAtma_$lang rename to VWAtma");
 	$dbh->do("alter table MeritPoint_$lang rename to MeritPoint");
+	$dbh->do("alter table Food_$lang rename to Food");
 	
 	$dbh->do("update Equipment set DescriptionOrg = NULL");
 	$dbh->do("update Atma set DescriptionOrg = NULL");
