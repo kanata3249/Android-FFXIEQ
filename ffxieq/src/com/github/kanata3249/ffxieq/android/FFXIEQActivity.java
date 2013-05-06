@@ -457,8 +457,6 @@ public class FFXIEQActivity extends TabActivity {
 							showDialog(R.string.InstallDBFailed);
 						}
 						dlg.dismiss();
-						updateValues();
-						updateSubViewValues();
 					}
 				};
 				if (item.getItemId() == R.id.useEnglishDB)
@@ -634,6 +632,19 @@ public class FFXIEQActivity extends TabActivity {
 			dialog = builder.create();
 			return dialog;
 		case R.string.InstallDBSucceeded:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(id));
+	    	builder.setTitle(getString(R.string.InstallDB));
+	    	builder.setPositiveButton(R.string.OK, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.InstallDBSucceeded);
+					updateValues();
+					updateSubViewValues();
+				}
+			});
+			dialog = builder.create();
+			return dialog;
 		case R.string.InstallDBFailed:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
