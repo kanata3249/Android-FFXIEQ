@@ -21,6 +21,7 @@ import com.github.kanata3249.ffxieq.Combination;
 import com.github.kanata3249.ffxieq.Equipment;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.*;
 
 public class EquipmentTable {
@@ -96,9 +97,11 @@ public class EquipmentTable {
 	public void setCombinationID(SQLiteDatabase db, Equipment equipment) {
 		Cursor cursor;
 		String []combi_columns = { C_Combi_CombinationID };
+		String escaped_eqname;
 
+		escaped_eqname = DatabaseUtils.sqlEscapeString("%" + equipment.getName() + "%");
 		try {
-			cursor = db.query(TABLE_NAME_COMBINATION, combi_columns, C_Combi_Equipments + " LIKE '%" + equipment.getName() + "%'", null, null, null, null);
+			cursor = db.query(TABLE_NAME_COMBINATION, combi_columns, C_Combi_Equipments + " LIKE " + escaped_eqname, null, null, null, null);
 		} catch (SQLiteException e) {
 			return;
 		}
@@ -113,10 +116,10 @@ public class EquipmentTable {
 		Cursor cursor;
 		String columns[] = { C_Id };
 		long newId;
-		
+
 		try {
 			cursor = db.query(TABLE_NAME, columns,
-					C_Name + " = '" + name + "' AND " +
+					C_Name + " = " + DatabaseUtils.sqlEscapeString(name) + " AND " +
 					C_Part + " LIKE '%" + part + "%' AND " +
 					C_Level + " = '" + level + "' AND " +
 					C_Weapon + " LIKE '%" + weapon + "%'",
@@ -242,9 +245,8 @@ public class EquipmentTable {
 			if (i != 0)
 				where.append(" AND ");
 			where.append(C_Combi_Equipments);
-			where.append(" LIKE '%");
-			where.append(names[i]);
-			where.append("%'");
+			where.append(" LIKE ");
+			where.append(DatabaseUtils.sqlEscapeString("%" + names[i] + "%"));
 		}
 		where.append(" AND " + C_Combi_NumMatches + " ='" + names.length + "'"); 
 
