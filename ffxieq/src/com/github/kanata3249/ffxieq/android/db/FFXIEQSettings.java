@@ -67,7 +67,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 	// Constructor
 	public FFXIEQSettings(Context context) {
-		super(context, DB_NAME, null, 2);
+		super(context, DB_NAME, null, 3);
 		
 		mContext = context;
 		mAugmentTable = new AugmentTable();
@@ -84,6 +84,9 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			} catch (Exception ex) {
 			}
 		}
+		
+		// call onCreate/onUpgrade
+		getReadableDatabase();
 	}
 
 	private void dataChanged() {
@@ -153,8 +156,10 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		switch (oldVersion) {
 		case 1:
 			create_meritpoint_table = true;
+			setDatabaseLang("jp");
 			break;
 		case 2:
+			setDatabaseLang("jp");
 			break;
 		}
 		
