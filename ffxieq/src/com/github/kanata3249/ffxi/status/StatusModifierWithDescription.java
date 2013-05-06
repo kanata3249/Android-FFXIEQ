@@ -105,22 +105,15 @@ public class StatusModifierWithDescription extends StatusModifier {
 		String modAndParam[];
 		DescriptionTokenHandler handler;
 		boolean updated;
-		int modlen;
 
 		updated = false;
 		if (token.length() == 0)
 			return updated;
 		modAndParam = splitTokenToModAndParameter(token);
-		modlen = modAndParam[0].length();
-		if (modlen > 0 && modAndParam[0].charAt(0) == '"') {
-			modAndParam[0] = modAndParam[0].substring(1, modlen);
-			modlen--;
-		}
-		if (modlen > 0 && modAndParam[0].charAt(modlen - 1) == '"') {
-			modAndParam[0] = modAndParam[0].substring(0, modlen - 1);
-		}
+		modAndParam[0] = modAndParam[0].replace("\"", "");
+		modAndParam[0] = modAndParam[0].toLowerCase();
 
-		handler = fTokenHandler.get(modAndParam[0].toLowerCase());
+		handler = fTokenHandler.get(modAndParam[0]);
 		if (handler != null) {
 			if (handler.handleToken(modAndParam[0], modAndParam[1])) {
 				updated = true;
