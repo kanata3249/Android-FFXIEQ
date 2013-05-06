@@ -44,6 +44,8 @@ sub builddb
 	$dbh->do("drop table original_$lang2");
 	$dbh->do("drop table items_$lang");
 	$dbh->do("drop table items_$lang2");
+	$dbh->do("drop table equipment_$lang" . "_modified");
+	$dbh->do("drop table equipment_$lang2" . "_modified");
 
 	$dbh->do("drop table Equipment_$lang2");
 	$dbh->do("drop table JobTrait_$lang2");
