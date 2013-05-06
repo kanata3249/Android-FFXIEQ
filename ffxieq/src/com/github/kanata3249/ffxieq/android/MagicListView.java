@@ -136,7 +136,11 @@ public class MagicListView extends ListView {
 								if (subName.startsWith("#")) {
 									((TextView)view).setText(subName.substring(1));
 								} else {
-									((TextView)view).setText(name + subName);
+									if (subName.length() > 0 && Character.isLetter(subName.charAt(0))) {
+										((TextView)view).setText(name + " " + subName);
+									} else {
+										((TextView)view).setText(name + subName);
+									}
 								}
 							} else {
 								((TextView)view).setText(name);
