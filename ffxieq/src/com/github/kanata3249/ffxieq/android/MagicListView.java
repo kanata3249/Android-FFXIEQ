@@ -1,5 +1,5 @@
 /*
-   Copyright 2011-2012 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -136,7 +136,11 @@ public class MagicListView extends ListView {
 								if (subName.startsWith("#")) {
 									((TextView)view).setText(subName.substring(1));
 								} else {
-									((TextView)view).setText(name + subName);
+									if (subName.length() > 0 && Character.isLetter(subName.charAt(0))) {
+										((TextView)view).setText(name + " " + subName);
+									} else {
+										((TextView)view).setText(name + subName);
+									}
 								}
 							} else {
 								((TextView)view).setText(name);

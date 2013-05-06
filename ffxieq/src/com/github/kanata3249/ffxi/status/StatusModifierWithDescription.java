@@ -15,7 +15,9 @@
 */
 package com.github.kanata3249.ffxi.status;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.github.kanata3249.ffxi.FFXIString;
 
@@ -61,10 +63,119 @@ public class StatusModifierWithDescription extends StatusModifier {
 		return updated;
 	}
 	
+	private String []splitTokenToModAndParameter(String token) {
+		String [] result = new String[2];
+		boolean inParameter;
+		int start, end;
+
+		start = end = 0;
+		inParameter = false;
+		result[0] = "";
+		result[1] = "";
+		for (int i = 0; i < token.length(); i++) {
+			char ch = token.charAt(i);
+			
+			if (Character.isDigit(ch) || ch == '+' || ch == '-') {
+				if (inParameter) {
+					end = i + 1;
+				} else {
+					inParameter = true;
+					start = i;
+					end = i + 1;
+				}
+			} else if (ch == '%' || ch == '(' || ch == ')' || ch == '.' || ch == '%') {
+				if (inParameter)
+					end = i + 1;
+			} else {
+				inParameter = false;
+			}
+		}
+		result[1] = token.substring(start, end).trim();
+		result[0] = token.substring(0, start).trim();
+		if (token.length() != end) {
+			if (result[0].length() != 0)
+				result[0] += " ";
+			result[0] += token.substring(end, token.length()).trim();
+		}
+
+		return result;
+	}
+
+	private boolean parseDescriptionToken(String token) {
+		String modAndParam[];
+		DescriptionTokenHandler handler;
+		boolean updated;
+
+		updated = false;
+		if (token.length() == 0)
+			return updated;
+		modAndParam = splitTokenToModAndParameter(token);
+		modAndParam[0] = modAndParam[0].replace("\"", "");
+		modAndParam[0] = modAndParam[0].toLowerCase();
+
+		handler = fTokenHandler.get(modAndParam[0]);
+		if (handler != null) {
+			if (handler.handleToken(modAndParam[0], modAndParam[1])) {
+				updated = true;
+			}
+		}
+		return updated;
+	}
+
+	private String [] tokenize(String description) {
+		List<String> tokens = new ArrayList<String>();
+		String cur_token;
+		int token_len;
+
+		token_len = 0;
+		cur_token = "";
+		for (int i = 0; i < description.length(); i++) {
+			char ch;
+			
+			ch = description.charAt(i);
+			switch (ch) {
+			case '"':
+			default:
+				if (token_len == 0 && Character.isLowerCase(ch) && tokens.size() != 0) {
+					cur_token = tokens.remove(tokens.size() - 1);
+					cur_token += ' ';
+					token_len = cur_token.length();					
+				}
+				token_len++;
+				cur_token += ch;
+				break;
+			case '\n':
+			case '\r':
+				if (token_len != 0) {
+					tokens.add(cur_token);
+					tokens.add("\n");
+					cur_token = "";
+					token_len = 0;
+				}
+				break;
+			case ' ':
+			case '\t':
+				if (token_len != 0) {
+					tokens.add(cur_token);
+					cur_token = "";
+					token_len = 0;
+				}
+				break;
+			}
+		}
+		if (token_len != 0) {
+			tokens.add(cur_token);
+		}
+		
+		return tokens.toArray(new String[tokens.size()]);
+	}
+
 	public boolean parseDescriptionSub(String description) {
 		boolean updated = false;
 		String tokens[];
+		String pending_unknown_token;
 
+		pending_unknown_token = "";
 		tokens = new String[1];
 		tokens[0] = description;
 		tokens = tokens[0].split(Dao.getString(FFXIString.TOKEN_AugmentComment));
@@ -72,58 +183,78 @@ public class StatusModifierWithDescription extends StatusModifier {
 			mUnknownTokens.addString(Dao.getString(FFXIString.TOKEN_AugmentComment) + tokens[1]);
 			updated = true;
 		}
-		tokens = tokens[0].split(Dao.getString(FFXIString.ItemDescriptionTokenSeparator));
-		for (int i = tokens.length - 1; i >= 0; i--) {
-			if (tokens[i].contains(":") && !tokens[i].contains(Dao.getString(FFXIString.TOKEN_Affinity))) {
-				String tmp, newtokens[];
-				
-				tmp = tokens[i];
-				for (int ii = i + 1; ii < tokens.length; ii++)
-					tmp += " " + tokens[ii];
-				mUnknownTokens.addString(tmp);
-				updated = true;
-				newtokens = new String[i];
-				for (int ii = 0; ii < newtokens.length; ii++) {
-					newtokens[ii] = tokens[ii];
-				}
-				tokens = newtokens;
-			}
-		}
-
+		tokens = tokenize(tokens[0]);
 		for (int i = 0; i < tokens.length; i++) {
-			String token, tmp[], parameter;
-			DescriptionTokenHandler handler;
-			
-			if (tokens[i].length() == 0)
-				continue;
-			tmp = tokens[i].split("[\\+\\-0-9]");
-			if (tmp != null && tmp.length > 0) {
-				if (tmp[0].length() == 0) {
-					// start with digits..
-					token = tmp[tmp.length - 1];
-					parameter = tokens[i].substring(0, tokens[i].length() - token.length());
-				} else {
-					token = tmp[0];
-					parameter = tokens[i].substring(token.length());
-				}
-			} else {
-				token = tokens[i];
-				parameter = "";
-			}
+			String rebuilt_token;
+			int ii;
 
-			handler = fTokenHandler.get(token);
-			if (handler != null) {
-				if (handler.handleToken(token, parameter)) {
-					updated = true;
+			if (tokens[i].charAt(0) == '\n')
+				continue;
+
+			rebuilt_token = "";
+			for (ii = i; ii < tokens.length; ii++) {
+				if (tokens[ii].charAt(0) == '\n')
+					break;
+				rebuilt_token += " " + tokens[ii];
+			}
+			rebuilt_token = rebuilt_token.trim();	// skip first SPC
+			if (rebuilt_token.length() == 0)
+				continue;
+			for (int t = ii - i; t > 0; t--) {
+				if (parseDescriptionToken(rebuilt_token)) {
+					// skip used tokens
+					i += t - 1;
+					updated |= true;
+					if (pending_unknown_token.length() > 0)
+						mUnknownTokens.addString(pending_unknown_token);
+					pending_unknown_token = "";
+					break;
 				} else {
-					mUnknownTokens.addString(tokens[i]);
-					updated = true;
+					if (t == 1) {
+						// all tokens didn't not match
+						if (rebuilt_token.contains(":")) {
+							// skip until next ':'
+							rebuilt_token = tokens[i];
+							for (ii = i + 1; ii < tokens.length; ii++) {
+								int coffset;
+								
+								if (tokens[ii].charAt(0) == '\n') {
+									break;
+								}
+								coffset = tokens[ii].lastIndexOf(":");
+								if (coffset >= 0) {
+									if (coffset < tokens[ii].length() - 1) {
+										char ch = tokens[ii].charAt(coffset + 1);
+										if (Character.isDigit(ch) || ch == '+' || ch == '-') {
+											coffset = -1;
+										}
+									}
+									if (coffset >= 0)
+										break;
+								}
+								i++;
+								rebuilt_token += " " + tokens[ii];
+							}
+						}
+						if (rebuilt_token.contains(":")) {
+							if (pending_unknown_token.length() != 0)
+								mUnknownTokens.addString(pending_unknown_token);
+							pending_unknown_token = rebuilt_token;
+						} else {
+							if (pending_unknown_token.length() != 0)
+								pending_unknown_token += " ";
+							pending_unknown_token += rebuilt_token;
+						}
+						updated = true;
+					} else {
+						// remove last token
+						rebuilt_token = rebuilt_token.substring(0, rebuilt_token.length() - (1 + tokens[t + i - 1].length()));
+					}
 				}
-			} else {
-				mUnknownTokens.addString(tokens[i]);
-				updated = true;
 			}
 		}
+		if (pending_unknown_token.length() > 0)
+			mUnknownTokens.addString(pending_unknown_token);
 		return updated;
 	}
 	
@@ -133,7 +264,6 @@ public class StatusModifierWithDescription extends StatusModifier {
 			return "";
 		}
 		String tmpString = new String(string);
-		// TODO Convert SPC to UNDERLINE for some multi-word token.  (for English/German version?)
 		
 		// Canonicalize some error characters in database
 		boolean skipwhite = false;
@@ -153,7 +283,12 @@ public class StatusModifierWithDescription extends StatusModifier {
 					ch = to.charAt(index);
 				}
 			}
-			if (Character.isWhitespace(ch)) {
+			if (ch == '\r' || ch == '\n') {
+				if (skipwhite)
+					continue;
+				ch = '\n';
+				skipwhite = true;
+			} else if (Character.isWhitespace(ch)) {
 				if (skipwhite)
 					continue;
 				ch = ' ';
@@ -170,7 +305,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 	protected StatusValue handleCommonToken(StatusValue base, String parameter) {
 		StatusValue newValue;
 
-		if (parameter.endsWith(mIgnoreSuffix)) {
+		if (mIgnoreSuffix != null && parameter.endsWith(mIgnoreSuffix)) {
 			parameter = parameter.substring(0, parameter.length() - mIgnoreSuffix.length());
 		}
 		newValue = StatusValue.valueOf(parameter);
@@ -200,7 +335,6 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_DELAY, StatusType.Delay);
 		setupCommonTokenHandler(FFXIString.TOKEN_ATTACK, StatusType.Attack);
 		setupCommonTokenHandler(FFXIString.TOKEN_ATTACK_RANGE, StatusType.AttackRange);
-		setupCommonTokenHandler(FFXIString.TOKEN_DEF, StatusType.Defence);
 		setupCommonTokenHandler(FFXIString.TOKEN_HASTE, StatusType.Haste);
 		setupCommonTokenHandler(FFXIString.TOKEN_HASTE_ABILITY, StatusType.HasteAbility);
 		setupCommonTokenHandler(FFXIString.TOKEN_SLOW, StatusType.Slow);
@@ -310,7 +444,7 @@ public class StatusModifierWithDescription extends StatusModifier {
 	}
 	
 	public void setupCommonTokenHandler(int token, final StatusType type) {
-		fTokenHandler.put(Dao.getString(token), new DescriptionTokenHandler() {
+		fTokenHandler.put(Dao.getString(token).toLowerCase(), new DescriptionTokenHandler() {
 			boolean handleToken(String token, String parameter) {
 				StatusValue v = handleCommonToken(getStatus(type), parameter);
 				if (v != null) {

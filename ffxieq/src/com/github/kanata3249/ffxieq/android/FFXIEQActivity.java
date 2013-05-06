@@ -1,5 +1,5 @@
 /*
-   Copyright 2011-2012 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -304,12 +304,14 @@ public class FFXIEQActivity extends TabActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		FFXIEQSettings settings = getSettings();
 		boolean useExternalDB;
-		MenuItem useExternalDBItem, installDBItem;
+		String databaseLang;
+		MenuItem useExternalDBItem, installDBItem, item;
 		boolean writable, readable;
 
 		useExternalDB = settings.useExternalDB();
 		useExternalDBItem = menu.findItem(R.id.useExternalDB);
 		installDBItem = menu.findItem(R.id.InstallDB);
+		databaseLang = settings.getDatabaseLang();
 	
 		// check SD card...
 		String status = Environment.getExternalStorageState();
@@ -336,7 +338,13 @@ public class FFXIEQActivity extends TabActivity {
 			useExternalDBItem.setEnabled(false);
 		}
 		
-		MenuItem item;
+		item = menu.findItem(R.id.useJapaneseDB);
+		if (item != null)
+			item.setChecked(databaseLang.equals("jp"));
+		item = menu.findItem(R.id.useEnglishDB);
+		if (item != null)
+			item.setChecked(databaseLang.equals("en"));
+		
 		item = menu.findItem(R.id.BackupToSD);
 		if (item != null)
 			item.setEnabled(writable);
@@ -416,6 +424,47 @@ public class FFXIEQActivity extends TabActivity {
 
 				return true;
 			}
+		case R.id.useEnglishDB:
+		case R.id.useJapaneseDB:
+			{
+				final FFXIDatabase db = (FFXIDatabase)getDAO();
+				final FFXIEQSettings settings = getSettings();
+				final ProgressDialog dlg = new ProgressDialog(this);
+
+				dlg.show();
+				AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
+					String lang;
+					String prev_lang;
+					@Override
+					protected Boolean doInBackground(String... params) {
+						lang = params[0];
+						prev_lang = params[1];
+						settings.setDatabaseLang(lang);
+						try {
+							db.copyDatabaseFromAssets(null);
+							return true;
+						} catch (IOException e) {
+							settings.setDatabaseLang(prev_lang);
+							return false;
+						}
+					}
+	
+					@Override
+					protected void onPostExecute(Boolean result) {
+						if (result) {
+							showDialog(R.string.InstallDBSucceeded);
+						} else {
+							showDialog(R.string.InstallDBFailed);
+						}
+						dlg.dismiss();
+					}
+				};
+				if (item.getItemId() == R.id.useEnglishDB)
+					task.execute("en", settings.getDatabaseLang());
+				else if (item.getItemId() == R.id.useJapaneseDB)
+					task.execute("jp", settings.getDatabaseLang());
+			}
+			return true;
 
 		case R.id.InstallDB:
 			{
@@ -583,6 +632,19 @@ public class FFXIEQActivity extends TabActivity {
 			dialog = builder.create();
 			return dialog;
 		case R.string.InstallDBSucceeded:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(id));
+	    	builder.setTitle(getString(R.string.InstallDB));
+	    	builder.setPositiveButton(R.string.OK, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.InstallDBSucceeded);
+					updateValues();
+					updateSubViewValues();
+				}
+			});
+			dialog = builder.create();
+			return dialog;
 		case R.string.InstallDBFailed:
 			builder = new AlertDialog.Builder(this);
 			builder.setCancelable(false);
@@ -741,7 +803,7 @@ public class FFXIEQActivity extends TabActivity {
 			
 		case R.id.showCredit:
 			dialog = new WebViewDialog(this);
-			((WebViewDialog)dialog).loadURL("file:///android_asset/about/about.html");
+			((WebViewDialog)dialog).loadURL(getResources().getString(R.string.AboutFile));
 			return dialog;
 		}
 		return super.onCreateDialog(id);

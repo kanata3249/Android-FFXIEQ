@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -249,7 +249,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 					/* This one must be the one of tree rings. */
 					if (mRangedTokens == null)
 						mRangedTokens = new SortedStringList();
-					mRangedTokens.addString(unknownTokens.get(i));
+					mRangedTokens.addString((unknownTokens.get(i).split(" "))[0]);
 					unknownTokens.remove(i);
 					i--;
 				}
@@ -312,8 +312,14 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		if (token.startsWith(type.name())) {
 			int low, high;
 			String params[];
-			String str;
+			String str, trailer;
 			
+			trailer = null;
+			params = token.split(" ");
+			if (params.length != 1) {
+				trailer = token.substring(params[0].length(), token.length());
+				token = params[0];
+			}
 			str = token.substring(type.name().length() + 1);
 			if (str.endsWith("-")) {
 				str = str + "0";
@@ -328,6 +334,8 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 						high = Integer.valueOf(params[1]);
 					
 					if (low == expectedLowValue && high == expectedHighValue) {
+						if (trailer != null)
+							mUnknownTokens.add(trailer.trim());
 						return true;
 					}
 				} catch (NumberFormatException e) {
@@ -390,7 +398,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 			}
 		}
 		/* not happen */
-		return null;
+		return new StatusValue(0, 0, 0);
 	}
 
 	public void removeCombinationToken() {
