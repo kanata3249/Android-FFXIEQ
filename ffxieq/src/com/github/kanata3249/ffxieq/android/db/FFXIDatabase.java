@@ -112,8 +112,9 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		String [] nameAndExt = DB_NAME.split("\\.");
 		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
 		try {
-			if (checkDatabase(getDBPath(useExternal))) {
-				copyDatabaseFromAssets(getDBPath(useExternal));
+			String dbpath = getDBFullPath(useExternal);
+			if (checkDatabase(dbpath)) {
+				copyDatabaseFromAssets(dbpath);
 			}
 		} catch (IOException e) {
 		}
@@ -124,12 +125,17 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 
 	static public String getDBPath(boolean useExternalDB) {
-		String path; 
 		if (DB_PATH == null)
 			return DB_NAME;
 
 		if (!supportsDBonSD())
 			return DB_NAME;
+
+		return getDBFullPath(useExternalDB);
+	}
+
+	static public String getDBFullPath(boolean useExternalDB) {
+		String path; 
 
 		if (useExternalDB) {
 			File extdir = new File(EXTERNAL_SD_PATH);
@@ -204,7 +210,7 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		String [] nameAndExt = DB_NAME.split("\\.");
 		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
 		if (pathToCopy == null) {
-			pathToCopy = getDBPath(mUseExternalDB);
+			pathToCopy = getDBFullPath(mUseExternalDB);
 		}
 		if (pathToCopy.endsWith("/"))
 			pathToCopy += DB_NAME;
