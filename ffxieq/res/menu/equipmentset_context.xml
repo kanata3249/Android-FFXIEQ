@@ -7,8 +7,8 @@
     <item android:id="@+id/AugmentList" android:title="@string/SelectFromAugmentList"></item>
     <item android:title="@string/EditAugment" android:id="@+id/EditAugment"></item>
     <group android:menuCategory="container" android:id="@+id/WebSearch">
-     <item android:title="@string/FF11DictionaryJP" android:id="@+id/WebSearch0"></item>
-     <item android:title="@string/GoogleSearch" android:id="@+id/WebSearch1"></item>
+     <item android:title="@string/GoogleSearch" android:id="@+id/WebSearch0"></item>
+     <item android:visible="false" android:id="@+id/WebSearch1"></item>
      <item android:visible="false" android:id="@+id/WebSearch2"></item>
      <item android:visible="false" android:id="@+id/WebSearch3"></item>
      <item android:visible="false" android:id="@+id/WebSearch4"></item>
