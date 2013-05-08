@@ -451,6 +451,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		case SKILL_ELEMENTAL_MAGIC:
 		case SKILL_DARK_MAGIC:
 			return getMagicSkill(type);
+			
+		case AttackMagic:
+			return getMagicAttack();
 		}
 	}
 
@@ -1094,6 +1097,14 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 
 		return skill;
+	}
+	
+	public StatusValue getMagicAttack() {
+		StatusValue v = getStatus(mLevel, StatusType.AttackMagic);
+		
+		v.add(new StatusValue(100, 0, 0));
+		
+		return v;
 	}
 
 	public SortedStringList getUnknownTokens() {
