@@ -609,14 +609,28 @@ public class FFXICharacter implements IStatus, Serializable {
 
 	public StatusValue getAttacksPerMinute() {
 		StatusValue delay, v;
-		int attacks, qa, ta, da;
+		int attacks, qa, ta, da, ka;
+		StatusType type;
+		Equipment eq;
+
+		type = null;
+		eq = mEquipment.getEquipment(EquipmentSet.MAINWEAPON);
+		if (eq != null) {
+			type = eq.getWeaponType();
+		}
+		if (type == null) {
+			type = StatusType.SKILL_HANDTOHAND;
+		}
 
 		delay = getDelayModifiedByHaste();
 		attacks = 60 * 60 * 100 / delay.getTotal();
 		qa = attacks * getStatus(mLevel, StatusType.QuadAttack).getAdditionalPercent() / 100 / 100;
 		ta = (attacks - qa) * getStatus(mLevel, StatusType.TrippleAttack).getAdditionalPercent() / 100 / 100;
 		da = (attacks - qa - ta) * getStatus(mLevel, StatusType.DoubleAttack).getAdditionalPercent() / 100 / 100;
-		attacks = (attacks - (qa + ta + da)) + qa * 4 + ta * 3 + da * 2;
+		ka = 0;
+		if (type == StatusType.SKILL_HANDTOHAND)
+			ka = attacks / 2 * getStatus(mLevel, StatusType.KickAttack).getValue() / 100;
+		attacks = (attacks - (qa + ta + da)) + qa * 4 + ta * 3 + da * 2 + ka;
 
 		v = new StatusValue(0, 0, attacks);
 		return v;
