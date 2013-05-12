@@ -505,7 +505,9 @@ public class FFXICharacter implements IStatus, Serializable {
 				StatusValue base = getStatus(mLevel, StatusType.Delay);
 				StatusValue martialarts = getStatus(mLevel, StatusType.MartialArts);
 				
-				base.setValue(Math.max(0, 480 - martialarts.getTotal()) / 2);
+				base.setValue(Math.max(0, 480 - martialarts.getTotal()));
+				base.setValue(base.getTotal() / 2);
+				base.setAdditional(0);
 				return base;
 			}
 
