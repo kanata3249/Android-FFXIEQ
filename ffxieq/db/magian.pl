@@ -39,12 +39,17 @@ local $| = 1;
 	while (@row = $sth->fetchrow_array) {
 		my ($mid, $baseID, $prefix, $postfix, $name, $level, $adesc) = @row;
 		$name =~ s/\'/\'\'/g;
+
 		$bsth = $dbh->prepare("select * from Equipment_$lang where Name LIKE '$name' AND Lv='$level'");
 		$bsth->execute();
 		if (@row = $bsth->fetchrow_array) {
 			my ($id, $name, $part, $weapon, $job, $race, $level, $rare, $ex, $desc_orig, $desc) = @row;
 			
-			$name = "$name$lb$prefix$mid$postfix$rb";
+			if ($mid >= 10000) {
+				$name = "$name$lb$prefix$postfix$rb";
+			} else {
+				$name = "$name$lb$prefix$mid$postfix$rb";
+			}
 			$name =~ s/\'/\'\'/g;
 			$desc =~ s/[\r\n]+/\n/g;
 			if (length($adesc) > 0) {
