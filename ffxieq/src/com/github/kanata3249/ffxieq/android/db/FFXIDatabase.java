@@ -111,13 +111,22 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 		mSettings = settings;
 		String [] nameAndExt = DB_NAME.split("\\.");
 		mOriginalDBName = nameAndExt[0] + "_" + mSettings.getDatabaseLang() + "." + nameAndExt[1];
+	}
+	
+	public boolean updateDatabase(boolean useExternal) {
+		boolean ret;
+		
+		ret = true;
 		try {
 			String dbpath = getDBFullPath(useExternal);
 			if (checkDatabase(dbpath)) {
 				copyDatabaseFromAssets(dbpath);
 			}
 		} catch (IOException e) {
+			ret = false;
 		}
+		
+		return ret;
 	}
 	
 	static public boolean supportsDBonSD() {

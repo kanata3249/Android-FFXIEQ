@@ -358,4 +358,5 @@
 	<string name="RecastDark_DarkArts">リキャスト(闇 黒魔法)</string>
 	<string name="AttacksPerMinute">振り/分</string>
 	<string name="AboutFile">file:///android_asset/about/about_jp.html</string>
+	<string name="updateDatabaseFailed">データベース更新に失敗しました。(空き容量不足の可能性があります)</string>
 </resources>

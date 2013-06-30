@@ -356,4 +356,5 @@
 	<string name="RecastDark_DarkArts">Recast(Dark BLM)</string>
 	<string name="AttacksPerMinute">Atk/min</string>
 	<string name="AboutFile">file:///android_asset/about/about_en.html</string>
+	<string name="updateDatabaseFailed">Updating Database failed(perhaps out of space).</string>
 </resources>

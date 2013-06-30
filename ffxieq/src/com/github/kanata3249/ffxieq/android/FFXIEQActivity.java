@@ -67,6 +67,11 @@ public class FFXIEQActivity extends TabActivity {
 			}
 		}
 		
+		if (!((FFXIDatabase)getDAO()).updateDatabase(getSettings().useExternalDB())) {
+			showDialog(R.string.updateDatabaseFailed);
+			return;
+		}
+		
 		((FFXIEQApplication)getApplication()).setOnDatasetChangedListener(new FFXIEQApplication.OnDatasetChangedListener() {
 			public void notifyDatasetChanged() {
 		    	setTitle(((FFXIEQApplication)getApplication()).getCaption());
@@ -683,7 +688,20 @@ public class FFXIEQActivity extends TabActivity {
 	    	});
 			dialog = builder.create();
 			return dialog;
-			
+		case R.string.updateDatabaseFailed:
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false);
+	    	builder.setMessage(getString(R.string.updateDatabaseFailed));
+	    	builder.setTitle(getString(R.string.app_name));
+	    	builder.setNegativeButton(R.string.NoAndDismiss, new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(R.string.updateDatabaseFailed);
+					finish();
+				}
+	    	});
+			dialog = builder.create();
+			return dialog;
+
 		case R.string.BackupToSDSucceeded:
 		case R.string.BackupToSDFailed:
 		case R.string.RestoreFromSDSucceeded:
