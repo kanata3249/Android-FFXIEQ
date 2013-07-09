@@ -143,6 +143,11 @@ public class FFXIString {
 	public static final int TOKEN_LIGHT_ARTS = 1084;
 	public static final int TOKEN_DARK_ARTS = 1085;
 
+	public static final int TOKEN_EVASION_MAGIC_SHORTEN = 1086;
+	public static final int TOKEN_ATTACK_MAGIC_SHORTEN = 1087;
+	public static final int TOKEN_ACCURACY_MAGIC_SHORTEN = 1088;
+	public static final int TOKEN_DEFENCE_MAGIC_SHORTEN = 1089;
+
 	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
 	public static final int TOKEN_SKILL_DAGGER = 1101;
 	public static final int TOKEN_SKILL_SWORD = 1102;

@@ -362,7 +362,11 @@ public class StatusModifierWithDescription extends StatusModifier {
 		setupCommonTokenHandler(FFXIString.TOKEN_DUALWIELD, StatusType.DualWield);
 		setupCommonTokenHandler(FFXIString.TOKEN_DUALWIELDUP, StatusType.DualWield);
 		setupCommonTokenHandler(FFXIString.TOKEN_MARTIALARTS, StatusType.MartialArts);
-		
+		setupCommonTokenHandler(FFXIString.TOKEN_ATTACK_MAGIC_SHORTEN, StatusType.AttackMagic);
+		setupCommonTokenHandler(FFXIString.TOKEN_DEFENCE_MAGIC_SHORTEN, StatusType.DefenceMagic);
+		setupCommonTokenHandler(FFXIString.TOKEN_EVASION_MAGIC_SHORTEN, StatusType.MagicEvasion);
+		setupCommonTokenHandler(FFXIString.TOKEN_ACCURACY_MAGIC_SHORTEN, StatusType.AccuracyMagic);
+
 		setupCommonTokenHandler(FFXIString.TOKEN_CURE_POTENCY, StatusType.CurePotency);
 		setupCommonTokenHandler(FFXIString.TOKEN_CURE_POTENCY2, StatusType.CurePotency);
 		setupCommonTokenHandler(FFXIString.TOKEN_SONG_SPELL_CASTING_TIME, StatusType.SongSpellCastingTime);
