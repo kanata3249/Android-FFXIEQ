@@ -46,7 +46,7 @@ public class EquipmentListView extends ListView {
 		super(context, attrs);
 		mFilter = "";
 		mFilterID = -1;
-		mOrderBy = EquipmentTable.C_Level + " DESC, " + EquipmentTable.C_Name + " ASC";
+		mOrderBy = EquipmentTable.C_ItemLevel + " DESC, " + EquipmentTable.C_Name + " ASC";
 		mFilterByType = "";
 	}
 
@@ -89,9 +89,9 @@ public class EquipmentListView extends ListView {
 		String order;
 		
 		if (orderByName)
-			order = EquipmentTable.C_Name + " ASC, " + EquipmentTable.C_Level;
+			order = EquipmentTable.C_Name + " ASC, " + EquipmentTable.C_ItemLevel;
 		else
-			order = EquipmentTable.C_Level + " DESC, " + EquipmentTable.C_Name + " ASC";
+			order = EquipmentTable.C_ItemLevel + " DESC, " + EquipmentTable.C_Name + " ASC";
 		if (!mOrderBy.equals(order)) {
 			mOrderBy = order;
 

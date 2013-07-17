@@ -38,6 +38,7 @@ public class EquipmentTable {
 	public static final String C_Job = "Job";
 	public static final String C_Race = "Race";
 	public static final String C_Level = "Lv";
+	public static final String C_ItemLevel = "ItemLv";
 	public static final String C_Rare = "Rare";
 	public static final String C_Ex = "Ex";
 	public static final String C_OriginalDescription = "DescriptionOrg";
