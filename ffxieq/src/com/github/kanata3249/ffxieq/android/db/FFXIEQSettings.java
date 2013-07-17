@@ -67,7 +67,7 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 	// Constructor
 	public FFXIEQSettings(Context context) {
-		super(context, DB_NAME, null, 3);
+		super(context, DB_NAME, null, 4);
 		
 		mContext = context;
 		mAugmentTable = new AugmentTable();
@@ -151,8 +151,10 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		boolean create_meritpoint_table;
+		boolean add_itemlevel_to_augment_table;
 		
 		create_meritpoint_table = false;
+		add_itemlevel_to_augment_table = true;
 		switch (oldVersion) {
 		case 1:
 			create_meritpoint_table = true;
@@ -160,6 +162,8 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 			break;
 		case 2:
 			setDatabaseLang("jp");
+			break;
+		case 3:
 			break;
 		}
 		
@@ -252,6 +256,24 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 
 					cursor.moveToNext();
 				}
+			} finally {
+			}
+		}
+
+		if (add_itemlevel_to_augment_table) {
+			try {
+				StringBuilder createSql = new StringBuilder();
+				
+				createSql.append("alter table " + AugmentTable.TABLE_NAME);
+				createSql.append(" add " + AugmentTable.C_ItemLevel + " integer");
+				
+				db.execSQL(createSql.toString());
+
+				createSql.setLength(0);
+				createSql.append("update " + AugmentTable.TABLE_NAME);
+				createSql.append(" set " + AugmentTable.C_ItemLevel + " = " + AugmentTable.C_Level);
+				
+				db.execSQL(createSql.toString());
 			} finally {
 			}
 		}
@@ -632,9 +654,9 @@ public class FFXIEQSettings extends SQLiteOpenHelper {
 		dataChanged();
 		return newId;
 	}
-	public long saveAugment(long id, long baseId, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description, String augment) {
+	public long saveAugment(long id, long baseId, String name, String part, String weapon, String job, String race, int level, int itemLevel, boolean rare, boolean ex, String description, String augment) {
 		SQLiteDatabase db = getWritableDatabase();
-		long newId = mAugmentTable.saveAugment(db, id, baseId, name, part, weapon, job, race, level, rare, ex, description, augment);
+		long newId = mAugmentTable.saveAugment(db, id, baseId, name, part, weapon, job, race, level, itemLevel, rare, ex, description, augment);
 		dataChanged();
 		return newId;
 	}

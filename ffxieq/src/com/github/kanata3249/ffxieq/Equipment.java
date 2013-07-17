@@ -31,6 +31,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	private String mJob;
 	private String mRace;
 	private int mLevel;
+	private int mItemLevel;
 	private boolean mRare;
 	private boolean mEx;
 	private String mAugment;
@@ -39,11 +40,11 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 	private transient SortedStringList mRangedTokens;
 	private transient String mAugmentComment;
 	
-	public Equipment(long id, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description) {
-		this(id, -1, name, part, weapon, job, race, level, rare, ex, description, "");
+	public Equipment(long id, String name, String part, String weapon, String job, String race, int level, int itemLevel, boolean rare, boolean ex, String description) {
+		this(id, -1, name, part, weapon, job, race, level, itemLevel, rare, ex, description, "");
 	}
 
-	public Equipment(long id, long augId, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description, String augment) {
+	public Equipment(long id, long augId, String name, String part, String weapon, String job, String race, int level, int itemLevel, boolean rare, boolean ex, String description, String augment) {
 		super();
 		
 		mId = id;
@@ -54,6 +55,7 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 		mJob = job;
 		mRace = race;
 		mLevel = level;
+		mItemLevel = itemLevel;
 		mRare = rare;
 		mEx = ex;
 		mDescription = canonicalizeDescription(description);
@@ -172,6 +174,14 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 
 	public void setLevel(int mLevel) {
 		this.mLevel = mLevel;
+	}
+
+	public int getItemLevel() {
+		return mItemLevel;
+	}
+
+	public void setItemLevel(int mItemLevel) {
+		this.mItemLevel = mItemLevel;
 	}
 
 	public boolean isRare() {

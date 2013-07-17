@@ -56,7 +56,7 @@ public class EquipmentTable {
 	public Equipment newInstance(FFXIDAO dao, SQLiteDatabase db, long id, int augId) {
 		Cursor cursor;
 		Equipment newInstance;
-		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description};
+		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_ItemLevel, C_Rare, C_Ex, C_Description};
 
 		try {
 			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + id + "'", null, null, null, null, null);
@@ -72,8 +72,9 @@ public class EquipmentTable {
 		newInstance = new Equipment(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getString(cursor.getColumnIndex(C_Name)),
 									cursor.getString(cursor.getColumnIndex(C_Part)), cursor.getString(cursor.getColumnIndex(C_Weapon)),
 									cursor.getString(cursor.getColumnIndex(C_Job)), cursor.getString(cursor.getColumnIndex(C_Race)),
-									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0,
-									cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0, cursor.getString(cursor.getColumnIndex(C_Description)));
+									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Level)),
+									cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0, cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0,
+									cursor.getString(cursor.getColumnIndex(C_Description)));
 		cursor.close();
 		
 		if (augId != -1) {

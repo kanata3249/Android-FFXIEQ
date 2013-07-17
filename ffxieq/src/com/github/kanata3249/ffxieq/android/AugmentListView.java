@@ -1,5 +1,5 @@
 /*
-   Copyright 2011-2012 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public class AugmentListView extends ListView {
 		super(context, attrs);
 		mFilter = "";
 		mFilterID = -1;
-		mOrderBy = AugmentTable.C_Level + " DESC, " + AugmentTable.C_Name + " ASC";
+		mOrderBy = AugmentTable.C_ItemLevel + " DESC, " + AugmentTable.C_Name + " ASC";
 		mFilterByType = "";
 	}
 
@@ -89,9 +89,9 @@ public class AugmentListView extends ListView {
 		String order;
 		
 		if (orderByName)
-			order = AugmentTable.C_Name + " ASC, " + AugmentTable.C_Level;
+			order = AugmentTable.C_Name + " ASC, " + AugmentTable.C_ItemLevel;
 		else
-			order = AugmentTable.C_Level + " DESC, " + AugmentTable.C_Name + " ASC";
+			order = AugmentTable.C_ItemLevel + " DESC, " + AugmentTable.C_Name + " ASC";
 		if (!mOrderBy.equals(order)) {
 			mOrderBy = order;
 

@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ public class AugmentTable {
 	public static final String C_Job = "Job";
 	public static final String C_Race = "Race";
 	public static final String C_Level = "Lv";
+	public static final String C_ItemLevel = "ItemLv";
 	public static final String C_Rare = "Rare";
 	public static final String C_Ex = "Ex";
 	public static final String C_Description = "Description";
@@ -54,6 +55,7 @@ public class AugmentTable {
 		createSql.append(C_Job + " text not null,");
 		createSql.append(C_Race + " text not null,");
 		createSql.append(C_Level + " integer not null,");
+		createSql.append(C_ItemLevel + " integer not null,");
 		createSql.append(C_Rare + " integer not null,");
 		createSql.append(C_Ex + " integer not null,");
 		createSql.append(C_Description + " text, ");
@@ -67,7 +69,7 @@ public class AugmentTable {
 	public Equipment newInstance(FFXIDAO dao, SQLiteDatabase db, long id, long augId) {
 		Cursor cursor;
 		Equipment newInstance;
-		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_Rare, C_Ex, C_Description, C_BaseId, C_Augment};
+		String []columns = { C_Id, C_Name, C_Part, C_Weapon, C_Job, C_Race, C_Level, C_ItemLevel, C_Rare, C_Ex, C_Description, C_BaseId, C_Augment};
 
 		try {
 			cursor = db.query(TABLE_NAME, columns, C_Id + " = '" + augId + "'", null, null, null, null, null);
@@ -83,8 +85,9 @@ public class AugmentTable {
 		newInstance = new Equipment(cursor.getLong(cursor.getColumnIndex(C_BaseId)), cursor.getString(cursor.getColumnIndex(C_Name)),
 									cursor.getString(cursor.getColumnIndex(C_Part)), cursor.getString(cursor.getColumnIndex(C_Weapon)),
 									cursor.getString(cursor.getColumnIndex(C_Job)), cursor.getString(cursor.getColumnIndex(C_Race)),
-									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0,
-									cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0, cursor.getString(cursor.getColumnIndex(C_Description)));
+									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Level)),
+									cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0, cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0,
+									cursor.getString(cursor.getColumnIndex(C_Description)));
 		if (newInstance != null) {
 			newInstance.setAugId(augId);
 			newInstance.setAugment(cursor.getString(cursor.getColumnIndex(C_Augment)));
@@ -188,6 +191,7 @@ public class AugmentTable {
 		values.put(C_Job, base.getJob());
 		values.put(C_Race, base.getRace());
 		values.put(C_Level, base.getLevel());
+		values.put(C_ItemLevel, base.getItemLevel());
 		values.put(C_Rare, base.isRare() ? 1 : 0);
 		values.put(C_Ex, base.isEx() ? 1 : 0);
 		values.put(C_Description, base.getDescription());
@@ -213,7 +217,7 @@ public class AugmentTable {
 		return newId;
 	}
 
-	public long saveAugment(SQLiteDatabase db, long id, long baseId, String name, String part, String weapon, String job, String race, int level, boolean rare, boolean ex, String description, String augment) {
+	public long saveAugment(SQLiteDatabase db, long id, long baseId, String name, String part, String weapon, String job, String race, int level, int itemLevel, boolean rare, boolean ex, String description, String augment) {
 		ContentValues values = new ContentValues();;
 		long newId;
 
@@ -225,6 +229,7 @@ public class AugmentTable {
 		values.put(C_Job, job);
 		values.put(C_Race, race);
 		values.put(C_Level, level);
+		values.put(C_ItemLevel, itemLevel);
 		values.put(C_Rare, rare ? 1 : 0);
 		values.put(C_Ex, ex ? 1 : 0);
 		values.put(C_Description, description);

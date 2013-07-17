@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 kanata3249
+   Copyright 2011-2013 kanata3249
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ public class EquipmentSelectorActivity extends FFXIEQBaseActivity {
 		{
 			Equipment cur = getDAO().instantiateEquipment(mCurrent, mAugID);
 			if (cur == null) {
-				cur = new Equipment(-1, getString(R.string.EquipmentNotSelected), "", "", "", "", 0, false, false, "");
+				cur = new Equipment(-1, getString(R.string.EquipmentNotSelected), "", "", "", "", 0, 0, false, false, "");
 			}
 			if (cur != null) {
 				TextView tv;
