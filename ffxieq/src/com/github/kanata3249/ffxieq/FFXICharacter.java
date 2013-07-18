@@ -671,7 +671,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		return calcTPByDelay(getStatus(mLevel, StatusType.DelayRange).getTotal());
 	}
 
-	int calcAccuracyByWeaponType(StatusType type) {
+	int calcAccuracyByWeaponType(StatusType type, Equipment eq) {
 		int value;
 		int skillvalue, modvalue;
 		StatusValue skill = getStatus(mLevel, type);
@@ -679,6 +679,8 @@ public class FFXICharacter implements IStatus, Serializable {
 
 		value = 0;
 		skillvalue = skill.getValue() + skill.getAdditional();
+		if (eq != null && eq.getItemLevel() > 99)
+			skillvalue += eq.getStatus(mLevel, type).getTotal();
 		switch (type) {
 		case SKILL_HANDTOHAND:
 		case SKILL_DAGGER:
@@ -724,7 +726,7 @@ public class FFXICharacter implements IStatus, Serializable {
 			type = StatusType.SKILL_HANDTOHAND;
 		}
 		if (type != null) {
-			mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
+			mod.setValue(calcAccuracyByWeaponType(type, eq) + mod.getValue());
 		}
 		return mod;
 	}
@@ -735,7 +737,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null && type != StatusType.SKILL_SHIELD) {
-				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
+				mod.setValue(calcAccuracyByWeaponType(type, eq) + mod.getValue());
 			} else {
 				mod = new StatusValue(0, 0, 0);
 			}
@@ -744,7 +746,7 @@ public class FFXICharacter implements IStatus, Serializable {
 			return new StatusValue(0, 0, 0);
 		}
 	}
-	int calcAttackByWeaponType(StatusType type, boolean sub) {
+	int calcAttackByWeaponType(StatusType type, Equipment eq, boolean sub) {
 		int value;
 		int skillvalue, strvalue;
 		StatusValue skill = getStatus(mLevel, type);
@@ -753,6 +755,8 @@ public class FFXICharacter implements IStatus, Serializable {
 		value = 0;
 		strvalue = str.getValue() + str.getAdditional();
 		skillvalue = skill.getValue() + skill.getAdditional();
+		if (eq != null && eq.getItemLevel() > 99)
+			skillvalue += eq.getStatus(mLevel, type).getTotal();
 		switch (type) {
 		case SKILL_HANDTOHAND:
 			value = strvalue * 625 / 1000 + skillvalue + 8;
@@ -792,7 +796,7 @@ public class FFXICharacter implements IStatus, Serializable {
 			type = StatusType.SKILL_HANDTOHAND;
 		}
 		if (type != null) {
-			mod.setValue(calcAttackByWeaponType(type, false) + mod.getValue());
+			mod.setValue(calcAttackByWeaponType(type, eq, false) + mod.getValue());
 		}
 		return mod;
 	}
@@ -803,7 +807,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null && type != StatusType.SKILL_SHIELD) {
-				mod.setValue(calcAttackByWeaponType(type, true) + mod.getValue());
+				mod.setValue(calcAttackByWeaponType(type, eq, true) + mod.getValue());
 			} else {
 				mod = new StatusValue(0, 0, 0);
 			}
@@ -822,7 +826,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAccuracyByWeaponType(type) + mod.getValue());
+				mod.setValue(calcAccuracyByWeaponType(type, eq) + mod.getValue());
 			}
 		}
 		return mod;
@@ -837,7 +841,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (eq != null) {
 			type = eq.getWeaponType();
 			if (type != null) {
-				mod.setValue(calcAttackByWeaponType(type, false) + mod.getValue());
+				mod.setValue(calcAttackByWeaponType(type, eq, false) + mod.getValue());
 			}
 		}
 		return mod;

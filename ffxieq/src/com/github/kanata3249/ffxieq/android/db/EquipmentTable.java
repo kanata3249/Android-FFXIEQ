@@ -72,7 +72,7 @@ public class EquipmentTable {
 		newInstance = new Equipment(cursor.getLong(cursor.getColumnIndex(C_Id)), cursor.getString(cursor.getColumnIndex(C_Name)),
 									cursor.getString(cursor.getColumnIndex(C_Part)), cursor.getString(cursor.getColumnIndex(C_Weapon)),
 									cursor.getString(cursor.getColumnIndex(C_Job)), cursor.getString(cursor.getColumnIndex(C_Race)),
-									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_Level)),
+									cursor.getInt(cursor.getColumnIndex(C_Level)), cursor.getInt(cursor.getColumnIndex(C_ItemLevel)),
 									cursor.getInt(cursor.getColumnIndex(C_Rare)) != 0, cursor.getInt(cursor.getColumnIndex(C_Ex)) != 0,
 									cursor.getString(cursor.getColumnIndex(C_Description)));
 		cursor.close();

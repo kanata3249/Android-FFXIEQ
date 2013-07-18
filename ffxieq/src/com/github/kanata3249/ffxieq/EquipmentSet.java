@@ -129,6 +129,29 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 			} else if (mEquipments[ANMO] != null)
 				total.setValue(mEquipments[ANMO].getStatus(level, StatusType.Delay).getAdditional());
 			break;
+		case SKILL_HANDTOHAND:
+		case SKILL_DAGGER:
+		case SKILL_SWORD:
+		case SKILL_GREATSWORD:
+		case SKILL_AXE:
+		case SKILL_GREATAXE:
+		case SKILL_SCYTH:
+		case SKILL_POLEARM:
+		case SKILL_KATANA:
+		case SKILL_GREATKATANA:
+		case SKILL_CLUB:
+		case SKILL_STAFF:
+		case SKILL_ARCHERY:
+		case SKILL_MARKSMANSHIP:
+			if (mEquipments[MAINWEAPON] != null && mEquipments[MAINWEAPON].getItemLevel() <= 99)
+				total.add(mEquipments[MAINWEAPON].getStatus(level, type));
+			if (mEquipments[SUBWEAPON] != null && mEquipments[SUBWEAPON].getItemLevel() <= 99)
+				total.add(mEquipments[SUBWEAPON].getStatus(level, type));
+			if (mEquipments[RANGE] != null && mEquipments[RANGE].getItemLevel() <= 99)
+				total.add(mEquipments[RANGE].getStatus(level, type));
+			if (mEquipments[ANMO] != null && mEquipments[ANMO].getItemLevel() <= 99)
+				total.add(mEquipments[ANMO].getStatus(level, type));
+			break;
 		default:
 			if (mEquipments[MAINWEAPON] != null)
 				total.add(mEquipments[MAINWEAPON].getStatus(level, type));
