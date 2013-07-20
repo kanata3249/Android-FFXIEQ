@@ -12,7 +12,7 @@
             <TextView android:id="@+id/textView3" android:text="@string/STR" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/STR" android:entries="@array/Merits_Status_Entries"></Spinner>
         </TableRow>
-        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow2" android:onClick="onSave">
+        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/tableRow2">
             <TextView android:id="@+id/textView4" android:text="@string/DEX" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
             <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/DEX" android:entries="@array/Merits_Status_Entries"></Spinner>
             <TextView android:id="@+id/textView5" android:text="@string/VIT" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
