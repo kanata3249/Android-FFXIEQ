@@ -369,6 +369,8 @@ public class StatusModifierWithDescription extends StatusModifier {
 
 		setupCommonTokenHandler(FFXIString.TOKEN_CURE_POTENCY, StatusType.CurePotency);
 		setupCommonTokenHandler(FFXIString.TOKEN_CURE_POTENCY2, StatusType.CurePotency);
+		setupCommonTokenHandler(FFXIString.TOKEN_HEALING_MAGIC_CASTING_TIME, StatusType.HealingMagicCastingTime);
+		setupCommonTokenHandler(FFXIString.TOKEN_CURE_CASTING_TIME, StatusType.CureCastingTime);
 		setupCommonTokenHandler(FFXIString.TOKEN_SONG_SPELL_CASTING_TIME, StatusType.SongSpellCastingTime);
 		setupCommonTokenHandler(FFXIString.TOKEN_SONG_RECAST_DELAY, StatusType.SongRecastDelay);
 		setupCommonTokenHandler(FFXIString.TOKEN_CONSERVE_MP, StatusType.ConserveMP);

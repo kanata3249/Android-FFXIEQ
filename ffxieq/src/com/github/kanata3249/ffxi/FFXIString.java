@@ -147,6 +147,8 @@ public class FFXIString {
 	public static final int TOKEN_ATTACK_MAGIC_SHORTEN = 1087;
 	public static final int TOKEN_ACCURACY_MAGIC_SHORTEN = 1088;
 	public static final int TOKEN_DEFENCE_MAGIC_SHORTEN = 1089;
+	public static final int TOKEN_HEALING_MAGIC_CASTING_TIME = 1090;
+	public static final int TOKEN_CURE_CASTING_TIME = 1091;
 
 	public static final int TOKEN_SKILL_HANDTOHAND = 1100;
 	public static final int TOKEN_SKILL_DAGGER = 1101;

@@ -444,6 +444,11 @@ public class FFXICharacter implements IStatus, Serializable {
 		case DarkAffinityRecast_DarkArts:
 			return getAffinityRecast(StatusType.DarkAffinityRecast, getStatus(mLevel, StatusType.DarkArts), getStatus(mLevel, StatusType.LightArts));
 
+		case CureCastingTime:
+			return getCureCastingTime();
+		case HealingMagicCastingTime:
+			return getHealingMagicCastingTime();
+
 		case SKILL_DIVINE_MAGIC:
 		case SKILL_HEALING_MAGIC:
 		case SKILL_ENCHANCING_MAGIC:
@@ -1124,6 +1129,27 @@ public class FFXICharacter implements IStatus, Serializable {
 		v.add(new StatusValue(100, 0, 0));
 		
 		return v;
+	}
+
+	public StatusValue getHealingMagicCastingTime() {
+		StatusValue fastcast, healing;
+
+		fastcast  = getStatus(mLevel, StatusType.FastCast);
+		healing  = getStatus(mLevel, StatusType.HealingMagicCastingTime);
+		healing.setAdditionalPercent(healing.getAdditionalPercent() - StatusValue.makePercentValue(fastcast.getTotal(), 0));
+
+		return healing;
+	}
+	public StatusValue getCureCastingTime() {
+		StatusValue fastcast, healing, cure;
+
+		fastcast  = getStatus(mLevel, StatusType.FastCast);
+		healing  = getStatus(mLevel, StatusType.HealingMagicCastingTime);
+		cure  = getStatus(mLevel, StatusType.CureCastingTime);
+		cure.setAdditionalPercent(cure.getAdditionalPercent() - StatusValue.makePercentValue(fastcast.getTotal(), 0));
+		cure.add(healing);
+
+		return cure;
 	}
 
 	public SortedStringList getUnknownTokens() {

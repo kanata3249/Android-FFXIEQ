@@ -165,5 +165,8 @@ public enum StatusType {
 	LightAffinityRecast_DarkArts,
 	DarkAffinityRecast_DarkArts,
 	
+	HealingMagicCastingTime,
+	CureCastingTime,
+	
 	MODIFIER_NUM
 }

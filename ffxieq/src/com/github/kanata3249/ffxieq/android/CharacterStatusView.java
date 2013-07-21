@@ -743,6 +743,10 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_HEALING_MP);
 		case CurePotency:
 			return mDao.getString(FFXIString.TOKEN_CURE_POTENCY);
+		case HealingMagicCastingTime:
+			return mDao.getString(FFXIString.TOKEN_HEALING_MAGIC_CASTING_TIME);
+		case CureCastingTime:
+			return mDao.getString(FFXIString.TOKEN_CURE_CASTING_TIME);
 		case SongSpellCastingTime:
 			return mDao.getString(FFXIString.TOKEN_SONG_SPELL_CASTING_TIME);
 		case SongRecastDelay:
