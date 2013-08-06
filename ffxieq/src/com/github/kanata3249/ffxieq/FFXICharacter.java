@@ -475,10 +475,13 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (type == StatusType.SKILL_HANDTOHAND) {
 			StatusValue value;
 			StatusValue skill;
-			int D;
+			int D, skillvalue;
 			
 			skill = getStatus(mLevel, type);
-			D = (skill.getValue() + skill.getAdditional()) * 11 / 100 + 3;
+			skillvalue = skill.getValue() + skill.getAdditional();
+			if (eq != null && eq.getItemLevel() > 99)
+				skillvalue += eq.getStatus(mLevel, type).getTotal();
+			D = skillvalue * 11 / 100 + 3;
 			value = new StatusValue(D, 0, 0);
 			
 			value.add(getStatus(mLevel, StatusType.D));
