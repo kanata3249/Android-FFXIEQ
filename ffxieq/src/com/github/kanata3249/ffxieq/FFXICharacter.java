@@ -702,25 +702,24 @@ public class FFXICharacter implements IStatus, Serializable {
 		case SKILL_POLEARM:
 		case SKILL_GREATKATANA:
 		case SKILL_STAFF:
+		default:
 			mod = getStatus(mLevel, StatusType.DEX);
-			modvalue = mod.getValue() + mod.getAdditional();
-			if (skillvalue < 200) {
-				value = modvalue * 75 / 100 + skillvalue;
-			} else {
-				value = modvalue * 75 / 100 + 200 + (skillvalue - 200) * 90 / 100;
-			}
 			break;
 		case SKILL_ARCHERY:
 		case SKILL_MARKSMANSHIP:
 		case SKILL_THROWING:
 			mod = getStatus(mLevel, StatusType.AGI);
-			modvalue = mod.getValue() + mod.getAdditional();
-			if (skillvalue < 200) {
-				value = modvalue * 75 / 100 + skillvalue;
-			} else {
-				value = modvalue * 75 / 100 + 200 + (skillvalue - 200) * 90 / 100;
-			}
 			break;
+		}
+		modvalue = mod.getValue() + mod.getAdditional();
+		if (skillvalue < 200) {
+			value = modvalue * 75 / 100 + skillvalue;
+		} else if (skillvalue < 400){
+			value = modvalue * 75 / 100 + 200 + (skillvalue - 200) * 90 / 100;
+		} else if (skillvalue < 600){
+			value = modvalue * 75 / 100 + 200 + 180 + (skillvalue - 400) * 80 / 100;
+		} else {
+			value = modvalue * 75 / 100 + 200 + 180 + 160 + (skillvalue - 600) * 70 / 100;
 		}
 		return value;
 	}
