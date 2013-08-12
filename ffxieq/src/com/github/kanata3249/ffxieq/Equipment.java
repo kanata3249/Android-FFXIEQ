@@ -314,6 +314,8 @@ public class Equipment extends StatusModifierWithDescription implements Serializ
 				
 			}
 			break;
+		default:
+			break;
 		}
 		return super.getStatus(level, type);
 	}

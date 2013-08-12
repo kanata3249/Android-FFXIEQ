@@ -541,8 +541,12 @@ public class FFXICharacter implements IStatus, Serializable {
 						
 						return base;
 					}
+				default:
+					break;
 				}
 			}
+		default:
+			break;
 		}
 		return getStatus(mLevel, StatusType.Delay);
 	}
@@ -606,8 +610,12 @@ public class FFXICharacter implements IStatus, Serializable {
 						v.setAdditionalPercent(-(StatusValue.makePercentValue(dualwield.getAdditional(), 0) + dualwield.getAdditionalPercent()));
 						break;
 					}
+				default:
+					break;
 				}
 			}
+			break;
+		default:
 			break;
 		}
 		v.setValue(Math.max(cap, v.getTotal() * (10000 - haste.getAdditionalPercent()) / 10000));
@@ -789,6 +797,8 @@ public class FFXICharacter implements IStatus, Serializable {
 		case SKILL_GREATKATANA:
 		case SKILL_STAFF:
 			value = strvalue * 75 / 100 + skillvalue + 8;
+			break;
+		default:
 			break;
 		}
 		return value;
@@ -1100,6 +1110,8 @@ public class FFXICharacter implements IStatus, Serializable {
 			if (darts.getTotal() > 0) {
 				arts = darts;
 			}
+			break;
+		default:
 			break;
 		}
 		

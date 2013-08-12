@@ -825,6 +825,8 @@ public class CharacterStatusView extends ScrollView {
 			return getResources().getString(R.string.RecastLight_DarkArts);
 		case DarkAffinityRecast_DarkArts:
 			return getResources().getString(R.string.RecastDark_DarkArts);
+		default:
+			break;
 		}
 		return null;
 	}
@@ -901,6 +903,8 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_SKILL_GEOMANCER_MAGIC);
 		case SKILL_HANDBELL:
 			return mDao.getString(FFXIString.TOKEN_SKILL_HANDBELL);
+		default:
+			break;
 		}
 		return null;
 	}

@@ -263,15 +263,21 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 
 	void copyDatabaseFromSD(String sd_path) throws IOException {
+		FileChannel channelSource = null;
+		FileChannel channelTarget = null;
 		File outDir = new File(DB_PATH);
 
 		outDir.mkdir();
-		FileChannel channelSource = new FileInputStream(sd_path + DB_NAME).getChannel();
-		FileChannel channelTarget = new FileOutputStream(DB_PATH + DB_NAME).getChannel();
-		channelSource.transferTo(0, channelSource.size(), channelTarget);
-
-		channelSource.close();
-		channelTarget.close();
+		try {
+			channelSource = new FileInputStream(sd_path + DB_NAME).getChannel();
+			channelTarget = new FileOutputStream(DB_PATH + DB_NAME).getChannel();
+			channelSource.transferTo(0, channelSource.size(), channelTarget);
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			try { channelSource.close(); } catch (Exception e) {};
+			try { channelTarget.close(); } catch (Exception e) {};
+		}
 		
 		// Copy last modified
 		File from = new File(sd_path + DB_NAME);
@@ -280,15 +286,21 @@ public class FFXIDatabase extends SQLiteOpenHelper implements FFXIDAO {
 	}
 
 	void copyDatabaseToSD(String sd_path) throws IOException {
+		FileChannel channelSource = null;
+		FileChannel channelTarget = null;
 		File outDir = new File(sd_path);
 
 		outDir.mkdir();
-		FileChannel channelSource = new FileInputStream(DB_PATH + DB_NAME).getChannel();
-		FileChannel channelTarget = new FileOutputStream(sd_path + DB_NAME).getChannel();
-		channelSource.transferTo(0, channelSource.size(), channelTarget);
-
-		channelSource.close();
-		channelTarget.close();
+		try {
+			channelSource = new FileInputStream(DB_PATH + DB_NAME).getChannel();
+			channelTarget = new FileOutputStream(sd_path + DB_NAME).getChannel();
+			channelSource.transferTo(0, channelSource.size(), channelTarget);
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			try { channelSource.close(); } catch (Exception e) {};
+			try { channelTarget.close(); } catch (Exception e) {};
+		}
 		
 		// Copy last modified
 		File from = new File(DB_PATH + DB_NAME);
