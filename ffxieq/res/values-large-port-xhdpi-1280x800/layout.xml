@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<item name="equipmentseteditfragment" type="layout">@layout/equipmentseteditfragment_handset</item>
-	<item name="basiceditfragment" type="layout">@layout/basiceditfragment_handset</item>
-	<item name="equipmentseteditactivity" type="layout">@layout/equipmentseteditactivity_handset</item>
-	<item name="statusview" type="layout">@layout/statusview_handset</item>
-</resources>
