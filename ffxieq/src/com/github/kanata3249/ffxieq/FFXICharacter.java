@@ -34,6 +34,7 @@ public class FFXICharacter implements IStatus, Serializable {
 	MagicSet mMagicSet;
 	VWAtmaSet mVWAtmaset;
 	BlueMagicSet mBlueMagicSet;
+	MagicSet mRegionalBuff;
 
 	long mMeritPointId;
 
@@ -53,6 +54,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		mInAbyssea = false;
 		mVWAtmaset = new VWAtmaSet();
 		mBlueMagicSet = new BlueMagicSet();
+		mRegionalBuff = new MagicSet();
 		mModified = false;
 		mStatusCacheValid = false;
 	}
@@ -73,6 +75,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		total.add(mEquipment.getStatus(level, type));
 		if (mFood != null) {
 			total.add(mFood.getStatus(level, type));
+		}
+		if (mRegionalBuff != null) {
+			total.add(mRegionalBuff.getStatus(level, type));
 		}
 		if (mMagicSet != null) {
 			total.add(mMagicSet.getStatus(level, type));
@@ -205,19 +210,65 @@ public class FFXICharacter implements IStatus, Serializable {
 		mStatusCacheValid = false;
 		mFood = food;
 	}
+	public int getNumRegionalBuff() {
+		if (mRegionalBuff == null)
+			mRegionalBuff = new MagicSet();
+		return mRegionalBuff.getNumMagic();
+	}
+	public Magic getRegionalBuff(int index) {
+		if (mRegionalBuff == null)
+			mRegionalBuff = new MagicSet();
+		return mRegionalBuff.getMagic(0);
+	}
+	public void setRegionalBuff(long id, long subid) {
+		Magic magic;
+		
+		if (mRegionalBuff == null)
+			mRegionalBuff = new MagicSet();
+		for (int i = 0; i < mRegionalBuff.getNumMagic(); i++) {
+			magic = mRegionalBuff.getMagic(i);
+			if (magic.getSubId() == subid) {
+				mRegionalBuff.setMagic(i, id);
+				mModified = true;
+				mStatusCacheValid = false;
+				return;
+			}
+		}
+
+		if (id >= 0) {
+			mRegionalBuff.addMagic(id);
+			mModified = true;
+			mStatusCacheValid = false;
+		}
+		return;
+	}
 	public int getNumMagic() {
+		int n;
+
 		if (mMagicSet == null)
 			mMagicSet = new MagicSet();
-		return mMagicSet.getNumMagic();
+		n = mMagicSet.getNumMagic();
+		n += getNumRegionalBuff();
+		return n;
 	}
 	public Magic getMagic(int index) {
+		int numMagic;
+
 		if (mMagicSet == null)
 			mMagicSet = new MagicSet();
+		numMagic = mMagicSet.getNumMagic();
+		if (index >= numMagic)
+			return getRegionalBuff(index - numMagic);
 		return mMagicSet.getMagic(index);
 	}
 	public void setMagic(long id, long subid) {
 		Magic magic;
 		
+		if (subid >= 100000) {
+			setRegionalBuff(id, subid);
+			return;
+		}
+			
 		if (mMagicSet == null)
 			mMagicSet = new MagicSet();
 		for (int i = 0; i < mMagicSet.getNumMagic(); i++) {
@@ -979,6 +1030,10 @@ public class FFXICharacter implements IStatus, Serializable {
 			ehaste.add(mVWAtmaset.getStatus(mLevel, StatusType.Haste));
 			ehaste.sub(mVWAtmaset.getStatus(mLevel, StatusType.Slow));
 		}
+		if (mRegionalBuff != null) {
+			ehaste.add(mRegionalBuff.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mRegionalBuff.getStatus(mLevel, StatusType.Slow));
+		}
 		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
 		if (ehaste.getAdditionalPercent() > 2600) {
 			haste.setAdditionalPercent(haste.getAdditionalPercent() - (ehaste.getAdditionalPercent() - 2600));
@@ -1012,6 +1067,10 @@ public class FFXICharacter implements IStatus, Serializable {
 		if (mVWAtmaset != null) {
 			ehaste.add(mVWAtmaset.getStatus(mLevel, StatusType.Haste));
 			ehaste.sub(mVWAtmaset.getStatus(mLevel, StatusType.Slow));
+		}
+		if (mRegionalBuff != null) {
+			ehaste.add(mRegionalBuff.getStatus(mLevel, StatusType.Haste));
+			ehaste.sub(mRegionalBuff.getStatus(mLevel, StatusType.Slow));
 		}
 		/* Equipment haste cap: 25% (Typical 25% build is 24.7%, so we use 26% cap at this time. */
 		if (ehaste.getAdditionalPercent() > 2600) {
@@ -1178,6 +1237,9 @@ public class FFXICharacter implements IStatus, Serializable {
 		}
 		if (mMagicSet != null) {
 			unknownTokens.mergeList(mMagicSet.getUnknownTokens());
+		}
+		if (mRegionalBuff != null) {
+			unknownTokens.mergeList(mRegionalBuff.getUnknownTokens());
 		}
 		if (mVWAtmaset != null) {
 			unknownTokens.mergeList(mVWAtmaset.getUnknownTokens());
