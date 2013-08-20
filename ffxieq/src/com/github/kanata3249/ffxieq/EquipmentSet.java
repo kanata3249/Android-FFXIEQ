@@ -205,7 +205,7 @@ public class EquipmentSet extends StatusModifier implements Serializable {
 				Equipment eq = Dao.instantiateEquipment(mEquipments[i].getId(), mEquipments[i].getAugId());
 				if (eq == null || !eq.getName().equals(mEquipments[i].getName())) {
 					// find
-					eq = Dao.findEquipment(mEquipments[i].getName(), mEquipments[i].getLevel(), mEquipments[i].getPart(), mEquipments[i].getWeapon());
+					eq = Dao.findEquipment(mEquipments[i].getId(), mEquipments[i].getName(), mEquipments[i].getLevel(), mEquipments[i].getPart(), mEquipments[i].getWeapon());
 					if (eq != null) {
 						mEquipments[i] = eq;
 						updated = true;
