@@ -114,17 +114,15 @@ public class EquipmentTable {
 		cursor.close();
 	}
 
-	public Equipment findEquipment(FFXIDAO dao, SQLiteDatabase db, String name, int level, String part, String weapon) {
+	public Equipment findEquipment(FFXIDAO dao, SQLiteDatabase db, long id, String name, int level, String part, String weapon) {
 		Cursor cursor;
 		String columns[] = { C_Id };
 		long newId;
 
 		try {
 			cursor = db.query(TABLE_NAME, columns,
-					C_Name + " = " + DatabaseUtils.sqlEscapeString(name) + " AND " +
-					C_Part + " LIKE '%" + part + "%' AND " +
-					C_Level + " = '" + level + "' AND " +
-					C_Weapon + " LIKE '%" + weapon + "%'",
+					C_Id + " = '" + id + "' AND " +
+					C_Level + " = '" + level + "'",
 					null, null, null, null);
 		} catch (SQLiteException e) {
 			cursor = null;
