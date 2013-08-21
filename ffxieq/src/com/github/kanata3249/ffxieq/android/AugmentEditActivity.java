@@ -67,7 +67,7 @@ public class AugmentEditActivity extends FFXIEQBaseActivity {
 			Equipment base = getDAO().instantiateEquipment(aug.getId(), -1);
 			
 			if (!aug.getName().equals(base.getName())) {
-				base = getDAO().findEquipment(aug.getName(), aug.getLevel(), aug.getPart(), aug.getWeapon());
+				base = getDAO().findEquipment(aug.getId(), aug.getName(), aug.getLevel(), aug.getPart(), aug.getWeapon());
 				if (base == null) {
 					showDialog(R.string.BaseEquipmentNotFound);
 				} else {
