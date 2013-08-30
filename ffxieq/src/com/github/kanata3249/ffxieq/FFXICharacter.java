@@ -778,7 +778,7 @@ public class FFXICharacter implements IStatus, Serializable {
 		} else if (skillvalue < 600){
 			value = modvalue * 75 / 100 + 200 + 180 + (skillvalue - 400) * 80 / 100;
 		} else {
-			value = modvalue * 75 / 100 + 200 + 180 + 160 + (skillvalue - 600) * 70 / 100;
+			value = modvalue * 75 / 100 + 200 + 180 + 160 + (skillvalue - 600) * 90 / 100;
 		}
 		return value;
 	}
