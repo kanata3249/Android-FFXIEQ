@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.github.kanata3249.ffxieq" android:installLocation="auto" android:versionCode="080057" android:versionName="20130821">
+      package="com.github.kanata3249.ffxieq" android:installLocation="auto" android:versionCode="080059" android:versionName="20131013">
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 <uses-sdk android:minSdkVersion="4"></uses-sdk>
 <supports-screens android:smallScreens="false" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true"></supports-screens>
