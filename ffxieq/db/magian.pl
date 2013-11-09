@@ -44,7 +44,7 @@ local $| = 1;
 		$bsth = $dbh->prepare("select * from Equipment_$lang where Name LIKE '$name' AND Lv='$level'");
 		$bsth->execute();
 		if (@row = $bsth->fetchrow_array) {
-			my ($id, $name, $part, $weapon, $job, $race, $level, $itemlevel, $rare, $ex, $desc_orig, $desc) = @row;
+			my ($id, $originalID, $name, $part, $weapon, $job, $race, $level, $itemlevel, $rare, $ex, $desc_orig, $desc) = @row;
 			
 			if ($mid >= 10000) {
 				$name = "$name$lb$prefix$postfix$rb";
