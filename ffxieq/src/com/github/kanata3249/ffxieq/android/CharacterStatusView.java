@@ -771,6 +771,8 @@ public class CharacterStatusView extends ScrollView {
 			return mDao.getString(FFXIString.TOKEN_BLOODPACT_ABILITY_DELAY);
 		case SaveTP:
 			return mDao.getString(FFXIString.TOKEN_SAVE_TP);
+		case MagicAccuracySkill:
+			return mDao.getString(FFXIString.TOKEN_MAGIC_ACCURACY_SKILL);
 		case Recast:
 			return getResources().getString(R.string.Recast);
 		case Recast_LightArts:

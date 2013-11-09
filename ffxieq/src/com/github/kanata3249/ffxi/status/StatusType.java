@@ -167,6 +167,8 @@ public enum StatusType {
 	
 	HealingMagicCastingTime,
 	CureCastingTime,
+
+	MagicAccuracySkill,
 	
 	MODIFIER_NUM
 }

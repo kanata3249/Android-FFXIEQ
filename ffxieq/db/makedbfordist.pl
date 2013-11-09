@@ -40,8 +40,6 @@ sub builddb
 
 	$dbh->do("drop table Magian_$lang");
 	$dbh->do("drop table Magian_$lang2");
-	$dbh->do("drop table original_$lang");
-	$dbh->do("drop table original_$lang2");
 	$dbh->do("drop table items_$lang");
 	$dbh->do("drop table items_$lang2");
 	$dbh->do("drop table equipment_$lang" . "_modified");
@@ -73,6 +71,7 @@ sub builddb
 	$dbh->do("alter table Magic_$lang rename to Magic");
 	
 	$dbh->do("update Equipment set DescriptionOrg = NULL");
+	$dbh->do("update Equipment set originalID = NULL");
 	$dbh->do("update Atma set DescriptionOrg = NULL");
 
 	$dbh->disconnect();
